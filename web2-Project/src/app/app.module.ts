@@ -8,6 +8,7 @@ import { FlightComponent } from './components/flight/flight.component';
 import { CarComponent } from './components/car/car.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
