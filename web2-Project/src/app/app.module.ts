@@ -7,6 +7,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FlightComponent } from './components/flight/flight.component';
 import { CarComponent } from './components/car/car.component';
 import { LogInComponent } from './components/log-in/log-in.component';
+import { LogInBtnComponent } from './components/log-in-btn/log-in-btn.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { LogInComponent } from './components/log-in/log-in.component';
     FlightComponent,
     CarComponent,
     LogInComponent,
+    LogInBtnComponent,
   ],
   imports: [
     BrowserModule,
