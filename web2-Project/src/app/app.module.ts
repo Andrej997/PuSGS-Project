@@ -8,6 +8,8 @@ import { FlightComponent } from './components/flight/flight.component';
 import { CarComponent } from './components/car/car.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { LogInBtnComponent } from './components/log-in-btn/log-in-btn.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignInBtnComponent } from './components/sign-in-btn/sign-in-btn.component';
 
 
 @NgModule({
@@ -18,6 +20,8 @@ import { LogInBtnComponent } from './components/log-in-btn/log-in-btn.component'
     CarComponent,
     LogInComponent,
     LogInBtnComponent,
+    SignInComponent,
+    SignInBtnComponent,
   ],
   imports: [
     BrowserModule,
