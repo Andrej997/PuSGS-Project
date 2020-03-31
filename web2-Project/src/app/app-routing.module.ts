@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FlightComponent } from './components/flight/flight.component';
-import { CarComponent } from './components/car/car.component';
+import { FlightsComponent } from './components/flights/flights.component';
+import { RentACarComponent } from './components/rent-a-car/rent-a-car.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-
+import { CarouselPhComponent } from './components/home/carousel-ph.component';
 
 const routes: Routes = [
   {
-    path: "flight",
-    component: FlightComponent
+    path: "flights",
+    component: FlightsComponent
   },
   {
-    path: "car",
-    component: CarComponent
+    path: "rent-a-car",
+    component: RentACarComponent
   },
   {
     path: "log-in",
@@ -22,7 +22,11 @@ const routes: Routes = [
   {
     path: "sign-in",
     component: SignInComponent
-  }
+  },
+  {
+    path: "home",
+    component: CarouselPhComponent
+  },
 ];
 
 @NgModule({

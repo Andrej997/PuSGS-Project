@@ -1,3 +1,23 @@
-.navbar-nav > li{
-    padding-right:10px;
+/* Navbar */
+.navbar-default {
+    background-color: #6699ff;
+    border-color: #E7E7E7;
+}
+
+/* Title */
+.navbar-default .navbar-brand {
+    color: rgb(255, 255, 255);
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: rgb(0, 0, 0);
+}
+
+/* Link */
+.navbar-default .navbar-nav > li > a {
+    color: rgb(255, 255, 255);
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: rgb(0, 0, 0);
 }

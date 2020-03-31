@@ -1,30 +1,26 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">MAANPP-20</a>
-  <!--button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button-->
-
-  <!--div class="collapse navbar-collapse" id="navbarSupportedContent"-->
-  <div class="navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="btn btn-outline-primary" routerLink="/flight">Flights</a>
-      </li>
-      <li class="nav-item">
-        <a class="btn btn-outline-primary" routerLink="/car">Rent a car</a>
-      </li>
-    </ul>
-    <ul class="navbar-nav">
-      <li class="nav-item">
-          <app-log-in-btn></app-log-in-btn>
-      </li>
-      <li class="nav-item">
-          <app-sign-in-btn></app-sign-in-btn>
-      </li>
-    </ul>
-    
-    
-  </div>
-</nav>
-
-<!-- data-toggle="modal" data-target="#exampleModal" routerLink="/log-in" -->
+<nav class="navbar navbar-expand-sm navbar-light navbar-default">
+    <a class="navbar-brand" routerLink="/home">MAANPP-20</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/flights">Flights</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/rent-a-car">Rent a car</a>
+        </li>
+      </ul>
+      <div class="ml-auto">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/log-in">Login</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
