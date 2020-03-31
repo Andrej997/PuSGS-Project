@@ -8,6 +8,10 @@ import { CarouselPhComponent } from './components/home/carousel-ph.component';
 
 const routes: Routes = [
   {
+    path: "**",
+    redirectTo: "home"
+  },
+  {
     path: "flights",
     component: FlightsComponent
   },
