@@ -9,6 +9,7 @@ import { RentACarComponent } from './components/rent-a-car/rent-a-car.component'
 import { LogInComponent } from './components/log-in/log-in.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { CarouselPhComponent } from './components/home/carousel-ph.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CarouselPhComponent } from './components/home/carousel-ph.component';
     RentACarComponent,
     LogInComponent,
     SignInComponent,
-    CarouselPhComponent
+    CarouselPhComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
