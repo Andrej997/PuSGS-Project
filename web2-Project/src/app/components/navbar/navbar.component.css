@@ -1,7 +1,7 @@
 /* Navbar */
-/* .navbar{
-    position: fixed; 
-} */
+.navbar{
+  width: 100%; /* Full width */
+}
 .navbar-default {
     background-color: #6699ff;
     border-color: #E7E7E7;
