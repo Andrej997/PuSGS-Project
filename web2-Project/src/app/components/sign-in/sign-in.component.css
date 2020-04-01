@@ -2,31 +2,88 @@
     .container{
         width: 500px;
     }
- }
- .profilePicture {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    border-radius: 50%;
-  }
-  /* .bg-image {
-    background-image: url("/src/assets/img/background.jpg");
-    
-  } */
-  .bg-img {
-    /* Set a specified height, or the minimum height for the background image */
-    background: url("../../../assets/img/2.jpg");
-    min-height: 500px;
+}
+.profilePicture {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  border-radius: 50%;
+}
+.bg-img {
+  background: url("../../../assets/img/2.jpg");
+  min-height: 500px;
+  background-attachment: fixed; 
+
+  /* filter: blur(8px);
+  -webkit-filter: blur(8px);  */
+
+  height: 100%;
+  width: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.container {
+  background-color: rgb(8, 8, 8); 
+  background-color: rgba(255, 255, 255, 0.788); 
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  border: 2px solid #f1f1f1; 
+  top: 55px;
+  padding: 16px;
+}
+
+.kw-dvp-HorizonalButton {
+  color: #0078d7;
+  display:flex;
+  flex-wrap:nowrap;
+  align-items:center;
+}
+.kw-dvp-HorizonalButton:before, .kw-dvp-HorizonalButton:after {
+  background-color: #0078d7;
+  content: "";
+  display: inline-block;
+  height:1px;
+}
+.kw-dvp-HorizonalButton:before {
+  order:1;
+  flex-grow:1;
+  margin-right:8px;
+}
+.kw-dvp-HorizonalButton:after {
+  order: 3;
+  flex-grow: 1;
+  margin-left: 8px;
+}
+.kw-dvp-HorizonalButton * {
+  order: 2;
+}
+
+#customBtn {
+  display: inline-block;
+  margin-bottom:3px; 
+  margin-right:5px;
+  border-radius: 20px;
+  text-transform:none;
   
-    background-attachment: fixed; 
-  
-     /* filter: blur(2px);
-    -webkit-filter: blur(1px);  *//*ovde treba srediti da pozadina bude zamucena a tekst cist, nekako xD*/
-  
-    height: 100%;
-  
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
+}
+#customBtn:hover {
+  cursor: pointer;
+}
+
+/* span.icon {
+  background: url("../../../assets/img/google-icon.png") ;
+  width: 42px;
+  height: 42px;
+} */
+/* span.buttonText {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 42px;
+  padding-right: 42px;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+} */
