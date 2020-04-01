@@ -1,7 +1,13 @@
 /* Navbar */
+/* .navbar{
+    position: fixed; 
+} */
 .navbar-default {
     background-color: #6699ff;
     border-color: #E7E7E7;
+    /* top: 0;
+    width: 100%; 
+    overflow: hidden; *//*nece govno da fiksira navbar xddd*/
 }
 
 /* Title */

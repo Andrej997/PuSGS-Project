@@ -1,0 +1,32 @@
+@media (min-width: 768px) { 
+    .container{
+        width: 500px;
+    }
+ }
+ .profilePicture {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    border-radius: 50%;
+  }
+  /* .bg-image {
+    background-image: url("/src/assets/img/background.jpg");
+    
+  } */
+  .bg-img {
+    /* Set a specified height, or the minimum height for the background image */
+    background: url("../../../assets/img/2.jpg");
+    min-height: 500px;
+  
+    background-attachment: fixed; 
+  
+     /* filter: blur(2px);
+    -webkit-filter: blur(1px);  *//*ovde treba srediti da pozadina bude zamucena a tekst cist, nekako xD*/
+  
+    height: 100%;
+  
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }

@@ -1,1 +1,218 @@
-<p>sign-in works!</p>
+<div class="bg-img">
+<div class="container">
+    <img src="\assets\img\person-icon.png" class="profilePicture">
+    <form>
+        <div class="form-group">
+            <label for="firstName">First name</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <img src="\assets\img\person-icon.png" height="40" width="40">
+                </div>
+                <input  type="text" class="form-control" id="firstName" 
+                    placeholder="name" aria-label="name" required > <!-- onfocus="this.value=''" ovo radi samo nije bas najpametnije da se sadrzaj brise cim se klikne na polje-->
+                <div class="input-group-prepend">
+                    <button type="button" id="firstNameBackspaceButton" class="btn btn-outline-secondary" onclick="document.getElementById('firstName').value = ''">
+                        <svg class="bi bi-backspace" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M6.603 2h7.08a1 1 0 011 1v10a1 1 0 01-1 1h-7.08a1 1 0 01-.76-.35L1 8l4.844-5.65A1 1 0 016.603 2zm7.08-1a2 2 0 012 2v10a2 2 0 01-2 2h-7.08a2 2 0 01-1.519-.698L.241 8.65a1 1 0 010-1.302L5.084 1.7A2 2 0 016.603 1h7.08z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M5.83 5.146a.5.5 0 000 .708l5 5a.5.5 0 00.707-.708l-5-5a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M11.537 5.146a.5.5 0 010 .708l-5 5a.5.5 0 01-.708-.708l5-5a.5.5 0 01.707 0z" clip-rule="evenodd"/>
+                        </svg>
+                    </button> 
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last name</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <img src="\assets\img\person-icon.png" height="40" width="40">
+                </div>
+                <input  type="text" class="form-control" id="lastName" 
+                    placeholder="surname" aria-label="name">
+                <div class="input-group-prepend">
+                    <button type="button" id="lastNameBackspaceButton" class="btn btn-outline-secondary" onclick="document.getElementById('lastName').value = ''">
+                        <svg class="bi bi-backspace" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M6.603 2h7.08a1 1 0 011 1v10a1 1 0 01-1 1h-7.08a1 1 0 01-.76-.35L1 8l4.844-5.65A1 1 0 016.603 2zm7.08-1a2 2 0 012 2v10a2 2 0 01-2 2h-7.08a2 2 0 01-1.519-.698L.241 8.65a1 1 0 010-1.302L5.084 1.7A2 2 0 016.603 1h7.08z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M5.83 5.146a.5.5 0 000 .708l5 5a.5.5 0 00.707-.708l-5-5a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M11.537 5.146a.5.5 0 010 .708l-5 5a.5.5 0 01-.708-.708l5-5a.5.5 0 01.707 0z" clip-rule="evenodd"/>
+                        </svg>
+                    </button> 
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <img src="\assets\img\email-icon.png" height="40" width="40">
+                </div>
+                <input  type="email" class="form-control" 
+                    id="email" aria-describedby="emailHelp"
+                    placeholder="email" aria-label="email">
+                <div class="input-group-prepend">
+                    <button type="button" id="emailBackspaceButton" class="btn btn-outline-secondary" onclick="document.getElementById('email').value = ''">
+                        <svg class="bi bi-backspace" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M6.603 2h7.08a1 1 0 011 1v10a1 1 0 01-1 1h-7.08a1 1 0 01-.76-.35L1 8l4.844-5.65A1 1 0 016.603 2zm7.08-1a2 2 0 012 2v10a2 2 0 01-2 2h-7.08a2 2 0 01-1.519-.698L.241 8.65a1 1 0 010-1.302L5.084 1.7A2 2 0 016.603 1h7.08z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M5.83 5.146a.5.5 0 000 .708l5 5a.5.5 0 00.707-.708l-5-5a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M11.537 5.146a.5.5 0 010 .708l-5 5a.5.5 0 01-.708-.708l5-5a.5.5 0 01.707 0z" clip-rule="evenodd"/>
+                        </svg>
+                     </button> 
+                </div>
+            </div>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <img src="\assets\img\password-icon.png" height="40" width="40">
+                </div>
+                <input  type="password" class="form-control" 
+                    id="password"
+                    placeholder="password" aria-label="password" aria-describedby="passwordHelp"
+                    onmousedown="this.type='text'"
+                    onmouseup="this.type='password'"
+                    onmousemove="this.type='password'">
+                <div class="input-group-append">
+                    <span toggle="#password" class="fa fa-fw fa-eye field-icon"></span>
+                </div>
+                <div class="input-group-prepend">
+                    <button type="button" id="passwordBackspaceButton" class="btn btn-outline-secondary" onclick="document.getElementById('password').value = ''">
+                        <svg class="bi bi-backspace" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M6.603 2h7.08a1 1 0 011 1v10a1 1 0 01-1 1h-7.08a1 1 0 01-.76-.35L1 8l4.844-5.65A1 1 0 016.603 2zm7.08-1a2 2 0 012 2v10a2 2 0 01-2 2h-7.08a2 2 0 01-1.519-.698L.241 8.65a1 1 0 010-1.302L5.084 1.7A2 2 0 016.603 1h7.08z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M5.83 5.146a.5.5 0 000 .708l5 5a.5.5 0 00.707-.708l-5-5a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M11.537 5.146a.5.5 0 010 .708l-5 5a.5.5 0 01-.708-.708l5-5a.5.5 0 01.707 0z" clip-rule="evenodd"/>
+                        </svg>
+                    </button> 
+                </div>
+            </div>
+            <small id="exampleInputPassword1" class="text-muted">
+                Must be 8-20 characters long.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="passwordRepeat">Password repeat</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <img src="\assets\img\repeat-password-icon.png" height="40" width="40">
+                </div>
+                <input  type="password" class="form-control" 
+                    id="passwordRepeat"
+                    placeholder="password" aria-label="password" aria-describedby="passwordHelp"
+                    onmousedown="this.type='text'"
+                    onmouseup="this.type='password'"
+                    onmousemove="this.type='password'">
+                <div class="input-group-prepend">
+                    <button type="button" onclick="document.getElementById('passwordRepeat').value = ''" id="passwordRepeatBackspaceButton" class="btn btn-outline-secondary" value="Reset">
+                        <svg class="bi bi-backspace" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M6.603 2h7.08a1 1 0 011 1v10a1 1 0 01-1 1h-7.08a1 1 0 01-.76-.35L1 8l4.844-5.65A1 1 0 016.603 2zm7.08-1a2 2 0 012 2v10a2 2 0 01-2 2h-7.08a2 2 0 01-1.519-.698L.241 8.65a1 1 0 010-1.302L5.084 1.7A2 2 0 016.603 1h7.08z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M5.83 5.146a.5.5 0 000 .708l5 5a.5.5 0 00.707-.708l-5-5a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M11.537 5.146a.5.5 0 010 .708l-5 5a.5.5 0 01-.708-.708l5-5a.5.5 0 01.707 0z" clip-rule="evenodd"/>
+                        </svg>
+                    </button> 
+                </div>
+            </div>
+            <small id="exampleInputPassword1" class="text-muted">
+                Must be 8-20 characters long.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="customFile">Profile image</label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">choose image</label>
+              </div>
+        </div>
+        <div class="form-group">
+            <label for="collapseBtnAdr">Address</label>
+            <div class="input-group-prepend">
+                <img src="\assets\img\home-location-icon.png" height="40" width="40">
+                <button class="btn btn-outline-secondary btn-block" type="button" data-toggle="collapse" id="collapseBtnAdr"
+                        data-target="#collapseAddress" aria-expanded="false" aria-controls="collapseExample">
+                    Full address
+                </button>
+            </div>
+            <div class="collapse" id="collapseAddress">
+                <div class="card card-body">
+                    <label for="street">Street and number</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <img src="\assets\img\street-icon.png" height="40" width="40">
+                        </div>
+                        <input type="text" id="street" class="form-control">
+                        <div class="input-group-prepend">
+                            <button type="button" onclick="document.getElementById('street').value = ''" id="passwordRepeatBackspaceButton" class="btn btn-outline-secondary" value="Reset">
+                                <svg class="bi bi-backspace" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M6.603 2h7.08a1 1 0 011 1v10a1 1 0 01-1 1h-7.08a1 1 0 01-.76-.35L1 8l4.844-5.65A1 1 0 016.603 2zm7.08-1a2 2 0 012 2v10a2 2 0 01-2 2h-7.08a2 2 0 01-1.519-.698L.241 8.65a1 1 0 010-1.302L5.084 1.7A2 2 0 016.603 1h7.08z" clip-rule="evenodd"/>
+                                    <path fill-rule="evenodd" d="M5.83 5.146a.5.5 0 000 .708l5 5a.5.5 0 00.707-.708l-5-5a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
+                                    <path fill-rule="evenodd" d="M11.537 5.146a.5.5 0 010 .708l-5 5a.5.5 0 01-.708-.708l5-5a.5.5 0 01.707 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </button> 
+                        </div>
+                    </div>
+                    <label for="city">City</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <img src="\assets\img\city-icon.png" height="40" width="40">
+                        </div>
+                        <input type="text" id="city" class="form-control">
+                        <div class="input-group-prepend">
+                            <button type="button" onclick="document.getElementById('city').value = ''" id="passwordRepeatBackspaceButton" class="btn btn-outline-secondary" value="Reset">
+                                <svg class="bi bi-backspace" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M6.603 2h7.08a1 1 0 011 1v10a1 1 0 01-1 1h-7.08a1 1 0 01-.76-.35L1 8l4.844-5.65A1 1 0 016.603 2zm7.08-1a2 2 0 012 2v10a2 2 0 01-2 2h-7.08a2 2 0 01-1.519-.698L.241 8.65a1 1 0 010-1.302L5.084 1.7A2 2 0 016.603 1h7.08z" clip-rule="evenodd"/>
+                                    <path fill-rule="evenodd" d="M5.83 5.146a.5.5 0 000 .708l5 5a.5.5 0 00.707-.708l-5-5a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
+                                    <path fill-rule="evenodd" d="M11.537 5.146a.5.5 0 010 .708l-5 5a.5.5 0 01-.708-.708l5-5a.5.5 0 01.707 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </button> 
+                        </div>
+                    </div>
+                    <label for="country">Country</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <img src="\assets\img\flag-icon.png" height="40" width="40">
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle btn-block" type="button" data-toggle="dropdown">Select country
+                            <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                              <li><a href="#">Serbia</a></li>
+                              <li><a href="#">UK</a></li>
+                              <li><a href="#">SAD</a></li>
+                            </ul>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <div class="form-group">
+            <label for="phoneNumber">Phone number</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <img src="\assets\img\fix-telephone-icon.png" height="40" width="40">
+                </div>
+                <input  type="tel" class="form-control" 
+                    id="phoneNumber"
+                    placeholder="number" aria-label="phoneNumber" >
+                <div class="input-group-prepend">
+                    <button type="button" onclick="document.getElementById('phoneNumber').value = ''" id="phoneNumberBackspaceButton" class="btn btn-outline-secondary" value="Reset">
+                        <svg class="bi bi-backspace" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M6.603 2h7.08a1 1 0 011 1v10a1 1 0 01-1 1h-7.08a1 1 0 01-.76-.35L1 8l4.844-5.65A1 1 0 016.603 2zm7.08-1a2 2 0 012 2v10a2 2 0 01-2 2h-7.08a2 2 0 01-1.519-.698L.241 8.65a1 1 0 010-1.302L5.084 1.7A2 2 0 016.603 1h7.08z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M5.83 5.146a.5.5 0 000 .708l5 5a.5.5 0 00.707-.708l-5-5a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M11.537 5.146a.5.5 0 010 .708l-5 5a.5.5 0 01-.708-.708l5-5a.5.5 0 01.707 0z" clip-rule="evenodd"/>
+                        </svg>
+                    </button> 
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">Remember me</label>
+        </div>
+        <button type="submit" class="btn btn-primary" routerLink="/log-in">Log in</button>
+        <button type="submit" class="btn btn-primary" 
+                style="float: right;">Sign in
+        </button>
+    </form>
+</div>
+</div>
