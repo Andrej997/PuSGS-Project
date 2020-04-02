@@ -34,7 +34,6 @@
   top: 55px;
   padding: 16px;
 }
-
 .kw-dvp-HorizonalButton {
   color: #0078d7;
   display:flex;
@@ -72,18 +71,10 @@
 #customBtn:hover {
   cursor: pointer;
 }
-
-/* span.icon {
-  background: url("../../../assets/img/google-icon.png") ;
-  width: 42px;
-  height: 42px;
-} */
-/* span.buttonText {
-  display: inline-block;
-  vertical-align: middle;
-  padding-left: 42px;
-  padding-right: 42px;
-  font-size: 14px;
-  font-weight: bold;
-  font-family: 'Roboto', sans-serif;
-} */
+.addressBg{
+  background: url("../../../assets/img/pinning.jpg");
+  min-height: 150px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
