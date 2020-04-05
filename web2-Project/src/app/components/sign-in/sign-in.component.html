@@ -177,12 +177,14 @@
                     <div class="input-group-prepend ">
                       <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                     </div>
-                    <div class="btn btn-primary float-left col-sm-10">
+                    <div class="btn btn-primary float-left col-sm-10" style="cursor: pointer;">
+                        <label style="cursor: pointer;">{{ imgName }}</label>
                         <input type="file" 
                                name="profileImg"
                                id="customFile"
                                accept="image/*"
-                               (change)="readURL($event)">
+                               (change)="readURL($event)"
+                               style="opacity: 0; cursor: pointer;">
                       </div>
                   </div>
                 <!-- <div class="custom-file">

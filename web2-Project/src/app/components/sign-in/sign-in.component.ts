@@ -16,15 +16,18 @@ export class SignInComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  imgName : string;
+
   readURL(event) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 
       reader.readAsDataURL(event.target.files[0]); // read file as data url
+      console.log(event.target.files[0].name);
+      this.imgName = event.target.files[0].name.toString();
 
       reader.onload = (event) => { // called once readAsDataURL is completed
         this.source = event.target.result.toString();
-        //alert(this.source);
       }
     }
 
