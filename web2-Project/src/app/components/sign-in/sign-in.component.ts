@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -8,15 +9,15 @@ import { Component, OnInit, Input } from '@angular/core';
 export class SignInComponent implements OnInit {
 
   @Input() source : string;
+  imgName : string;
 
-  constructor() {
+  constructor(private router: Router) {
     this.source = "../../../assets/img/person-icon.png";
+    this.imgName = "Choose image";
    }
 
   ngOnInit(): void {
   }
-
-  imgName : string;
 
   readURL(event) {
     if (event.target.files && event.target.files[0]) {
@@ -30,38 +31,19 @@ export class SignInComponent implements OnInit {
         this.source = event.target.result.toString();
       }
     }
+    //this.source = "../../../assets/img/1.jpg";
+  }
 
-    // let files = event.target.files;
-    // if (files.length > 0) {
-    //   var reader = new FileReader();
-    //   reader.onload(files[0])
-    //   alert(files[0]);
-    // }
-    //var files = event.srcElement.files;
+  deleteProfileImage(){
+    this.source = "../../../assets/img/person-icon.png";
+    this.imgName = "Choose image";
+  }
 
-    // let file = event.target.files[0];
-    // let fileName = file.name;
-    // console.log(file)
-    // console.log(fileName)
-    // let formData = new FormData();
-    // formData.append('file',file);
-    
-    //alert(Input);
+  signIn(): void {
+    localStorage.setItem('userRole', JSON.stringify('USER'));
 
-    this.source = "../../../assets/img/1.jpg";
+    this.router.navigateByUrl('/home');
 
   }
-  // function readURL(input) {
-  //   if (input.files && input.files[0]) {
-  //       var reader = new FileReader();
-
-  //       reader.onload = function (e) {
-  //           $('#blah')
-  //               .attr('src', e.target.result);
-  //       };
-
-  //       reader.readAsDataURL(input.files[0]);
-  //   }
-
 
 }

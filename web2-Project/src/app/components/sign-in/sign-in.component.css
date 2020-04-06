@@ -14,13 +14,8 @@
   background: url("../../../assets/img/2.jpg");
   min-height: 500px;
   background-attachment: fixed; 
-
-  /* filter: blur(8px);
-  -webkit-filter: blur(8px);  */
-
   height: 100%;
   width: 100%;
-
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -59,7 +54,6 @@
 .kw-dvp-HorizonalButton * {
   order: 2;
 }
-
 #customBtn {
   display: inline-block;
   margin-bottom:3px; 
@@ -77,4 +71,16 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+#btnImage{
+  cursor: auto;
+  width: 346px ;
+  min-width: 260px;
+}
+#customFile{
+  cursor: pointer;
+  opacity: 0; 
+  position: relative; 
+  width: 330px; 
+  height: "document.getElementById('btnImage').getBoundingClientRect().height";
 }
