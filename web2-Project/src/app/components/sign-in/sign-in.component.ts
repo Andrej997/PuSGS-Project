@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { User } from 'src/app/entities/user/user';
+import { Address } from 'src/app/entities/address/address';
 
 @Component({
   selector: 'app-sign-in',
@@ -7,6 +10,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
+
+  signInForm: FormGroup;
 
   @Input() source : string;
   imgName : string;
@@ -16,9 +21,54 @@ export class SignInComponent implements OnInit {
     this.imgName = "Choose image";
    }
 
+   
   ngOnInit(): void {
+    this.initForm();
   }
 
+  private initForm() {
+    this.signInForm = new FormGroup({
+      'firstName': new FormControl("", Validators.required),
+      'lastName': new FormControl("", Validators.required),
+      'email': new FormControl('', [Validators.required, Validators.email]),
+      'password' : new FormControl('', [Validators.required, Validators.minLength(3)]),
+      'passwordRepeat' : new FormControl('', [Validators.required, Validators.minLength(3)]),
+      'phoneNumber' : new FormControl('', [
+                                            Validators.required, 
+                                            Validators.pattern("^[0-9]*$"),
+                                            Validators.minLength(8)]),
+      'streetAndNumber': new FormControl("", Validators.required),
+      'city': new FormControl("", Validators.required),
+      'profileImg': new FormControl("", Validators.nullValidator)
+
+      
+    });
+  }
+
+  onSubmit() {
+    console.log(this.signInForm.value);
+    console.log(this.signInForm);
+
+    var address = new Address(this.signInForm.value.streetAndNumber, this.signInForm.value.city, "Srbija");
+
+    var user = new User(this.signInForm.value.firstName, 
+                        this.signInForm.value.lastName, 
+                        this.signInForm.value.email,
+                        this.signInForm.value.password,
+                        this.signInForm.value.profileImg,
+                        address    );
+
+                        
+    console.log(user);
+
+    localStorage.setItem('userRole', JSON.stringify('USER'));
+
+    this.router.navigateByUrl('/home');
+  }
+
+  onClear() {
+    this.signInForm.reset();
+  }
   readURL(event) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
@@ -39,11 +89,5 @@ export class SignInComponent implements OnInit {
     this.imgName = "Choose image";
   }
 
-  signIn(): void {
-    localStorage.setItem('userRole', JSON.stringify('USER'));
-
-    this.router.navigateByUrl('/home');
-
-  }
 
 }
