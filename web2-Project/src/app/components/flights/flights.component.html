@@ -1,0 +1,30 @@
+<div id="container" style="margin-left: 15px; margin-right: 15px; margin-top: 15px;">
+    <table class="table table-hover">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col">AVIO COMPANY</th>
+                <th scope="col">FROM</th>
+                <th scope="col">TO</th>
+                <th scope="col">FLIGHT DATE</th>
+                <th scope="col">RETURN DATE</th>
+                <th scope="col">PRISE</th>
+                <th colspan="2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let flight of allFlights">
+                <td>{{ flight.avioNama }}</td>
+                <td>{{ flight.from }}</td>
+                <td>{{ flight.to }}</td>
+                <td>{{ flight.datumPolaska.toUTCString() }}</td>
+                <td>{{ flight.datumPovratka.toUTCString() }}</td>
+                <td>{{ flight.prise }}</td>
+                <td>
+                    <button type="button" 
+                            class="btn btn-warning">CHANGE
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
