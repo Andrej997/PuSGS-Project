@@ -233,6 +233,9 @@
                     </div>
                 </div>
             </div>
+
+            
+
             <div class="form-group ">
                 <label for="collapseBtnAdr">Address</label>
                 <div class="input-group-prepend">
@@ -251,10 +254,6 @@
                             <path fill-rule="evenodd" d="M3.646 13.854a.5.5 0 00.708 0L8 10.207l3.646 3.647a.5.5 0 00.708-.708l-4-4a.5.5 0 00-.708 0l-4 4a.5.5 0 000 .708zm0-11.708a.5.5 0 01.708 0L8 5.793l3.646-3.647a.5.5 0 01.708.708l-4 4a.5.5 0 01-.708 0l-4-4a.5.5 0 010-.708z" clip-rule="evenodd"/>
                         </svg>
                     </button>
-                    <div *ngIf="signInForm.controls.passwordRepeat.touched && signInForm.controls.passwordRepeat.invalid" class="alert alert-danger">
-                        <div *ngIf="signInForm.controls.passwordRepeat.errors.required">Please enter password repeat.</div>
-                        <div *ngIf="signInForm.controls.passwordRepeat.errors.minlength">Password should be 3 character.</div>
-                    </div>
                 </div>
                 <div class="collapse " 
                      id="collapseAddress">
@@ -325,7 +324,14 @@
                                      width="37">
                             </div>
                             <div class="dropdown">
-                                <button class="btn btn-outline-secondary dropdown-toggle btn-block" 
+                                <!-- <label for="country">Country</label><span style="color: red !important; display: inline; float: none;">*</span>       -->
+        
+                                <select id="country" name="country" class="form-control">
+                                    <option value="Afghanistan">Afghanistan</option>
+                                    <option value="Åland Islands">Åland Islands</option>
+                                    <option value="Albania">Albania</option>
+                                </select>
+                                <!-- <button class="btn btn-outline-secondary dropdown-toggle btn-block" 
                                         type="button" 
                                         data-toggle="dropdown">Select country
                                 <span class="caret"></span></button>
@@ -333,9 +339,10 @@
                                 <li><a href="#">Serbia</a></li>
                                 <li><a href="#">UK</a></li>
                                 <li><a href="#">SAD</a></li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>  
