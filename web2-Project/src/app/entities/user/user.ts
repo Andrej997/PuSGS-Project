@@ -7,6 +7,7 @@ export class User {
     password: string;
     profileImage: string;
     address: Address;
+    authdata?: string;
 
     constructor(firstName: string, lastName: string, email: string, password: string, profileImage: string, address: Address) {
         this.firstName = firstName;

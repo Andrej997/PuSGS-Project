@@ -5,7 +5,8 @@ import { RentACarComponent } from './components/rent-a-car/rent-a-car.component'
 import { LogInComponent } from './components/log-in/log-in.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { CarouselPhComponent } from './components/home/carousel-ph.component';
-import { UserGuard } from './guards/user.guard';
+import { UserGuard } from './guards/user-guard/user.guard';
+import { ProfileComponent } from './components/profile/profile/profile.component';
 
 const routes: Routes = [
   
@@ -30,7 +31,10 @@ const routes: Routes = [
     path: "home",
     component: CarouselPhComponent
   },
-
+  {
+    path: "profile",
+    component: ProfileComponent
+  },
   {
     path: "**",
     redirectTo: "home"

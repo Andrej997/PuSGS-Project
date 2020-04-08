@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GoogleMapsModule } from '@angular/google-maps'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+//import { GoogleMapsModule } from '@angular/google-maps'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,11 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { CarouselPhComponent } from './components/home/carousel-ph.component';
 import { FooterComponent } from './components/footer/footer.component';
 
+import { fakeBackendProvider } from './interceptors/fake-backend/fake-backend.interceptor'
+import { BasicAuthInterceptor } from './interceptors/basic-auth-interceptor/basic-auth.interceptor'
+import { ErrorInterceptor } from './interceptors/error-interceptor/error.interceptor';
+import { ProfileComponent } from './components/profile/profile/profile.component'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,15 +29,21 @@ import { FooterComponent } from './components/footer/footer.component';
     SignInComponent,
     CarouselPhComponent,
     FooterComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    GoogleMapsModule
+    HttpClientModule,
+    //GoogleMapsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    fakeBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
