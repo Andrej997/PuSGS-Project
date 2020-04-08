@@ -1,4 +1,9 @@
 <div id="container" style="margin-left: 15px; margin-right: 15px; margin-top: 15px;">
+    <div class="alert alert-info" role="alert"
+         *ngIf='!this.authenticationService.currentUserValue'>
+        To se the prise, you need to <a routerLink="/log-in"><b><u>login</u></b></a>
+        or <a routerLink="/sign-in"><b><u>register</u></b></a>!
+      </div>
     <table class="table table-hover">
         <thead class="table-primary">
             <tr>
@@ -7,7 +12,7 @@
                 <th scope="col">TO</th>
                 <th scope="col">FLIGHT DATE</th>
                 <th scope="col">RETURN DATE</th>
-                <th scope="col">PRISE</th>
+                <th scope="col" *ngIf='this.authenticationService.currentUserValue'>PRISE</th>
                 <th colspan="2"></th>
             </tr>
         </thead>
@@ -18,10 +23,21 @@
                 <td>{{ flight.to }}</td>
                 <td>{{ flight.datumPolaska.toUTCString() }}</td>
                 <td>{{ flight.datumPovratka.toUTCString() }}</td>
-                <td>{{ flight.prise }}</td>
+                <td *ngIf='this.authenticationService.currentUserValue'>{{ flight.prise }}</td>
                 <td>
                     <button type="button" 
-                            class="btn btn-warning">CHANGE
+                            class="btn btn-warning"
+                            *ngIf='currentUserEmail === "andrej.km997@gmail.com" || 
+                                currentUserEmail === "admin@admin.com"'>CHANGE
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" 
+                            class="btn btn-success"
+                            *ngIf='currentUserEmail === "andrej.km997@gmail.com" || 
+                                currentUserEmail === "admin@admin.com"'>CREATE NEW FLIGHT
                     </button>
                 </td>
             </tr>

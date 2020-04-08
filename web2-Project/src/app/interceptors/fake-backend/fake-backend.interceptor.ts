@@ -49,6 +49,18 @@ const users: User[] = [
       country: 'string'
     }
   },
+  { 
+    firstName: 'Test',
+    lastName: 'User',
+    email: 'user@user.com', 
+    password: 'admin',
+    profileImage: 'string',
+    address: {
+      streetAndNumber: 'string',
+      city: 'string',
+      country: 'string'
+    }
+  },
 ];
 
 @Injectable()

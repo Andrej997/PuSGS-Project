@@ -17,7 +17,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { fakeBackendProvider } from './interceptors/fake-backend/fake-backend.interceptor'
 import { BasicAuthInterceptor } from './interceptors/basic-auth-interceptor/basic-auth.interceptor'
 import { ErrorInterceptor } from './interceptors/error-interceptor/error.interceptor';
-import { ProfileComponent } from './components/profile/profile/profile.component'
+import { ProfileComponent } from './components/profile/profile/profile.component';
+import { FlightComponent } from './components/profile/flight/flight.component'
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ProfileComponent } from './components/profile/profile/profile.component
     CarouselPhComponent,
     FooterComponent,
     ProfileComponent,
+    FlightComponent,
   ],
   imports: [
     BrowserModule,
