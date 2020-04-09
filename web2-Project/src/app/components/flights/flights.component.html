@@ -8,11 +8,16 @@
 
 <div class="container">
   <div class="row card-group" >
-    <div class="col-sm-4" *ngFor="let flight of allFlights">
+    <div class="col-sm-3" *ngFor="let flight of allFlights">
         <div class="card" style="margin-bottom: 30px;">
             <img [src]="flight.destImg" class="card-img-top" alt="...">
             <div class="card-body">
-              <h3 class="card-title">{{ flight.avioNama }}</h3>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <img src={{flight.logo}} height="40" width="40">
+                    </div>
+                    <h3 class="card-title">{{ flight.company }}</h3>
+                </div>
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item" data-toggle="tooltip" 
@@ -28,22 +33,34 @@
                     <img src="\assets\img\destination.jpg" height="40" width="40">
                     {{ flight.to }}</li>
                 <li class="list-group-item" data-toggle="tooltip" 
-                        data-placement="right" title="return date">
+                        data-placement="right" title="landing date">
                     <img src="\assets\img\calendar.png" height="40" width="40">
-                    {{ flight.datumPovratka.toUTCString() }}</li>
+                    {{ flight.datumSletanja.toUTCString() }}</li>
                 <li class="list-group-item" 
-                        *ngIf='this.authenticationService.currentUserValue' data-toggle="tooltip" 
-                        data-placement="right" title="prise">
+                        data-toggle="tooltip" 
+                        data-placement="right" title="prise" 
+                        *ngIf='this.authenticationService.currentUserValue'>
                     <img src="\assets\img\dollar.png" height="40" width="40">
                     {{ flight.prise }}</li>
+                <li class="list-group-item" 
+                        data-toggle="tooltip" 
+                        data-placement="right" title="flight time">
+                    <img src="\assets\img\time.png" height="40" width="40">
+                    {{ flight.vremePutovanja }}</li>
+                <li class="list-group-item" 
+                        data-toggle="tooltip" 
+                        data-placement="right" title="km">
+                    <img src="\assets\img\kilometers.png" height="40" width="40">
+                    {{ flight.duzinaPutovanja }}</li>
+                <li class="list-group-item" 
+                        data-toggle="tooltip" 
+                        data-placement="right" title="changeover">
+                    <img src="\assets\img\path.png" height="40" width="40">
+                    <div style="float: right;" class="list-group list-group-flush" *ngFor="let p of flight.presedanje.gradoviPresedanja">
+                        <span>-{{p}}-</span>
+                    </div>
+                </li>
             </ul>
-            <div class="card-body">
-                <button type="button" 
-                        class="btn btn-warning"
-                        *ngIf='currentUserEmail === "andrej.km997@gmail.com" || 
-                            currentUserEmail === "admin@admin.com"'>CHANGE
-                </button>
-            </div>
         </div>
     </div>
     
@@ -55,5 +72,5 @@
         </a>
     </div>
 
-  </div>
+    </div>
 </div>

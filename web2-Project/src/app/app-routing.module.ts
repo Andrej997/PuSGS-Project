@@ -7,6 +7,8 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { CarouselPhComponent } from './components/home/carousel-ph.component';
 import { UserGuard } from './guards/user-guard/user.guard';
 import { ProfileComponent } from './components/profile/profile/profile.component';
+import { AvioCompaniesComponent } from './components/avio-companies/avio-companies/avio-companies.component';
+import { AvioCompanyDetailsComponent } from './components/avio-company-details/avio-company-details.component';
 
 const routes: Routes = [
   
@@ -34,6 +36,13 @@ const routes: Routes = [
   {
     path: "profile",
     component: ProfileComponent
+  },
+  {
+    path: "avio-companies",
+    children:[
+      { path: "", component: AvioCompaniesComponent },
+      { path: ":id/details", component: AvioCompanyDetailsComponent }
+    ]
   },
   {
     path: "**",

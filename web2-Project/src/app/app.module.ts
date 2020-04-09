@@ -18,7 +18,9 @@ import { fakeBackendProvider } from './interceptors/fake-backend/fake-backend.in
 import { BasicAuthInterceptor } from './interceptors/basic-auth-interceptor/basic-auth.interceptor'
 import { ErrorInterceptor } from './interceptors/error-interceptor/error.interceptor';
 import { ProfileComponent } from './components/profile/profile/profile.component';
-import { FlightComponent } from './components/profile/flight/flight.component'
+import { FlightComponent } from './components/profile/flight/flight.component';
+import { AvioCompaniesComponent } from './components/avio-companies/avio-companies/avio-companies.component';
+import { AvioCompanyDetailsComponent } from './components/avio-company-details/avio-company-details.component'
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { FlightComponent } from './components/profile/flight/flight.component'
     FooterComponent,
     ProfileComponent,
     FlightComponent,
+    AvioCompaniesComponent,
+    AvioCompanyDetailsComponent,
   ],
   imports: [
     BrowserModule,

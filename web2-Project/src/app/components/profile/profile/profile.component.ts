@@ -16,14 +16,11 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService) {
         this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+        console.log(this.currentUser);
     }
 
   ngOnInit(): void {
   }
 
-  logout() {
-    this.authenticationService.logout();
-    this.router.navigate(['/login']);
-  }
 
 }
