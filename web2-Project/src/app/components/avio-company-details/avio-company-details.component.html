@@ -1,0 +1,93 @@
+
+<div class="container-fluid">
+
+    <div class="card mb-3" style="max-width: 100%;">
+        <div class="card-header mb-3">
+            <h1 style="float: left;">{{flightCompany.name}}</h1>
+            <span style="float: right;"><button type="button" class="btn btn-warning">CHANGE</button></span>
+        </div>
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src={{flightCompany.logo}} class="card-img" alt="...">
+                <h5 class="card-text">{{flightCompany.address.streetAndNumber}},</h5>
+                <h5 class="card-text">{{flightCompany.address.city}},</h5>
+                <h5 class="card-text">{{flightCompany.address.country}}</h5>
+            </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <div>
+                    <h4 data-toggle="collapse" href="#collapseExample1" style="cursor: pointer;">Destination</h4>
+                    <div class="collapse" id="collapseExample1">
+                        <ul class="list-group" *ngFor="let desAddr of flightCompany.destinations">
+                            <li class="list-group-item">{{desAddr.address.city}} - {{desAddr.address.country}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <h4 data-toggle="collapse" href="#collapseExample2" style="cursor: pointer;">Flights</h4>
+                    <div class="collapse" id="collapseExample2">
+                        <div class="row card-group" >
+                            <div class="col-sm-5" *ngFor="let flight of flightCompany.flights">
+                                <div class="card" style="margin-bottom: 30px;">
+                                    <img [src]="flight.destImg" class="card-img-top" alt="...">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item" data-toggle="tooltip" 
+                                                data-placement="right" title="from">
+                                            <img src="\assets\img\destination.jpg" height="40" width="40">
+                                            {{ flight.from }}  </li>
+                                        <li class="list-group-item" data-toggle="tooltip" 
+                                                data-placement="right" title="flight date">
+                                            <img src="\assets\img\calendar.png" height="40" width="40">
+                                            {{ flight.datumPolaska.toUTCString() }}</li>
+                                        <li class="list-group-item" data-toggle="tooltip" 
+                                                data-placement="right" title="to">
+                                            <img src="\assets\img\destination.jpg" height="40" width="40">
+                                            {{ flight.to }}</li>
+                                        <li class="list-group-item" data-toggle="tooltip" 
+                                                data-placement="right" title="landing date">
+                                            <img src="\assets\img\calendar.png" height="40" width="40">
+                                            {{ flight.datumSletanja.toUTCString() }}</li>
+                                        <li class="list-group-item" 
+                                                data-toggle="tooltip" 
+                                                data-placement="right" title="prise">
+                                            <img src="\assets\img\dollar.png" height="40" width="40">
+                                            {{ flight.prise }}</li>
+                                        <li class="list-group-item" 
+                                                data-toggle="tooltip" 
+                                                data-placement="right" title="flight time">
+                                            <img src="\assets\img\time.png" height="40" width="40">
+                                            {{ flight.vremePutovanja }}</li>
+                                        <li class="list-group-item" 
+                                                data-toggle="tooltip" 
+                                                data-placement="right" title="km">
+                                            <img src="\assets\img\kilometers.png" height="40" width="40">
+                                            {{ flight.duzinaPutovanja }}</li>
+                                        <li class="list-group-item" 
+                                                data-toggle="tooltip" 
+                                                data-placement="right" title="changeover">
+                                            <img src="\assets\img\path.png" height="40" width="40">
+                                            <div style="float: right;" class="list-group list-group-flush" *ngFor="let p of flight.presedanje.gradoviPresedanja">
+                                                <span>-{{p}}-</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!--div class="border-success col-sm-3" style="margin-bottom: 30px; "
+                                *ngIf='currentUserEmail === "andrej.km997@gmail.com" || 
+                                    currentUserEmail === "admin@admin.com"'>
+                                <a style="cursor: pointer;">
+                                    <img id="myimgborder" src="\assets\img\add.png" class="card-img-top" alt="add new flight">
+                                </a>
+                            </div-->
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+</div>

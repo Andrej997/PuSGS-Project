@@ -22,29 +22,55 @@
                     *ngIf='!this.authenticationService.currentUserValue'>Login</a>
             </li>
             <li>
-              <div class="input-group-prepend" *ngIf='this.authenticationService.currentUserValue'>
-                <a href="#" 
-                   role="button" 
-                   aria-haspopup="true" 
-                   aria-expanded="false">
-                  <img src="\assets\img\car-icon-png.png" 
-                       height="37" 
-                       width="37" >
-                </a>
-                <a href="#" 
-                   role="button" 
-                   aria-haspopup="true" 
-                   aria-expanded="false">
-                  <img src="\assets\img\airplane-icon.png" 
-                       height="37" 
-                       width="37" >
-                </a>
-                <button type="button" class="btn btn-primary">
-                  Vocation 
-                  <span class="badge badge-light">3</span><!--ili mozda da bude slicica pa na nju da se zakaci ovaj badge koji bi predstavljao broj pozivnica, prepustam buraz tebi mastu na volju xD-->
-                  <span class="sr-only">unread messages</span>
-                </button>
-                <div class="dropdown show">
+              <div class="input-group-prepend">
+                <div *ngIf='this.authenticationService.currentUserValue'>
+                  <a href="#" 
+                    role="button" style="margin-right: 10px;"
+                    aria-haspopup="true" 
+                    aria-expanded="false"
+                    *ngIf='this.authenticationService.currentUserValue.email === "markomisojcic@gmail.com" || 
+                          this.authenticationService.currentUserValue.email === "admin@admin.com"'>
+                    <img src="\assets\img\car-icon-png.png" 
+                        height="37" 
+                        width="37" >
+                  </a>
+                  <a routerLink="avio-companies" 
+                    role="button" style="margin-right: 10px;"
+                    aria-haspopup="true" 
+                    aria-expanded="false"
+                    *ngIf='this.authenticationService.currentUserValue.email === "andrej.km997@gmail.com" || 
+                          this.authenticationService.currentUserValue.email === "admin@admin.com"'>
+                    <img src="\assets\img\airplane-icon.png" 
+                        height="37" 
+                        width="37" >
+                  </a>
+                  <a href="#" 
+                    role="button" style="margin-right: 10px;"
+                    aria-haspopup="true" 
+                    aria-expanded="false">
+                      <img src="\assets\img\friend.png" 
+                          height="30" 
+                          width="30" >
+                      <sup>
+                        <span class="badge badge-danger">3</span>
+                        <span class="sr-only">unread messages</span>
+                      </sup>
+                  </a>
+                  <a href="#" 
+                    role="button" style="margin-right: 10px;"
+                    aria-haspopup="true" 
+                    aria-expanded="false">
+                      <img src="\assets\img\message.png" 
+                          height="30" 
+                          width="30" >
+                      <sup>
+                        <span class="badge badge-danger">3</span>
+                        <span class="sr-only">unread messages</span>
+                      </sup>
+                  </a>
+                </div>  
+                
+                <div class="dropdown show" *ngIf='this.authenticationService.currentUserValue'>
                   <a class="dropdown-toggle" 
                      href="#" 
                      role="button" 
@@ -60,16 +86,6 @@
                        aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" 
                        routerLink="/profile">My profile
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" 
-                       href="#">My friends
-                    </a>
-                    <a class="dropdown-item" 
-                       href="#">My friends
-                    </a>
-                    <a class="dropdown-item" 
-                       href="#">My friends
                     </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" 

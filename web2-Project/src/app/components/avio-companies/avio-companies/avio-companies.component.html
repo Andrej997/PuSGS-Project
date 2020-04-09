@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="row card-group" >
+        <div class="col-sm-4" *ngFor="let avioCompany of allAvioCompanies">
+            <div class="card" style="margin-bottom: 30px;">
+                <img [src]="avioCompany.logo" class="card-img-top" alt="..." 
+                    routerLink="/avio-companies/{{avioCompany.id}}/details" 
+                    style="cursor: pointer;">
+                <div class="card-body">
+                  <h3 class="card-title">{{ avioCompany.name }}</h3>
+                  <h4 class="card-title">{{ avioCompany.address.country }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
