@@ -3,7 +3,7 @@ import { Flight } from 'src/app/entities/flight/flight';
 import { FlightsService } from 'src/app/services/flights-service/flights.service';
 
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
-import { User } from 'src/app/entities/user/user'
+import { User } from 'src/app/entities/user/user';
 
 @Component({
   selector: 'app-flights',
