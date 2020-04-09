@@ -4,43 +4,56 @@
         To se the prise, you need to <a routerLink="/log-in"><b><u>login</u></b></a>
         or <a routerLink="/sign-in"><b><u>register</u></b></a>!
       </div>
-    <table class="table table-hover">
-        <thead class="table-primary">
-            <tr>
-                <th scope="col">AVIO COMPANY</th>
-                <th scope="col">FROM</th>
-                <th scope="col">TO</th>
-                <th scope="col">FLIGHT DATE</th>
-                <th scope="col">RETURN DATE</th>
-                <th scope="col" *ngIf='this.authenticationService.currentUserValue'>PRISE</th>
-                <th colspan="2"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let flight of allFlights">
-                <td>{{ flight.avioNama }}</td>
-                <td>{{ flight.from }}</td>
-                <td>{{ flight.to }}</td>
-                <td>{{ flight.datumPolaska.toUTCString() }}</td>
-                <td>{{ flight.datumPovratka.toUTCString() }}</td>
-                <td *ngIf='this.authenticationService.currentUserValue'>{{ flight.prise }}</td>
-                <td>
-                    <button type="button" 
-                            class="btn btn-warning"
-                            *ngIf='currentUserEmail === "andrej.km997@gmail.com" || 
-                                currentUserEmail === "admin@admin.com"'>CHANGE
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button type="button" 
-                            class="btn btn-success"
-                            *ngIf='currentUserEmail === "andrej.km997@gmail.com" || 
-                                currentUserEmail === "admin@admin.com"'>CREATE NEW FLIGHT
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+</div>
+
+<div class="container">
+  <div class="row card-group" >
+    <div class="col-sm-4" *ngFor="let flight of allFlights">
+        <div class="card" style="margin-bottom: 30px;">
+            <img [src]="flight.destImg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h3 class="card-title">{{ flight.avioNama }}</h3>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" data-toggle="tooltip" 
+                        data-placement="right" title="from">
+                    <img src="\assets\img\destination.jpg" height="40" width="40">
+                    {{ flight.from }}  </li>
+                <li class="list-group-item" data-toggle="tooltip" 
+                        data-placement="right" title="flight date">
+                    <img src="\assets\img\calendar.png" height="40" width="40">
+                    {{ flight.datumPolaska.toUTCString() }}</li>
+                <li class="list-group-item" data-toggle="tooltip" 
+                        data-placement="right" title="to">
+                    <img src="\assets\img\destination.jpg" height="40" width="40">
+                    {{ flight.to }}</li>
+                <li class="list-group-item" data-toggle="tooltip" 
+                        data-placement="right" title="return date">
+                    <img src="\assets\img\calendar.png" height="40" width="40">
+                    {{ flight.datumPovratka.toUTCString() }}</li>
+                <li class="list-group-item" 
+                        *ngIf='this.authenticationService.currentUserValue' data-toggle="tooltip" 
+                        data-placement="right" title="prise">
+                    <img src="\assets\img\dollar.png" height="40" width="40">
+                    {{ flight.prise }}</li>
+            </ul>
+            <div class="card-body">
+                <button type="button" 
+                        class="btn btn-warning"
+                        *ngIf='currentUserEmail === "andrej.km997@gmail.com" || 
+                            currentUserEmail === "admin@admin.com"'>CHANGE
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="border-success col-sm-3" style="margin-bottom: 30px; "
+        *ngIf='currentUserEmail === "andrej.km997@gmail.com" || 
+            currentUserEmail === "admin@admin.com"'>
+        <a style="cursor: pointer;">
+            <img id="myimgborder" src="\assets\img\add.png" class="card-img-top" alt="add new flight">
+        </a>
+    </div>
+
+  </div>
 </div>
