@@ -14,6 +14,7 @@ import { User } from 'src/app/entities/user/user';
 
 const users: User[] = [
   { 
+    id: 1,
     firstName: 'admin',
     lastName: 'admin',
     email: 'admin@admin.com', 
@@ -26,6 +27,7 @@ const users: User[] = [
     }
   },
   { 
+    id: 2,
     firstName: 'Andrej',
     lastName: 'Kalocanj Mohaci',
     email: 'andrej.km997@gmail.com', 
@@ -38,6 +40,7 @@ const users: User[] = [
     }
   },
   { 
+    id: 3,
     firstName: 'Marko',
     lastName: 'Misojcic',
     email: 'markomisojcic@gmail.com', 
@@ -50,6 +53,7 @@ const users: User[] = [
     }
   },
   { 
+    id: 4,
     firstName: 'Test',
     lastName: 'User',
     email: 'user@user.com', 

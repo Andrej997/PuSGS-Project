@@ -51,7 +51,8 @@ export class SignInComponent implements OnInit {
 
     var address = new Address(this.signInForm.value.streetAndNumber, this.signInForm.value.city, "Srbija");
 
-    var user = new User(this.signInForm.value.firstName, 
+    var user = new User(69, //ovde moramo ubaciti logiku da id bude jedinstven
+                        this.signInForm.value.firstName, 
                         this.signInForm.value.lastName, 
                         this.signInForm.value.email,
                         this.signInForm.value.password,
