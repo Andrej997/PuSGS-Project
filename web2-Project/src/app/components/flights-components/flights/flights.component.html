@@ -1,0 +1,81 @@
+<div id="container" style="margin-left: 15px; margin-right: 15px; margin-top: 15px;">
+    <div class="alert alert-info" role="alert"
+         *ngIf='!this.authenticationService.currentUserValue'>
+        To se the prise, you need to <a routerLink="/log-in"><b><u>login</u></b></a>
+        or <a routerLink="/sign-in"><b><u>register</u></b></a>!
+    </div>
+    <div class="alert alert-info" role="alert">
+        Click on company name to se the profile of that company!
+    </div>
+</div>
+
+<div class="container">
+  <div class="row card-group" >
+    <div class="col-sm-4" *ngFor="let flight of allFlights">
+        <div class="card" style="margin-bottom: 30px;">
+            <img [src]="flight.destImg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <img src={{flight.logo}} height="40" width="40">
+                    </div>
+                    <a class="card-title ml-1" routerLink="/avio-companies/{{flight.idCompany}}/details">
+                        <b style="font-size:xx-large">{{ flight.company }}</b>
+                    </a>
+                </div>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" data-toggle="tooltip" 
+                        data-placement="right" title="from">
+                    <img src="\assets\img\destination.jpg" height="40" width="40">
+                    {{ flight.from }}  </li>
+                <li class="list-group-item" data-toggle="tooltip" 
+                        data-placement="right" title="flight date">
+                    <img src="\assets\img\calendar.png" height="40" width="40">
+                    {{ flight.datumPolaska.toUTCString() }}</li>
+                <li class="list-group-item" data-toggle="tooltip" 
+                        data-placement="right" title="to">
+                    <img src="\assets\img\destination.jpg" height="40" width="40">
+                    {{ flight.to }}</li>
+                <li class="list-group-item" data-toggle="tooltip" 
+                        data-placement="right" title="landing date">
+                    <img src="\assets\img\calendar.png" height="40" width="40">
+                    {{ flight.datumSletanja.toUTCString() }}</li>
+                <li class="list-group-item" 
+                        data-toggle="tooltip" 
+                        data-placement="right" title="prise" 
+                        *ngIf='this.authenticationService.currentUserValue'>
+                    <img src="\assets\img\dollar.png" height="40" width="40">
+                    {{ flight.prise }}</li>
+                <li class="list-group-item" 
+                        data-toggle="tooltip" 
+                        data-placement="right" title="flight time">
+                    <img src="\assets\img\time.png" height="40" width="40">
+                    {{ flight.vremePutovanja }}</li>
+                <li class="list-group-item" 
+                        data-toggle="tooltip" 
+                        data-placement="right" title="km">
+                    <img src="\assets\img\kilometers.png" height="40" width="40">
+                    {{ flight.duzinaPutovanja }}</li>
+                <li class="list-group-item" 
+                        data-toggle="tooltip" 
+                        data-placement="right" title="changeover">
+                    <img src="\assets\img\path.png" height="40" width="40">
+                    <div style="float: right;" class="list-group list-group-flush" *ngFor="let p of flight.presedanje.gradoviPresedanja">
+                        <span>-{{p}}-</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="border-success col-sm-3" style="margin-bottom: 30px; "
+        *ngIf='currentUserEmail === "andrej.km997@gmail.com" || 
+            currentUserEmail === "admin@admin.com"'>
+        <a style="cursor: pointer;">
+            <img id="myimgborder" src="\assets\img\add.png" class="card-img-top" alt="add new flight">
+        </a>
+    </div>
+
+    </div>
+</div>
