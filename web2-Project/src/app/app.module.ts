@@ -20,7 +20,9 @@ import { ErrorInterceptor } from './interceptors/error-interceptor/error.interce
 import { ProfileComponent } from './components/profile/profile/profile.component';
 import { FlightComponent } from './components/profile/flight/flight.component';
 import { AvioCompaniesComponent } from './components/flights-components/avio-companies/avio-companies.component';
-import { AvioCompanyDetailsComponent } from './components/flights-components/avio-company-details/avio-company-details.component'
+import { AvioCompanyDetailsComponent } from './components/flights-components/avio-company-details/avio-company-details.component';
+import { SearchFlightComponent } from './components/flights-components/search-flight/search-flight.component';
+import { FilterFlightComponent } from './components/flights-components/filter-flight/filter-flight.component'
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { AvioCompanyDetailsComponent } from './components/flights-components/avi
     FlightComponent,
     AvioCompaniesComponent,
     AvioCompanyDetailsComponent,
+    SearchFlightComponent,
+    FilterFlightComponent,
   ],
   imports: [
     BrowserModule,
