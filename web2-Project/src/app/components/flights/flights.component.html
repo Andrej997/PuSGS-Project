@@ -3,12 +3,15 @@
          *ngIf='!this.authenticationService.currentUserValue'>
         To se the prise, you need to <a routerLink="/log-in"><b><u>login</u></b></a>
         or <a routerLink="/sign-in"><b><u>register</u></b></a>!
-      </div>
+    </div>
+    <div class="alert alert-info" role="alert">
+        Click on company name to se the profile of that company!
+    </div>
 </div>
 
 <div class="container">
   <div class="row card-group" >
-    <div class="col-sm-3" *ngFor="let flight of allFlights">
+    <div class="col-sm-4" *ngFor="let flight of allFlights">
         <div class="card" style="margin-bottom: 30px;">
             <img [src]="flight.destImg" class="card-img-top" alt="...">
             <div class="card-body">
@@ -16,7 +19,9 @@
                     <div class="input-group-prepend">
                         <img src={{flight.logo}} height="40" width="40">
                     </div>
-                    <h3 class="card-title">{{ flight.company }}</h3>
+                    <a class="card-title ml-1" routerLink="/avio-companies/{{flight.idCompany}}/details">
+                        <b style="font-size:xx-large">{{ flight.company }}</b>
+                    </a>
                 </div>
             </div>
             <ul class="list-group list-group-flush">

@@ -4,6 +4,48 @@
     <div class="card mb-3" style="max-width: 100%;">
         <div class="card-header mb-3">
             <h1 style="float: left;">{{flightCompany.name}}</h1>
+            <div class="profile-stars">
+                <!-- START NO 1-->
+                <div *ngIf="ocena < 0.5; then thenBlock1 else elseBlock1"></div>
+                <ng-template #thenBlock1><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                <ng-template #elseBlock1>
+                    <div *ngIf="ocena < 1; then thenBlock11 else elseBlock11"></div>
+                    <ng-template #thenBlock11><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock11><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                </ng-template>
+                <!-- START NO 2-->
+                <div *ngIf="ocena < 1.5; then thenBlock2 else elseBlock2"></div>
+                <ng-template #thenBlock2><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                <ng-template #elseBlock2>
+                    <div *ngIf="ocena < 2; then thenBlock22 else elseBlock22"></div>
+                    <ng-template #thenBlock22><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock22><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                </ng-template>
+                <!-- START NO 3-->
+                <div *ngIf="ocena < 2.5; then thenBlock3 else elseBlock3"></div>
+                <ng-template #thenBlock3><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                <ng-template #elseBlock3>
+                    <div *ngIf="ocena < 3; then thenBlock33 else elseBlock33"></div>
+                    <ng-template #thenBlock33><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock33><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                </ng-template>
+                <!-- START NO 4-->
+                <div *ngIf="ocena < 3.5; then thenBlock4 else elseBlock4"></div>
+                <ng-template #thenBlock4><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                <ng-template #elseBlock4>
+                    <div *ngIf="ocena < 4; then thenBlock44 else elseBlock44"></div>
+                    <ng-template #thenBlock44><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock44><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                </ng-template>
+                <!-- START NO 5-->
+                <div *ngIf="ocena < 4.5; then thenBlock5 else elseBlock5"></div>
+                <ng-template #thenBlock5><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                <ng-template #elseBlock5>
+                    <div *ngIf="ocena < 5; then thenBlock55 else elseBlock55"></div>
+                    <ng-template #thenBlock55><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock55><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                </ng-template>
+            </div>
             <span style="float: right;"><button type="button" class="btn btn-warning">CHANGE</button></span>
         </div>
         <div class="row no-gutters">
@@ -26,61 +68,66 @@
                 <div>
                     <h4 data-toggle="collapse" href="#collapseExample2" style="cursor: pointer;">Flights</h4>
                     <div class="collapse" id="collapseExample2">
+                        <div class="alert alert-info" data-toggle="collapse" href="#collapseExample3" role="alert">
+                            Click <u style="cursor: pointer;"><b>here</b></u> to show/hide flights details!
+                        </div>
                         <div class="row card-group" >
                             <div class="col-sm-5" *ngFor="let flight of flightCompany.flights">
                                 <div class="card" style="margin-bottom: 30px;">
                                     <img [src]="flight.destImg" class="card-img-top" alt="...">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item" data-toggle="tooltip" 
-                                                data-placement="right" title="from">
-                                            <img src="\assets\img\destination.jpg" height="40" width="40">
-                                            {{ flight.from }}  </li>
-                                        <li class="list-group-item" data-toggle="tooltip" 
-                                                data-placement="right" title="flight date">
-                                            <img src="\assets\img\calendar.png" height="40" width="40">
-                                            {{ flight.datumPolaska.toUTCString() }}</li>
-                                        <li class="list-group-item" data-toggle="tooltip" 
-                                                data-placement="right" title="to">
-                                            <img src="\assets\img\destination.jpg" height="40" width="40">
-                                            {{ flight.to }}</li>
-                                        <li class="list-group-item" data-toggle="tooltip" 
-                                                data-placement="right" title="landing date">
-                                            <img src="\assets\img\calendar.png" height="40" width="40">
-                                            {{ flight.datumSletanja.toUTCString() }}</li>
-                                        <li class="list-group-item" 
-                                                data-toggle="tooltip" 
-                                                data-placement="right" title="prise">
-                                            <img src="\assets\img\dollar.png" height="40" width="40">
-                                            {{ flight.prise }}</li>
-                                        <li class="list-group-item" 
-                                                data-toggle="tooltip" 
-                                                data-placement="right" title="flight time">
-                                            <img src="\assets\img\time.png" height="40" width="40">
-                                            {{ flight.vremePutovanja }}</li>
-                                        <li class="list-group-item" 
-                                                data-toggle="tooltip" 
-                                                data-placement="right" title="km">
-                                            <img src="\assets\img\kilometers.png" height="40" width="40">
-                                            {{ flight.duzinaPutovanja }}</li>
-                                        <li class="list-group-item" 
-                                                data-toggle="tooltip" 
-                                                data-placement="right" title="changeover">
-                                            <img src="\assets\img\path.png" height="40" width="40">
-                                            <div style="float: right;" class="list-group list-group-flush" *ngFor="let p of flight.presedanje.gradoviPresedanja">
-                                                <span>-{{p}}-</span>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <div class="collapse" id="collapseExample3">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item" data-toggle="tooltip" 
+                                                    data-placement="right" title="from">
+                                                <img src="\assets\img\destination.jpg" height="40" width="40">
+                                                {{ flight.from }}  </li>
+                                            <li class="list-group-item" data-toggle="tooltip" 
+                                                    data-placement="right" title="flight date">
+                                                <img src="\assets\img\calendar.png" height="40" width="40">
+                                                {{ flight.datumPolaska.toUTCString() }}</li>
+                                            <li class="list-group-item" data-toggle="tooltip" 
+                                                    data-placement="right" title="to">
+                                                <img src="\assets\img\destination.jpg" height="40" width="40">
+                                                {{ flight.to }}</li>
+                                            <li class="list-group-item" data-toggle="tooltip" 
+                                                    data-placement="right" title="landing date">
+                                                <img src="\assets\img\calendar.png" height="40" width="40">
+                                                {{ flight.datumSletanja.toUTCString() }}</li>
+                                            <li class="list-group-item" 
+                                                    data-toggle="tooltip" 
+                                                    data-placement="right" title="prise">
+                                                <img src="\assets\img\dollar.png" height="40" width="40">
+                                                {{ flight.prise }}</li>
+                                            <li class="list-group-item" 
+                                                    data-toggle="tooltip" 
+                                                    data-placement="right" title="flight time">
+                                                <img src="\assets\img\time.png" height="40" width="40">
+                                                {{ flight.vremePutovanja }}</li>
+                                            <li class="list-group-item" 
+                                                    data-toggle="tooltip" 
+                                                    data-placement="right" title="km">
+                                                <img src="\assets\img\kilometers.png" height="40" width="40">
+                                                {{ flight.duzinaPutovanja }}</li>
+                                            <li class="list-group-item" 
+                                                    data-toggle="tooltip" 
+                                                    data-placement="right" title="changeover">
+                                                <img src="\assets\img\path.png" height="40" width="40">
+                                                <div style="float: right;" class="list-group list-group-flush" *ngFor="let p of flight.presedanje.gradoviPresedanja">
+                                                    <span>-{{p}}-</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <!--div class="border-success col-sm-3" style="margin-bottom: 30px; "
+                            <div class="border-success col-sm-3" style="margin-bottom: 30px; "
                                 *ngIf='currentUserEmail === "andrej.km997@gmail.com" || 
                                     currentUserEmail === "admin@admin.com"'>
                                 <a style="cursor: pointer;">
                                     <img id="myimgborder" src="\assets\img\add.png" class="card-img-top" alt="add new flight">
                                 </a>
-                            </div-->
+                            </div>
                         
                         </div>
                     </div>

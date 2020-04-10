@@ -16,6 +16,7 @@ export class FlightCompany {
     cenovnik: Array<Cak>; // za ovaj recnik, kljuc je naziv grada a vrednost je cena
     prtljagInfo: string;
     logo: string;
+    ocene: Array<number>;
 
     constructor(
         id: number,
@@ -28,7 +29,8 @@ export class FlightCompany {
         sedista: Array<AvioSediste>,
         cenovnik: Array<Cak>,
         prtljagInfo: string, 
-        logo: string) {
+        logo: string,
+        ocene: Array<number>) {
             this.id = id;
             this.name = name;
             this.address = address;
@@ -40,5 +42,6 @@ export class FlightCompany {
             this.cenovnik = cenovnik;
             this.prtljagInfo = prtljagInfo;
             this.logo = logo;
+            this.ocene = ocene;
     }
 }
