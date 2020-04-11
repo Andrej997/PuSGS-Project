@@ -1,0 +1,32 @@
+<p>Ti si admin sledecih rent-a-car servisa:</p>
+<button class="btn-primary" style="display: block; margin-left: auto;" routerLink="/rent-a-car-profile">
+  Create new service
+</button>
+<br>
+<div class="container">
+    <div class="row card-group" >
+        <div class="col-sm-4" *ngFor="let myCarService of myCarServices">
+            <div class="card" style="margin-bottom: 30px;">
+                <img [src]="myCarService.logoImage" class="card-img-top" alt="..." 
+                    ><!--routerLink="/avio-companies/{{avioCompany.id}}/details" -->
+                <div class="card-body">
+                  <a class="card-title ml-1" routerLink="/rent-a-car-profile/{{myCarService.id}}/service-detail">
+                    <b style="font-size:xx-large">{{ myCarService.name }}</b>
+                  </a>
+                  <p class="card-description">
+                    {{myCarService.description}}
+                  </p>
+                  <h5 class="card-title">
+                    {{ myCarService.address.streetAndNumber }}
+                  </h5>
+                  <h5 class="card-title">
+                    {{ myCarService.address.city }}
+                  </h5>
+                  <h5 class="card-title">
+                    {{ myCarService.address.country }}
+                  </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

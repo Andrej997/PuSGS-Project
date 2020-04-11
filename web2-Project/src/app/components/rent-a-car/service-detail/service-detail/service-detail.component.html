@@ -1,0 +1,69 @@
+<p>Pregled konkretnog servisa:</p>
+<button class="btn-primary" style="display: block;" routerLink="/rent-a-car-profile">
+    Back
+</button>
+<button class="btn-primary" style="display: block; margin-left: auto;" routerLink="/rent-a-car-profile">
+    Modify service
+</button>
+<br>
+<div class="container">
+    <div class="row card-group" >
+        <div class="col-sm-9" >
+            <div class="card" style="margin-bottom: 30px;">
+                <img [src]="myService.logoImage" class="card-img-top" alt="..." 
+                    ><!--routerLink="/avio-companies/{{avioCompany.id}}/details" -->
+                <div class="card-body">
+                    <a class="card-title ml-1">
+                        <b style="font-size:xx-large">
+                            {{ myService.name }}
+                        </b>
+                    </a>
+                    <p class="card-description">
+                        {{myService.description}}
+                    </p>
+                    <h5 class="card-title">
+                        {{ myService.address.streetAndNumber }}
+                    </h5>
+                    <h5 class="card-title">
+                        {{ myService.address.city }}
+                    </h5>
+                    <h5 class="card-title">
+                        {{ myService.address.country }} <!--carlist-->
+                    </h5>
+                    <div class="container">
+                        <div class="row card-group" >
+                        <p>Svi glasovi:</p>
+                        <div class="col-sm-1"  *ngFor="let r of myService.raiting">
+                            <div class="card" style="margin-bottom: 30px;">
+                                <p>{{r}}</p>
+                            </div>
+                        </div>
+                        <p>Prosek: {{prosek}}</p>
+                    </div>
+                    <div class="container">
+                        <div class="row card-group" >
+                            <p>Pricelist:</p>
+                            <div class="col-sm-1"  *ngFor="let price of myService.pricelist">
+                                <div class="card" style="margin-bottom: 30px;">
+                                    <p>{{price}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row card-group" >
+                            <div class="col-sm-3"  *ngFor="let car of myService.carlist">
+                                <div class="card" style="margin-bottom: 30px;">
+                                    <img [src]="car.image" class="card-img-top" alt="..." 
+                                        ><!--routerLink="/avio-companies/{{avioCompany.id}}/details" -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

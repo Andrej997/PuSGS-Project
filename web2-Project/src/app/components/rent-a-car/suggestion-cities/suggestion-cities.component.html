@@ -39,7 +39,8 @@
               <div class="card-body">
                   <button type="button" 
                           class="btn btn-primary"
-                          *ngIf='this.authenticationService.currentUserValue'>Choose
+                          *ngIf='this.authenticationService.currentUserValue'
+                          routerLink="/rent-a-car/{{city.city}}/just-rent">Choose
                   </button>
                   <button type="button" 
                           class="btn btn-warning"
