@@ -1,0 +1,6 @@
+#myimgborder {
+    border: 1px solid green;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+}
