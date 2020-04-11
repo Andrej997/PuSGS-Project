@@ -49,13 +49,13 @@ const routes: Routes = [
     component: CarouselPhComponent
   },
   {
-    path: "profile",
-    children:[
-      { path: "", component: ProfileComponent},
-      { path : ":id/friends", component: UserFriendsComponent },
-      { path : ":id/messages", component: UserMessagesComponent }
-    ]
-    
+    path: "profile", component: ProfileComponent
+  },
+  {
+    path : "friends", component: UserFriendsComponent
+  },
+  {
+    path : "messages", component: UserMessagesComponent
   },
   {
     path: "avio-companies",

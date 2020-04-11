@@ -12,12 +12,13 @@ import { User } from 'src/app/entities/user/user'
 export class ProfileComponent implements OnInit {
   currentUser: User; // sve se nalazi u currentUser-u
   unreadMessages = 0;
+  friendReq = 0
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService) {
         this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-        console.log(this.currentUser);
+        //console.log(this.currentUser);
     }
 
   ngOnInit(): void {
@@ -25,6 +26,9 @@ export class ProfileComponent implements OnInit {
       if (element.isUnread) {
         ++this.unreadMessages;
       }
+    });
+    this.currentUser.friendRequests.forEach(element => {
+      ++this.friendReq;
     });
   }
 

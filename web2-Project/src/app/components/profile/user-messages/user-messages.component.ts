@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/entities/user/user';
+import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 
 @Component({
   selector: 'app-user-messages',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserMessagesComponent implements OnInit {
 
-  constructor() { }
+  currentUser: User;
+  constructor(private authenticationService: AuthenticationService) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    //console.log(this.currentUser);
+  } 
 
   ngOnInit(): void {
   }

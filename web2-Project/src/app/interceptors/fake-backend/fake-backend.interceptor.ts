@@ -12,6 +12,7 @@ import { delay, mergeMap, materialize, dematerialize, first } from 'rxjs/operato
 
 import { User, Role } from 'src/app/entities/user/user';
 import { Message } from 'src/app/entities/message/message';
+import { Address } from 'src/app/entities/address/address';
 
 const users: User[] = [
   { 
@@ -28,6 +29,7 @@ const users: User[] = [
     },
     role: Role.admin,
     friends: new Array<User>(),
+    friendRequests: new Array<User>(),
     messages: new Array<Message>()
   },
   { 
@@ -43,7 +45,62 @@ const users: User[] = [
       country: 'Serbia'
     },
     role: Role.adminA,
-    friends: new Array<User>(),
+    friends: new Array<User>(
+      
+      new User(
+        5,
+        'Test1',
+        'User1',
+        'test1@user1.com',
+        'admin',
+        '\\assets\\img\\user.png',
+        new Address(
+          'ulica i broj',
+          'grad',
+          'drzava'
+        ),
+        Role.user,
+        new Array<User>(),
+        new Array<User>(),
+        new Array<Message>()
+      ),
+      new User(
+        6,
+        'Tes2',
+        'User2',
+        'test2@user2.com',
+        'admin',
+        '\\assets\\img\\user.png',
+        new Address(
+          'ulica i broj',
+          'grad',
+          'drzava'
+        ),
+        Role.user,
+        new Array<User>(),
+        new Array<User>(),
+        new Array<Message>()
+      )
+    ),
+    friendRequests: new Array<User>(
+      new User(
+        7,
+        'Tes3',
+        'User3',
+        'test3@user3.com',
+        'admin',
+        '\\assets\\img\\user.png',
+        new Address(
+          'ulica i broj',
+          'grad',
+          'drzava'
+        ),
+        Role.user,
+        new Array<User>(),
+        new Array<User>(),
+        new Array<Message>()
+      )
+    ),
     messages: new Array<Message>()
   },
   { 
@@ -60,6 +117,7 @@ const users: User[] = [
     },
     role: Role.adminM,
     friends: new Array<User>(),
+    friendRequests: new Array<User>(),
     messages: new Array<Message>()
   },
   { 
@@ -76,6 +134,7 @@ const users: User[] = [
     },
     role: Role.user,
     friends: new Array<User>(),
+    friendRequests: new Array<User>(),
     messages: new Array<Message>()
   },
 ];
@@ -125,6 +184,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 }, 
                 role: user.role,
                 friends: user.friends,
+                friendRequests: user.friendRequests,
                 messages: user.messages
             })
         }

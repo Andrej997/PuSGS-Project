@@ -12,12 +12,14 @@ import { User } from 'src/app/entities/user/user';
 export class NavbarComponent implements OnInit {
   imgUrl: string;
   currentUser: User;
+  fR: number; // broj zahteva za prijateljstvo
 
   constructor(private router: Router, 
               public authenticationService: AuthenticationService) { 
     if (this.authenticationService.currentUserValue) { 
       this.imgUrl = this.authenticationService.currentUserValue.profileImage;
       this.currentUser = this.authenticationService.currentUserValue;
+      this.fR = this.currentUser.friendRequests.length;
     }
   }
 

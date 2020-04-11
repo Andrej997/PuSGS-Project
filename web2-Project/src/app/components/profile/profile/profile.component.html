@@ -28,13 +28,14 @@
 
             <div class="container">
                 <p style="cursor: pointer;" 
-                    routerLink="/profile/{{currentUser.id}}/friends" ><u>Friends</u>
+                    routerLink="/friends" ><u>Friends</u>
+                    <span><b *ngIf="friendReq > 0">({{friendReq}})</b></span>
                 </p>
             </div>
 
             <div class="container">
                 <p style="cursor: pointer;"
-                    routerLink="/profile/{{currentUser.id}}/messages">
+                    routerLink="/messages">
                         <u>Messages</u> <span><b *ngIf="unreadMessages > 0">({{unreadMessages}})</b></span>
                 </p>
             </div>

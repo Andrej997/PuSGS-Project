@@ -1,1 +1,33 @@
-<p>user-friends works!</p>
+<div class="container">
+    <h1>FRIEND REQUEST</h1>
+    <div class="card mb-3" *ngFor="let fr of currentUser.friendRequests">
+        <div class="row no-gutters">
+            <div class="col-md-1">
+                <img src={{fr.profileImage}} alt="">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{fr.email}}</h5>
+                <p class="card-text">{{fr.firstName}} {{fr.lastName}}</p>
+                <button type="button" class="btn btn-success">ACCEPT</button>
+                <button type="button" class="btn btn-danger ml-4">DECLINE</button>
+              </div>
+            </div>
+        </div>
+    </div>
+    <h1>FRIENDS</h1>
+    <div class="card mb-3" *ngFor="let fr of currentUser.friends">
+        <div class="row no-gutters">
+            <div class="col-md-1">
+                <img src={{fr.profileImage}} alt="">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{fr.email}}</h5>
+                <p class="card-text">{{fr.firstName}} {{fr.lastName}}</p>
+                <button type="button" class="btn btn-primary">CHAT</button>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

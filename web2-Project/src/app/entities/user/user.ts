@@ -18,13 +18,14 @@ export class User {
     address: Address;
     role: Role;
     friends: Array<User>;
+    friendRequests: Array<User>;
     messages: Array<Message>;
     authdata?: string;
 
     constructor(id: number, firstName: string, lastName: string, 
         email: string, password: string, 
         profileImage: string, address: Address,
-        role: Role, friends: Array<User>, messages: Array<Message>) {
+        role: Role, friends: Array<User>, friendRequests: Array<User>, messages: Array<Message>) {
             this.id = id;
             this.firstName = firstName;
             this.lastName = lastName;
@@ -34,6 +35,7 @@ export class User {
             this.address = address;
             this.role = role;
             this.friends = friends;
+            this.friendRequests = friendRequests;
             this.messages = messages;
     }
 }
