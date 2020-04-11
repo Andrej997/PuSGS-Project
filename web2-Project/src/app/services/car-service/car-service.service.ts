@@ -1,22 +1,44 @@
 import { Injectable } from '@angular/core';
 import { Car } from 'src/app/entities/car/car';
 import { CardCity } from 'src/app/entities/card-city/card-city';
-
+// import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarServiceService {
+  // cards = new Array<CardCity>();
+  // private c = new BehaviorSubject<Array<CardCity>>(this.cards);
+  // cm = this.c.asObservable();
+
+  constructor() { }
+
+  // changeFilter(filter: string){
+  //   //this.c.next(this.loadCardsCity());
+  //   this.c.next(this.filterCities(this.loadCardsCity(), filter));
+  //   //console.log(this.cards);
+  // }
+
+  // filterCities(allCity: CardCity[], filterParam: string): CardCity[] {
+  //   let filteredCities = new Array<CardCity>();
+  //   for (const city of allCity) {
+  //     let addCar = true;
+  //     if (city.city === filterParam) {
+  //       filteredCities.push(city);
+  //         //break;
+  //     }
+  //   }
+  //   return filteredCities;
+  // }
 
   loadCars() {
-    console.log('Učitavanje auta...');
+    //console.log('Učitavanje auta...');
     return this.mockedCars();
   }
   loadCardsCity(){
-    console.log('Učitavanje gradova...');
+    //console.log('Učitavanje gradova...');
     return this.mockedCardsCity();
   }
-  constructor() { }
 
   mockedCars(): Array<Car> {
     let allCars = new Array<Car>();
@@ -29,8 +51,6 @@ export class CarServiceService {
     allCars.push(car2);
     allCars.push(car3);
 
-    console.log(car1);
-
     return allCars;
   }
   mockedCardsCity(): Array<CardCity> {
@@ -38,15 +58,18 @@ export class CarServiceService {
     let ny = new Array<string>();
     ny.push("../../../assets/img/peking.jpg");
     ny.push("../../../assets/img/los angeles.jpg");
+    ny.push("../../../assets/img/moskva.jpg");
 
     const card1 = new CardCity("New york", "Neki opis ovde stoji..xD", ny);
     const card2 = new CardCity("Peking", "Neki opis i ovde stoji..xD", ny);
+    const card3 = new CardCity("Peking", "Neki opis i ovde stoji..xD", ny);
+    const card4 = new CardCity("Moskva", "Neki opis i ovde stoji..xD", ny);
 
     allCards.push(card1);
     allCards.push(card2);
+    allCards.push(card3);
+    allCards.push(card4);
 
-    console.log(card1);
-    
     return allCards;
   }
 }

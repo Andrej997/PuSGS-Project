@@ -8,7 +8,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FlightsComponent } from './components/flights/flights.component';
-import { RentACarComponent } from './components/rent-a-car/rent-a-car.component';
+//import { RentACarComponent } from './components/cities/cities.component';
+
+import { CitiesComponent } from './components/rent-a-car/cities/cities.component';
+import { FilteredCitiesComponent } from './components/rent-a-car/filtered-cities/filtered-cities.component';
+import { SearchByCityComponent } from './components/rent-a-car/search-by-city/search-by-city.component';
+import { SuggestionCitiesComponent } from './components/rent-a-car/suggestion-cities/suggestion-cities.component';
+
 import { LogInComponent } from './components/log-in/log-in.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { CarouselPhComponent } from './components/home/carousel-ph.component';
@@ -20,14 +26,14 @@ import { ErrorInterceptor } from './interceptors/error-interceptor/error.interce
 import { ProfileComponent } from './components/profile/profile/profile.component';
 import { FlightComponent } from './components/profile/flight/flight.component';
 import { AvioCompaniesComponent } from './components/avio-companies/avio-companies/avio-companies.component';
-import { AvioCompanyDetailsComponent } from './components/avio-company-details/avio-company-details.component'
+import { AvioCompanyDetailsComponent } from './components/avio-company-details/avio-company-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FlightsComponent,
-    RentACarComponent,
+    //RentACarComponent,
     LogInComponent,
     SignInComponent,
     CarouselPhComponent,
@@ -36,6 +42,10 @@ import { AvioCompanyDetailsComponent } from './components/avio-company-details/a
     FlightComponent,
     AvioCompaniesComponent,
     AvioCompanyDetailsComponent,
+    CitiesComponent,
+    FilteredCitiesComponent,
+    SearchByCityComponent,
+    SuggestionCitiesComponent,
   ],
   imports: [
     BrowserModule,
