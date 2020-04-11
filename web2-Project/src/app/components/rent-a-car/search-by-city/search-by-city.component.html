@@ -1,0 +1,36 @@
+<div class="form-row">
+    <div class="col-md-12">
+        <div class="input-group mb-12">
+            <div class="input-group-prepend">
+                <img src="\assets\img\city-icon.png" 
+                     height="40" 
+                     width="40">
+            </div>
+            <input type="search" 
+                   class="form-control col-md-9" 
+                   placeholder="city" 
+                   id="searchCity"
+                   #searchCity
+                   (keyup.enter)="newFilter(searchCity.value)">
+            <!-- <input  formControlName="email"
+                    id="email" 
+                    #email
+                    type="text" 
+                    class="form-control"
+                    placeholder="email" aria-label="email"> -->
+            <button type="button" 
+                    class="btn btn-primary" 
+                    style="margin-left: 30px"
+                    (click)="newFilter(searchCity.value)"
+                    >Search
+            </button>
+            <button type="button" 
+                    class="btn btn-primary" 
+                    style="margin-left: 30px"
+                    (click) = "searchCity.value = ''"
+                    (click) = "clearFilterList()"
+                    >Cansel
+            </button>
+        </div>
+    </div>
+</div>

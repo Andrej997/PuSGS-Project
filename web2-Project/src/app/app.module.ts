@@ -7,8 +7,19 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+
+//import { FlightsComponent } from './components/flights/flights.component';
+//import { RentACarComponent } from './components/cities/cities.component';
+
+import { CitiesComponent } from './components/rent-a-car/cities/cities.component';
+import { FilteredCitiesComponent } from './components/rent-a-car/filtered-cities/filtered-cities.component';
+import { SearchByCityComponent } from './components/rent-a-car/search-by-city/search-by-city.component';
+import { SuggestionCitiesComponent } from './components/rent-a-car/suggestion-cities/suggestion-cities.component';
+
+
 import { FlightsComponent } from './components/flights-components/flights/flights.component';
-import { RentACarComponent } from './components/rent-a-car/rent-a-car.component';
+//import { RentACarComponent } from './components/rent-a-car/rent-a-car.component';
+
 import { LogInComponent } from './components/log-in/log-in.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { CarouselPhComponent } from './components/home/carousel-ph.component';
@@ -29,7 +40,7 @@ import { FilterFlightComponent } from './components/flights-components/filter-fl
     AppComponent,
     NavbarComponent,
     FlightsComponent,
-    RentACarComponent,
+    //RentACarComponent,
     LogInComponent,
     SignInComponent,
     CarouselPhComponent,
@@ -38,8 +49,15 @@ import { FilterFlightComponent } from './components/flights-components/filter-fl
     FlightComponent,
     AvioCompaniesComponent,
     AvioCompanyDetailsComponent,
+
+    CitiesComponent,
+    FilteredCitiesComponent,
+    SearchByCityComponent,
+    SuggestionCitiesComponent,
+
     SearchFlightComponent,
     FilterFlightComponent,
+
   ],
   imports: [
     BrowserModule,
