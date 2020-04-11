@@ -38,10 +38,10 @@ export class AvioCompaniesService {
     const flights = new Array<Flight>();
     const flight1A1 = new Flight(1, 'Air Serbia', A1id, "../../../assets/img/avio companies/air serbia.png", 'Belgrade', 'New York', "../../../assets/img/new york.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            599.99, "14:15:00", 1500, new Presedanje(0, ["NONE"]));
+            658, "14:15:00", 1500, new Presedanje(0, ["NONE"]));
     const flight2A1 = new Flight(2, 'Air Serbia', A1id, "../../../assets/img/avio companies/air serbia.png", 'Belgrade', 'Los Angeles', "../../../assets/img/los angeles.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            599.99, "14:15:00", 1500, new Presedanje(2, ["New York", "Paris"]));
+            1202.69, "14:15:00", 1500, new Presedanje(2, ["New York", "Paris"]));
     flights.push(flight1A1);
     flights.push(flight2A1);
     const fastReservation = new Array<Flight>();
@@ -77,10 +77,10 @@ export class AvioCompaniesService {
     const flights2 = new Array<Flight>();
     const flight1A2 = new Flight(1, A2name, A2id, "../../../assets/img/avio companies/turkish airlines.png", 'Belgrade', 'Bejing', "../../../assets/img/peking.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            599.99, "14:15:00", 1500, new Presedanje(0, ["NONE"]));
+            1995, "14:15:00", 1500, new Presedanje(0, ["NONE"]));
     const flight2A2 = new Flight(2, A2name, A2id, "../../../assets/img/avio companies/turkish airlines.png", 'Belgrade', 'Los Angeles', "../../../assets/img/los angeles.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            599.99, "14:15:00", 1500, new Presedanje(2, ["New York", "Paris"]));
+            766, "14:15:00", 1500, new Presedanje(2, ["New York", "Paris"]));
     flights2.push(flight1A2);
     flights2.push(flight2A2);
     const fastReservation2 = new Array<Flight>();

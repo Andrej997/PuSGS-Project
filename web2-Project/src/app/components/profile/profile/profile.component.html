@@ -1,1 +1,44 @@
-<p>profile works!</p>
+<div class="container">
+    <div class="media">
+        <img src={{currentUser.profileImage}} class="mr-4" alt="">
+        <div class="media-body">
+            <h3 class="mt-0" >{{currentUser.firstName}} {{currentUser.lastName}}
+                (<span *ngIf="currentUser.role == 1">admin</span>
+                <span *ngIf="currentUser.role == 2">flight admin</span>
+                <span *ngIf="currentUser.role == 1">rent a car admin</span>
+                <span *ngIf="currentUser.role == 1">user</span>)
+            </h3>
+
+            <div class="container">
+                <label for="email">Email</label>
+                <p class="ml-3" id="email">{{currentUser.email}}</p> 
+            </div>
+            
+            <div class="container">
+                <label for="password">Password</label>
+                <p class="ml-3" id="password">**************</p>
+            </div>
+
+            <div class="container">
+                <label for="address">Address</label>
+                <p class="ml-3">{{currentUser.address.streetAndNumber}}</p> 
+                <p class="ml-3">{{currentUser.address.city}}</p>
+                <p class="ml-3">{{currentUser.address.country}}</p>
+            </div>
+
+            <div class="container">
+                <p style="cursor: pointer;" 
+                    routerLink="/friends" ><u>Friends</u>
+                    <span><b *ngIf="friendReq > 0">({{friendReq}})</b></span>
+                </p>
+            </div>
+
+            <div class="container">
+                <p style="cursor: pointer;"
+                    routerLink="/messages">
+                        <u>Messages</u> <span><b *ngIf="unreadMessages > 0">({{unreadMessages}})</b></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

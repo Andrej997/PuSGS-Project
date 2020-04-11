@@ -8,9 +8,11 @@ import {
   HTTP_INTERCEPTORS
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+import { delay, mergeMap, materialize, dematerialize, first } from 'rxjs/operators';
 
-import { User } from 'src/app/entities/user/user';
+import { User, Role } from 'src/app/entities/user/user';
+import { Message } from 'src/app/entities/message/message';
+import { Address } from 'src/app/entities/address/address';
 
 const users: User[] = [
   { 
@@ -19,12 +21,16 @@ const users: User[] = [
     lastName: 'admin',
     email: 'admin@admin.com', 
     password: 'admin',
-    profileImage: 'string',
+    profileImage: '\\assets\\img\\user.png',
     address: {
       streetAndNumber: 'string',
       city: 'string',
       country: 'string'
-    }
+    },
+    role: Role.admin,
+    friends: new Array<User>(),
+    friendRequests: new Array<User>(),
+    messages: new Array<Message>()
   },
   { 
     id: 2,
@@ -32,12 +38,70 @@ const users: User[] = [
     lastName: 'Kalocanj Mohaci',
     email: 'andrej.km997@gmail.com', 
     password: 'admin',
-    profileImage: 'string',
+    profileImage: '\\assets\\img\\user.png',
     address: {
-      streetAndNumber: 'string',
-      city: 'string',
-      country: 'string'
-    }
+      streetAndNumber: 'Mise Dimitrijevica 1C',
+      city: 'Novi Sad',
+      country: 'Serbia'
+    },
+    role: Role.adminA,
+    friends: new Array<User>(
+      
+      new User(
+        5,
+        'Test1',
+        'User1',
+        'test1@user1.com',
+        'admin',
+        '\\assets\\img\\user.png',
+        new Address(
+          'ulica i broj',
+          'grad',
+          'drzava'
+        ),
+        Role.user,
+        new Array<User>(),
+        new Array<User>(),
+        new Array<Message>()
+      ),
+      new User(
+        6,
+        'Tes2',
+        'User2',
+        'test2@user2.com',
+        'admin',
+        '\\assets\\img\\user.png',
+        new Address(
+          'ulica i broj',
+          'grad',
+          'drzava'
+        ),
+        Role.user,
+        new Array<User>(),
+        new Array<User>(),
+        new Array<Message>()
+      )
+    ),
+    friendRequests: new Array<User>(
+      new User(
+        7,
+        'Tes3',
+        'User3',
+        'test3@user3.com',
+        'admin',
+        '\\assets\\img\\user.png',
+        new Address(
+          'ulica i broj',
+          'grad',
+          'drzava'
+        ),
+        Role.user,
+        new Array<User>(),
+        new Array<User>(),
+        new Array<Message>()
+      )
+    ),
+    messages: new Array<Message>()
   },
   { 
     id: 3,
@@ -45,12 +109,16 @@ const users: User[] = [
     lastName: 'Misojcic',
     email: 'markomisojcic@gmail.com', 
     password: 'admin',
-    profileImage: 'string',
+    profileImage: '\\assets\\img\\user.png',
     address: {
       streetAndNumber: 'string',
       city: 'string',
       country: 'string'
-    }
+    },
+    role: Role.adminM,
+    friends: new Array<User>(),
+    friendRequests: new Array<User>(),
+    messages: new Array<Message>()
   },
   { 
     id: 4,
@@ -58,12 +126,16 @@ const users: User[] = [
     lastName: 'User',
     email: 'user@user.com', 
     password: 'admin',
-    profileImage: 'string',
+    profileImage: '\\assets\\img\\user.png',
     address: {
       streetAndNumber: 'string',
       city: 'string',
       country: 'string'
-    }
+    },
+    role: Role.user,
+    friends: new Array<User>(),
+    friendRequests: new Array<User>(),
+    messages: new Array<Message>()
   },
 ];
 
@@ -100,6 +172,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const user = users.find(x => x.email === email && x.password === password);
             if (!user) return error('Username or password is incorrect');
             return ok({
+                id: user.id,
                 email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -108,7 +181,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                   streetAndNumber: user.address.streetAndNumber,
                   city: user.address.city,
                   country: user.address.country
-                }
+                }, 
+                role: user.role,
+                friends: user.friends,
+                friendRequests: user.friendRequests,
+                messages: user.messages
             })
         }
 
