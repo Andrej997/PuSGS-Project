@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FlightsComponent } from '../flights/flights.component';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { FilterFlight } from 'src/app/entities/filter-flight/filter-flight';
 
 @Component({
   selector: 'app-filter-flight',
@@ -8,6 +9,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
   styleUrls: ['./filter-flight.component.css']
 })
 export class FilterFlightComponent implements OnInit {
+  filterFlight: FilterFlight;
 
   constructor(private flightsComponent: FlightsComponent) { }
 
@@ -15,8 +17,14 @@ export class FilterFlightComponent implements OnInit {
   }
   
   form = new FormGroup({
-    search: new FormControl('', [Validators.required]),
-    selectSearch: new FormControl('', [Validators.required])
+    datefrom: new FormControl(),
+    dateto: new FormControl(),
+    pricefrom: new FormControl(),
+    priceto: new FormControl(),
+    distancefrom: new FormControl(),
+    distanceto: new FormControl(),
+    changeoverfrom: new FormControl(),
+    changeoverto: new FormControl()
   });
   
   get f(){
@@ -24,7 +32,17 @@ export class FilterFlightComponent implements OnInit {
   }
   
   submit(){
-    
+    this.filterFlight = new FilterFlight((this.form.value.datefrom), 
+                                          this.form.value.dateto,
+                                          this.form.value.pricefrom,
+                                          this.form.value.priceto,
+                                          this.form.value.distancefrom,
+                                          this.form.value.distanceto,
+                                          this.form.value.changeoverfrom,
+                                          this.form.value.changeoverto);
+    //console.log(this.filterFlight);
+
+    this.flightsComponent.filter(this.filterFlight);
   }
 
   showAll(){
