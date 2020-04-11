@@ -44,25 +44,27 @@
                         height="37" 
                         width="37" >
                   </a>
-                  <a href="#" 
-                    role="button" style="margin-right: 10px;"
+                  <a role="button" style="margin-right: 10px;"
                     aria-haspopup="true" 
                     aria-expanded="false">
                       <img src="\assets\img\friend.png" 
                           height="30" 
-                          width="30" >
+                          width="30" 
+                          routerLink="/profile/{{currentUser.id}}/friends"
+                          style="cursor: pointer;">
                       <sup>
                         <span class="badge badge-danger">3</span>
                         <span class="sr-only">unread messages</span>
                       </sup>
                   </a>
-                  <a href="#" 
-                    role="button" style="margin-right: 10px;"
+                  <a role="button" style="margin-right: 10px;"
                     aria-haspopup="true" 
                     aria-expanded="false">
                       <img src="\assets\img\message.png" 
                           height="30" 
-                          width="30" >
+                          width="30" 
+                          routerLink="/profile/{{currentUser.id}}/messages"
+                          style="cursor: pointer;">
                       <sup>
                         <span class="badge badge-danger">3</span>
                         <span class="sr-only">unread messages</span>

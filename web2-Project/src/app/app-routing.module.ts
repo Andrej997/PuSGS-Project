@@ -16,6 +16,8 @@ import { AvioCompaniesComponent } from './components/flights-components/avio-com
 import { AvioCompanyDetailsComponent } from './components/flights-components/avio-company-details/avio-company-details.component';
 
 import { CitiesComponent } from './components/rent-a-car/cities/cities.component'
+import { UserFriendsComponent } from './components/profile/user-friends/user-friends.component';
+import { UserMessagesComponent } from './components/profile/user-messages/user-messages.component';
 
 
 const routes: Routes = [
@@ -48,7 +50,12 @@ const routes: Routes = [
   },
   {
     path: "profile",
-    component: ProfileComponent
+    children:[
+      { path: "", component: ProfileComponent},
+      { path : ":id/friends", component: UserFriendsComponent },
+      { path : ":id/messages", component: UserMessagesComponent }
+    ]
+    
   },
   {
     path: "avio-companies",

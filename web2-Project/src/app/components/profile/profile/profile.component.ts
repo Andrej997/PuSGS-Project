@@ -11,6 +11,7 @@ import { User } from 'src/app/entities/user/user'
 })
 export class ProfileComponent implements OnInit {
   currentUser: User; // sve se nalazi u currentUser-u
+  unreadMessages = 0;
 
   constructor(
     private router: Router,
@@ -20,6 +21,11 @@ export class ProfileComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.currentUser.messages.forEach(element => {
+      if (element.isUnread) {
+        ++this.unreadMessages;
+      }
+    });
   }
 
 

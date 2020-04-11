@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { User } from 'src/app/entities/user/user';
+import { User, Role } from 'src/app/entities/user/user';
 import { Address } from 'src/app/entities/address/address';
+import { Message } from 'src/app/entities/message/message';
 
 @Component({
   selector: 'app-sign-in',
@@ -57,7 +58,10 @@ export class SignInComponent implements OnInit {
                         this.signInForm.value.email,
                         this.signInForm.value.password,
                         this.signInForm.value.profileImg,
-                        address    );
+                        address,
+                        Role.user,
+                        new Array<User>(),
+                        new Array<Message>()    );
 
                         
     console.log(user);
