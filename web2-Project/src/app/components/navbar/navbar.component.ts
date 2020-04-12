@@ -12,7 +12,8 @@ import { User } from 'src/app/entities/user/user';
 export class NavbarComponent implements OnInit {
   imgUrl: string;
   currentUser: User;
-  fR: number; // broj zahteva za prijateljstvo
+  fR: number; // number of friend req
+  uM: number; // unread messages
 
   constructor(private router: Router, 
               public authenticationService: AuthenticationService) { 
@@ -20,14 +21,11 @@ export class NavbarComponent implements OnInit {
       this.imgUrl = this.authenticationService.currentUserValue.profileImage;
       this.currentUser = this.authenticationService.currentUserValue;
       this.fR = this.currentUser.friendRequests.length;
+      this.uM = this.currentUser.messages.length;
     }
   }
 
   ngOnInit(): void {
-  }
-
-  h(){
-    alert("ss");
   }
 
   logout() {

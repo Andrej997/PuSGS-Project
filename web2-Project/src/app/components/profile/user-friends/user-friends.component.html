@@ -9,8 +9,8 @@
               <div class="card-body">
                 <h5 class="card-title">{{fr.email}}</h5>
                 <p class="card-text">{{fr.firstName}} {{fr.lastName}}</p>
-                <button type="button" class="btn btn-success">ACCEPT</button>
-                <button type="button" class="btn btn-danger ml-4">DECLINE</button>
+                <button type="button" class="btn btn-success" (click)="accept(fr.email)">ACCEPT</button>
+                <button type="button" class="btn btn-danger ml-4" (click)="decline(fr.email)">DECLINE</button>
               </div>
             </div>
         </div>

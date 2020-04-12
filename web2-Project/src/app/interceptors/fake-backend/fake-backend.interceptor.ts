@@ -30,6 +30,7 @@ const users: User[] = [
     role: Role.admin,
     friends: new Array<User>(),
     friendRequests: new Array<User>(),
+    waitingForAccept: new Array<User>(),
     messages: new Array<Message>()
   },
   { 
@@ -62,6 +63,7 @@ const users: User[] = [
         Role.user,
         new Array<User>(),
         new Array<User>(),
+        new Array<User>(),
         new Array<Message>()
       ),
       new User(
@@ -77,6 +79,7 @@ const users: User[] = [
           'drzava'
         ),
         Role.user,
+        new Array<User>(),
         new Array<User>(),
         new Array<User>(),
         new Array<Message>()
@@ -98,9 +101,11 @@ const users: User[] = [
         Role.user,
         new Array<User>(),
         new Array<User>(),
+        new Array<User>(),
         new Array<Message>()
       )
     ),
+    waitingForAccept: new Array<User>(),
     messages: new Array<Message>()
   },
   { 
@@ -118,6 +123,7 @@ const users: User[] = [
     role: Role.adminM,
     friends: new Array<User>(),
     friendRequests: new Array<User>(),
+    waitingForAccept: new Array<User>(),
     messages: new Array<Message>()
   },
   { 
@@ -135,6 +141,7 @@ const users: User[] = [
     role: Role.user,
     friends: new Array<User>(),
     friendRequests: new Array<User>(),
+    waitingForAccept: new Array<User>(),
     messages: new Array<Message>()
   },
 ];
@@ -185,6 +192,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 role: user.role,
                 friends: user.friends,
                 friendRequests: user.friendRequests,
+                waitingForAccept: user.waitingForAccept,
                 messages: user.messages
             })
         }

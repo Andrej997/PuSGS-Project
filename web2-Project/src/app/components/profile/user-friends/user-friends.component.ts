@@ -19,4 +19,23 @@ export class UserFriendsComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  accept(email: string) {
+    for (let i = 0; i < this.currentUser.friendRequests.length; ++i) {
+      if (this.currentUser.friendRequests[i].email === email) {
+        this.currentUser.friends.push(this.currentUser.friendRequests[i]);
+        this.currentUser.friendRequests.splice(i, 1);
+        break;
+      }
+    }
+  }
+
+  decline(email: string) {
+    for (let i = 0; i < this.currentUser.friendRequests.length; ++i) {
+      if (this.currentUser.friendRequests[i].email === email) {
+        this.currentUser.friendRequests.splice(i, 1);
+        break;
+      }
+    }
+  }
+
 }

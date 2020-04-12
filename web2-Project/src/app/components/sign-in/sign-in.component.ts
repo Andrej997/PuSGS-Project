@@ -61,6 +61,8 @@ export class SignInComponent implements OnInit {
                         address,
                         Role.user,
                         new Array<User>(),
+                        new Array<User>(),
+                        new Array<User>(),
                         new Array<Message>()    );
 
                         
