@@ -2,9 +2,6 @@
 <button class="btn-primary" style="display: block;" routerLink="/rent-a-car-profile">
     Back
 </button>
-<button class="btn-primary" style="display: block; margin-left: auto;" routerLink="/rent-a-car-profile">
-    Modify service
-</button>
 <br>
 <div class="container">
     <div class="row card-group" >
@@ -17,6 +14,9 @@
                         <b style="font-size:xx-large">
                             {{ myService.name }}
                         </b>
+                        <div class="btn btn-primary" style="align-self: right;">
+                            <span>Edit</span>
+                        </div>
                     </a>
                     <p class="card-description">
                         {{myService.description}}
@@ -54,8 +54,11 @@
                         <div class="row card-group" >
                             <div class="col-sm-3"  *ngFor="let car of myService.carlist">
                                 <div class="card" style="margin-bottom: 30px;">
-                                    <img [src]="car.image" class="card-img-top" alt="..." 
-                                        ><!--routerLink="/avio-companies/{{avioCompany.id}}/details" -->
+                                    <img [src]="car.image" class="card-img-top" alt="..." ><!--routerLink="/avio-companies/{{avioCompany.id}}/details" -->
+                                    <h5 class="card-title">{{car.brand}} {{car.model}}</h5>
+                                    <p class="card-text"><small class="text-muted">Type: {{ car.type }}</small></p>
+                                    <p class="card-text">Year: {{ car.year }}</p>
+                                    <p class="card-text">Price per day: {{ car.pricePerDay }}</p>
                                 </div>
                             </div>
                         </div>

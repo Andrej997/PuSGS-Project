@@ -24,6 +24,12 @@ export class FilterServiceService {
 
   filterCities(allCity: CardCity[], filterParam: AbstractFilterParam): CardCity[] {
     let filteredCities = new Array<CardCity>();
+    if( typeof filterParam == 'undefined'){
+      //console.log("iffffff");
+      //console.log(typeof filterParam);
+      return filteredCities;
+    }
+
     for (const city of allCity) {
       if (!this.checkCityFilter(city, filterParam)) {
         filteredCities.push(city);
@@ -34,10 +40,6 @@ export class FilterServiceService {
   }
 
   checkCityFilter(city: CardCity, filterParam: AbstractFilterParam): boolean {
-    //return filterParam instanceof StringFilterParam && filterParam.getFilterParamName() === 'searchCity' && !city.city.toLowerCase().includes(filterParam.getFilterParamValue().toLowerCase());
-    if(filterParam instanceof StringFilterParam && filterParam.getFilterParamValue().length === 0)
-      return false;
-    
     return filterParam instanceof StringFilterParam && 
            filterParam.getFilterParamName() === 'searchCity' && 
            !city.city.toLowerCase().includes(filterParam.getFilterParamValue().toLowerCase()
@@ -45,4 +47,3 @@ export class FilterServiceService {
   }
 
 }
-//searchCity

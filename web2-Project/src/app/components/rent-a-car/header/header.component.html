@@ -1,0 +1,49 @@
+<div class="form-inline">
+    <button class="btn btn-success" routerLink="/rent-a-car">
+        <img src="\assets\img\back-icon.png" height="30" width="30">
+    </button>
+    <h4 style="padding-left: 1em; ">Your choose city is  </h4>
+    <h3 style="padding-left: 10px; font-size: xx-large;">
+        <a routerLink="/rent-a-car/{{city.city}}/just-rent">
+            {{city}}
+        </a>
+    </h3>
+    <div class="form-group" style="padding-left: 1em;">
+        <label >Pick-up date: </label>
+        <pre style="padding-left: 10px;"></pre>
+        <input type="date" 
+               name="bday" 
+               max="3000-12-31" 
+               min="1000-01-01" 
+               class="form-control"
+               value="2020-04-14">
+        <input type="time" 
+               class="form-control"
+               value="10:00">
+        <label style="padding-left: 10px;">Drop-off date: </label>
+        <pre style="padding-left: 10px;"></pre>
+        <input type="date" 
+               name="bday" 
+               max="3000-12-31" 
+               min="1000-01-01" 
+               class="form-control"
+               value="2020-04-14">
+        <input type="time" 
+               class="form-control"
+               value="14:00">
+    </div>
+    <!-- <div class="form-group mb-4">
+        <div class="datepicker date input-group p-0 shadow-sm">
+            <input type="date" placeholder="Choose a reservation date" class="form-control py-4 px-4" id="reservationDate">
+            <div class="input-group-append"><span class="input-group-text px-4"><i class="fa fa-clock-o"></i></span></div>
+        </div>
+    </div> -->
+    <!-- <main class="container">
+        <div class="row" style="padding-top: 100px">
+            <div class="col">
+                <input data-date-format="dd/mm/yyyy" id="datepicker">
+            </div>
+        </div>
+    </main> -->
+</div>
+

@@ -27,7 +27,9 @@
               </div>
   
               <div class="card-body">
-                <h3 class="card-title">{{ city.city }}</h3>
+                <a class="card-title ml-1" routerLink="/rent-a-car/{{city.city}}/just-rent">
+                  <b style="font-size:xx-large">{{ city.city }}</b>
+                </a>
               </div>
               <ul class="list-group list-group-flush">
                   <li class="list-group-item" data-toggle="tooltip" 
@@ -38,10 +40,6 @@
                   </li>
               </ul>
               <div class="card-body">
-                  <button type="button" 
-                          class="btn btn-primary"
-                          *ngIf='this.authenticationService.currentUserValue'>Choose
-                  </button>
                   <button type="button" 
                           class="btn btn-warning"
                           *ngIf='currentUserEmail === "markomisojcic@gmail.com" || 

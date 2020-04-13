@@ -6,6 +6,7 @@ export class Car {
     type: string;
     year: number;
     pricePerDay: number;
+    
 
     constructor(id: number,image: string, brand: string, model: string, type: string, year: number, pricePerDay: number) {
         this.id = id;

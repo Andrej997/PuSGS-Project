@@ -1,0 +1,41 @@
+.header {
+    height: 65px;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 60px;
+    left: 2px;
+    right: 2px;
+    background: #eee;
+    overflow-x: hidden;
+    padding: 8px 0;
+  }
+.sidenav {
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 130px;
+    left: 2px;
+    bottom: 10px;
+    background: rgba(255, 245, 245, 0.568);
+    overflow-x: hidden;
+    padding: 2px 0;
+    overflow: hidden;
+    padding-top: 10px;
+  }
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+#main {
+  margin-left: 260px; /* Same as the width of the sidebar */
+  margin-top: 60px;
+  position: sticky;
+  left: 2px;
+  background:  #eee;
+  overflow-x: hidden;
+  padding: 2px 0;
+  overflow: hidden;
+  padding-top: 10px;
+  
+}

@@ -1,6 +1,9 @@
+
+
+
 <div class="container">
     <div class="row card-group" >
-      <div class="col-sm-6" *ngFor="let city of suggestionCity">
+      <div class="col-sm-4" *ngFor="let city of suggestionCity">
           <div class="card" style="margin-bottom: 30px;">
               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                   <ol class="carousel-indicators">
@@ -26,7 +29,9 @@
               </div>
   
               <div class="card-body">
-                <h3 class="card-title">{{ city.city }}</h3>
+                <a class="card-title ml-1" routerLink="/rent-a-car/{{city.city}}/just-rent">
+                  <b style="font-size:xx-large">{{ city.city }}</b>
+                </a>
               </div>
               <ul class="list-group list-group-flush">
                   <li class="list-group-item" data-toggle="tooltip" 
@@ -37,11 +42,6 @@
                   </li>
               </ul>
               <div class="card-body">
-                  <button type="button" 
-                          class="btn btn-primary"
-                          *ngIf='this.authenticationService.currentUserValue'
-                          routerLink="/rent-a-car/{{city.city}}/just-rent">Choose
-                  </button>
                   <button type="button" 
                           class="btn btn-warning"
                           *ngIf='currentUserEmail === "markomisojcic@gmail.com" || 

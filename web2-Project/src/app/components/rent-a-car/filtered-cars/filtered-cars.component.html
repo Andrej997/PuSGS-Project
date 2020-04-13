@@ -1,0 +1,74 @@
+<h2>
+  Prikaz svih dostupnih vozila po servisima:
+</h2>
+<br>
+<div class="container">
+    <div class="row card-group" >
+        <div class="col-sm-12" *ngFor="let service of services">
+            <div class="card" style="margin-bottom: 10px;">
+                <img [src]="service.logoImage" class="card-img-top" alt="..."  >
+                <div class="card-body">
+                  <a class="card-title ml-1" routerLink="/rent-a-car-profile">
+                    <b style="font-size:xx-large">{{ service.name }}</b>
+                  </a>
+                  <p class="card-description">
+                    {{service.description}}
+                  </p>
+                  <h5 class="card-title">
+                    {{ service.address.streetAndNumber }}
+                  </h5>
+                  <h5 class="card-title">
+                    {{ service.address.city }}
+                  </h5>
+                  <h5 class="card-title">
+                    {{ service.address.country }}
+                  </h5>
+                </div>
+
+                <div class="container">
+                  <div class="card mb-3" style="max-width: auto;" *ngFor="let car of service.carlist">
+                    <div class="row card-group " >
+                      <div class="col-md-4">
+                        <img [src]="car.image" class="card-img" alt="...">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h3 class="card-title">{{car.brand}} {{car.model}}</h3>
+                          <p class="card-text"><small class="text-muted">Type: {{ car.type }}</small></p>
+                          <p class="card-text">Year: {{ car.year }}</p>
+                          <p class="card-text">Price per day: {{ car.pricePerDay }}</p>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+<h2>
+  Prikaz svih dostupnih vozila:
+</h2>
+<br>
+
+  <div class="container">
+        <div class="card mb-3" style="max-width: auto;" *ngFor="let car of cars">
+          <div class="row card-group " >
+            <div class="col-md-4">
+              <img [src]="car.image" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h3 class="card-title">{{car.brand}} {{car.model}}</h3>
+                <p class="card-text"><small class="text-muted">Type: {{ car.type }}</small></p>
+                <p class="card-text">Year: {{ car.year }}</p>
+                <p class="card-text">Price per day: {{ car.pricePerDay }}</p>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
