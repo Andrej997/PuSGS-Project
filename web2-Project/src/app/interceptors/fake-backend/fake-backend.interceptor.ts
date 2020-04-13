@@ -103,6 +103,24 @@ const users: User[] = [
         new Array<User>(),
         new Array<User>(),
         new Array<Message>()
+      ),
+      new User(
+        8,
+        'Tes4',
+        'User4',
+        'test4@user4.com',
+        'admin',
+        '\\assets\\img\\user.png',
+        new Address(
+          'ulica i broj',
+          'grad',
+          'drzava'
+        ),
+        Role.user,
+        new Array<User>(),
+        new Array<User>(),
+        new Array<User>(),
+        new Array<Message>()
       )
     ),
     waitingForAccept: new Array<User>(),

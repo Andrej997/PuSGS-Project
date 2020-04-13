@@ -14,13 +14,17 @@ import { ServiceDetailComponent } from './components/rent-a-car/service-detail/s
 import { JustRentComponent } from './components/rent-a-car/just-rent/just-rent.component';
 import { UserFriendsComponent } from './components/profile/user-friends/user-friends.component';
 import { UserMessagesComponent } from './components/profile/user-messages/user-messages.component';
+import { FlightComponent } from './components/profile/flight/flight.component';
 
 
 const routes: Routes = [
   
   {
     path: "flights",
-    component: FlightsComponent
+    children:[
+      { path: "", component: FlightsComponent },
+      { path: ":id/flightdetails", component: FlightComponent }
+    ]
   },
   {
     path: "rent-a-car",

@@ -19,9 +19,20 @@
 
 <div class="container">
   <div class="row card-group" >
-    <div class="col-sm-4" *ngFor="let flight of allFlights">
+    <div class="col-sm-4" *ngFor="let flight of allFlights" ><!--[@myTrigger]='state'-->
         <div class="card" style="margin-bottom: 30px;">
-            <img [src]="flight.destImg" class="card-img-top" alt="...">
+            <div *ngIf='this.authenticationService.currentUserValue; then thenBlock1 else elseBlock1'></div>
+            <ng-template #thenBlock1> <!-- ako je user ulogovan, on ima pravo da udje na profil leta-->
+                <img [src]="flight.destImg" class="card-img-top" alt="..." 
+                    data-toggle="tooltip" 
+                    data-placement="right" title="details..."
+                    style="cursor:pointer;"
+                    routerLink="/flights/{{flight.idCompany}}v{{flight.id}}/flightdetails">
+            </ng-template>
+            <ng-template #elseBlock1>
+                <img [src]="flight.destImg" class="card-img-top" alt="..." >
+            </ng-template>
+            
             <div class="card-body">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -55,7 +66,7 @@
                         *ngIf='this.authenticationService.currentUserValue'>
                     <img src="\assets\img\dollar.png" height="40" width="40">
                     {{ flight.prise }}</li>
-                <li class="list-group-item" 
+                <!--li class="list-group-item" 
                         data-toggle="tooltip" 
                         data-placement="right" title="flight time">
                     <img src="\assets\img\time.png" height="40" width="40">
@@ -71,6 +82,24 @@
                     <img src="\assets\img\path.png" height="40" width="40">
                     <div style="float: right;" class="list-group list-group-flush" *ngFor="let p of flight.presedanje.gradoviPresedanja">
                         <span>-{{p}}-</span>
+                    </div>
+                </li-->
+                <li class="list-group-item">
+                    <div>
+                        <button *ngIf='this.authenticationService.currentUserValue'
+                                type="button" class="btn btn-success" 
+                                data-toggle="tooltip" 
+                                data-placement="right" title="quick reservation">
+                            BOOK
+                        </button>
+                        <button *ngIf='this.authenticationService.currentUserValue'
+                                type="button" class="btn btn-info"
+                                style="float: right;" 
+                                data-toggle="tooltip" 
+                                data-placement="right" title="see details"
+                                routerLink="/flights/{{flight.idCompany}}v{{flight.id}}/flightdetails">
+                            DETAILS
+                        </button>
                     </div>
                 </li>
             </ul>

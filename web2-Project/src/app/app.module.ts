@@ -28,7 +28,9 @@ import { RentACarProfileComponent } from './components/profile/rent-a-car-profil
 import { ServiceDetailComponent } from './components/rent-a-car/service-detail/service-detail/service-detail.component';
 import { JustRentComponent } from './components/rent-a-car/just-rent/just-rent.component';
 import { UserFriendsComponent } from './components/profile/user-friends/user-friends.component';
-import { UserMessagesComponent } from './components/profile/user-messages/user-messages.component'
+import { UserMessagesComponent } from './components/profile/user-messages/user-messages.component';
+import { AirplaneSeatsComponent } from './components/flights-components/airplane-seats/airplane-seats.component';
+import { FlightCallFriendsComponent } from './components/flights-components/flight-call-friends/flight-call-friends.component'
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { UserMessagesComponent } from './components/profile/user-messages/user-m
     ServiceDetailComponent,
     UserFriendsComponent,
     UserMessagesComponent,
+    AirplaneSeatsComponent,
+    FlightCallFriendsComponent,
 
   ],
   imports: [

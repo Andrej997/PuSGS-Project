@@ -1,1 +1,71 @@
-<p>flight works!</p>
+<div class="container">
+    <div class="card">
+        <!--img src={{flight.destImg}} class="mr-4" alt=""-->
+        <div class="media-body">
+            
+            <h3 class="mt-0" >{{flight.company}}
+                <img src={{flight.logo}} class="mr-4" alt="" width="35px">
+            </h3>
+
+            <div class="container">
+                <label for="from">From</label>
+                <p class="ml-3" id="from">{{flight.from}}</p> 
+            </div>
+            
+            <div class="container">
+                <label for="datumPolaska">Date</label>
+                <p class="ml-3" id="datumPolaska">{{flight.datumPolaska}}</p> 
+            </div>
+
+            <div class="container">
+                <label for="to">To</label>
+                <p class="ml-3" id="to">{{flight.to}}</p>
+            </div>
+
+            <div class="container">
+                <label for="datumSletanja">Date</label>
+                <p class="ml-3" id="datumSletanja">{{flight.datumSletanja}}</p> 
+            </div>
+
+            <div class="container">
+                <label for="vremePutovanja">Travel time</label>
+                <p class="ml-3" id="vremePutovanja">{{flight.vremePutovanja}}</p>
+            </div>
+
+            <div class="container">
+                <label for="duzinaPutovanja">Travel distance</label>
+                <p class="ml-3" id="duzinaPutovanja">{{flight.duzinaPutovanja}}</p>
+            </div>
+
+            <div class="container">
+                <label for="presedanje" data-toggle="collapse" href="#collapseChangeover"
+                        style="cursor: pointer;">
+                    Changeover({{flight.presedanje.brojPresedanja}})
+                </label>
+                <p class="ml-3" id="presedanje"  class="container collapse" id="collapseChangeover"
+                    *ngFor="let presedanje of flight.presedanje.gradoviPresedanja">{{presedanje}}</p>
+            </div>
+
+            <div class="container">
+                <label for="price">Price</label>
+                <p class="ml-3" id="price">{{flight.prise}}</p>
+            </div>
+
+            <div class="container" >
+                <app-airplane-seats (click)="getActivatedSeat()"></app-airplane-seats>
+                <span *ngIf='sumPrice>0'>Sum: <b>${{sumPrice}}</b></span>
+
+                <div  *ngIf='seatsNumber>1'>
+                    <div class="border border-secondary pb-4 pl-1 pr-1" *ngFor="let item of createRange(seatsNumber)">
+                        <label>Call Friends</label>
+                        <app-flight-call-friends ></app-flight-call-friends>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container mt-5">
+                <button type="button" class="btn btn-success">BOOK FLIGHT</button>
+            </div>
+        </div>
+    </div>
+</div>

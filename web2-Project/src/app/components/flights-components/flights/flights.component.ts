@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Flight } from 'src/app/entities/flight/flight';
 import { FlightsService } from 'src/app/services/flights-service/flights.service';
+//import { trigger, state, style, transition, animate } from '@angular/animations'
+
 
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { AvioCompaniesService } from 'src/app/services/avio-companies-service/avio-companies.service';
@@ -11,9 +13,21 @@ import { FilterFlight } from 'src/app/entities/filter-flight/filter-flight';
 @Component({
   selector: 'app-flights',
   templateUrl: './flights.component.html',
-  styleUrls: ['./flights.component.css']
+  styleUrls: ['./flights.component.css']/*,
+  animations:[
+    trigger('myTrigger',[
+      state('fadeIn', style({
+        opacity: '1'
+      })),
+      transition('void => *', [
+        style({ opacity: '0', transform: 'translateY(200px)'}),
+        animate('5000ms')
+      ])
+    ])
+  ]*/
 })
 export class FlightsComponent implements OnInit {
+  //state: string = 'fadeIn';
   currentUser: User;
   currentUserEmail = '';
   searchedBool: boolean;
