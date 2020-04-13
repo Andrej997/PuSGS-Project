@@ -20,8 +20,10 @@ export class NavbarComponent implements OnInit {
     if (this.authenticationService.currentUserValue) { 
       this.imgUrl = this.authenticationService.currentUserValue.profileImage;
       this.currentUser = this.authenticationService.currentUserValue;
-      this.fR = this.currentUser.friendRequests.length;
-      this.uM = this.currentUser.messages.length;
+      //this.fR = this.currentUser.friendRequests.length;
+      this.fR = 5;
+      //this.uM = this.currentUser.messages.length;
+      this.uM = 2;
     }
   }
 

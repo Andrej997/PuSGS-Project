@@ -1,27 +1,11 @@
-<p>just-rent works!</p>
-<div class="container">
-    <div class="row card-group" >
-        <div class="col-sm-4" *ngFor="let service of services">
-            <div class="card" style="margin-bottom: 30px;">
-                <img [src]="service.logoImage" class="card-img-top" alt="..."  >
-                <div class="card-body">
-                  <a class="card-title ml-1" routerLink="/rent-a-car-profile">
-                    <b style="font-size:xx-large">{{ service.name }}</b>
-                  </a>
-                  <p class="card-description">
-                    {{service.description}}
-                  </p>
-                  <h5 class="card-title">
-                    {{ service.address.streetAndNumber }}
-                  </h5>
-                  <h5 class="card-title">
-                    {{ service.address.city }}
-                  </h5>
-                  <h5 class="card-title">
-                    {{ service.address.country }}
-                  </h5>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="header">
+  <app-header [city]="city"></app-header>
 </div>
+<div id="main">
+  <app-filtered-cars [services]="services" [cars]="cars"></app-filtered-cars>
+</div>
+<div class="sidenav"  ><!--onscroll="scrollFunction()"-->
+  <app-filter-side-bar ></app-filter-side-bar>
+</div>
+
+

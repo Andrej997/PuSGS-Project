@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AvioCompaniesComponent } from './avio-companies.component';
+import { FilterSideBarComponent } from './filter-side-bar.component';
 
-describe('AvioCompaniesComponent', () => {
-  let component: AvioCompaniesComponent;
-  let fixture: ComponentFixture<AvioCompaniesComponent>;
+describe('FilterSideBarComponent', () => {
+  let component: FilterSideBarComponent;
+  let fixture: ComponentFixture<FilterSideBarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AvioCompaniesComponent ]
+      declarations: [ FilterSideBarComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AvioCompaniesComponent);
+    fixture = TestBed.createComponent(FilterSideBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

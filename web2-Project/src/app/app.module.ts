@@ -31,6 +31,9 @@ import { UserFriendsComponent } from './components/profile/user-friends/user-fri
 import { UserMessagesComponent } from './components/profile/user-messages/user-messages.component';
 import { AirplaneSeatsComponent } from './components/flights-components/airplane-seats/airplane-seats.component';
 import { FlightCallFriendsComponent } from './components/flights-components/flight-call-friends/flight-call-friends.component'
+import { HeaderComponent } from './components/rent-a-car/header/header.component';
+import { FilterSideBarComponent } from './components/rent-a-car/filter-side-bar/filter-side-bar.component';
+import { FilteredCarsComponent } from './components/rent-a-car/filtered-cars/filtered-cars.component'
 
 @NgModule({
   declarations: [
@@ -60,6 +63,9 @@ import { FlightCallFriendsComponent } from './components/flights-components/flig
     UserMessagesComponent,
     AirplaneSeatsComponent,
     FlightCallFriendsComponent,
+    HeaderComponent,
+    FilterSideBarComponent,
+    FilteredCarsComponent,
 
   ],
   imports: [

@@ -1,0 +1,57 @@
+<div style="overflow: scroll;" >
+    <label for="cars">Choose a specific service:</label>
+    <br>
+    <select id="services" >
+        <option value="volvo" *ngFor="let service of services">{{service.name}}</option>
+    </select>
+    <br>
+    <br>
+    <label for="cars">Price range:</label>
+    <br>
+
+    <form class="range-field">
+        <span class="font-weight-bold indigo-text ml-2 mt-1">234</span>
+        <input type="range" min="234" max="1000" />
+        <span class="font-weight-bold indigo-text ml-2 mt-1">1000</span>
+    </form>
+
+    <br>
+    <label for="cars">Choose a specific brand car:</label>
+    <br>
+    <select id="cars" >
+    <option value="volvo" href="#" *ngFor="let car of cars">{{car.brand}}</option>
+    </select>
+    <br>
+    <br>
+
+    <h6>Type</h6>
+    <label class="container" id="type" >Convertable
+    <input type="checkbox" checked="checked">
+    <span class="checkmark"></span>
+    </label>
+    <label class="container" id="type" >Coupe
+    <input type="checkbox">
+    <span class="checkmark"></span>
+    </label>
+    <label class="container" id="type">Crossoover
+    <input type="checkbox" checked="checked">
+    <span class="checkmark"></span>
+    </label>
+    <label class="container" id="type">Hatchback
+    <input type="checkbox">
+    <span class="checkmark"></span>
+    </label>
+    <label class="container" id="type">Luxuary
+        <input type="checkbox">
+        <span class="checkmark"></span>
+    </label>
+    <label class="container" id="type">Minivan
+        <input type="checkbox">
+        <span class="checkmark"></span>
+    </label>
+    <label class="container"id="type">Sedan
+        <input type="checkbox" checked="checked">
+        <span class="checkmark"></span>
+    </label>
+
+</div>
