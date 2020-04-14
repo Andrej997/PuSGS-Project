@@ -3,6 +3,9 @@ import { User, Role } from 'src/app/entities/user/user';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { Address } from 'src/app/entities/address/address';
 import { Message } from 'src/app/entities/message/message';
+import { Friend } from 'src/app/entities/friend/friend';
+import { FriendServiceService } from 'src/app/services/friend-service/friend-service.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-user-friends',
@@ -11,31 +14,77 @@ import { Message } from 'src/app/entities/message/message';
 })
 export class UserFriendsComponent implements OnInit {
 
+  foundUser: boolean = false;
+  searchedUser: User;
+  searchedUserName: string = '';
+  searchedUserSurname: string = '';
+
   currentUser: User;
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService,
+      private friendServiceService: FriendServiceService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    console.log(this.currentUser);
+    //console.log(this.currentUser);
   } 
 
   ngOnInit(): void { }
 
   accept(email: string) {
-    for (let i = 0; i < this.currentUser.friendRequests.length; ++i) {
-      if (this.currentUser.friendRequests[i].email === email) {
-        this.currentUser.friends.push(this.currentUser.friendRequests[i]);
-        this.currentUser.friendRequests.splice(i, 1);
-        break;
-      }
-    }
+    this.friendServiceService.acceptFriend(email);
   }
 
   decline(email: string) {
-    for (let i = 0; i < this.currentUser.friendRequests.length; ++i) {
-      if (this.currentUser.friendRequests[i].email === email) {
-        this.currentUser.friendRequests.splice(i, 1);
-        break;
+    this.friendServiceService.declineFriend(email);
+  }
+
+  form = new FormGroup({
+    email: new FormControl()
+  });
+  
+  get f(){
+    return this.form.controls;
+  }
+
+  searchUser() {
+    let email = this.form.value.email;
+    if (email != this.currentUser.email) { // ako je user ukucao svoj mail, nece se nista desiti
+      let retVal = this.friendServiceService.findUser(email);
+      if (retVal === false) {
+        this.foundUser = false;
+      }
+      else {
+        this.searchedUser = (retVal as User);
+        this.searchedUserName = this.searchedUser.firstName;
+        this.searchedUserSurname = this.searchedUser.lastName;
+        this.foundUser = true;
+        // console.log(this.searchedUser);
       }
     }
   }
 
+  addFriend(): void {
+    this.friendServiceService.addUserToMyWaitingList(this.searchedUser);
+    this.foundUser = false;
+  }
+
+  cancelAdd(): void {
+    this.foundUser = false;
+  }
+
+  deleteFriend(email: string): void {
+    this.friendServiceService.deleteFriend(email);
+  }
+
+  formChat = new FormGroup({
+    chatText: new FormControl()
+  });
+  
+  get fChat(){
+    return this.formChat.controls;
+  }
+
+  chatWithFriend(email: string): void {
+    let text = this.formChat.value.chatText;
+    let message = new Message(this.currentUser.firstName, text, new Date(), true);
+    this.friendServiceService.saveMessage(email, message);
+  }
 }

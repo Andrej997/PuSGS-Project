@@ -10,9 +10,10 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 export class UserMessagesComponent implements OnInit {
 
   currentUser: User;
+  
   constructor(private authenticationService: AuthenticationService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    //console.log(this.currentUser);
+    console.log(this.currentUser.friends);
   } 
 
   ngOnInit(): void {

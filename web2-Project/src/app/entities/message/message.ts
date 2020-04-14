@@ -1,17 +1,12 @@
-import { User } from '../user/user';
 
 export class Message {
-    withUser: User;
-    fromUserEmail: string;
-    toUserEmail: string;
-    text: string;
-    date: Date;
-    isUnread: boolean;
+    name: string; // ime posiljaoca ove poruke
+    text: string; // sadrzaj poruke
+    date: Date; // vreme kad je poslata
+    isUnread: boolean; // da li je procitana
 
-    constructor(withUser: User, fromUserEmail: string, toUserEmail: string, text: string, date: Date, isUnread: boolean) {
-        this.withUser = withUser;
-        this.fromUserEmail = fromUserEmail;
-        this.toUserEmail = toUserEmail;
+    constructor(name: string, text: string, date: Date, isUnread: boolean) {
+        this.name = name;
         this.text = text;
         this.date = date;
         this.isUnread = isUnread;
