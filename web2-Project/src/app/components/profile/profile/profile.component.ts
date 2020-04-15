@@ -22,14 +22,14 @@ export class ProfileComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.currentUser.messages.forEach(element => {
-      if (element.isUnread) {
-        ++this.unreadMessages;
-      }
-    });
-    this.currentUser.friendRequests.forEach(element => {
-      ++this.friendReq;
-    });
+    // this.currentUser.messages.forEach(element => {
+    //   if (element.isUnread) {
+    //     ++this.unreadMessages;
+    //   }
+    // });
+    // this.currentUser.friendRequests.forEach(element => {
+    //   ++this.friendReq;
+    // });
   }
 
 

@@ -13,8 +13,9 @@ import { delay, mergeMap, materialize, dematerialize, first } from 'rxjs/operato
 import { User, Role } from 'src/app/entities/user/user';
 import { Message } from 'src/app/entities/message/message';
 import { Address } from 'src/app/entities/address/address';
+import { Friend } from 'src/app/entities/friend/friend';
 
-const users: User[] = [
+export const users: User[] = [
   { 
     id: 1,
     firstName: 'admin',
@@ -28,10 +29,9 @@ const users: User[] = [
       country: 'string'
     },
     role: Role.admin,
-    friends: new Array<User>(),
+    friends: new Array<Friend>(),
     friendRequests: new Array<User>(),
-    waitingForAccept: new Array<User>(),
-    messages: new Array<Message>()
+    waitingForAccept: new Array<User>()
   },
   { 
     id: 2,
@@ -46,8 +46,8 @@ const users: User[] = [
       country: 'Serbia'
     },
     role: Role.adminA,
-    friends: new Array<User>(
-      
+    friends: new Array<Friend>(),
+    friendRequests: new Array<User>(
       new User(
         5,
         'Test1',
@@ -61,10 +61,9 @@ const users: User[] = [
           'drzava'
         ),
         Role.user,
+        new Array<Friend>(),
         new Array<User>(),
-        new Array<User>(),
-        new Array<User>(),
-        new Array<Message>()
+        new Array<User>()
       ),
       new User(
         6,
@@ -79,52 +78,12 @@ const users: User[] = [
           'drzava'
         ),
         Role.user,
+        new Array<Friend>(),
         new Array<User>(),
-        new Array<User>(),
-        new Array<User>(),
-        new Array<Message>()
+        new Array<User>()
       )
     ),
-    friendRequests: new Array<User>(
-      new User(
-        7,
-        'Tes3',
-        'User3',
-        'test3@user3.com',
-        'admin',
-        '\\assets\\img\\user.png',
-        new Address(
-          'ulica i broj',
-          'grad',
-          'drzava'
-        ),
-        Role.user,
-        new Array<User>(),
-        new Array<User>(),
-        new Array<User>(),
-        new Array<Message>()
-      ),
-      new User(
-        8,
-        'Tes4',
-        'User4',
-        'test4@user4.com',
-        'admin',
-        '\\assets\\img\\user.png',
-        new Address(
-          'ulica i broj',
-          'grad',
-          'drzava'
-        ),
-        Role.user,
-        new Array<User>(),
-        new Array<User>(),
-        new Array<User>(),
-        new Array<Message>()
-      )
-    ),
-    waitingForAccept: new Array<User>(),
-    messages: new Array<Message>()
+    waitingForAccept: new Array<User>()
   },
   { 
     id: 3,
@@ -139,10 +98,9 @@ const users: User[] = [
       country: 'string'
     },
     role: Role.adminM,
-    friends: new Array<User>(),
+    friends: new Array<Friend>(),
     friendRequests: new Array<User>(),
-    waitingForAccept: new Array<User>(),
-    messages: new Array<Message>()
+    waitingForAccept: new Array<User>()
   },
   { 
     id: 4,
@@ -157,10 +115,9 @@ const users: User[] = [
       country: 'string'
     },
     role: Role.user,
-    friends: new Array<User>(),
+    friends: new Array<Friend>(),
     friendRequests: new Array<User>(),
-    waitingForAccept: new Array<User>(),
-    messages: new Array<Message>()
+    waitingForAccept: new Array<User>()
   },
 ];
 
@@ -210,8 +167,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 role: user.role,
                 friends: user.friends,
                 friendRequests: user.friendRequests,
-                waitingForAccept: user.waitingForAccept,
-                messages: user.messages
+                waitingForAccept: user.waitingForAccept
             })
         }
 

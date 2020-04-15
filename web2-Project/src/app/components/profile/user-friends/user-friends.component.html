@@ -15,8 +15,61 @@
             </div>
         </div>
     </div>
-    <h1>FRIENDS</h1>
+    <h1>FRIENDS <button type="button" data-toggle="collapse" href="#addNewFriend" class="btn btn-primary">ADD NEW</button></h1>
+    <div class="collapse border rounded border-primary pb-5 pl-1 pr-1 pt-1" id="addNewFriend">
+      <form [formGroup]="form" (ngSubmit)="searchUser()" *ngIf="!foundUser">
+        <div class="form-group">
+          <input type="email" class="form-control" id="email" formControlName="email"  #email 
+                aria-describedby="emailHelp" style="width: 90%; float: left;" placeholder="email">
+          <button type="submit" class="btn btn-primary" style="float: right;">
+            Search
+          </button>
+        </div>
+      </form>
+      <div *ngIf="foundUser">
+        <h3 style="float: left;">{{searchedUserName}} {{searchedUserSurname}}</h3>
+        <button type="submit" class="btn btn-danger" style="float: right;"
+                (click)="cancelAdd()">
+          CANCEL
+        </button>
+        <button type="submit" class="btn btn-success" style="float: right;"
+                (click)="addFriend()">
+          ADD
+        </button>
+      </div>
+    </div>
     <div class="card mb-3" *ngFor="let fr of currentUser.friends">
+        <div class="row no-gutters">
+            <div class="col-md-1">
+                <img src={{fr.friend.profileImage}} alt="">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{fr.friend.email}}</h5>
+                <p class="card-text">{{fr.friend.firstName}} {{fr.friend.lastName}}</p>
+                <button type="button" class="btn btn-primary" data-toggle="collapse" href="#overflowchat">CHAT</button>
+                <button type="button" class="btn btn-danger ml-4" (click)="deleteFriend(fr.friend.email)">DELETE</button>
+              </div>
+            </div>
+            <div class="collapse overflowChat" id="overflowchat">
+              <div *ngFor="let message of fr.messages">
+                <p><b>{{message.name}}:</b> {{message.text}}</p><b>{{message.date}}</b>
+                <hr style="background-color: black;">
+              </div>
+              <form [formGroup]="formChat" (ngSubmit)="chatWithFriend(fr.friend.email)">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="chatText" formControlName="chatText"  #chatText 
+                        aria-describedby="chatTextHelp" style="width: 90%; float: left;" placeholder="text...">
+                  <button type="submit" class="btn btn-primary" style="float: right;">
+                    Send
+                  </button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+    <h1>WAITING LIST</h1>
+    <div class="card mb-3" *ngFor="let fr of currentUser.waitingForAccept">
         <div class="row no-gutters">
             <div class="col-md-1">
                 <img src={{fr.profileImage}} alt="">
@@ -25,8 +78,6 @@
               <div class="card-body">
                 <h5 class="card-title">{{fr.email}}</h5>
                 <p class="card-text">{{fr.firstName}} {{fr.lastName}}</p>
-                <button type="button" class="btn btn-primary">CHAT</button>
-                <button type="button" class="btn btn-danger ml-4">DELETE</button>
               </div>
             </div>
         </div>

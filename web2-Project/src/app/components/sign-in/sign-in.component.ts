@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User, Role } from 'src/app/entities/user/user';
 import { Address } from 'src/app/entities/address/address';
 import { Message } from 'src/app/entities/message/message';
+import { Friend } from 'src/app/entities/friend/friend';
 
 @Component({
   selector: 'app-sign-in',
@@ -60,10 +61,9 @@ export class SignInComponent implements OnInit {
                         this.signInForm.value.profileImg,
                         address,
                         Role.user,
+                        new Array<Friend>(),
                         new Array<User>(),
-                        new Array<User>(),
-                        new Array<User>(),
-                        new Array<Message>()    );
+                        new Array<User>());
 
                         
     console.log(user);
