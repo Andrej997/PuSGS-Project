@@ -12,7 +12,8 @@ export class ServiceDetailComponent implements OnInit {
 
   id: number;
   myService: RentACarService;
-  prosek: number;
+  averageRating: number;
+  numberVote: number;
 
 
   constructor(private route: ActivatedRoute,
@@ -23,12 +24,13 @@ export class ServiceDetailComponent implements OnInit {
   }
 
   calculateAvg(){
-    var zbir: number;
-    zbir = 0;
+    var sum = 0;
     this.myService.raiting.forEach(element => {
-      zbir += element;
+      sum += element;
     });
-    this.prosek =  zbir / this.myService.raiting.length;
+    this.numberVote = this.myService.raiting.length;
+
+    this.averageRating =  sum / this.numberVote;
   }
 
   ngOnInit(): void {

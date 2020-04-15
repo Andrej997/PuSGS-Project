@@ -31,12 +31,41 @@
                       <div class="col-md-4">
                         <img [src]="car.image" class="card-img" alt="...">
                       </div>
-                      <div class="col-md-8">
+                      <div class="col-md-6">
                         <div class="card-body">
                           <h3 class="card-title">{{car.brand}} {{car.model}}</h3>
                           <p class="card-text"><small class="text-muted">Type: {{ car.type }}</small></p>
                           <p class="card-text">Year: {{ car.year }}</p>
                           <p class="card-text">Price per day: {{ car.pricePerDay }}</p>
+                        </div>
+                      </div>
+                      <div class="col-md-1">
+                        <div class="card-body">
+                          <div class="label" style="width: 120px;">
+                            <span >
+                              <b>
+                                140 e/per day
+                              </b>
+                            </span>
+                          </div>
+                          <div class="label" style="width: 120px;">
+                            <span >
+                              <b>
+                                Summary[-]
+                              </b>
+                            </span>
+                          </div>
+                          <div class="btn btn-primary" style="width: 120px; ">
+                            <p class="card-text">
+                              Rent
+                            </p>
+                          </div>
+                          <br>
+                          <div class="btn btn-primary" style="width: 120px;">
+                            <p class="card-text">
+                              Detail
+                            </p>
+                          </div>
                         </div>
                       </div>
                   </div>
@@ -60,12 +89,40 @@
             <div class="col-md-4">
               <img [src]="car.image" class="card-img" alt="...">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
               <div class="card-body">
                 <h3 class="card-title">{{car.brand}} {{car.model}}</h3>
                 <p class="card-text"><small class="text-muted">Type: {{ car.type }}</small></p>
                 <p class="card-text">Year: {{ car.year }}</p>
                 <p class="card-text">Price per day: {{ car.pricePerDay }}</p>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <div class="card-body">
+                <div class="label" style="width: 120px;">
+                  <span >
+                    <b>
+                      140 e/per day
+                    </b>
+                  </span>
+                </div>
+                <div class="label" style="width: 120px;">
+                  <span >
+                    <b>
+                      Summary[-]
+                    </b>
+                  </span>
+                </div>
+                <div class="btn btn-primary" style="width: 120px;">
+                  <span>
+                    Rent
+                  </span>
+                </div>
+                <div class="btn btn-primary" style="width: 120px;">
+                  <p class="card-text">
+                    Detail
+                  </p>
+                </div>
               </div>
             </div>
         </div>

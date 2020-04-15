@@ -6,7 +6,7 @@
     top: 60px;
     left: 2px;
     right: 2px;
-    background: #eee;
+    background: rgb(151, 151, 151);
     overflow-x: hidden;
     padding: 8px 0;
   }
@@ -17,7 +17,7 @@
     top: 130px;
     left: 2px;
     bottom: 10px;
-    background: rgba(255, 245, 245, 0.568);
+    background: rgba(209, 209, 209, 0.404);
     overflow-x: hidden;
     padding: 2px 0;
     overflow: hidden;

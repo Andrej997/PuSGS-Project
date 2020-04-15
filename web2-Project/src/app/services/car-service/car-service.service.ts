@@ -26,10 +26,10 @@ export class CarServiceService {
 
   mockedCarServices() {
     let allServices = new Array<RentACarService>();
-    var pe = new Address("Yongdingmen Inner St", "Peking", "Kina");//Euro Car
-    var sm = new Address("Arsenija Carnojevica, 25", "Peking", "Srbija");//Euro Car
-    var ns = new Address("Футошка, 22", "New york", "Srbija"); //Cartize Company
-    var tv = new Address("Kotorksa, 12", "Moskva", "Crna Gora"); //Queen
+    var pe = new Address("Yongdingmen Inner St", "Peking", "Kina");
+    var sm = new Address("500 W Temple St", "Los angeles", "SAD");
+    var ns = new Address("30 Water St", "New york", "SAD"); 
+    var tv = new Address("Никитский пер 2,", "Moskva", "Rusija"); 
 
     var pricelist = new Array<number>();
     pricelist.push(99, 88, 123, 456); 
@@ -43,12 +43,12 @@ export class CarServiceService {
     var raiting =  Array<number>();
     var raiting1 =  Array<number>();
     raiting.push(4, 5, 1, 2, 3);
-    raiting1.push(4, 5, 1, 2, 5);
+    raiting1.push(4, 1, 1, 2, 5);
     var comments = Array<string>();
     comments.push("Komentar1");
     comments.push("Komentar2");
     comments.push("Komentar3");
-    var image = "../../../assets/img/car.jpg";
+    var image = "../../../assets/img/rent-a-car-logo.jpg";
 
     const service1 = new RentACarService(123, 
                                          "Euro car", 
@@ -148,18 +148,24 @@ export class CarServiceService {
   mockedCardsCity(): Array<CardCity> {
     let allCards = new Array<CardCity>();
     let ny = new Array<string>();
-    ny.push("../../../assets/img/peking.jpg");
+    let ny1 = new Array<string>();
+    let ny2 = new Array<string>();
+    ny.push("../../../assets/img/new york.jpg");
     ny.push("../../../assets/img/los angeles.jpg");
-    ny.push("../../../assets/img/moskva.jpg");
+
+    ny1.push("../../../assets/img/peking.jpg");
+    ny1.push("../../../assets/img/new york.jpg");
+
+    ny2.push("../../../assets/img/moskva.jpg");
+    ny2.push("../../../assets/img/los angeles.jpg");
+   
 
     const card1 = new CardCity("New york", "Neki opis ovde stoji..xD", ny);
-    const card2 = new CardCity("Peking", "Neki opis i ovde stoji..xD", ny);
-    const card3 = new CardCity("Peking", "Neki opis i ovde stoji..xD", ny);
-    const card4 = new CardCity("Moskva", "Neki opis i ovde stoji..xD", ny);
+    const card2 = new CardCity("Peking", "Neki opis i ovde stoji..xD", ny1);
+    const card4 = new CardCity("Moskva", "Neki opis i ovde stoji..xD", ny2);
 
     allCards.push(card1);
     allCards.push(card2);
-    allCards.push(card3);
     allCards.push(card4);
 
     return allCards;
