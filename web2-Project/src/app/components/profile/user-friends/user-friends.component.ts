@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { User, Role } from 'src/app/entities/user/user';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { Address } from 'src/app/entities/address/address';
@@ -13,6 +13,7 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./user-friends.component.css']
 })
 export class UserFriendsComponent implements OnInit {
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
   foundUser: boolean = false;
   searchedUser: User;
@@ -26,7 +27,21 @@ export class UserFriendsComponent implements OnInit {
     //console.log(this.currentUser);
   } 
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.scrollToBottom();
+  }
+
+  ngAfterViewChecked() {        
+    this.scrollToBottom();        
+  } 
+
+  scrollToBottom(): void {
+    try {
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }                 
+  }
+
+  
 
   accept(email: string) {
     this.friendServiceService.acceptFriend(email);

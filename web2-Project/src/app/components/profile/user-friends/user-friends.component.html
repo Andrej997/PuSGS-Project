@@ -51,16 +51,17 @@
                 <button type="button" class="btn btn-danger ml-4" (click)="deleteFriend(fr.friend.email)">DELETE</button>
               </div>
             </div>
-            <div class="collapse overflowChat" id="overflowchat">
+            <div #scrollMe class="collapse overflowChat" id="overflowchat">
               <div *ngFor="let message of fr.messages">
-                <p><b>{{message.name}}:</b> {{message.text}}</p><b>{{message.date}}</b>
+                <p><b>{{message.name}}:</b> {{message.text}}</p>
+                <b>{{message.date}}</b>
                 <hr style="background-color: black;">
               </div>
               <form [formGroup]="formChat" (ngSubmit)="chatWithFriend(fr.friend.email)">
                 <div class="form-group">
                   <input type="text" class="form-control" id="chatText" formControlName="chatText"  #chatText 
                         aria-describedby="chatTextHelp" style="width: 90%; float: left;" placeholder="text...">
-                  <button type="submit" class="btn btn-primary" style="float: right;">
+                  <button type="submit" (click) = "chatText.value = ''" class="btn btn-primary" style="float: right;">
                     Send
                   </button>
                 </div>
