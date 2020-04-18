@@ -1,0 +1,103 @@
+<!-- THIS COMPONENT IS USED FOR CREATING OR CHANGING FLIGHTS -->
+<div class="container"
+        *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
+    <div class="alert alert-danger" role="alert"> 
+        <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+    </div>
+    <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+</div>
+<div class="container"
+        *ngIf='this.authenticationService.currentUserValue'> <!-- AKO JE ULOGOVAN A NEMA DOZVOLU-->
+    <div *ngIf="currentUser.role != 1 && currentUser.role != 2">
+        <div class="alert alert-danger" role="alert">
+            <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+        </div>
+        <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+    </div>
+</div>
+
+<div class="container">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        
+        <div class="form-group" >
+            <label for="company">Company</label>
+            <div class="input-group mb-3 border border-secondary rounded">
+                <select id="company" #company formControlName="company" class="form-control">
+                    <option value="{{name}}" *ngFor="let name of allCompanies">
+                        {{name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label for="from">From</label>
+            <div class="input-group mb-3 border border-secondary rounded">
+                <input type="text" id="from" #from formControlName="from" class="form-control" placeholder="city">
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label for="to">To</label>
+            <div class="input-group mb-3 border border-secondary rounded">
+                <input type="text" id="to" #to formControlName="to" class="form-control" placeholder="city">
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label for="destImg">Destination image</label>
+            <div class="input-group mb-3">
+                <div class="border border-secondary rounded" id="btnImage">
+                    <label style="position: absolute;">{{ imgName }}</label>
+                    <input type="file" accept="image/*" id="destImg" 
+                            #destImg formControlName="destImg" class="form-control" 
+                            placeholder="image">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label for="dateFrom">Date</label>
+            <div class="input-group mb-3 border border-secondary rounded">
+                <input type="date" id="dateFrom" #dateFrom formControlName="dateFrom" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label for="dateTo">Date</label>
+            <div class="input-group mb-3 border border-secondary rounded">
+                <input type="date" id="dateTo" #dateTo formControlName="dateTo" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label for="price">Price</label>
+            <div class="input-group mb-3 border border-secondary rounded">
+                <input type="number" id="price" #price formControlName="price" class="form-control" placeholder="price">
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label for="vremePutovanja">Travel time</label>
+            <div class="input-group mb-3 border border-secondary rounded">
+                <input type="number" id="vremePutovanja" #vremePutovanja formControlName="vremePutovanja" class="form-control" placeholder="travel time">
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label for="duzinaPutovanja">Flight distance</label>
+            <div class="input-group mb-3 border border-secondary rounded">
+                <input type="number" id="duzinaPutovanja" #duzinaPutovanja formControlName="duzinaPutovanja" class="form-control" placeholder="flight distance">
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label for="price">Changeover</label>
+            <div class="input-group mb-3 border border-secondary rounded">
+                <input type="number" id="presedanjeCnt" #presedanjeCnt formControlName="presedanjeCnt" class="form-control" placeholder="number">
+            </div>
+        </div>
+    
+        <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
+    </form>
+</div>

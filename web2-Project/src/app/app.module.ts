@@ -33,7 +33,8 @@ import { AirplaneSeatsComponent } from './components/flights-components/airplane
 import { FlightCallFriendsComponent } from './components/flights-components/flight-call-friends/flight-call-friends.component'
 import { HeaderComponent } from './components/rent-a-car/header/header.component';
 import { FilterSideBarComponent } from './components/rent-a-car/filter-side-bar/filter-side-bar.component';
-import { FilteredCarsComponent } from './components/rent-a-car/filtered-cars/filtered-cars.component'
+import { FilteredCarsComponent } from './components/rent-a-car/filtered-cars/filtered-cars.component';
+import { CcFlightComponent } from './components/flights-components/cc-flight/cc-flight.component'
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { FilteredCarsComponent } from './components/rent-a-car/filtered-cars/fil
     HeaderComponent,
     FilterSideBarComponent,
     FilteredCarsComponent,
+    CcFlightComponent,
 
   ],
   imports: [

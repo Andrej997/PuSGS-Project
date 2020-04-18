@@ -15,6 +15,7 @@ import { JustRentComponent } from './components/rent-a-car/just-rent/just-rent.c
 import { UserFriendsComponent } from './components/profile/user-friends/user-friends.component';
 import { UserMessagesComponent } from './components/profile/user-messages/user-messages.component';
 import { FlightComponent } from './components/profile/flight/flight.component';
+import { CcFlightComponent } from './components/flights-components/cc-flight/cc-flight.component';
 
 
 const routes: Routes = [
@@ -75,6 +76,9 @@ const routes: Routes = [
       { path: ":id/details", component: AvioCompanyDetailsComponent }
     ]
   },
+  { 
+    path: "createFlight", component: CcFlightComponent 
+  }, // ova putanja ima id jer componenta ce moci da se koristi i za menjanje
   {
     path: "**",
     redirectTo: "home"

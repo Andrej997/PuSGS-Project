@@ -33,6 +33,8 @@ export class FlightsComponent implements OnInit {
   searchedBool: boolean;
   filteredBool: boolean;
 
+  newId: number; // broj koji se dodeljuje automatski pri kreiranju novog leta
+
   allFlights: Array<Flight>;
   allFlightsCopy: Array<Flight>; // jer ne postoji baza trenutno
   constructor(

@@ -168,4 +168,32 @@ allFlights.push(f3);
 
     return flight;
   }
+
+  // koristi se u cc-flight component
+  getAvioCompanyNames(): Array<string> {
+    let names = new Array<string>();
+    this.allAvioCompanies.forEach(element => {
+      // console.log(element);
+      names.push(element.name);
+    });
+    return names;
+  }
+
+  // koristi se u cc-flight component
+  getAvioCompanyData(companyName: string): Array<any> {
+    let data = new Array<any>();
+    for (let i = 0; i < this.allAvioCompanies.length; ++i) {
+      if (companyName === this.allAvioCompanies[i].name) {
+        data.push(this.allAvioCompanies[i].id); // id of company
+        let indexOfFlight = 0;
+        this.allAvioCompanies[i].flights.forEach(element => {
+          ++indexOfFlight; // ovako nalazimo ukupan broj
+        });
+        data.push(++indexOfFlight); // naredni let
+        data.push(this.allAvioCompanies[i].logo);
+      }
+    }
+
+    return data;
+  }
 }

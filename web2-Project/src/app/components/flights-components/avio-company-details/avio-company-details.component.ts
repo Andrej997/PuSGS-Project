@@ -33,6 +33,8 @@ export class AvioCompanyDetailsComponent implements OnInit {
       this.ocena += this.flightCompany.ocene[index];
     }
     this.ocena = this.ocena / this.flightCompany.ocene.length;
+
+    console.log(this.flightCompany);
   }
 
   ngOnInit(): void {
