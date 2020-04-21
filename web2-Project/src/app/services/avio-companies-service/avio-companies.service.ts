@@ -196,4 +196,14 @@ allFlights.push(f3);
 
     return data;
   }
+
+  // saves the new flight
+  saveNewFlight(companyId: number, flight: Flight) {
+    for (let i = 0; i < this.allAvioCompanies.length; ++i) {
+      if (this.allAvioCompanies[i].id === companyId) {
+        this.allAvioCompanies[i].flights.push(flight);
+        break;
+      }
+    }
+  }
 }

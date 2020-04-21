@@ -61,13 +61,16 @@ const routes: Routes = [
     component: CarouselPhComponent
   },
   {
-    path: "profile", component: ProfileComponent
+    path: "profile", 
+    component: ProfileComponent
   },
   {
-    path : "friends", component: UserFriendsComponent
+    path : "friends", 
+    component: UserFriendsComponent
   },
   {
-    path : "messages", component: UserMessagesComponent
+    path : "messages", 
+    component: UserMessagesComponent
   },
   {
     path: "avio-companies",
@@ -77,8 +80,9 @@ const routes: Routes = [
     ]
   },
   { 
-    path: "createFlight", component: CcFlightComponent 
-  }, // ova putanja ima id jer componenta ce moci da se koristi i za menjanje
+    path : "createFlight", 
+    component: CcFlightComponent 
+  },
   {
     path: "**",
     redirectTo: "home"
