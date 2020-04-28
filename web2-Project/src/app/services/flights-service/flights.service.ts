@@ -1,22 +1,34 @@
 import { Injectable } from '@angular/core';
+import { Flight } from 'src/app/entities/flight/flight';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FlightsService {
 
+  private flight: Flight;
+
   numberOfSeats: number;
   symbol: string; // ako je +, znaci da se povecava
+  reservedSeats: Array<boolean>; // lista rezervisanih siceva
 
   constructor() { }
 
-  setSeatsNumber(sn: number, sy: string) {
-    this.numberOfSeats = sn;
-    this.symbol = sy;
+  setFlight(flight: Flight) {
+    this.flight = flight;
   }
 
-  getSeatsNumber(): [number, string] {
-    return [this.numberOfSeats, this.symbol];
+  getFlight(): Flight {
+    return this.flight;
+  }
+
+  setSeatsNumber(sn: number, as: Array<boolean>) {
+    this.numberOfSeats = sn;
+    this.reservedSeats = as;
+  }
+
+  getSeatsNumber(): [number, Array<boolean>] {
+    return [this.numberOfSeats, this.reservedSeats];
   }
 
 }

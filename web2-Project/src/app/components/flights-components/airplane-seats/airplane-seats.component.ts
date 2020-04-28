@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FlightsService } from 'src/app/services/flights-service/flights.service';
+import { Flight } from 'src/app/entities/flight/flight';
 
 @Component({
   selector: 'app-airplane-seats',
@@ -7,91 +8,52 @@ import { FlightsService } from 'src/app/services/flights-service/flights.service
   styleUrls: ['./airplane-seats.component.css']
 })
 export class AirplaneSeatsComponent implements OnInit {
-  toggle1 = true;
-  toggle2 = true;
-  toggle3 = true;
-  toggle4 = true;
-  toggle5 = true;
-  toggle6 = true;
-  seats: number = 0;
+  seats: number = 0; // broj ukupno kliknutih mesta
+
+  private clickedImg: Array<boolean>;
+  public numSeats: number = 0;
+  public flight: Flight;
   
   constructor(private flightsService: FlightsService) { }
 
   ngOnInit(): void {
+    this.flight = this.flightsService.getFlight();
+    this.numSeats = this.flight.aeroplane.numSeats;
+    let clickedImg = new Array<boolean>(this.numSeats);
+    for (let i = 0; i < this.numSeats; ++i) {
+      clickedImg[i] = false;
+    }
+    this.clickedImg = clickedImg;
   }
 
   checkUncheckSeat(event) {
     let selectedId = event.target.id;
-    let symbol: string;
-
-    if (selectedId == 1) {
-      this.toggle1 = !this.toggle1;
-      if (!this.toggle1) {
+    // ako mesto vec nije rezervisano, moze da se rezervise
+    if (!this.flight.aeroplane.allSeats[selectedId].rezervisano) { 
+      let img = document.getElementById(selectedId);
+      if (!this.clickedImg[selectedId]) {
+        this.clickedImg[selectedId] = true;
+        img.style.backgroundColor = 'green';
         ++this.seats;
-        symbol = '+';
       }
       else {
+        this.clickedImg[selectedId] = false;
+        img.style.backgroundColor = 'white';
         --this.seats;
-        symbol = '-';
       }
+      //console.log(img);
     }
-    else if (selectedId == 2) {
-      this.toggle2 = !this.toggle2;
-      if (!this.toggle2) {
-        ++this.seats;
-        symbol = '+';
-      }
-      else {
-        --this.seats;
-        symbol = '-';
-      }
-    }
-    else if (selectedId == 3) {
-      this.toggle3 = !this.toggle3;
-      if (!this.toggle3) {
-        ++this.seats;
-        symbol = '+';
-      }
-      else {
-        --this.seats;
-        symbol = '-';
-      }
-    }
-    else if (selectedId == 4) {
-      this.toggle4 = !this.toggle4;
-      if (!this.toggle4) {
-        ++this.seats;
-        symbol = '+';
-      }
-      else {
-        --this.seats;
-        symbol = '-';
-      }
-    }
-    else if (selectedId == 5) {
-      this.toggle5 = !this.toggle5;
-      if (!this.toggle5) {
-        ++this.seats;
-        symbol = '+';
-      }
-      else {
-        --this.seats;
-        symbol = '-';
-      }
-    }
-    else if (selectedId == 6) {
-      this.toggle6 = !this.toggle6;
-      if (!this.toggle6) {
-        ++this.seats;
-        symbol = '+';
-      }
-      else {
-        --this.seats;
-        symbol = '-';
-      }
-    }
-    this.flightsService.setSeatsNumber(this.seats, symbol);
+    
+    this.flightsService.setSeatsNumber(this.seats, this.clickedImg);
     //console.log(this.seats);
+  }
+
+  createRange(number) {   // simulacija for petlje u html-u
+    var items: number[] = [];
+    for(var i = 0; i < number; i++){
+       items.push(i);
+    }
+    return items;
   }
 
 }

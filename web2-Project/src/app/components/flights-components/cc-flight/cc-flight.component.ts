@@ -149,24 +149,24 @@ export class CcFlightComponent implements OnInit {
       allChangeovers.push(this.form.value.presedanje5);
     }
 
-    let newFlight = new Flight(
-      companyData[1],
-      companyName,
-      companyData[0],
-      companyData[2],
-      this.form.value.from,
-      this.form.value.to,
-      this.form.value.destImg,
-      this.form.value.dateFrom,
-      this.form.value.dateTo,
-      this.form.value.price,
-      this.form.value.vremePutovanja,
-      this.form.value.duzinaPutovanja,
-      new Presedanje(
-        this.form.value.presedanjeCnt,
-        allChangeovers
-      )
-    );
-    this.avioCompaniesService.saveNewFlight(companyData[0], newFlight);
+    // let newFlight = new Flight(
+    //   companyData[1],
+    //   companyName,
+    //   companyData[0],
+    //   companyData[2],
+    //   this.form.value.from,
+    //   this.form.value.to,
+    //   this.form.value.destImg,
+    //   this.form.value.dateFrom,
+    //   this.form.value.dateTo,
+    //   this.form.value.price,
+    //   this.form.value.vremePutovanja,
+    //   this.form.value.duzinaPutovanja,
+    //   new Presedanje(
+    //     this.form.value.presedanjeCnt,
+    //     allChangeovers
+    //   )
+    // );
+    // this.avioCompaniesService.saveNewFlight(companyData[0], newFlight);
   }
 }

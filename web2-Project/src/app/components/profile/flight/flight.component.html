@@ -1,7 +1,25 @@
 <div class="container">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" style="cursor: pointer;" (click)="previousView()"
+                    data-toggle="tooltip" data-placement="bottom" 
+                    title="Tooltip on bottom">
+                    {{prev}}
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" style="cursor: pointer;" (click)="nextView()"
+                    data-toggle="tooltip" data-placement="bottom" 
+                    title="Choose seats">
+                    {{next}}
+                </a>
+            </li>
+        </ul>
+    </nav>
     <div class="card">
         <!--img src={{flight.destImg}} class="mr-4" alt=""-->
-        <div class="media-body">
+        <div class="media-body" *ngIf="paginationNum === 0">
             
             <h3 class="mt-0" >{{flight.company}}
                 <img src={{flight.logo}} class="mr-4" alt="" width="35px">
@@ -51,19 +69,44 @@
                 <p class="ml-3" id="price">{{flight.prise}}</p>
             </div>
 
-            <div class="container" >
-                <app-airplane-seats (click)="getActivatedSeat()"></app-airplane-seats>
-                <span *ngIf='sumPrice>0'>Sum: <b>${{sumPrice}}</b></span>
+            <div class="container">
+                <label for="aeroplane">Aeroplane</label>
+                <p class="ml-3" id="aeroplane">{{flight.aeroplane.name}}</p>
+            </div>
+        </div>
 
-                <div  *ngIf='seatsNumber>1'>
-                    <div class="border border-secondary pb-4 pl-1 pr-1" *ngFor="let item of createRange(seatsNumber)">
-                        <label>Call Friends</label>
-                        <app-flight-call-friends ></app-flight-call-friends>
-                    </div>
-                </div>
+        <div class="media-body" *ngIf="paginationNum === 1">
+            <div class="container" width="30px" >
+                <app-airplane-seats (click)="getActivatedSeat()"></app-airplane-seats>
             </div>
 
-            <div class="container mt-5">
+            <div class="container mt-5" style="float: left;">
+                <span *ngIf='sumPrice>0'>
+                    Sum: <b>${{sumPrice}}</b>
+                </span>
+            </div>
+        </div>
+
+        <div class="media-body" *ngIf="paginationNum === 2">
+            <div class="container" *ngIf='seatsNumber>1' style="display: inline;">
+                <div class="border border-secondary pb-4 pl-1 pr-1" 
+                    *ngFor="let item of createRange(seatsNumber)">
+                    <label>Call Friends</label>
+                    <app-flight-call-friends ></app-flight-call-friends>
+                </div>
+            </div>
+        </div>
+
+        <div class="media-body" *ngIf="paginationNum === 3">
+            RENT A CAR 
+            <div class="container mt-5" style="float: left;">
+                <button type="button" class="btn btn-info">RENT A CAR</button>
+            </div>
+        </div>
+
+        <div class="media-body" *ngIf="paginationNum === 4">
+            ALL RESERVATION DATA
+            <div class="container mt-5" style="float: left;">
                 <button type="button" class="btn btn-success">BOOK FLIGHT</button>
             </div>
         </div>

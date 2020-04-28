@@ -1,9 +1,9 @@
 export class AvioSediste {
-    brSedista: number;
+    id: number;
     rezervisano: boolean;
 
-    constructor(brSedista: number, rezervisano: boolean) {
-        this.brSedista = brSedista;
+    constructor(id: number, rezervisano: boolean) {
+        this.id = id;
         this.rezervisano = rezervisano;
     }
 }

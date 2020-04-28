@@ -7,6 +7,8 @@ import { AvioSediste } from 'src/app/entities/avio-sediste/avio-sediste';
 import { Cak } from 'src/app/entities/cena-avio-karte/cak';
 import { FlightDestination } from 'src/app/entities/flight-destination/flight-destination';
 import { Presedanje } from 'src/app/entities/flight-presedanje/presedanje';
+import { Aeroplane } from 'src/app/entities/aeroplane/aeroplane';
+import { AeroplaneServiceService } from '../aeroplane-service/aeroplane-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ import { Presedanje } from 'src/app/entities/flight-presedanje/presedanje';
 export class AvioCompaniesService {
   allAvioCompanies: Array<FlightCompany>;
   avioCompanies: FlightCompany;
-  constructor() { }
+  constructor(private aeroplaneServiceService: AeroplaneServiceService) { }
 
   loadAvioCompanies() {
     console.log('Učitavanje kompanija...');
@@ -38,10 +40,12 @@ export class AvioCompaniesService {
     const flights = new Array<Flight>();
     const flight1A1 = new Flight(1, 'Air Serbia', A1id, "../../../assets/img/avio companies/air serbia.png", 'Belgrade', 'New York', "../../../assets/img/new york.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            658, "14:15:00", 1500, new Presedanje(0, ["NONE"]));
+            658, "14:15:00", 1500, new Presedanje(0, ["NONE"]), 
+            this.aeroplaneServiceService.mockedAvioCompanies()[0]);
     const flight2A1 = new Flight(2, 'Air Serbia', A1id, "../../../assets/img/avio companies/air serbia.png", 'Belgrade', 'Los Angeles', "../../../assets/img/los angeles.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            1202.69, "14:15:00", 1500, new Presedanje(2, ["Paris", "New York"]));
+            1202.69, "14:15:00", 1500, new Presedanje(2, ["Paris", "New York"]),
+            this.aeroplaneServiceService.mockedAvioCompanies()[1]);
     flights.push(flight1A1);
     flights.push(flight2A1);
     const fastReservation = new Array<Flight>();
@@ -77,10 +81,12 @@ export class AvioCompaniesService {
     const flights2 = new Array<Flight>();
     const flight1A2 = new Flight(1, A2name, A2id, "../../../assets/img/avio companies/turkish airlines.png", 'Belgrade', 'Bejing', "../../../assets/img/peking.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            1995, "14:15:00", 1500, new Presedanje(0, ["NONE"]));
+            1995, "14:15:00", 1500, new Presedanje(0, ["NONE"]),
+            this.aeroplaneServiceService.mockedAvioCompanies()[2]);
     const flight2A2 = new Flight(2, A2name, A2id, "../../../assets/img/avio companies/turkish airlines.png", 'Belgrade', 'Los Angeles', "../../../assets/img/los angeles.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            766, "14:15:00", 1500, new Presedanje(2, ["Frankfurt", "New York"]));
+            766, "14:15:00", 1500, new Presedanje(2, ["Frankfurt", "New York"]),
+            this.aeroplaneServiceService.mockedAvioCompanies()[3]);
     flights2.push(flight1A2);
     flights2.push(flight2A2);
     const fastReservation2 = new Array<Flight>();

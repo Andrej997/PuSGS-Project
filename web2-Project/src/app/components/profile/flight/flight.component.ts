@@ -19,6 +19,13 @@ export class FlightComponent implements OnInit {
   idC: number; // companyID
   seatsNumber: number = 0;
   sumPrice: number = 0;
+
+  paginationNum: number = 0;
+  next: string = 'Choose seats';
+  prev: string = 'None';
+
+  private reservedSeats: Array<boolean>;
+
   constructor(private route: ActivatedRoute, 
     public authenticationService: AuthenticationService,
     private avioCompaniesService: AvioCompaniesService,
@@ -33,6 +40,7 @@ export class FlightComponent implements OnInit {
   ngOnInit(): void {
     this.parseId(this.id);
     this.flight = this.avioCompaniesService.getFlightProfile(this.idC, this.idF);
+    this.flightsService.setFlight(this.flight);
     console.log(this.flight);
   }
 
@@ -42,23 +50,50 @@ export class FlightComponent implements OnInit {
   }
 
   getActivatedSeat() {
-    let symbol: string = '';
-    [this.seatsNumber, symbol] = this.flightsService.getSeatsNumber();
-
-    if (symbol === '+') {
-      this.sumPrice += this.flight.prise;
-    }
-    if (symbol === '-') {
-      this.sumPrice -= this.flight.prise;
-    }
-    // console.log(this.flightsService.getSeatsNumber());
+    [this.seatsNumber, this.reservedSeats] = this.flightsService.getSeatsNumber();
+    this.sumPrice = this.seatsNumber * this.flight.prise;
   }
 
-  createRange(number){   // simulacija for petlje u html-u
+  createRange(number) {   // simulacija for petlje u html-u
     var items: number[] = [];
     for(var i = 1; i <= number-1; i++){
        items.push(i);
     }
     return items;
+  }
+
+  private setControlerNextPrev(num: number): void {
+    if (num === 0) {
+      this.next = 'Choose seats';
+      this.prev = 'None';
+    }
+    else if (num === 1) {
+      this.next = 'Call friends';
+      this.prev = 'Flight details';
+    }
+    else if (num === 2) {
+      this.next = 'Rent a car';
+      this.prev = 'Choose seats';
+    }
+    else if (num === 3) {
+      this.next = 'Book flight';
+      this.prev = 'Call friends';
+    }
+    else if (num === 4) {
+      this.next = 'None';
+      this.prev = 'Rent a car';
+    }
+  }
+
+  nextView(): void {
+    if (this.paginationNum < 4)
+      this.paginationNum += 1;
+    this.setControlerNextPrev(this.paginationNum);
+  }
+
+  previousView(): void {
+    if (this.paginationNum > 0)
+      this.paginationNum -= 1;
+    this.setControlerNextPrev(this.paginationNum);
   }
 }
