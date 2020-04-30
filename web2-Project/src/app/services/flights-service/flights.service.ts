@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Flight } from 'src/app/entities/flight/flight';
+import { User } from 'src/app/entities/user/user';
 
 @Injectable({
   providedIn: 'root'
@@ -31,4 +32,12 @@ export class FlightsService {
     return [this.numberOfSeats, this.reservedSeats];
   }
 
+  private allFriendsToCall: Array<User> = new Array<User>();
+  setFriend(user: User, passport: string) {
+    this.allFriendsToCall.push(user);
+  }
+
+  getCalledFriends(): Array<User> {
+    return this.allFriendsToCall;
+  }
 }

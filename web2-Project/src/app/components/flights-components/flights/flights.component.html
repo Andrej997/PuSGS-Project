@@ -85,20 +85,22 @@
                     </div>
                 </li-->
                 <li class="list-group-item">
-                    <div>
-                        <button *ngIf='this.authenticationService.currentUserValue'
+                    <div *ngIf='this.authenticationService.currentUserValue'>
+                        <button *ngIf='flight.numOfFastReseravtions>0'
                                 type="button" class="btn btn-success" 
                                 data-toggle="tooltip" 
-                                data-placement="right" title="quick reservation">
-                            BOOK
+                                data-placement="right" title="quick reservation"
+                                routerLink="/flights/{{flight.idCompany}}v{{flight.id}}/fastReservaion"
+                                style="width: 50%; height: 60px;">
+                            FAST RESERVATION
                         </button>
-                        <button *ngIf='this.authenticationService.currentUserValue'
-                                type="button" class="btn btn-info"
+                        <button type="button" class="btn btn-info"
                                 style="float: right;" 
                                 data-toggle="tooltip" 
                                 data-placement="right" title="see details"
-                                routerLink="/flights/{{flight.idCompany}}v{{flight.id}}/flightdetails">
-                            DETAILS
+                                routerLink="/flights/{{flight.idCompany}}v{{flight.id}}/flightdetails"
+                                style="width: 50%; height: 60px;">
+                            DETAILS/BOOK 
                         </button>
                     </div>
                 </li>

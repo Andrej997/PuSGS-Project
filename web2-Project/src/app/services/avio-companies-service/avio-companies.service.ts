@@ -23,6 +23,17 @@ export class AvioCompaniesService {
     return this.mockedAvioCompanies();
   }
 
+  private setSeatsForFastReservation(flight: Flight, idS :Array<number>): Flight {
+    flight.aeroplane.allSeats.forEach(element => {
+      idS.forEach(element1 => {
+        if (element1 === element.id) {
+          element.isFastReservation = true;
+        }
+      });
+    });
+    return flight;
+  }
+
   mockedAvioCompanies(): Array<FlightCompany> /* ovo predstavlja tip return val*/{
     let allFlights = new Array<FlightCompany>();
 //#region avio company 1
@@ -38,10 +49,13 @@ export class AvioCompaniesService {
     destListA1.push(d3a1);
     destListA1.push(d4a1);
     const flights = new Array<Flight>();
-    const flight1A1 = new Flight(1, 'Air Serbia', A1id, "../../../assets/img/avio companies/air serbia.png", 'Belgrade', 'New York', "../../../assets/img/new york.jpg",
+    let flight1A1 = new Flight(1, 'Air Serbia', A1id, "../../../assets/img/avio companies/air serbia.png", 'Belgrade', 'New York', "../../../assets/img/new york.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
             658, "14:15:00", 1500, new Presedanje(0, ["NONE"]), 
             this.aeroplaneServiceService.mockedAvioCompanies()[0]);
+    flight1A1.numOfFastReseravtions = 5;
+    flight1A1.discountForFastReservation = 10;
+    flight1A1 = this.setSeatsForFastReservation(flight1A1, [3, 4, 23, 55, 89]);
     const flight2A1 = new Flight(2, 'Air Serbia', A1id, "../../../assets/img/avio companies/air serbia.png", 'Belgrade', 'Los Angeles', "../../../assets/img/los angeles.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
             1202.69, "14:15:00", 1500, new Presedanje(2, ["Paris", "New York"]),

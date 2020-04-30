@@ -5,13 +5,24 @@
         <div *ngIf="flight.aeroplane.allSeats[i].rezervisano ; then thenBlock1 else elseBlock1"></div>
         <ng-template #thenBlock1>
             <!--ovi tipovi imaju id z0, z1... i oni se nece ni citati-->
-            <img src="../assets/img/chair.png" (click)="checkUncheckSeat($event)" 
-                class="rounded-circle"  id=z{{i}} width="30px" alt=""
-                style="background-color: red;">
+            <img src="../assets/img/chair.png"
+                class="rounded-circle"  id=z{{i}} width="30px" alt="reserved"  
+                data-toggle="tooltip" data-placement="right" title="reserved"
+                style="background-color: red;" >
         </ng-template>
         <ng-template #elseBlock1>
-            <img src="../assets/img/chair.png" (click)="checkUncheckSeat($event)" 
-                class="rounded-circle"  id={{i}} width="30px" alt="">
+            <div *ngIf="!flight.aeroplane.allSeats[i].isFastReservation ; then thenBlock11 else elseBlock11"></div>
+            <ng-template #thenBlock11>
+                <img src="../assets/img/chair.png" (click)="checkUncheckSeat($event)"  
+                    data-toggle="tooltip" data-placement="right" title="avaible"
+                    class="rounded-circle"  id={{i}} width="30px" alt="avaible">
+            </ng-template>
+            <ng-template #elseBlock11>
+                <img src="../assets/img/chair.png" 
+                    class="rounded-circle"  id={{i}} width="30px" alt="fast rezervation"  
+                    data-toggle="tooltip" data-placement="right" title="reserved for fast rezervation"
+                    style="background-color: turquoise;" >
+            </ng-template>
         </ng-template>
     </span>
 </div>

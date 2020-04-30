@@ -89,9 +89,13 @@
 
         <div class="media-body" *ngIf="paginationNum === 2">
             <div class="container" *ngIf='seatsNumber>1' style="display: inline;">
-                <div class="border border-secondary pb-4 pl-1 pr-1" 
+                <div class="alert alert-warning" role="alert">
+                    After entering data for each friend, <b>submit</b> his data by clicking on button SUBMIT Friend!
+                    <br/><u>Data will be lost for every unsubmitet frind!</u>
+                </div>
+                <div class="border border-secondary pb-1 pl-1 pr-1" 
                     *ngFor="let item of createRange(seatsNumber)">
-                    <label>Call Friends</label>
+                    <label>Call Friends {{item}}</label>
                     <app-flight-call-friends ></app-flight-call-friends>
                 </div>
             </div>

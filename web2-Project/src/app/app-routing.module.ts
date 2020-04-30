@@ -16,6 +16,7 @@ import { UserFriendsComponent } from './components/profile/user-friends/user-fri
 import { UserMessagesComponent } from './components/profile/user-messages/user-messages.component';
 import { FlightComponent } from './components/profile/flight/flight.component';
 import { CcFlightComponent } from './components/flights-components/cc-flight/cc-flight.component';
+import { FastFlightReservationComponent } from './components/flights-components/fast-flight-reservation/fast-flight-reservation.component';
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
     path: "flights",
     children:[
       { path: "", component: FlightsComponent },
-      { path: ":id/flightdetails", component: FlightComponent }
+      { path: ":id/flightdetails", component: FlightComponent },
+      { path: ":id/fastReservaion", component: FastFlightReservationComponent }
     ]
   },
   {

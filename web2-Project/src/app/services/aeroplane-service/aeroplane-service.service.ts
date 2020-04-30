@@ -12,7 +12,7 @@ export class AeroplaneServiceService {
   private CreateMockedSeats(num: number):  Array<AvioSediste>{
     let seats = new Array<AvioSediste>();
     for (let i = 0; i < num; ++i) {
-      let seat = new AvioSediste(i, false);
+      let seat = new AvioSediste(i, false, false);
       seats.push(seat);
     }
     return seats;

@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 import { User } from 'src/app/entities/user/user';
 import { AvioCompaniesService } from 'src/app/services/avio-companies-service/avio-companies.service';
 import { FlightsService } from 'src/app/services/flights-service/flights.service';
+import { Friend } from 'src/app/entities/friend/friend';
 
 @Component({
   selector: 'app-flight',
@@ -23,6 +24,8 @@ export class FlightComponent implements OnInit {
   paginationNum: number = 0;
   next: string = 'Choose seats';
   prev: string = 'None';
+
+  calledFriends: Array<User>; // ovde ce se iz flight-call-friends.component preko flight.service stavljati useri koji su pozvati za putovanje
 
   private reservedSeats: Array<boolean>;
 
@@ -74,6 +77,7 @@ export class FlightComponent implements OnInit {
     else if (num === 2) {
       this.next = 'Rent a car';
       this.prev = 'Choose seats';
+      this.calledFriends = new Array<User>();
     }
     else if (num === 3) {
       this.next = 'Book flight';
@@ -95,5 +99,9 @@ export class FlightComponent implements OnInit {
     if (this.paginationNum > 0)
       this.paginationNum -= 1;
     this.setControlerNextPrev(this.paginationNum);
+  }
+
+  bookFlight() {
+    this.calledFriends = this.flightsService.getCalledFriends();
   }
 }

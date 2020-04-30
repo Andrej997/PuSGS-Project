@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="card">
+        <div class="media-body">
+            
+            <h3 class="mt-0" >{{flight.company}}
+                <img src={{flight.logo}} class="mr-4" alt="" width="35px">
+            </h3>
+
+            <div class="container">
+                <label for="from">From</label>
+                <p class="ml-3" id="from">{{flight.from}}</p> 
+            </div>
+            
+            <div class="container">
+                <label for="datumPolaska">Date</label>
+                <p class="ml-3" id="datumPolaska">{{flight.datumPolaska}}</p> 
+            </div>
+
+            <div class="container">
+                <label for="to">To</label>
+                <p class="ml-3" id="to">{{flight.to}}</p>
+            </div>
+
+            <div class="container">
+                <label for="datumSletanja">Date</label>
+                <p class="ml-3" id="datumSletanja">{{flight.datumSletanja}}</p> 
+            </div>
+
+            <div class="container">
+                <label for="vremePutovanja">Travel time</label>
+                <p class="ml-3" id="vremePutovanja">{{flight.vremePutovanja}}</p>
+            </div>
+
+            <div class="container">
+                <label for="duzinaPutovanja">Travel distance</label>
+                <p class="ml-3" id="duzinaPutovanja">{{flight.duzinaPutovanja}}</p>
+            </div>
+
+            <div class="container">
+                <label for="presedanje" data-toggle="collapse" href="#collapseChangeover"
+                        style="cursor: pointer;">
+                    Changeover({{flight.presedanje.brojPresedanja}})
+                </label>
+                <p class="ml-3" id="presedanje"  class="container collapse" id="collapseChangeover"
+                    *ngFor="let presedanje of flight.presedanje.gradoviPresedanja">{{presedanje}}</p>
+            </div>
+
+            <div class="container">
+                <label for="price">Price with discount of {{flight.discountForFastReservation}}%</label>
+                <p class="ml-3" id="price">{{discountPrice}}</p>
+            </div>
+
+            <div class="container">
+                <label for="sn">Seat numeration</label>
+                <p class="ml-3" id="sn">{{firstAwaibleSeat}}</p>
+            </div>
+
+            <div class="container">
+                <label for="aeroplane">Aeroplane</label>
+                <p class="ml-3" id="aeroplane">{{flight.aeroplane.name}}</p>
+            </div>
+
+            <div class="container">
+                <button type="button" class="btn btn-success">
+                    BOOK FLIGHT
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
