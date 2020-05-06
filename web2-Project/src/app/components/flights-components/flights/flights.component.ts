@@ -9,6 +9,7 @@ import { AvioCompaniesService } from 'src/app/services/avio-companies-service/av
 import { User } from 'src/app/entities/user/user';
 import { SearchFlight } from 'src/app/entities/search-flight/search-flight';
 import { FilterFlight } from 'src/app/entities/filter-flight/filter-flight';
+import { AvioSediste } from 'src/app/entities/avio-sediste/avio-sediste';
 
 @Component({
   selector: 'app-flights',
@@ -29,7 +30,6 @@ import { FilterFlight } from 'src/app/entities/filter-flight/filter-flight';
 export class FlightsComponent implements OnInit {
   //state: string = 'fadeIn';
   currentUser: User;
-  currentUserEmail = '';
   searchedBool: boolean;
   filteredBool: boolean;
 
@@ -43,7 +43,6 @@ export class FlightsComponent implements OnInit {
       private avioCompaniesService: AvioCompaniesService) {
         if (this.authenticationService.currentUserValue) { 
           this.currentUser = this.authenticationService.currentUserValue;
-          this.currentUserEmail = this.currentUser.email;
         }
       this.allFlights = avioCompaniesService.getAllFligths();
       this.allFlightsCopy = this.allFlights;
@@ -171,5 +170,16 @@ export class FlightsComponent implements OnInit {
     }
 
     return filteredChangeover;
+  }
+
+  createRange(allSeats: Array<AvioSediste>) {   // simulacija for petlje u html-u
+    let items: number[] = [];
+    let retItem: number[] = [];
+    for(var i = 0, j = 0; i < allSeats.length; i++){
+      if (!allSeats[i].reserved && !allSeats[i].isFastReservation)
+       items.push(++j);
+    }
+    retItem.push(items[items.length-1]);
+    return retItem;
   }
 }

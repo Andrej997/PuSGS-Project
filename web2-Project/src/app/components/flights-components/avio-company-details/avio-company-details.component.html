@@ -70,7 +70,9 @@
                     <h4 data-toggle="collapse" href="#collapseExample1" style="cursor: pointer;">Destination</h4>
                     <div class="collapse" id="collapseExample1">
                         <ul class="list-group" *ngFor="let desAddr of flightCompany.destinations">
-                            <li class="list-group-item">{{desAddr.address.city}} - {{desAddr.address.country}}</li>
+                            <li class="list-group-item">
+                                {{desAddr.startAddress.city}} - {{desAddr.startAddress.country}} -> {{desAddr.endAddress.city}} - {{desAddr.endAddress.country}}
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -125,19 +127,50 @@
                                                     <span>-{{p}}-</span>
                                                 </div>
                                             </li>
+                                            <li class="list-group-item" 
+                                                    data-toggle="tooltip" 
+                                                    data-placement="right" title="free seats">
+                                                <div>
+                                                    <img src="\assets\img\chair.png" height="40" width="40" style="float: left;">
+                                                    <div *ngFor="let countFreeSeats of createRange(flight.aeroplane.allSeats)">
+                                                        {{countFreeSeats}}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div *ngIf='this.authenticationService.currentUserValue'>
+                                                    <button *ngIf='flight.numOfFastReseravtions>0'
+                                                            type="button" class="btn btn-success" 
+                                                            data-toggle="tooltip" 
+                                                            data-placement="right" title="quick reservation"
+                                                            routerLink="/flights/{{flight.idCompany}}v{{flight.id}}/fastReservaion"
+                                                            style="width: 50%; height: 60px;">
+                                                        FAST RESERVATION
+                                                    </button>
+                                                    <button type="button" class="btn btn-info"
+                                                            style="float: right;" 
+                                                            data-toggle="tooltip" 
+                                                            data-placement="right" title="see details"
+                                                            routerLink="/flights/{{flight.idCompany}}v{{flight.id}}/flightdetails"
+                                                            style="width: 50%; height: 60px;">
+                                                        DETAILS/BOOK 
+                                                    </button>
+                                                </div>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="border-success col-sm-3" style="margin-bottom: 30px; "
-                                *ngIf='currentUserEmail === "andrej.km997@gmail.com" || 
-                                    currentUserEmail === "admin@admin.com"'>
-                                <a style="cursor: pointer;" routerLink="/createFlight">
-                                    <img id="myimgborder" src="\assets\img\add.png" class="card-img-top" alt="add new flight">
-                                </a>
+                            <div *ngIf='this.authenticationService.currentUserValue'>
+                                <div class="border-success col-sm-3" style="margin-bottom: 30px; "
+                                    *ngIf='currentUser.role === 2 || currentUser.role === 1'>
+                                    <a style="cursor: pointer;" routerLink="/createFlight">
+                                        <img id="myimgborder" src="\assets\img\add.png" 
+                                            class="card-img-top" alt="add new flight" style="width: 100px;">
+                                    </a>
+                                </div>
                             </div>
-                        
+                            
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { AvioCompaniesService } from 'src/app/services/avio-companies-service/avio-companies.service';
 import { FlightsService } from 'src/app/services/flights-service/flights.service';
@@ -23,15 +23,26 @@ export class FastFlightReservationComponent implements OnInit {
 
   firstAwaibleSeat: number = 0;
 
-  constructor(private route: ActivatedRoute, 
+  constructor(private route: ActivatedRoute, private router: Router,
     public authenticationService: AuthenticationService,
     private avioCompaniesService: AvioCompaniesService,
     private flightsService: FlightsService) {
       if (this.authenticationService.currentUserValue) { 
         this.currentUser = this.authenticationService.currentUserValue;
       }
+      else {
+        this.kick();
+      }
       route.params.subscribe(params => { this.id = params['id']; });
       //console.log(this.id);
+    }
+
+    private async kick() {
+      await this.delay(3000);
+      this.router.navigate(['/log-in']);
+    }
+    private delay(ms: number) {
+      return new Promise(resolve => setTimeout(resolve, ms));
     }
 
   ngOnInit(): void {
@@ -57,7 +68,7 @@ export class FastFlightReservationComponent implements OnInit {
   private fas(): number {
     for (let i = 0; i < this.flight.aeroplane.allSeats.length; ++i) {
       // ako je namenjeno za brzu rezervaciju i ako je slobodno
-      if (this.flight.aeroplane.allSeats[i].isFastReservation === true && this.flight.aeroplane.allSeats[i].rezervisano === false) {
+      if (this.flight.aeroplane.allSeats[i].isFastReservation === true && this.flight.aeroplane.allSeats[i].reserved === false) {
         return ++i;
       }
     }

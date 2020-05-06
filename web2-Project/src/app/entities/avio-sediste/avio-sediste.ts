@@ -1,11 +1,11 @@
 export class AvioSediste {
     id: number;
-    rezervisano: boolean;
+    reserved: boolean;
     isFastReservation: boolean;
 
-    constructor(id: number, rezervisano: boolean, isFastReservation: boolean) {
+    constructor(id: number, reserved: boolean, isFastReservation: boolean) {
         this.id = id;
-        this.rezervisano = rezervisano;
+        this.reserved = reserved;
         this.isFastReservation = isFastReservation;
     }
 }

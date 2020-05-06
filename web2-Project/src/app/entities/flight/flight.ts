@@ -1,5 +1,6 @@
 import { Presedanje } from '../flight-presedanje/presedanje';
 import { Aeroplane } from '../aeroplane/aeroplane';
+import { AvioLuggage } from '../avio-luggage/avio-luggage';
 
 export class Flight {
     id: number;
@@ -12,18 +13,22 @@ export class Flight {
     datumPolaska: Date; //
     datumSletanja: Date;//
     prise: number; //
+    priceTwoWay: number; //* cena povratne karte
     vremePutovanja: string;
     duzinaPutovanja: number;
     presedanje: Presedanje;
     aeroplane: Aeroplane;
+    luggage: AvioLuggage;
     
     // polja koja ne prosledjujem kroz konstruktor, jer nisu obavezna za let
     numOfFastReseravtions: number; // broj sedista koja moze da ima za brzu rezervaciju
     discountForFastReservation: number; // popust za brzu rezervaciju
+    ocene: Array<number>;
     
     constructor(id: number, company: string, idCompany: number, logo: string, from: string, to: string, destImg: string,
-                datumPolaska: Date, datumSletanja: Date, prise: number,
-                vremePutovanja: string, duzinaPutovanja: number, presedanje: Presedanje, aeroplane: Aeroplane) {
+                datumPolaska: Date, datumSletanja: Date, prise: number, priceTwoWay: number,
+                vremePutovanja: string, duzinaPutovanja: number, presedanje: Presedanje, aeroplane: Aeroplane,
+                luggage: AvioLuggage) {
         this.id = id;
         this.company = company;
         this.idCompany = idCompany;
@@ -34,9 +39,12 @@ export class Flight {
         this.datumPolaska = datumPolaska;
         this.datumSletanja = datumSletanja;
         this.prise = prise;
+        this.priceTwoWay = priceTwoWay;
         this.vremePutovanja = vremePutovanja;
         this.duzinaPutovanja = duzinaPutovanja;
         this.presedanje = presedanje;
         this.aeroplane = aeroplane;
+        this.ocene = new Array<number>();
+        this.luggage = luggage;
     }
 }

@@ -23,6 +23,9 @@ export class User {
     waitingForAccept: Array<User>; // lista poslatih zahteva za prijateljstvo
     authdata?: string;
 
+    //* passport: number;
+    
+
     constructor(id: number, firstName: string, lastName: string, 
         email: string, password: string, 
         profileImage: string, address: Address, role: Role, 
@@ -38,5 +41,6 @@ export class User {
             this.friends = friends;
             this.friendRequests = friendRequests;
             this.waitingForAccept = waitingForAccept;
+            //* this.passport = 0;
     }
 }

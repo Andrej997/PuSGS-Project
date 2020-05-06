@@ -35,7 +35,9 @@ import { HeaderComponent } from './components/rent-a-car/header/header.component
 import { FilterSideBarComponent } from './components/rent-a-car/filter-side-bar/filter-side-bar.component';
 import { FilteredCarsComponent } from './components/rent-a-car/filtered-cars/filtered-cars.component';
 import { CcFlightComponent } from './components/flights-components/cc-flight/cc-flight.component';
-import { FastFlightReservationComponent } from './components/flights-components/fast-flight-reservation/fast-flight-reservation.component'
+import { FastFlightReservationComponent } from './components/flights-components/fast-flight-reservation/fast-flight-reservation.component';
+import { CreateAvioCompanyComponent } from './components/flights-components/create-avio-company/create-avio-company.component';
+import { StatisticsComponent } from './components/statistics/statistics.component'
 
 @NgModule({
   declarations: [
@@ -70,6 +72,8 @@ import { FastFlightReservationComponent } from './components/flights-components/
     FilteredCarsComponent,
     CcFlightComponent,
     FastFlightReservationComponent,
+    CreateAvioCompanyComponent,
+    StatisticsComponent,
 
   ],
   imports: [

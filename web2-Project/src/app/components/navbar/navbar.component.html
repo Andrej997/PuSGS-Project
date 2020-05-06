@@ -24,6 +24,14 @@
             <li>
               <div class="input-group-prepend">
                 <div *ngIf='this.authenticationService.currentUserValue'>
+                  <a routerLink="/statistics" 
+                    role="button" style="margin-right: 10px;"
+                    aria-haspopup="true" 
+                    aria-expanded="false">
+                    <img src="\assets\img\statistics.png" 
+                        height="30" 
+                        width="30" >
+                  </a>
                   <a routerLink="/rent-a-car-profile" 
                     role="button" style="margin-right: 10px;"
                     aria-haspopup="true" 

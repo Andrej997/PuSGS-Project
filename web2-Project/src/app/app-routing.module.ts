@@ -17,6 +17,8 @@ import { UserMessagesComponent } from './components/profile/user-messages/user-m
 import { FlightComponent } from './components/profile/flight/flight.component';
 import { CcFlightComponent } from './components/flights-components/cc-flight/cc-flight.component';
 import { FastFlightReservationComponent } from './components/flights-components/fast-flight-reservation/fast-flight-reservation.component';
+import { CreateAvioCompanyComponent } from './components/flights-components/create-avio-company/create-avio-company.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 
 
 const routes: Routes = [
@@ -84,6 +86,14 @@ const routes: Routes = [
   { 
     path : "createFlight", 
     component: CcFlightComponent 
+  },
+  {
+    path: "createAvioCompany",
+    component: CreateAvioCompanyComponent
+  },
+  {
+    path: "statistics",
+    component: StatisticsComponent
   },
   {
     path: "**",

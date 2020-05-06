@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 import { AvioCompaniesService } from 'src/app/services/avio-companies-service/avio-companies.service';
 import { FlightCompany } from 'src/app/entities/flightCompany/flight-company';
 import { User } from 'src/app/entities/user/user';
+import { AvioSediste } from 'src/app/entities/avio-sediste/avio-sediste';
 
 @Component({
   selector: 'app-avio-company-details',
@@ -40,4 +41,14 @@ export class AvioCompanyDetailsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  createRange(allSeats: Array<AvioSediste>) {   // simulacija for petlje u html-u
+    let items: number[] = [];
+    let retItem: number[] = [];
+    for(var i = 0, j = 0; i < allSeats.length; i++){
+      if (!allSeats[i].reserved && !allSeats[i].isFastReservation)
+       items.push(++j);
+    }
+    retItem.push(items[items.length-1]);
+    return retItem;
+  }
 }

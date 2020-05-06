@@ -1,17 +1,25 @@
-<div class="container">
+<div class="container"
+        *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
+    <div class="alert alert-danger" role="alert"> 
+        <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+    </div>
+    <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+</div>
+
+<div class="container" *ngIf='this.authenticationService.currentUserValue'>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             <li class="page-item">
                 <a class="page-link" style="cursor: pointer;" (click)="previousView()"
                     data-toggle="tooltip" data-placement="bottom" 
-                    title="Tooltip on bottom">
+                    title="{{prev}}">
                     {{prev}}
                 </a>
             </li>
             <li class="page-item">
                 <a class="page-link" style="cursor: pointer;" (click)="nextView()"
                     data-toggle="tooltip" data-placement="bottom" 
-                    title="Choose seats">
+                    title="{{next}}">
                     {{next}}
                 </a>
             </li>
@@ -65,8 +73,13 @@
             </div>
 
             <div class="container">
-                <label for="price">Price</label>
-                <p class="ml-3" id="price">{{flight.prise}}</p>
+                <label for="exampleFormControlSelect1">Ticket type</label>
+                <div>
+                    <select class="form-control ml-3" [(ngModel)]="selectedTicket" >
+                        <option value=1 selected> One way - ${{flight.prise}}</option>
+                        <option value=2> Two way - ${{flight.priceTwoWay}}</option>
+                    </select>
+                </div>
             </div>
 
             <div class="container">
@@ -96,7 +109,7 @@
                 <div class="border border-secondary pb-1 pl-1 pr-1" 
                     *ngFor="let item of createRange(seatsNumber)">
                     <label>Call Friends {{item}}</label>
-                    <app-flight-call-friends ></app-flight-call-friends>
+                    <app-flight-call-friends></app-flight-call-friends>
                 </div>
             </div>
         </div>
@@ -109,7 +122,45 @@
         </div>
 
         <div class="media-body" *ngIf="paginationNum === 4">
-            ALL RESERVATION DATA
+
+            <div class="container">
+                <label>Carry-On</label>
+                <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="carryOn" (change)="luggageF()">
+            </div>
+
+            <div class="container">
+                <label>Personal Bag</label>
+                <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="personalBag" (change)="luggageF()">
+            </div>
+
+            <div class="container">
+                <label>Full-Size Spinner</label>
+                <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="fullSizeSpiner" (change)="luggageF()">
+            </div>
+
+            <div class="container">
+                <label>Large Duffel</label>
+                <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="largeDuffel" (change)="luggageF()">
+            </div>
+
+            <div class="container">
+                <label>Number of reserved seats</label>
+                <p class="ml-3"><b>{{seatsNumber}}</b></p> 
+                <p>
+                    Seats numerations: 
+                    <b>
+                        <span *ngFor="let seatId of selectedSeats"> 
+                            {{seatId}} 
+                        </span>
+                    </b>
+                </p>
+            </div>
+
+            <div class="container">
+                <label>Sum price</label>
+                <p class="ml-3"><b><span title="ticket sum">${{sumPrice}}</span> + <span  title="luggage sum">${{sumLuggagePrice}}</span> = <span  title="total sum">${{sumPriceForAll}}</span></b></p> 
+            </div>
+
             <div class="container mt-5" style="float: left;">
                 <button type="button" class="btn btn-success">BOOK FLIGHT</button>
             </div>

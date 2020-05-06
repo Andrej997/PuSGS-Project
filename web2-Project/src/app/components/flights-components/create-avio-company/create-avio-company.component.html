@@ -1,0 +1,102 @@
+<!-- THIS COMPONENT IS USED FOR CREATING OR CHANGING FLIGHTS -->
+<div class="container"
+        *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
+    <div class="alert alert-danger" role="alert"> 
+        <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+    </div>
+    <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+</div>
+<div class="container"
+        *ngIf='this.authenticationService.currentUserValue'> <!-- AKO JE ULOGOVAN A NEMA DOZVOLU-->
+    <div *ngIf="currentUser.role != 1 && currentUser.role != 2">
+        <div class="alert alert-danger" role="alert">
+            <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+        </div>
+        <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+    </div>
+</div>
+
+<div *ngIf='this.authenticationService.currentUserValue'>
+    <div class="container" *ngIf="currentUser.role === 1 || currentUser.role === 2">
+    <div class="alert alert-warning" role="alert">
+        <b>All fields are required!</b>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-group">
+            <label for="company">Company</label>
+            <div class="input-group mb-3 border border-secondary rounded">
+                <input type="text" id="company" #company formControlName="company" class="form-control" placeholder="company name">
+            </div>
+            <div *ngIf="f.company.touched && f.company.invalid" class="alert alert-danger">
+                <div *ngIf="f.company.errors.required">Company name is required.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="promotionalDesc">Address</label>
+            <div class="ml-2">
+                <div class="form-group">
+                    <label for="streetAndNumber">Street and number</label>
+                    <div class="input-group mb-3 border border-secondary rounded">
+                        <input type="text" id="streetAndNumber" #streetAndNumber formControlName="streetAndNumber" class="form-control" placeholder="street and number">
+                    </div>
+                    <div *ngIf="f.streetAndNumber.touched && f.streetAndNumber.invalid" class="alert alert-danger">
+                        <div *ngIf="f.streetAndNumber.errors.required">Street name and number are required.</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <div class="input-group mb-3 border border-secondary rounded">
+                        <input type="text" id="city" #city formControlName="city" class="form-control" placeholder="city">
+                    </div>
+                    <div *ngIf="f.city.touched && f.city.invalid" class="alert alert-danger">
+                        <div *ngIf="f.city.errors.required">City is required.</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <div class="input-group mb-3 border border-secondary rounded">
+                        <input type="text" id="country" #country formControlName="country" class="form-control" placeholder="country">
+                    </div>
+                    <div *ngIf="f.country.touched && f.country.invalid" class="alert alert-danger">
+                        <div *ngIf="f.country.errors.required">Country is required.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="promotionalDesc">Promotional description</label>
+            <div class="input-group mb-3 border border-secondary rounded">
+                <input type="text" id="promotionalDesc" #promotionalDesc 
+                    formControlName="promotionalDesc" class="form-control" placeholder="promotional description">
+            </div>
+            <div *ngIf="f.promotionalDesc.touched && f.promotionalDesc.invalid" class="alert alert-danger">
+                <div *ngIf="f.promotionalDesc.errors.required">Promotionaln desctiption is required.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="numdestinations">Number of destinations</label>
+            <div class="input-group mb-3 border border-secondary rounded">
+                <input type="number" id="numdestinations" #numdestinations (input)="onChangeDestination($event.target.value)"
+                    formControlName="numdestinations" class="form-control" placeholder="number of destinations">
+            </div>
+            <div *ngIf="f.numdestinations.touched && f.numdestinations.invalid" class="alert alert-danger">
+                <div *ngIf="f.numdestinations.errors.min">Minimun is 0 destinations.</div>
+            </div>
+            <div class="form-group ml-2" *ngFor="let i of createRange(numOfDestinations)">
+                <label for="desctiption">Destionation {{i+1}}</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="d{{i}}"class="form-control" 
+                            placeholder="destination {{i+1}}" (keyup)="onKey($event)">
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
+    </form>
+    </div>
+</div>

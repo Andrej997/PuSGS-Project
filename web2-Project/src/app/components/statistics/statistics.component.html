@@ -1,0 +1,27 @@
+<div class="container"
+        *ngIf='!this.authenticationService.currentUserValue'> <!-- !AKO NIJE NIKO ULOGOVAN -->
+    <div class="alert alert-danger" role="alert"> 
+        <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+    </div>
+    <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+</div>
+<div class="container"
+        *ngIf='this.authenticationService.currentUserValue'> <!-- !AKO JE ULOGOVAN A NEMA DOZVOLU-->
+    <div *ngIf="currentUser.role != 1 && currentUser.role != 2 && currentUser.role != 3">
+        <div class="alert alert-danger" role="alert">
+            <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+        </div>
+        <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+    </div>
+</div>
+
+<!-- *Ako je ulogovan i ako je avio i car admin -->
+<div class="container" *ngIf='this.authenticationService.currentUserValue'>
+    <div *ngIf="currentUser.role === 1 || currentUser.role === 2">
+        <h1>ovde ide avio statistika</h1>
+    </div>
+    <div *ngIf="currentUser.role === 1 || currentUser.role === 3">
+        <h1>ovde ide rent a car statistika</h1>
+    </div>
+</div>
+

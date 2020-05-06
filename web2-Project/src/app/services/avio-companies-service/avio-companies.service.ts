@@ -4,11 +4,11 @@ import { Address } from 'src/app/entities/address/address'
 import { FlightCompany } from 'src/app/entities/flightCompany/flight-company'
 import { Flight } from 'src/app/entities/flight/flight';
 import { AvioSediste } from 'src/app/entities/avio-sediste/avio-sediste';
-import { Cak } from 'src/app/entities/cena-avio-karte/cak';
 import { FlightDestination } from 'src/app/entities/flight-destination/flight-destination';
 import { Presedanje } from 'src/app/entities/flight-presedanje/presedanje';
 import { Aeroplane } from 'src/app/entities/aeroplane/aeroplane';
 import { AeroplaneServiceService } from '../aeroplane-service/aeroplane-service.service';
+import { AvioLuggage } from 'src/app/entities/avio-luggage/avio-luggage';
 
 @Injectable({
   providedIn: 'root'
@@ -40,10 +40,10 @@ export class AvioCompaniesService {
     const A1id = 1;
     const a1 = new Address('Jurije Gagarina 12', 'Belgrade', 'Serbia');
     const destListA1 = Array<FlightDestination>();
-    const d1a1 = new FlightDestination(new Address("Rue Costes et Bellonte", "Nice", "France"), 1538.33);
-    const d2a1 = new FlightDestination(new Address("Cesta Dr. Franje Tuđmana 1270", "Split", "Croatia"), 78.66);
-    const d3a1 = new FlightDestination(new Address("street", "New York", "USA"), 558.66);
-    const d4a1 = new FlightDestination(new Address("street", "Los Angeles", "USA"), 558.66);
+    const d1a1 = new FlightDestination(new Address("Rue Costes et Bellonte", "Nice", "France"), new Address("Rue Costes et Bellonte", "Nice", "France"));
+    const d2a1 = new FlightDestination(new Address("Cesta Dr. Franje Tuđmana 1270", "Split", "Croatia"), new Address("Rue Costes et Bellonte", "Nice", "France"));
+    const d3a1 = new FlightDestination(new Address("street", "New York", "USA"), new Address("Rue Costes et Bellonte", "Nice", "France"));
+    const d4a1 = new FlightDestination(new Address("street", "Los Angeles", "USA"), new Address("Rue Costes et Bellonte", "Nice", "France"));
     destListA1.push(d1a1);
     destListA1.push(d2a1);
     destListA1.push(d3a1);
@@ -51,20 +51,19 @@ export class AvioCompaniesService {
     const flights = new Array<Flight>();
     let flight1A1 = new Flight(1, 'Air Serbia', A1id, "../../../assets/img/avio companies/air serbia.png", 'Belgrade', 'New York', "../../../assets/img/new york.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            658, "14:15:00", 1500, new Presedanje(0, ["NONE"]), 
-            this.aeroplaneServiceService.mockedAvioCompanies()[0]);
+            658, 2*658-100, "14:15:00", 1500, new Presedanje(0, ["NONE"]), 
+            this.aeroplaneServiceService.mockedAvioCompanies()[0], new AvioLuggage(20, 5, 40, 120));
     flight1A1.numOfFastReseravtions = 5;
     flight1A1.discountForFastReservation = 10;
     flight1A1 = this.setSeatsForFastReservation(flight1A1, [3, 4, 23, 55, 89]);
     const flight2A1 = new Flight(2, 'Air Serbia', A1id, "../../../assets/img/avio companies/air serbia.png", 'Belgrade', 'Los Angeles', "../../../assets/img/los angeles.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            1202.69, "14:15:00", 1500, new Presedanje(2, ["Paris", "New York"]),
-            this.aeroplaneServiceService.mockedAvioCompanies()[1]);
+            1202.69, 1202.69*2-100,"14:15:00", 1500, new Presedanje(2, ["Paris", "New York"]),
+            this.aeroplaneServiceService.mockedAvioCompanies()[1], new AvioLuggage(13, 3, 40, 90));
     flights.push(flight1A1);
     flights.push(flight2A1);
     const fastReservation = new Array<Flight>();
     const sedista = new Array<AvioSediste>();
-    const cene = new Array<Cak>();
     const oceneA1 = new Array<number>();
     oceneA1.push(4.5);
     oceneA1.push(3.5);
@@ -75,10 +74,7 @@ export class AvioCompaniesService {
       "Sigurno letenje s nama",
       destListA1,
       flights,
-      fastReservation,
       sedista,
-      cene,
-      "informacije o prtljagu",
       "../../../assets/img/avio companies/air serbia.png", 
       oceneA1);
     allFlights.push(f1);
@@ -88,24 +84,23 @@ export class AvioCompaniesService {
     const A2name = 'Turkish Airlines';
     const a2 = new Address('Atatürk Havalimanı Cd. No:3/1', 'İstanbul', 'Turkey');
     const destListA2 = Array<FlightDestination>();
-    const d1a2 = new FlightDestination(new Address('Jurije Gagarina 12', 'Belgrade', 'Serbia'), 548);
-    const d2a2 = new FlightDestination(new Address('adress', 'Bejing', 'China'), 548);
+    const d1a2 = new FlightDestination(new Address('Jurije Gagarina 12', 'Belgrade', 'Serbia'), new Address("Rue Costes et Bellonte", "Nice", "France"));
+    const d2a2 = new FlightDestination(new Address('adress', 'Bejing', 'China'), new Address("Rue Costes et Bellonte", "Nice", "France"));
     destListA2.push(d1a2);
     destListA2.push(d2a2);
     const flights2 = new Array<Flight>();
     const flight1A2 = new Flight(1, A2name, A2id, "../../../assets/img/avio companies/turkish airlines.png", 'Belgrade', 'Bejing', "../../../assets/img/peking.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            1995, "14:15:00", 1500, new Presedanje(0, ["NONE"]),
-            this.aeroplaneServiceService.mockedAvioCompanies()[2]);
+            1995, 1995*2-100, "14:15:00", 1500, new Presedanje(0, ["NONE"]),
+            this.aeroplaneServiceService.mockedAvioCompanies()[2], new AvioLuggage(20, 5, 40, 90));
     const flight2A2 = new Flight(2, A2name, A2id, "../../../assets/img/avio companies/turkish airlines.png", 'Belgrade', 'Los Angeles', "../../../assets/img/los angeles.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            766, "14:15:00", 1500, new Presedanje(2, ["Frankfurt", "New York"]),
-            this.aeroplaneServiceService.mockedAvioCompanies()[3]);
+            766, 766*2-100,"14:15:00", 1500, new Presedanje(2, ["Frankfurt", "New York"]),
+            this.aeroplaneServiceService.mockedAvioCompanies()[3], new AvioLuggage(22, 5, 30, 70));
     flights2.push(flight1A2);
     flights2.push(flight2A2);
     const fastReservation2 = new Array<Flight>();
     const sedista2 = new Array<AvioSediste>();
-    const cene2 = new Array<Cak>();
     const oceneA2 = new Array<number>();
     oceneA2.push(4);
     oceneA2.push(5);
@@ -116,10 +111,7 @@ export class AvioCompaniesService {
       "Sigurno letenje s nama",
       destListA2,
       flights2,
-      fastReservation2,
       sedista2,
-      cene2,
-      "informacije o prtljagu",
       "../../../assets/img/avio companies/turkish airlines.png",
       oceneA2);
     allFlights.push(f2);
@@ -127,12 +119,11 @@ export class AvioCompaniesService {
 //#region avio company 3
 const a3 = new Address('60549 Frankfurt am Main', 'Frankfurt', 'Germany');
 const destListA3 = Array<FlightDestination>();
-const d1a3 = new FlightDestination(new Address('Jurije Gagarina 12', 'Belgrade', 'Serbia'), 257.33);
+const d1a3 = new FlightDestination(new Address('Jurije Gagarina 12', 'Belgrade', 'Serbia'), new Address("Rue Costes et Bellonte", "Nice", "France"));
 destListA3.push(d1a3);
 const flights3 = new Array<Flight>();
 const fastReservation3 = new Array<Flight>();
 const sedista3 = new Array<AvioSediste>();
-const cene3 = new Array<Cak>();
 const oceneA3 = new Array<number>();
 oceneA3.push(5);
 oceneA3.push(1.5);
@@ -143,10 +134,7 @@ const f3 = new FlightCompany(
   "Sigurno letenje s nama",
   destListA3,
   flights3,
-  fastReservation3,
   sedista3,
-  cene3,
-  "informacije o prtljagu",
   "../../../assets/img/avio companies/lufthansa.jpg",
   oceneA3);
 allFlights.push(f3);

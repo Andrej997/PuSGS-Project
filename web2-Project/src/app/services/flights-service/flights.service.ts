@@ -23,13 +23,15 @@ export class FlightsService {
     return this.flight;
   }
 
-  setSeatsNumber(sn: number, as: Array<boolean>) {
+  seatId: number;
+  setSeatsNumber(sn: number, as: Array<boolean>, seatId: number) {
     this.numberOfSeats = sn;
     this.reservedSeats = as;
+    this.seatId = seatId;
   }
 
-  getSeatsNumber(): [number, Array<boolean>] {
-    return [this.numberOfSeats, this.reservedSeats];
+  getSeatsNumber(): [number, Array<boolean>, number] {
+    return [this.numberOfSeats, this.reservedSeats, this.seatId];
   }
 
   private allFriendsToCall: Array<User> = new Array<User>();

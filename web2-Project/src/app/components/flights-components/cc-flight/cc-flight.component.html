@@ -16,171 +16,173 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="alert alert-warning" role="alert">
-        <b>All fields are required!</b>
-    </div>
-    <form [formGroup]="form" (ngSubmit)="submit()">
-        
-        <div class="form-group" >
-            <label for="company">Company</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <select id="company" #company formControlName="company" class="form-control">
-                    <option value="{{name}}" *ngFor="let name of allCompanies">
-                        {{name}}
-                    </option>
-                </select>
-            </div>
-            <div *ngIf="f.company.touched && f.company.invalid" class="alert alert-danger">
-                <div *ngIf="f.company.errors.required">Company name is required.</div>
-            </div>
+<div *ngIf='this.authenticationService.currentUserValue'>
+    <div class="container" *ngIf="currentUser.role === 1 || currentUser.role === 2">
+        <div class="alert alert-warning" role="alert">
+            <b>All fields are required!</b>
         </div>
-
-        <div class="form-group" >
-            <label for="from">From</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <input type="text" id="from" #from formControlName="from" class="form-control" placeholder="city">
-            </div>
-            <div *ngIf="f.from.touched && f.from.invalid" class="alert alert-danger">
-                <div *ngIf="f.from.errors.required">City is required.</div>
-            </div>
-        </div>
-
-        <div class="form-group" >
-            <label for="to">To</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <input type="text" id="to" #to formControlName="to" class="form-control" placeholder="city">
-            </div>
-            <div *ngIf="f.to.touched && f.to.invalid" class="alert alert-danger">
-                <div *ngIf="f.to.errors.required">City is required.</div>
-            </div>
-        </div>
-
-        <div class="form-group" >
-            <label for="destImg">Destination image</label>
-            <div class="input-group mb-3">
-                <div class="border border-secondary rounded" id="btnImage">
-                    <label style="position: absolute;">{{ imgName }}</label>
-                    <input type="file" accept="image/*" id="destImg" 
-                            #destImg formControlName="destImg" class="form-control">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            
+            <div class="form-group">
+                <label for="company">Company</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <select id="company" #company formControlName="company" class="form-control">
+                        <option value="{{name}}" *ngFor="let name of allCompanies">
+                            {{name}}
+                        </option>
+                    </select>
+                </div>
+                <div *ngIf="f.company.touched && f.company.invalid" class="alert alert-danger">
+                    <div *ngIf="f.company.errors.required">Company name is required.</div>
                 </div>
             </div>
-            <div *ngIf="f.destImg.touched && f.destImg.invalid" class="alert alert-danger">
-                <div *ngIf="f.destImg.errors.required">Destination image is required.</div>
-            </div>
-        </div>
 
-        <div class="form-group" >
-            <label for="dateFrom">Date</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <input type="datetime-local" id="dateFrom" #dateFrom formControlName="dateFrom" class="form-control">
+            <div class="form-group" >
+                <label for="from">From</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="from" #from formControlName="from" class="form-control" placeholder="city">
+                </div>
+                <div *ngIf="f.from.touched && f.from.invalid" class="alert alert-danger">
+                    <div *ngIf="f.from.errors.required">City is required.</div>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group" >
-            <label for="dateTo">Date</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <input type="datetime-local" id="dateTo" #dateTo formControlName="dateTo" class="form-control">
+            <div class="form-group" >
+                <label for="to">To</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="to" #to formControlName="to" class="form-control" placeholder="city">
+                </div>
+                <div *ngIf="f.to.touched && f.to.invalid" class="alert alert-danger">
+                    <div *ngIf="f.to.errors.required">City is required.</div>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group" >
-            <label for="price">Price</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <input type="number" id="price" #price min="0" 
-                        formControlName="price" class="form-control" placeholder="price">
+            <div class="form-group" >
+                <label for="destImg">Destination image</label>
+                <div class="input-group mb-3">
+                    <div class="border border-secondary rounded" id="btnImage">
+                        <label style="position: absolute;">{{ imgName }}</label>
+                        <input type="file" accept="image/*" id="destImg" 
+                                #destImg formControlName="destImg" class="form-control">
+                    </div>
+                </div>
+                <div *ngIf="f.destImg.touched && f.destImg.invalid" class="alert alert-danger">
+                    <div *ngIf="f.destImg.errors.required">Destination image is required.</div>
+                </div>
             </div>
-            <div *ngIf="f.price.touched && f.price.invalid" class="alert alert-danger">
-                <div *ngIf="f.price.errors.required">Price is required.</div>
-                <div *ngIf="f.price.errors.min">Min value of price is 1.</div>
-            </div>
-        </div>
 
-        <div class="form-group" >
-            <label for="vremePutovanja">Travel time</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <input type="time" id="vremePutovanja" #vremePutovanja formControlName="vremePutovanja" class="form-control" placeholder="hh:mm:ss">
+            <div class="form-group" >
+                <label for="dateFrom">Date</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="datetime-local" id="dateFrom" #dateFrom formControlName="dateFrom" class="form-control">
+                </div>
             </div>
-            <div *ngIf="f.vremePutovanja.touched && f.vremePutovanja.invalid" class="alert alert-danger">
-                <div *ngIf="f.vremePutovanja.errors.required">Travel time is required.</div>
-            </div>
-        </div>
 
-        <div class="form-group" >
-            <label for="duzinaPutovanja">Flight distance</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <input type="number" id="duzinaPutovanja" #duzinaPutovanja min="0"
-                        formControlName="duzinaPutovanja" class="form-control" placeholder="flight distance">
+            <div class="form-group" >
+                <label for="dateTo">Date</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="datetime-local" id="dateTo" #dateTo formControlName="dateTo" class="form-control">
+                </div>
             </div>
-            <div *ngIf="f.duzinaPutovanja.touched && f.duzinaPutovanja.invalid" class="alert alert-danger">
-                <div *ngIf="f.duzinaPutovanja.errors.required">Distance is required.</div>
-                <div *ngIf="f.duzinaPutovanja.errors.min">Min value of distance is 1.</div>
-            </div>
-        </div>
 
-        <div class="form-group" >
-            <label for="price">Changeover</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <input type="number" id="presedanjeCnt" #presedanjeCnt min="0" max="5" (keyup)="onKey($event)"
-                        formControlName="presedanjeCnt" class="form-control" placeholder="number">
+            <div class="form-group" >
+                <label for="price">Price</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="number" id="price" #price min="0" 
+                            formControlName="price" class="form-control" placeholder="price">
+                </div>
+                <div *ngIf="f.price.touched && f.price.invalid" class="alert alert-danger">
+                    <div *ngIf="f.price.errors.required">Price is required.</div>
+                    <div *ngIf="f.price.errors.min">Min value of price is 1.</div>
+                </div>
             </div>
-            <div *ngIf="f.presedanjeCnt.touched && f.presedanjeCnt.invalid" class="alert alert-danger">
-                <div *ngIf="f.presedanjeCnt.errors.required">Changeover is required.</div>
-                <div *ngIf="f.presedanjeCnt.errors.min">Min value of changeover is 0.</div>
-                <div *ngIf="f.presedanjeCnt.errors.max">Max value of changeover is 5.</div>
-            </div>
-        </div>
 
-        <div class="form-group" *ngIf="show1">
-            <label for="presedanje1">Changeover city one</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <input type="text" id="presedanje1" #presedanje1 formControlName="presedanje1" class="form-control" placeholder="city">
+            <div class="form-group" >
+                <label for="vremePutovanja">Travel time</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="time" id="vremePutovanja" #vremePutovanja formControlName="vremePutovanja" class="form-control" placeholder="hh:mm:ss">
+                </div>
+                <div *ngIf="f.vremePutovanja.touched && f.vremePutovanja.invalid" class="alert alert-danger">
+                    <div *ngIf="f.vremePutovanja.errors.required">Travel time is required.</div>
+                </div>
             </div>
-            <div *ngIf="f.presedanje1.touched && f.presedanje1.invalid" class="alert alert-danger">
-                <div *ngIf="f.presedanje1.errors.required">City is required.</div>
-            </div>
-        </div>
 
-        <div class="form-group" *ngIf="show2">
-            <label for="presedanje2">Changeover city two</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <input type="text" id="presedanje2" #presedanje2 formControlName="presedanje2" class="form-control" placeholder="city">
+            <div class="form-group" >
+                <label for="duzinaPutovanja">Flight distance</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="number" id="duzinaPutovanja" #duzinaPutovanja min="0"
+                            formControlName="duzinaPutovanja" class="form-control" placeholder="flight distance">
+                </div>
+                <div *ngIf="f.duzinaPutovanja.touched && f.duzinaPutovanja.invalid" class="alert alert-danger">
+                    <div *ngIf="f.duzinaPutovanja.errors.required">Distance is required.</div>
+                    <div *ngIf="f.duzinaPutovanja.errors.min">Min value of distance is 1.</div>
+                </div>
             </div>
-            <div *ngIf="f.presedanje2.touched && f.presedanje2.invalid" class="alert alert-danger">
-                <div *ngIf="f.presedanje2.errors.required">City is required.</div>
-            </div>
-        </div>
 
-        <div class="form-group" *ngIf="show3">
-            <label for="presedanje3">Changeover city three</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <input type="text" id="presedanje3" #presedanje3 formControlName="presedanje3" class="form-control" placeholder="city">
+            <div class="form-group" >
+                <label for="price">Changeover</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="number" id="presedanjeCnt" #presedanjeCnt min="0" max="5" (keyup)="onKey($event)"
+                            formControlName="presedanjeCnt" class="form-control" placeholder="number">
+                </div>
+                <div *ngIf="f.presedanjeCnt.touched && f.presedanjeCnt.invalid" class="alert alert-danger">
+                    <div *ngIf="f.presedanjeCnt.errors.required">Changeover is required.</div>
+                    <div *ngIf="f.presedanjeCnt.errors.min">Min value of changeover is 0.</div>
+                    <div *ngIf="f.presedanjeCnt.errors.max">Max value of changeover is 5.</div>
+                </div>
             </div>
-            <div *ngIf="f.presedanje3.touched && f.presedanje3.invalid" class="alert alert-danger">
-                <div *ngIf="f.presedanje3.errors.required">City is required.</div>
-            </div>
-        </div>
 
-        <div class="form-group" *ngIf="show4">
-            <label for="presedanje4">Changeover city four</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <input type="text" id="presedanje4" #presedanje4 formControlName="presedanje4" class="form-control" placeholder="city">
+            <div class="form-group" *ngIf="show1">
+                <label for="presedanje1">Changeover city one</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="presedanje1" #presedanje1 formControlName="presedanje1" class="form-control" placeholder="city">
+                </div>
+                <div *ngIf="f.presedanje1.touched && f.presedanje1.invalid" class="alert alert-danger">
+                    <div *ngIf="f.presedanje1.errors.required">City is required.</div>
+                </div>
             </div>
-            <div *ngIf="f.presedanje4.touched && f.presedanje4.invalid" class="alert alert-danger">
-                <div *ngIf="f.presedanje4.errors.required">City is required.</div>
-            </div>
-        </div>
 
-        <div class="form-group" *ngIf="show5">
-            <label for="presedanje5">Changeover city five</label>
-            <div class="input-group mb-3 border border-secondary rounded">
-                <input type="text" id="presedanje5" #presedanje5 formControlName="presedanje5" class="form-control" placeholder="city">
+            <div class="form-group" *ngIf="show2">
+                <label for="presedanje2">Changeover city two</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="presedanje2" #presedanje2 formControlName="presedanje2" class="form-control" placeholder="city">
+                </div>
+                <div *ngIf="f.presedanje2.touched && f.presedanje2.invalid" class="alert alert-danger">
+                    <div *ngIf="f.presedanje2.errors.required">City is required.</div>
+                </div>
             </div>
-            <div *ngIf="f.presedanje5.touched && f.presedanje5.invalid" class="alert alert-danger">
-                <div *ngIf="f.presedanje5.errors.required">City is required.</div>
+
+            <div class="form-group" *ngIf="show3">
+                <label for="presedanje3">Changeover city three</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="presedanje3" #presedanje3 formControlName="presedanje3" class="form-control" placeholder="city">
+                </div>
+                <div *ngIf="f.presedanje3.touched && f.presedanje3.invalid" class="alert alert-danger">
+                    <div *ngIf="f.presedanje3.errors.required">City is required.</div>
+                </div>
             </div>
-        </div>
-    
-        <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
-    </form>
+
+            <div class="form-group" *ngIf="show4">
+                <label for="presedanje4">Changeover city four</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="presedanje4" #presedanje4 formControlName="presedanje4" class="form-control" placeholder="city">
+                </div>
+                <div *ngIf="f.presedanje4.touched && f.presedanje4.invalid" class="alert alert-danger">
+                    <div *ngIf="f.presedanje4.errors.required">City is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="show5">
+                <label for="presedanje5">Changeover city five</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="presedanje5" #presedanje5 formControlName="presedanje5" class="form-control" placeholder="city">
+                </div>
+                <div *ngIf="f.presedanje5.touched && f.presedanje5.invalid" class="alert alert-danger">
+                    <div *ngIf="f.presedanje5.errors.required">City is required.</div>
+                </div>
+            </div>
+        
+            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
+        </form>
+    </div>
 </div>

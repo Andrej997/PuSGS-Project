@@ -51,7 +51,7 @@ export class CcFlightComponent implements OnInit {
   // ovoj stranici
   private async kick() {
     await this.delay(3000);
-    this.router.navigate(['/']);
+    this.router.navigate(['/log-in']);
   }
   private delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));

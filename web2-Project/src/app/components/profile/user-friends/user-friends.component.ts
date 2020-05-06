@@ -6,6 +6,7 @@ import { Message } from 'src/app/entities/message/message';
 import { Friend } from 'src/app/entities/friend/friend';
 import { FriendServiceService } from 'src/app/services/friend-service/friend-service.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-friends',
@@ -21,11 +22,24 @@ export class UserFriendsComponent implements OnInit {
   searchedUserSurname: string = '';
 
   currentUser: User;
-  constructor(private authenticationService: AuthenticationService,
+  constructor(public authenticationService: AuthenticationService, private router: Router,
       private friendServiceService: FriendServiceService) {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    if (this.authenticationService.currentUserValue) { 
+      this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    }
+    else {
+      this.kick();
+    }
     //console.log(this.currentUser);
   } 
+
+  private async kick() {
+    await this.delay(3000);
+    this.router.navigate(['/log-in']);
+  }
+  private delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   ngOnInit(): void { 
     this.scrollToBottom();

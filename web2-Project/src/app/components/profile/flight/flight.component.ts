@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Flight } from 'src/app/entities/flight/flight';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { User } from 'src/app/entities/user/user';
@@ -13,12 +13,13 @@ import { Friend } from 'src/app/entities/friend/friend';
   styleUrls: ['./flight.component.css']
 })
 export class FlightComponent implements OnInit {
-  id: string; // this is from link and will contain companyid and flightid
+  id: string; // !this is from link and will contain companyid and flightid
   flight: Flight;
   currentUser: User;
   idF: number; // flightID
   idC: number; // companyID
   seatsNumber: number = 0;
+  selectedSeats: Array<number>;
   sumPrice: number = 0;
 
   paginationNum: number = 0;
@@ -29,17 +30,36 @@ export class FlightComponent implements OnInit {
 
   private reservedSeats: Array<boolean>;
 
-  constructor(private route: ActivatedRoute, 
+  selectedTicket = 1;
+  carryOn = 1;
+  personalBag = 1;
+  fullSizeSpiner = 1;
+  largeDuffel = 1;
+  sumLuggagePrice = 0;
+
+  sumPriceForAll = 0;
+
+  constructor(private route: ActivatedRoute, private router: Router,
     public authenticationService: AuthenticationService,
     private avioCompaniesService: AvioCompaniesService,
     private flightsService: FlightsService) {
       if (this.authenticationService.currentUserValue) { 
         this.currentUser = this.authenticationService.currentUserValue;
       }
+      else {
+        this.kick();
+      }
       route.params.subscribe(params => { this.id = params['id']; });
       //console.log(this.id);
     }
 
+  private async kick() {
+    await this.delay(3000);
+    this.router.navigate(['/log-in']);
+  }
+  private delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
   ngOnInit(): void {
     this.parseId(this.id);
     this.flight = this.avioCompaniesService.getFlightProfile(this.idC, this.idF);
@@ -53,8 +73,30 @@ export class FlightComponent implements OnInit {
   }
 
   getActivatedSeat() {
-    [this.seatsNumber, this.reservedSeats] = this.flightsService.getSeatsNumber();
-    this.sumPrice = this.seatsNumber * this.flight.prise;
+
+    let seatId: number = 0;
+    [this.seatsNumber, this.reservedSeats, seatId] = this.flightsService.getSeatsNumber();
+
+    if (this.selectedSeats.includes(seatId))
+      for (let i = 0; i < this.selectedSeats.length; ++i) {
+        if (this.selectedSeats[i] == seatId) {
+          this.selectedSeats.splice(i, 1);
+          break;
+        }
+      }
+    else 
+      this.selectedSeats.push(seatId);
+
+    //! sortiraj po rastucem
+    this.selectedSeats.sort(function(a, b) { return a - b });
+
+    //*console.log(this.selectedSeats)
+    if (this.selectedTicket == 1) {
+      this.sumPrice = this.seatsNumber * this.flight.prise;
+    }
+    else if (this.selectedTicket == 2) {
+      this.sumPrice = this.seatsNumber * this.flight.priceTwoWay;
+    }
   }
 
   createRange(number) {   // simulacija for petlje u html-u
@@ -73,6 +115,8 @@ export class FlightComponent implements OnInit {
     else if (num === 1) {
       this.next = 'Call friends';
       this.prev = 'Flight details';
+      this.sumPrice = 0;
+      this.selectedSeats = new Array<number>();
     }
     else if (num === 2) {
       this.next = 'Rent a car';
@@ -84,6 +128,7 @@ export class FlightComponent implements OnInit {
       this.prev = 'Call friends';
     }
     else if (num === 4) {
+      this.sumPriceForAll = this.sumPrice;
       this.next = 'None';
       this.prev = 'Rent a car';
     }
@@ -103,5 +148,23 @@ export class FlightComponent implements OnInit {
 
   bookFlight() {
     this.calledFriends = this.flightsService.getCalledFriends();
+  }
+  luggageF() {
+    let co = 0;
+    let pb = 0;
+    let fss = 0;
+    let ld = 0;
+    if (this.carryOn > 1)
+      co = (this.carryOn-1) * this.flight.luggage.priceCarryOn;
+    if (this.personalBag > 1)
+      pb = (this.personalBag-1) * this.flight.luggage.pricePersonalBag;
+    if (this.fullSizeSpiner > 1)
+      fss = (this.fullSizeSpiner-1) * this.flight.luggage.priceFullSizeSpinner;
+    if (this.largeDuffel > 1)
+      ld = (this.largeDuffel-1) * this.flight.luggage.priceLargeDuffel;
+
+    this.sumLuggagePrice = co + pb + fss + ld;
+
+    this.sumPriceForAll = this.sumPrice + this.sumLuggagePrice;
   }
 }

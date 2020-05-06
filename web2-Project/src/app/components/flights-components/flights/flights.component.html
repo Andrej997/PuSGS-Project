@@ -47,43 +47,40 @@
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="from">
                     <img src="\assets\img\destination.jpg" height="40" width="40">
-                    {{ flight.from }}  </li>
+                    {{ flight.from }}  
+                </li>
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="flight date">
                     <img src="\assets\img\calendar.png" height="40" width="40">
-                    {{ flight.datumPolaska.toUTCString() }}</li>
+                    {{ flight.datumPolaska.toUTCString() }}
+                </li>
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="to">
                     <img src="\assets\img\destination.jpg" height="40" width="40">
-                    {{ flight.to }}</li>
+                    {{ flight.to }}
+                </li>
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="landing date">
                     <img src="\assets\img\calendar.png" height="40" width="40">
-                    {{ flight.datumSletanja.toUTCString() }}</li>
+                    {{ flight.datumSletanja.toUTCString() }}
+                </li>
                 <li class="list-group-item" 
                         data-toggle="tooltip" 
                         data-placement="right" title="prise" 
                         *ngIf='this.authenticationService.currentUserValue'>
                     <img src="\assets\img\dollar.png" height="40" width="40">
-                    {{ flight.prise }}</li>
-                <!--li class="list-group-item" 
-                        data-toggle="tooltip" 
-                        data-placement="right" title="flight time">
-                    <img src="\assets\img\time.png" height="40" width="40">
-                    {{ flight.vremePutovanja }}</li>
+                    {{ flight.prise }}
+                </li>
                 <li class="list-group-item" 
                         data-toggle="tooltip" 
-                        data-placement="right" title="km">
-                    <img src="\assets\img\kilometers.png" height="40" width="40">
-                    {{ flight.duzinaPutovanja }}</li>
-                <li class="list-group-item" 
-                        data-toggle="tooltip" 
-                        data-placement="right" title="changeover">
-                    <img src="\assets\img\path.png" height="40" width="40">
-                    <div style="float: right;" class="list-group list-group-flush" *ngFor="let p of flight.presedanje.gradoviPresedanja">
-                        <span>-{{p}}-</span>
+                        data-placement="right" title="free seats">
+                    <div>
+                        <img src="\assets\img\chair.png" height="40" width="40" style="float: left;">
+                        <div *ngFor="let countFreeSeats of createRange(flight.aeroplane.allSeats)">
+                            {{countFreeSeats}}
+                        </div>
                     </div>
-                </li-->
+                </li>
                 <li class="list-group-item">
                     <div *ngIf='this.authenticationService.currentUserValue'>
                         <button *ngIf='flight.numOfFastReseravtions>0'
@@ -108,13 +105,15 @@
         </div>
     </div>
     
-    <div class="border-success col-sm-3" style="margin-bottom: 30px; "
-        *ngIf='currentUserEmail === "andrej.km997@gmail.com" || 
-            currentUserEmail === "admin@admin.com"'>
-        <a style="cursor: pointer;" routerLink="/createFlight">
-            <img id="myimgborder" src="\assets\img\add.png" class="card-img-top" alt="add new flight">
-        </a>
+    <div *ngIf='this.authenticationService.currentUserValue'>
+        <div class="border-success col-sm-3" style="margin-bottom: 30px; "
+            *ngIf='currentUser.role === 2 || currentUser.role === 1'>
+            <a style="cursor: pointer;" routerLink="/createFlight">
+                <img id="myimgborder" src="\assets\img\add.png" class="card-img-top" alt="add new flight">
+            </a>
+        </div>
     </div>
+    
 
     </div>
 </div>
