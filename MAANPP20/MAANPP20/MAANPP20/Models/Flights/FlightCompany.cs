@@ -15,22 +15,18 @@ namespace MAANPP20.Models.Flights
 
         public string name { get; set; }
 
-        [ForeignKey("addressId")]
+        [ForeignKey("address")]
         public int addressId { get; set; }
-
-        [NotMapped]
         public Address address { get; set; }
 
         public string promotionalDesc { get; set; }
 
-        //public HashSet<FlightDestination> destinations { get; set; }
+        public ICollection<FlightDestination> destinations { get; set; }
 
-        //public HashSet<Flight> flights { get; set; }
-
-        //public HashSet<AvioSediste> sedista { get; set; }
+        //public ICollection<Flight> flights { get; set; }
 
         //public string logo { get; set; }
 
-        //public HashSet<double> ocene { get; set; }
+        //public ICollection<DoubleForICollection> ocene { get; set; }
     }
 }

@@ -30,6 +30,8 @@ namespace MAANPP20
 
             services.AddDbContext<MAANPP20Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MAANPP20Context")));
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +41,11 @@ namespace MAANPP20
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder => 
+                builder.WithOrigins("http://localhost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseRouting();
 

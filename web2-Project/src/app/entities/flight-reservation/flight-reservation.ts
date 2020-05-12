@@ -9,5 +9,7 @@ export class FlightReservation {
     friends: Array<string>; //* prijatelji koji su pozvani
     totalPrice: number; //* ukupna cena
 
-    constructor(){}
+    constructor(){
+        this.friends = new Array<string>();
+    }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Flight } from 'src/app/entities/flight/flight';
 import { User } from 'src/app/entities/user/user';
+import { FlightReservation } from 'src/app/entities/flight-reservation/flight-reservation';
 
 @Injectable({
   providedIn: 'root'
@@ -35,11 +36,24 @@ export class FlightsService {
   }
 
   private allFriendsToCall: Array<User> = new Array<User>();
-  setFriend(user: User, passport: string) {
+  setFriend(user: User) {
     this.allFriendsToCall.push(user);
+    //console.log(this.allFriendsToCall)
   }
 
   getCalledFriends(): Array<User> {
     return this.allFriendsToCall;
   }
+
+  //* DOBIJEM LISTU SEDISTA, I NA OSNOVU TOGA JA PROMENIM U AVIONU TA SEDISTA
+  addReservation(selectedSeats: Array<number>) {
+    selectedSeats.forEach(element => {
+      let index = element - 1;
+      //console.log(index);
+      if (this.flight.aeroplane.allSeats[index].reserved === false){
+        this.flight.aeroplane.allSeats[index].reserved = true;
+      }
+    });
+    //console.log(this.flight);
+  } 
 }

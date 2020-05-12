@@ -55,9 +55,8 @@ namespace MAANPP20.Controllers.Flights
             return CreatedAtAction("GetFlightCompany", new { id = flightCompany.id }, flightCompany);
         }
 
-        // PUT: api/FlightCompany/1
+        // PUT: api/FlightCompany
         [HttpPut]
-        [Route("UpdateBook")]
         public async Task<IActionResult> UpdateFlightCompany(FlightCompany flightCompany)
         {
             _context.Entry(flightCompany).State = EntityState.Modified;
@@ -81,7 +80,7 @@ namespace MAANPP20.Controllers.Flights
             return NoContent();
         }
 
-        // DELETE: api/FlightCompany/1
+        // DELETE: api/FlightCompany/DeleteFlightCompany/1
         [HttpDelete]
         [Route("DeleteFlightCompany/{id}")]
         public async Task<ActionResult<FlightCompany>> DeleteFlightCompany(int id)

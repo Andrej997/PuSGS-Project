@@ -74,7 +74,6 @@ export class AvioCompaniesService {
       "Sigurno letenje s nama",
       destListA1,
       flights,
-      sedista,
       "../../../assets/img/avio companies/air serbia.png", 
       oceneA1);
     allFlights.push(f1);
@@ -111,7 +110,6 @@ export class AvioCompaniesService {
       "Sigurno letenje s nama",
       destListA2,
       flights2,
-      sedista2,
       "../../../assets/img/avio companies/turkish airlines.png",
       oceneA2);
     allFlights.push(f2);
@@ -134,7 +132,6 @@ const f3 = new FlightCompany(
   "Sigurno letenje s nama",
   destListA3,
   flights3,
-  sedista3,
   "../../../assets/img/avio companies/lufthansa.jpg",
   oceneA3);
 allFlights.push(f3);

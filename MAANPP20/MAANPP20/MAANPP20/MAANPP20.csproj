@@ -5,6 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200508153212_FlightCompany.cs" />
+    <Compile Remove="Migrations\20200508153212_FlightCompany.Designer.cs" />
+    <Compile Remove="Migrations\20200512130900_FlightDestinations.cs" />
+    <Compile Remove="Migrations\20200512130900_FlightDestinations.Designer.cs" />
+    <Compile Remove="Migrations\20200512131857_FlightCompany_change.cs" />
+    <Compile Remove="Migrations\20200512131857_FlightCompany_change.Designer.cs" />
+    <Compile Remove="Migrations\20200512132856_FlightDestinations.cs" />
+    <Compile Remove="Migrations\20200512132856_FlightDestinations.Designer.cs" />
+    <Compile Remove="Migrations\20200512133325_FlightDestinations.cs" />
+    <Compile Remove="Migrations\20200512133325_FlightDestinations.Designer.cs" />
+    <Compile Remove="Migrations\20200512133614_FlightDestinations_added.cs" />
+    <Compile Remove="Migrations\20200512133614_FlightDestinations_added.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">

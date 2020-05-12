@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { AvioCompaniesService } from 'src/app/services/avio-companies-service/avio-companies.service';
 import { User } from 'src/app/entities/user/user';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { Address } from 'src/app/entities/address/address';
+import { HttpClient } from '@angular/common/http';
+import { FlightCompany } from 'src/app/entities/flightCompany/flight-company';
+import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 
 @Component({
   selector: 'app-create-avio-company',
@@ -11,12 +15,11 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
   styleUrls: ['./create-avio-company.component.css']
 })
 export class CreateAvioCompanyComponent implements OnInit {
-
   currentUser: User;
   numOfDestinations: number;
-  
+
   constructor(public authenticationService: AuthenticationService,
-    private router: Router,
+    private router: Router, private httpService: HttpServiceService,
     private avioCompaniesService: AvioCompaniesService) { 
       if (this.authenticationService.currentUserValue) { 
         this.currentUser = this.authenticationService.currentUserValue;
@@ -77,9 +80,29 @@ export class CreateAvioCompanyComponent implements OnInit {
   }
 
   submit() {
+
     let companyName = this.form.value.company;
+    let address = new Address(
+      this.form.value.streetAndNumber,
+      this.form.value.city,
+      this.form.value.country
+    );
+    let promotionalDesc = this.form.value.promotionalDesc;
+
+    let body = {
+      companyName,
+      address,
+      promotionalDesc,
+    }
+
+    // this.httpService.postAction('FlightCompany', 'AddFlightCompany', body).subscribe(
+    //   res => { this.form.reset(); },
+    //   err => { console.log(err); }
+    // );
+
     for (let i = 0; i < this.numOfDestinations; ++i) {
       console.log(this.destValues['d'+i]);
     }
   }
+
 }

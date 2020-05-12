@@ -18,8 +18,20 @@ namespace MAANPP20.Data
         #endregion
 
         #region Flights
-        public DbSet<FlightCompany> FlightCompanies { get; set; }
+        // tabele koje imaju samo elementarna polja, tj. ne postoji strani kljuc
+        public DbSet<AvioLuggage> AvioLuggages { get; set; }
+        public DbSet<AvioSediste> AvioSedista { get; set; }
+        public DbSet<StringForICollection> StringForICollections { get; set; }
+        public DbSet<DoubleForICollection> DoubleForICollections { get; set; }
 
+
+        // zadrze samo ICollection
+        public DbSet<Aeroplane> Aeroplanes { get; set; }
+        public DbSet<Presedanje> Presedanja { get; set; }
+
+        // kompleksni tipovi
+        public DbSet<FlightCompany> FlightCompanies { get; set; }
+        public DbSet<FlightDestination> FlightDestinations { get; set; }
         #endregion
 
         #region Rent a car

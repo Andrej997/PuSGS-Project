@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200512155343_Aeroplane")]
+    partial class Aeroplane
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,41 +40,6 @@ namespace MAANPP20.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Addresses");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.DoubleForICollection", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("DoubleValue")
-                        .HasColumnType("float");
-
-                    b.HasKey("id");
-
-                    b.ToTable("DoubleForICollections");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.StringForICollection", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("PlainString")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Presedanjeid")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("Presedanjeid");
-
-                    b.ToTable("StringForICollections");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Flights.Aeroplane", b =>
@@ -188,28 +155,6 @@ namespace MAANPP20.Migrations
                     b.HasIndex("sId");
 
                     b.ToTable("FlightDestinations");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Flights.Presedanje", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("brojPresedanja")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Presedanja");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.StringForICollection", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Flights.Presedanje", null)
-                        .WithMany("gradoviPresedanja")
-                        .HasForeignKey("Presedanjeid");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Flights.AvioSediste", b =>
