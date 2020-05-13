@@ -47,7 +47,7 @@
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="from">
                     <img src="\assets\img\destination.jpg" height="40" width="40">
-                    {{ flight.from }}  
+                    {{ flight.from.city }}, {{ flight.from.country }}
                 </li>
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="flight date">
@@ -57,7 +57,7 @@
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="to">
                     <img src="\assets\img\destination.jpg" height="40" width="40">
-                    {{ flight.to }}
+                    {{ flight.to.city }}, {{ flight.to.country }}
                 </li>
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="landing date">

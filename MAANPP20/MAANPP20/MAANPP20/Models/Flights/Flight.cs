@@ -19,9 +19,13 @@ namespace MAANPP20.Models.Flights
 
         public string logo { get; set; }
 
-        public string from { get; set; } // ovde bi isto trebala Address
+        [ForeignKey("from")]
+        public int addressFromId { get; set; }
+        public Address from { get; set; }
 
-        public string to { get; set; } // ovde bi isto trebala Address
+        [ForeignKey("to")]
+        public int addressToId { get; set; }
+        public Address to { get; set; } 
 
         public string destImg { get; set; }
 

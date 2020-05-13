@@ -23,13 +23,15 @@ namespace MAANPP20.Migrations
                         column: x => x.eId,
                         principalTable: "Addresses",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, // Restrict
+                        onUpdate: ReferentialAction.Cascade); // nije
                     table.ForeignKey(
                         name: "FK_startId",
                         column: x => x.sId,
                         principalTable: "Addresses",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.NoAction, // Restrict
+                        onUpdate: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

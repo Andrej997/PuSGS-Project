@@ -35,7 +35,8 @@ namespace MAANPP20.Migrations
                 column: "Presedanjeid",
                 principalTable: "Presedanja",
                 principalColumn: "id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade, // Restrict
+                onUpdate: ReferentialAction.Cascade); // nije postojao
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

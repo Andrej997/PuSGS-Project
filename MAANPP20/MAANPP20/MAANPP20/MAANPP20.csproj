@@ -17,6 +17,10 @@
     <Compile Remove="Migrations\20200512133325_FlightDestinations.Designer.cs" />
     <Compile Remove="Migrations\20200512133614_FlightDestinations_added.cs" />
     <Compile Remove="Migrations\20200512133614_FlightDestinations_added.Designer.cs" />
+    <Compile Remove="Migrations\20200513170256_Image.cs" />
+    <Compile Remove="Migrations\20200513170256_Image.Designer.cs" />
+    <Compile Remove="Migrations\20200513170631_FlightCompanyLogoChange.cs" />
+    <Compile Remove="Migrations\20200513170631_FlightCompanyLogoChange.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

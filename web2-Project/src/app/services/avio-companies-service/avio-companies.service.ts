@@ -49,14 +49,20 @@ export class AvioCompaniesService {
     destListA1.push(d3a1);
     destListA1.push(d4a1);
     const flights = new Array<Flight>();
-    let flight1A1 = new Flight(1, 'Air Serbia', A1id, "../../../assets/img/avio companies/air serbia.png", 'Belgrade', 'New York', "../../../assets/img/new york.jpg",
+    let flight1A1 = new Flight(1, 'Air Serbia', A1id, "../../../assets/img/avio companies/air serbia.png", 
+            new Address("ulica i broj", 'Belgrade', 'Serbia'), 
+            new Address("ulica i broj", 'New York', 'USA'), 
+            "../../../assets/img/new york.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
             658, 2*658-100, "14:15:00", 1500, new Presedanje(0, ["NONE"]), 
             this.aeroplaneServiceService.mockedAvioCompanies()[0], new AvioLuggage(20, 5, 40, 120));
     flight1A1.numOfFastReseravtions = 5;
     flight1A1.discountForFastReservation = 10;
     flight1A1 = this.setSeatsForFastReservation(flight1A1, [3, 4, 23, 55, 89]);
-    const flight2A1 = new Flight(2, 'Air Serbia', A1id, "../../../assets/img/avio companies/air serbia.png", 'Belgrade', 'Los Angeles', "../../../assets/img/los angeles.jpg",
+    const flight2A1 = new Flight(2, 'Air Serbia', A1id, "../../../assets/img/avio companies/air serbia.png", 
+            new Address("ulica i broj", 'Belgrade', 'Serbia'), 
+            new Address("ulica i broj", 'Los Angeles', 'USA'), 
+            "../../../assets/img/los angeles.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
             1202.69, 1202.69*2-100,"14:15:00", 1500, new Presedanje(2, ["Paris", "New York"]),
             this.aeroplaneServiceService.mockedAvioCompanies()[1], new AvioLuggage(13, 3, 40, 90));
@@ -88,11 +94,17 @@ export class AvioCompaniesService {
     destListA2.push(d1a2);
     destListA2.push(d2a2);
     const flights2 = new Array<Flight>();
-    const flight1A2 = new Flight(1, A2name, A2id, "../../../assets/img/avio companies/turkish airlines.png", 'Belgrade', 'Bejing', "../../../assets/img/peking.jpg",
+    const flight1A2 = new Flight(1, A2name, A2id, "../../../assets/img/avio companies/turkish airlines.png", 
+            new Address("ulica i broj", 'Belgrade', 'Serbia'), 
+            new Address("ulica i broj", 'Bejing', 'China'), 
+            "../../../assets/img/peking.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
             1995, 1995*2-100, "14:15:00", 1500, new Presedanje(0, ["NONE"]),
             this.aeroplaneServiceService.mockedAvioCompanies()[2], new AvioLuggage(20, 5, 40, 90));
-    const flight2A2 = new Flight(2, A2name, A2id, "../../../assets/img/avio companies/turkish airlines.png", 'Belgrade', 'Los Angeles', "../../../assets/img/los angeles.jpg",
+    const flight2A2 = new Flight(2, A2name, A2id, "../../../assets/img/avio companies/turkish airlines.png",
+            new Address("ulica i broj", 'Belgrade', 'Serbia'), 
+            new Address("ulica i broj", 'Los Angeles', 'USA'), 
+            "../../../assets/img/los angeles.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
             766, 766*2-100,"14:15:00", 1500, new Presedanje(2, ["Frankfurt", "New York"]),
             this.aeroplaneServiceService.mockedAvioCompanies()[3], new AvioLuggage(22, 5, 30, 70));

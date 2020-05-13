@@ -2,14 +2,15 @@ import { Presedanje } from '../flight-presedanje/presedanje';
 import { Aeroplane } from '../aeroplane/aeroplane';
 import { AvioLuggage } from '../avio-luggage/avio-luggage';
 import { FlightReservation } from '../flight-reservation/flight-reservation';
+import { Address } from '../address/address';
 
 export class Flight {
     id: number;
     company: string;
     idCompany: number;
     logo: string;
-    from: string; //
-    to: string; //
+    from: Address; //
+    to: Address; //
     destImg: string; //
     datumPolaska: Date; //
     datumSletanja: Date;//
@@ -28,7 +29,7 @@ export class Flight {
 
     //allReservations: Array<FlightReservation>;
     
-    constructor(id: number, company: string, idCompany: number, logo: string, from: string, to: string, destImg: string,
+    constructor(id: number, company: string, idCompany: number, logo: string, from: Address, to: Address, destImg: string,
                 datumPolaska: Date, datumSletanja: Date, prise: number, priceTwoWay: number,
                 vremePutovanja: string, duzinaPutovanja: number, presedanje: Presedanje, aeroplane: Aeroplane,
                 luggage: AvioLuggage) {

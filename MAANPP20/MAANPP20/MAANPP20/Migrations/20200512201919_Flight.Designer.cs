@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200512201919_Flight")]
+    partial class Flight
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,15 +52,10 @@ namespace MAANPP20.Migrations
                     b.Property<double>("DoubleValue")
                         .HasColumnType("float");
 
-                    b.Property<int?>("FlightCompanyid")
-                        .HasColumnType("int");
-
                     b.Property<int?>("Flightid")
                         .HasColumnType("int");
 
                     b.HasKey("id");
-
-                    b.HasIndex("FlightCompanyid");
 
                     b.HasIndex("Flightid");
 
@@ -157,9 +154,6 @@ namespace MAANPP20.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("FlightCompanyid")
-                        .HasColumnType("int");
-
                     b.Property<int>("addressFromId")
                         .HasColumnType("int");
 
@@ -213,8 +207,6 @@ namespace MAANPP20.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("FlightCompanyid");
-
                     b.HasIndex("addressFromId");
 
                     b.HasIndex("addressToId");
@@ -237,9 +229,6 @@ namespace MAANPP20.Migrations
 
                     b.Property<int>("addressId")
                         .HasColumnType("int");
-
-                    b.Property<string>("logo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
@@ -298,10 +287,6 @@ namespace MAANPP20.Migrations
 
             modelBuilder.Entity("MAANPP20.Models.Common.DoubleForICollection", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Flights.FlightCompany", null)
-                        .WithMany("ocene")
-                        .HasForeignKey("FlightCompanyid");
-
                     b.HasOne("MAANPP20.Models.Flights.Flight", null)
                         .WithMany("ocene")
                         .HasForeignKey("Flightid");
@@ -323,10 +308,6 @@ namespace MAANPP20.Migrations
 
             modelBuilder.Entity("MAANPP20.Models.Flights.Flight", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Flights.FlightCompany", null)
-                        .WithMany("flights")
-                        .HasForeignKey("FlightCompanyid");
-
                     b.HasOne("MAANPP20.Models.Common.Address", "from")
                         .WithMany()
                         .HasForeignKey("addressFromId")

@@ -89,14 +89,14 @@ export class FlightsComponent implements OnInit {
     }
     else if (searchFlights.selectType == 2) { // ako je po gradu polaska
       array.forEach(element => {
-        if (element.from === searchFlights.inputSearch) { // ako postoji ta kompanija
+        if (element.from.city === searchFlights.inputSearch) { // ako postoji ta kompanija
           searched.push(element);
         }
       });
     }
     else if (searchFlights.selectType == 3) { // ako je po gradu sletanja
       array.forEach(element => {
-        if (element.to === searchFlights.inputSearch) { // ako postoji ta kompanija
+        if (element.to.city === searchFlights.inputSearch) { // ako postoji ta kompanija
           searched.push(element);
         }
       });

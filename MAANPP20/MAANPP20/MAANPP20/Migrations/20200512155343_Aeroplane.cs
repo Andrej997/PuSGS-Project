@@ -36,7 +36,8 @@ namespace MAANPP20.Migrations
                 column: "Aeroplaneid",
                 principalTable: "Aeroplanes",
                 principalColumn: "id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade,
+                onUpdate: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -29,7 +29,8 @@ namespace MAANPP20.Migrations
                         column: x => x.addressId,
                         principalTable: "Addresses",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade, 
+                        onUpdate: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -48,7 +49,8 @@ namespace MAANPP20.Migrations
                 column: "FlightCompanyid",
                 principalTable: "FlightCompanies",
                 principalColumn: "id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.NoAction,
+                onUpdate: ReferentialAction.NoAction);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

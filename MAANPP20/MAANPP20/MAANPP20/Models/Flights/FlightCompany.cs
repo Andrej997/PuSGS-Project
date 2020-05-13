@@ -13,20 +13,23 @@ namespace MAANPP20.Models.Flights
         [Key]
         public int id { get; set; }
 
+        [Required]
+        [StringLength(25)]
         public string name { get; set; }
 
         [ForeignKey("address")]
         public int addressId { get; set; }
         public Address address { get; set; }
 
+        [Required]
         public string promotionalDesc { get; set; }
 
         public ICollection<FlightDestination> destinations { get; set; }
 
-        //public ICollection<Flight> flights { get; set; }
+        public ICollection<Flight> flights { get; set; }
 
-        //public string logo { get; set; }
+        public string logo { get; set; }
 
-        //public ICollection<DoubleForICollection> ocene { get; set; }
+        public ICollection<DoubleForICollection> ocene { get; set; }
     }
 }

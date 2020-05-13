@@ -1,6 +1,15 @@
-
-<div class="container-fluid">
-
+<div class="container" *ngIf="!flightCompany">
+    <div class="alert alert-danger" role="alert" *ngIf="error">
+        <b>{{errorText}}</b>
+    </div>
+</div>
+<div class="container-fluid" *ngIf="flightCompany"> <!-- ako postoji -->
+    <div class="alert alert-success" role="alert" *ngIf="deleted">
+        <b>You have successfully deleted this company!</b>
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="error">
+        <b>Error occured while deleting!</b>
+    </div>
     <div class="card mb-3" style="max-width: 100%;">
         <div class="card-header mb-3">
             <h1 style="float: left;">{{flightCompany.name}}</h1>
@@ -48,8 +57,28 @@
             </div>
             <div *ngIf='this.authenticationService.currentUserValue'>
                 <span style="float: right;" *ngIf="currentUser.role == 1 || currentUser.role == 2">
-                    <button type="button" class="btn btn-warning">
+                    <button type="button" *ngIf="!hideShowBTN"
+                            class="btn btn-danger ml-3" (click)="hideShow()">
+                        DELETE
+                    </button>
+                </span>
+                <span style="float: right;" *ngIf="currentUser.role == 1 || currentUser.role == 2">
+                    <button type="button" *ngIf="!hideShowBTN"
+                            class="btn btn-warning" routerLink="/createAvioCompany">
                         CHANGE
+                    </button>
+                </span>
+
+                <span style="float: right;" *ngIf="currentUser.role == 1 || currentUser.role == 2">
+                    <button type="button" *ngIf="hideShowBTN"
+                            class="btn btn-secondary ml-3" (click)="hideShow()">
+                        NO
+                    </button>
+                </span>
+                <span style="float: right;" *ngIf="currentUser.role == 1 || currentUser.role == 2">
+                    <button type="button" *ngIf="hideShowBTN"
+                            class="btn btn-danger" (click)="deleteEntity()">
+                        YES
                     </button>
                 </span>
             </div>
@@ -74,6 +103,15 @@
                                 {{desAddr.startAddress.city}} - {{desAddr.startAddress.country}} -> {{desAddr.endAddress.city}} - {{desAddr.endAddress.country}}
                             </li>
                         </ul>
+                        <div *ngIf='this.authenticationService.currentUserValue'>
+                            <div class="border-success col-sm-3" style="margin-bottom: 30px; "
+                                *ngIf='currentUser.role === 2 || currentUser.role === 1'>
+                                <a style="cursor: pointer;" routerLink="/createFlight">
+                                    <img id="myimgborder" src="\assets\img\add.png" 
+                                        class="card-img-top" alt="add new flight" style="width: 100px;">
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -91,7 +129,8 @@
                                             <li class="list-group-item" data-toggle="tooltip" 
                                                     data-placement="right" title="from">
                                                 <img src="\assets\img\destination.jpg" height="40" width="40">
-                                                {{ flight.from }}  </li>
+                                                {{ flight.from.city }}, {{ flight.from.country }}  
+                                            </li>
                                             <li class="list-group-item" data-toggle="tooltip" 
                                                     data-placement="right" title="flight date">
                                                 <img src="\assets\img\calendar.png" height="40" width="40">
@@ -99,7 +138,8 @@
                                             <li class="list-group-item" data-toggle="tooltip" 
                                                     data-placement="right" title="to">
                                                 <img src="\assets\img\destination.jpg" height="40" width="40">
-                                                {{ flight.to }}</li>
+                                                {{ flight.to.city }}, {{ flight.to.country }}
+                                            </li>
                                             <li class="list-group-item" data-toggle="tooltip" 
                                                     data-placement="right" title="landing date">
                                                 <img src="\assets\img\calendar.png" height="40" width="40">
