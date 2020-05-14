@@ -21,5 +21,10 @@ namespace MAANPP20.Models.Flights
         [ForeignKey("endAddress")]
         public int eId { get; set; }
         public Address endAddress { get; set; }
+
+        // dodao da bih pri kreiranju dodelio kljuc kompanije, da bih poslao samo jedan parametar.
+        // Stoji NotMapped jer ne zelim da ga mapiram u bazi, posto vec postoji iz veze 1:N izmedju kompanije i destinacije
+        [NotMapped]
+        public int CompanyID { get; set; }
     }
 }

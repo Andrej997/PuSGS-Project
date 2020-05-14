@@ -18,22 +18,37 @@
 
 <div *ngIf='this.authenticationService.currentUserValue'>
     <div class="container" *ngIf="currentUser.role === 1 || currentUser.role === 2">
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+            <b>{{errorText}}</b>
+        </div>
         <div class="alert alert-warning" role="alert">
             <b>All fields are required!</b>
         </div>
+        <img src={{logo}} class="centerSTOPimg" alt="" style="width: 300px;"> 
         <form [formGroup]="form" (ngSubmit)="submit()">
             
-            <div class="form-group">
-                <label for="company">Company</label>
-                <div class="input-group mb-3 border border-secondary rounded">
-                    <select id="company" #company formControlName="company" class="form-control">
-                        <option value="{{name}}" *ngFor="let name of allCompanies">
-                            {{name}}
-                        </option>
-                    </select>
+            <div *ngIf="!oneCompany">
+                <div class="form-group">
+                    <label for="company">Company</label>
+                    <div class="input-group mb-3 border border-secondary rounded">
+                        <select id="company" #company formControlName="company" class="form-control" (change)="onChange($event.target.value)">
+                            <option value="{{company.id}}" *ngFor="let company of allAvioCompanies">
+                                {{company.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div *ngIf="f.company.touched && f.company.invalid" class="alert alert-danger">
+                        <div *ngIf="f.company.errors.required">Company name is required.</div>
+                    </div>
                 </div>
-                <div *ngIf="f.company.touched && f.company.invalid" class="alert alert-danger">
-                    <div *ngIf="f.company.errors.required">Company name is required.</div>
+            </div>
+            
+            <div *ngIf="oneCompany">
+                <div class="form-group" >
+                    <label >Company</label>
+                    <div class="input-group mb-3 border border-secondary rounded">
+                        <input type="text" id="oneComapny" class="form-control" value="{{oneCompanyName}}" readonly>
+                    </div>
                 </div>
             </div>
 
@@ -98,19 +113,42 @@
             </div>
 
             <div class="form-group" >
+                <label for="pricetw">Price two way</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="number" id="pricetw" #pricetw min="0" 
+                            formControlName="pricetw" class="form-control" placeholder="price two way">
+                </div>
+                <div *ngIf="f.pricetw.touched && f.pricetw.invalid" class="alert alert-danger">
+                    <div *ngIf="f.pricetw.errors.required">Price is required.</div>
+                    <div *ngIf="f.pricetw.errors.min">Min value of price is 1.</div>
+                </div>
+            </div>
+
+            <div class="form-group" >
                 <label for="vremePutovanja">Travel time</label>
                 <div class="input-group mb-3 border border-secondary rounded">
-                    <input type="time" id="vremePutovanja" #vremePutovanja formControlName="vremePutovanja" class="form-control" placeholder="hh:mm:ss">
+                    <input type="number" id="vremePutovanjahh" #vremePutovanjahh min="0" onkeydown="return false"
+                            formControlName="vremePutovanjahh" class="form-control mr-1" placeholder="hours">
+                    <input type="number" id="vremePutovanjamm" #vremePutovanjamm min="0" onkeydown="return false"
+                            formControlName="vremePutovanjamm" class="form-control mr-1 ml-1" placeholder="minutes">
+                    <input type="number" id="vremePutovanjass" #vremePutovanjass min="0" onkeydown="return false"
+                            formControlName="vremePutovanjass" class="form-control ml-1" placeholder="seconds">
                 </div>
-                <div *ngIf="f.vremePutovanja.touched && f.vremePutovanja.invalid" class="alert alert-danger">
-                    <div *ngIf="f.vremePutovanja.errors.required">Travel time is required.</div>
+                <div *ngIf="f.vremePutovanjahh.touched && f.vremePutovanjahh.invalid" class="alert alert-danger">
+                    <div *ngIf="f.vremePutovanjahh.errors.required">Travel time is required.</div>
+                </div>
+                <div *ngIf="f.vremePutovanjamm.touched && f.vremePutovanjamm.invalid" class="alert alert-danger">
+                    <div *ngIf="f.vremePutovanjamm.errors.required">Travel time is required.</div>
+                </div>
+                <div *ngIf="f.vremePutovanjass.touched && f.vremePutovanjass.invalid" class="alert alert-danger">
+                    <div *ngIf="f.vremePutovanjass.errors.required">Travel time is required.</div>
                 </div>
             </div>
 
             <div class="form-group" >
                 <label for="duzinaPutovanja">Flight distance</label>
                 <div class="input-group mb-3 border border-secondary rounded">
-                    <input type="number" id="duzinaPutovanja" #duzinaPutovanja min="0"
+                    <input type="number" id="duzinaPutovanja" #duzinaPutovanja min="1"
                             formControlName="duzinaPutovanja" class="form-control" placeholder="flight distance">
                 </div>
                 <div *ngIf="f.duzinaPutovanja.touched && f.duzinaPutovanja.invalid" class="alert alert-danger">
@@ -123,7 +161,7 @@
                 <label for="price">Changeover</label>
                 <div class="input-group mb-3 border border-secondary rounded">
                     <input type="number" id="presedanjeCnt" #presedanjeCnt min="0" max="5" (keyup)="onKey($event)"
-                            formControlName="presedanjeCnt" class="form-control" placeholder="number">
+                            formControlName="presedanjeCnt" class="form-control" placeholder="number" onkeydown="return false">
                 </div>
                 <div *ngIf="f.presedanjeCnt.touched && f.presedanjeCnt.invalid" class="alert alert-danger">
                     <div *ngIf="f.presedanjeCnt.errors.required">Changeover is required.</div>
@@ -182,7 +220,7 @@
                 </div>
             </div>
         
-            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
+            <button class="btn btn-primary" type="submit" [disabled]="form.valid">Submit</button>
         </form>
     </div>
 </div>

@@ -31,7 +31,8 @@
         <div class="form-group">
             <label for="company">Company</label>
             <div class="input-group mb-3 border border-secondary rounded">
-                <input type="text" id="company" #company formControlName="company" class="form-control" placeholder="company name">
+                <input type="text" id="company" #company
+                    formControlName="company" class="form-control" placeholder="company name">
             </div>
             <div *ngIf="f.company.touched && f.company.invalid" class="alert alert-danger">
                 <div *ngIf="f.company.errors.required">Company name is required.</div>

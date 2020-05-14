@@ -49,8 +49,8 @@ namespace MAANPP20.Migrations
                 column: "FlightCompanyid",
                 principalTable: "FlightCompanies",
                 principalColumn: "id",
-                onDelete: ReferentialAction.NoAction,
-                onUpdate: ReferentialAction.NoAction);
+                onDelete: ReferentialAction.Restrict,
+                onUpdate: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

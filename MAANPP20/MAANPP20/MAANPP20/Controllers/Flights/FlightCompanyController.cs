@@ -39,6 +39,9 @@ namespace MAANPP20.Controllers.Flights
             var flightCompany = await _context.FlightCompanies
                 .Include(address => address.address)
                 .Include(destinations => destinations.destinations)
+                .ThenInclude(startAddr => startAddr.startAddress)
+                .Include(destinations => destinations.destinations)
+                .ThenInclude(endAddr => endAddr.endAddress)
                 .Include(flights => flights.flights)
                 .Include(ocene => ocene.ocene)
                 .FirstOrDefaultAsync(i => i.id == id);
@@ -56,40 +59,44 @@ namespace MAANPP20.Controllers.Flights
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            if (ValidateModel(flightCompany, true))
-            {
+            //if (ValidateModel(flightCompany, true))
+            //{
                 _context.FlightCompanies.Add(flightCompany);
 
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction("GetFlightCompany", new { id = flightCompany.id }, flightCompany);
-            }
-            else return BadRequest();
+            //}
+            //else return BadRequest();
         }
 
         // PUT: api/FlightCompany
         [HttpPut]
         public async Task<IActionResult> UpdateFlightCompany(FlightCompany flightCompany)
         {
-            _context.Entry(flightCompany).State = EntityState.Modified;
-
-            try
+            if (ValidateModel(flightCompany, false))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FlightCompanyExists(flightCompany.id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                _context.Entry(flightCompany).State = EntityState.Modified;
 
-            return NoContent();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!FlightCompanyExists(flightCompany.id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return Ok();
+            }
+            else return BadRequest();
         }
 
         // DELETE: api/FlightCompany/DeleteFlightCompany/1

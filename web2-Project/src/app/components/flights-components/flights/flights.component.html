@@ -105,10 +105,11 @@
         </div>
     </div>
     
+    <!-- ! OVDE IZMENI DA MOZE SAMO ADMIN SISTEMA DA VIDI -->
     <div *ngIf='this.authenticationService.currentUserValue'>
         <div class="border-success col-sm-3" style="margin-bottom: 30px; "
             *ngIf='currentUser.role === 2 || currentUser.role === 1'>
-            <a style="cursor: pointer;" routerLink="/createFlight">
+            <a style="cursor: pointer;" routerLink="/createFlight/0">
                 <img id="myimgborder" src="\assets\img\add.png" class="card-img-top" alt="add new flight">
             </a>
         </div>

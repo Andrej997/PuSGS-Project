@@ -6,6 +6,7 @@ import { FlightDestination } from '../flight-destination/flight-destination';
 export class FlightCompany {
     id: number; // jedinstevi identifikacioni broj kompanije
     name: string;
+    addressId: number;
     address: Address; // adresa gde se aerodrom nalazi
     promotionalDesc: string; // promotivni opis
     destinations: Array<FlightDestination>; // adrese na koje lete avioni kompanije

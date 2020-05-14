@@ -7,9 +7,15 @@
     <div class="alert alert-success" role="alert" *ngIf="deleted">
         <b>You have successfully deleted this company!</b>
     </div>
+
     <div class="alert alert-danger" role="alert" *ngIf="error">
         <b>Error occured while deleting!</b>
     </div>
+
+    <div class="alert alert-warning" role="alert" *ngIf="change">
+        Changes have been made, please refresh page or click <a style="cursor: pointer;" (click)="refreshPage()"><b>here</b></a>!
+    </div>
+
     <div class="card mb-3" style="max-width: 100%;">
         <div class="card-header mb-3">
             <h1 style="float: left;">{{flightCompany.name}}</h1>
@@ -56,30 +62,46 @@
                 </ng-template>
             </div>
             <div *ngIf='this.authenticationService.currentUserValue'>
-                <span style="float: right;" *ngIf="currentUser.role == 1 || currentUser.role == 2">
-                    <button type="button" *ngIf="!hideShowBTN"
+                <span style="float: right;" *ngIf="currentUser.role == 1 || currentUser.role == 2" class="ml-3">
+                    <!--button type="button" *ngIf="!hideShowBTN"
                             class="btn btn-danger ml-3" (click)="hideShow()">
                         DELETE
-                    </button>
+                    </!--button-->
+                    <a style="cursor: pointer;" *ngIf="!hideShowBTN">
+                        <img id="myimgborder" src="\assets\img\delete.png" (click)="hideShow()"
+                            class="card-img-top" alt="add new flight" style="width: 60px;">
+                    </a>
                 </span>
                 <span style="float: right;" *ngIf="currentUser.role == 1 || currentUser.role == 2">
-                    <button type="button" *ngIf="!hideShowBTN"
-                            class="btn btn-warning" routerLink="/createAvioCompany">
+                    <!--button type="button" *ngIf="!hideShowBTN"
+                            class="btn btn-warning" routerLink="/createAvioCompany/{{flightCompany.id}}">
                         CHANGE
-                    </button>
+                    </!--button-->
+                    <a style="cursor: pointer;" *ngIf="!hideShowBTN" routerLink="/createAvioCompany/{{flightCompany.id}}">
+                        <img id="myimgborder" src="\assets\img\change.png" 
+                            class="card-img-top" alt="add new flight" style="width: 60px;">
+                    </a>
                 </span>
 
-                <span style="float: right;" *ngIf="currentUser.role == 1 || currentUser.role == 2">
-                    <button type="button" *ngIf="hideShowBTN"
+                <span style="float: right;" *ngIf="currentUser.role == 1 || currentUser.role == 2" class="ml-3">
+                    <!--button-- type="button" *ngIf="hideShowBTN"
                             class="btn btn-secondary ml-3" (click)="hideShow()">
                         NO
-                    </button>
+                    </!--button-->
+                    <a style="cursor: pointer;" *ngIf="hideShowBTN" (click)="hideShow()">
+                        <img id="myimgborder" src="\assets\img\cancel.png" 
+                            class="card-img-top" alt="add new flight" style="width: 60px;">
+                    </a>
                 </span>
                 <span style="float: right;" *ngIf="currentUser.role == 1 || currentUser.role == 2">
-                    <button type="button" *ngIf="hideShowBTN"
+                    <!--button type="button" *ngIf="hideShowBTN"
                             class="btn btn-danger" (click)="deleteEntity()">
                         YES
-                    </button>
+                    </!--button-->
+                    <a style="cursor: pointer;" *ngIf="hideShowBTN" (click)="deleteEntity()">
+                        <img id="myimgborder" src="\assets\img\accept.png" 
+                            class="card-img-top" alt="add new flight" style="width: 60px;">
+                    </a>
                 </span>
             </div>
         </div>
@@ -101,13 +123,28 @@
                         <ul class="list-group" *ngFor="let desAddr of flightCompany.destinations">
                             <li class="list-group-item">
                                 {{desAddr.startAddress.city}} - {{desAddr.startAddress.country}} -> {{desAddr.endAddress.city}} - {{desAddr.endAddress.country}}
+                                <div *ngIf='this.authenticationService.currentUserValue'>
+                                    <span style="float: right;" *ngIf="currentUser.role == 1 || currentUser.role == 2">
+                                        <a style="cursor: pointer;">
+                                            <img id={{desAddr.destinationid}} src="\assets\img\delete.png" (click)="deleteFlightDestination($event)"
+                                                class="card-img-top" alt="add new flight" style="width: 50px;">
+                                        </a>
+                                    </span>
+                                    <span style="float: right;" *ngIf="currentUser.role == 1 || currentUser.role == 2">
+                                        <a style="cursor: pointer;" routerLink="/createFlightDestinaion/{{flightCompany.id}}/{{desAddr.destinationid}}">
+                                            <img id="myimgborder1" src="\assets\img\change.png" 
+                                                class="card-img-top" alt="add new flight" style="width: 50px;">
+                                        </a>
+                                    </span>
+                                </div>
+                                
                             </li>
                         </ul>
                         <div *ngIf='this.authenticationService.currentUserValue'>
                             <div class="border-success col-sm-3" style="margin-bottom: 30px; "
                                 *ngIf='currentUser.role === 2 || currentUser.role === 1'>
-                                <a style="cursor: pointer;" routerLink="/createFlight">
-                                    <img id="myimgborder" src="\assets\img\add.png" 
+                                <a style="cursor: pointer;" routerLink="/createFlightDestinaion/{{flightCompany.id}}">
+                                    <img id="myimgborder2" src="\assets\img\add.png" 
                                         class="card-img-top" alt="add new flight" style="width: 100px;">
                                 </a>
                             </div>
@@ -204,7 +241,7 @@
                             <div *ngIf='this.authenticationService.currentUserValue'>
                                 <div class="border-success col-sm-3" style="margin-bottom: 30px; "
                                     *ngIf='currentUser.role === 2 || currentUser.role === 1'>
-                                    <a style="cursor: pointer;" routerLink="/createFlight">
+                                    <a style="cursor: pointer;" routerLink="/createFlight/{{flightCompany.id}}">
                                         <img id="myimgborder" src="\assets\img\add.png" 
                                             class="card-img-top" alt="add new flight" style="width: 100px;">
                                     </a>

@@ -6,6 +6,8 @@ import { User } from 'src/app/entities/user/user';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AvioCompaniesService } from 'src/app/services/avio-companies-service/avio-companies.service';
 import { Presedanje } from 'src/app/entities/flight-presedanje/presedanje';
+import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
+import { FlightCompany } from 'src/app/entities/flightCompany/flight-company';
 
 @Component({
   selector: 'app-cc-flight',
@@ -16,8 +18,15 @@ export class CcFlightComponent implements OnInit {
   currentUser: User;
   flight: Flight;
   id: number;
-  allCompanies: Array<string>;
+  allAvioCompanies: Array<FlightCompany>;
   imgName : string;
+  flightCompany: FlightCompany;
+  companyID: number = -1;
+  oneCompany: boolean = false;
+  oneCompanyName: string = "";
+
+  error: boolean = false;
+  errorText: string = "";
 
   values = 0;
   show1: boolean = false;
@@ -26,8 +35,11 @@ export class CcFlightComponent implements OnInit {
   show4: boolean = false;
   show5: boolean = false;
 
+  logo: string = "";
+
   constructor(public authenticationService: AuthenticationService,
-      private router: Router,
+      private route: ActivatedRoute,
+      private router: Router, private httpService: HttpServiceService,
       private avioCompaniesService: AvioCompaniesService) { 
     if (this.authenticationService.currentUserValue) { 
       this.currentUser = this.authenticationService.currentUserValue;
@@ -35,7 +47,41 @@ export class CcFlightComponent implements OnInit {
         this.kick();
       }
       else {
-        this.allCompanies = avioCompaniesService.getAvioCompanyNames();
+        route.params.subscribe(params => { this.companyID = params['idC']; });
+
+        if (this.companyID != -1 && this.companyID != 0) {
+          this.oneCompany = true;
+          //* ako je pristupio ovoj stranici iz aviocompany details
+          this.httpService.getIdAction("FlightCompany", this.companyID).toPromise()
+          .then(result => {
+            this.flightCompany = result as FlightCompany;
+            this.oneCompanyName = this.flightCompany.name;
+            this.logo = this.flightCompany.logo;
+            console.log(this.flightCompany);
+          })
+          .catch(
+            err => {
+              console.log(err)
+              this.error = true;
+              this.errorText = "Error while loading company!"
+            });
+        }
+        else if (this.companyID == 0) {
+          this.oneCompany = false;
+          //* vrati mi sve kompanije
+          this.httpService.getAction('FlightCompany')
+          .toPromise()
+          .then(result => {
+            this.allAvioCompanies = result as FlightCompany[];
+            console.log(this.allAvioCompanies);
+          })
+          .catch(
+            err => {
+              console.log(err)
+              this.error = true;
+              this.errorText = "Error while loading companies!"
+            });
+        }
       }
     }
     else {
@@ -64,10 +110,13 @@ export class CcFlightComponent implements OnInit {
     destImg: new FormControl("",[Validators.required]),
     dateFrom: new FormControl([Validators.required]),
     dateTo: new FormControl([Validators.required]),
-    price: new FormControl(0, [Validators.required, Validators.min(1)]),
-    vremePutovanja: new FormControl([Validators.required]),
-    duzinaPutovanja: new FormControl(0, [Validators.required, Validators.min(1)]),
-    presedanjeCnt: new FormControl(0, [Validators.required, Validators.min(0), Validators.max(5)]),
+    price: new FormControl([Validators.required, Validators.min(1)]),
+    pricetw: new FormControl([Validators.required, Validators.min(1)]),
+    vremePutovanjass: new FormControl([Validators.required]),
+    vremePutovanjamm: new FormControl([Validators.required]),
+    vremePutovanjahh: new FormControl([Validators.required]),
+    duzinaPutovanja: new FormControl([Validators.required, Validators.min(1)]),
+    presedanjeCnt: new FormControl([Validators.required, Validators.min(0), Validators.max(5)]),
     presedanje1: new FormControl('city',[Validators.required]),
     presedanje2: new FormControl('city',[Validators.required]),
     presedanje3: new FormControl('city',[Validators.required]),
@@ -77,6 +126,15 @@ export class CcFlightComponent implements OnInit {
   
   get f(){
     return this.form.controls;
+  }
+
+  onChange(id: number) {
+    for (let i = 0; i < this.allAvioCompanies.length; ++i) {
+      if (this.allAvioCompanies[i].id == id) {
+        this.logo = this.allAvioCompanies[i].logo;
+        break;
+      }
+    }
   }
 
   onKey(event: any) { // without type info
@@ -126,10 +184,13 @@ export class CcFlightComponent implements OnInit {
   }
   
   submit(){
+    let dateFrom = this.form.value.dateFrom;
+    let date = new Date(dateFrom);
+    console.log(date);
 
     let companyName = this.form.value.company;
-    let companyData = this.avioCompaniesService.getAvioCompanyData(companyName);
-    let dateFrom = this.form.value.dateFrom;
+    //let companyData = this.avioCompaniesService.getAvioCompanyData(companyName);
+    
     let dateTo =  this.form.value.dateTo;
 
     let allChangeovers = new Array<string>();

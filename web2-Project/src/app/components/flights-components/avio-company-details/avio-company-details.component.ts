@@ -27,6 +27,8 @@ export class AvioCompanyDetailsComponent implements OnInit {
   deleted: boolean = false;
   hideShowBTN: boolean = false;
 
+  change: boolean = false;
+
   constructor(private route: ActivatedRoute, private httpService: HttpServiceService,
         private avioCompaniesService: AvioCompaniesService, private router: Router,
         public authenticationService: AuthenticationService) { 
@@ -95,7 +97,25 @@ export class AvioCompanyDetailsComponent implements OnInit {
     })
     .catch(
       err => {
-        console.log(err)
+        console.log(err);
+        this.error = true;
+        this.hideShowBTN = false;
+      });
+  }
+
+  refreshPage() {
+    location.reload();
+  }
+
+  deleteFlightDestination(event) {
+    const idDeleteFD = event.target.id;
+    this.httpService.deleteAction("FlightDestination", "DeleteFlightDestination", idDeleteFD).toPromise()
+    .then(result => {
+      this.change = true;
+    })
+    .catch(
+      err => {
+        console.log(err);
         this.error = true;
         this.hideShowBTN = false;
       });

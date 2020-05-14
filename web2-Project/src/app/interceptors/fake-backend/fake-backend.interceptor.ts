@@ -24,6 +24,7 @@ export const users: User[] = [
     password: 'admin',
     profileImage: '\\assets\\img\\user.png',
     address: {
+      id: 1,
       streetAndNumber: 'string',
       city: 'string',
       country: 'string'
@@ -41,6 +42,7 @@ export const users: User[] = [
     password: 'admin',
     profileImage: '\\assets\\img\\user.png',
     address: {
+      id: 2,
       streetAndNumber: 'Mise Dimitrijevica 1C',
       city: 'Novi Sad',
       country: 'Serbia'
@@ -93,6 +95,7 @@ export const users: User[] = [
     password: 'admin',
     profileImage: '\\assets\\img\\user.png',
     address: {
+      id: 3,
       streetAndNumber: 'string',
       city: 'string',
       country: 'string'
@@ -110,6 +113,7 @@ export const users: User[] = [
     password: 'admin',
     profileImage: '\\assets\\img\\user.png',
     address: {
+      id: 4,
       streetAndNumber: 'string',
       city: 'string',
       country: 'string'
@@ -160,6 +164,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 lastName: user.lastName,
                 profileImage: user.profileImage,
                 address: {
+                  id: user.address.id,
                   streetAndNumber: user.address.streetAndNumber,
                   city: user.address.city,
                   country: user.address.country

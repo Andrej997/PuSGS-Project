@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AvioCompaniesService } from 'src/app/services/avio-companies-service/avio-companies.service';
 import { User } from 'src/app/entities/user/user';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
@@ -28,7 +28,11 @@ export class CreateAvioCompanyComponent implements OnInit {
   success: boolean = false;
   successText: string = "";
 
+  flightCompany: FlightCompany;
+  companyId: number = 0;
+
   constructor(public authenticationService: AuthenticationService,
+    private route: ActivatedRoute, 
     private router: Router, private httpService: HttpServiceService,
     private avioCompaniesService: AvioCompaniesService) { 
       if (this.authenticationService.currentUserValue) { 
@@ -40,10 +44,37 @@ export class CreateAvioCompanyComponent implements OnInit {
       else {
         this.kick();
       }
+      
+      
     }
 
   ngOnInit(): void {
     this.imgName = "Choose image";
+    this.route.params.subscribe(params => { this.companyId = params['id']; });
+      if (this.companyId == undefined)
+            this.companyId = -1;
+      else {
+        this.httpService.getIdAction("FlightCompany", this.companyId).toPromise()
+          .then(result => {
+            this.flightCompany = result as FlightCompany;
+            this.form.setValue({
+              company: this.flightCompany.name,
+              promotionalDesc: this.flightCompany.promotionalDesc,
+              streetAndNumber: this.flightCompany.address.streetAndNumber,
+              city: this.flightCompany.address.city,
+              country: this.flightCompany.address.country,
+              logoImg: ""
+            })
+            this.form.controls["logoImg"].setValidators([]); //* menjamo validator za logo jer ne mora da ga menja
+            this.form.controls["logoImg"].updateValueAndValidity(); //* promeni validator dinamicki
+          })
+          .catch(
+            err => {
+              console.log(err)
+              this.error = true;
+              this.errorText = "Error while loading company!"
+            });
+      }
   }
 
   // ako ne autorizovan ili ne ulogovan korisnik pokusa da pristupi
@@ -100,7 +131,8 @@ export class CreateAvioCompanyComponent implements OnInit {
       this.form.value.country
     );
     let promotionalDesc = this.form.value.promotionalDesc;
-    let logo = this.form.value.logoImg;
+    
+    
 
     let postFlightCompany = new FlightCompany(
       0,
@@ -113,21 +145,46 @@ export class CreateAvioCompanyComponent implements OnInit {
       new Array<number>()
     );
 
-    // this.httpService.postAction('FlightCompany', 'AddFlightCompany', postFlightCompany).subscribe();
+    //* ako ne postoji id, znaci da je u pitanju kreiranje companije
+    if (this.companyId === -1) {
+      this.httpService.postAction('FlightCompany', 'AddFC', postFlightCompany).subscribe(
+        res => { 
+          this.form.reset(); 
+          this.successText = postFlightCompany.name;
+          this.success = true;
+          this.error = false;
+        },
+        err => { 
+          this.errorText = err; 
+          this.error = true; 
+          this.success = false;
+        }
+      );
+    } //* posto postoji id znaci da je u pitanju menjenje podataka kompanije
+    else {
+      //! vracamo mu podatke koje je imao a koji se ne menjaju kroz ovu formu
+      postFlightCompany.id = this.flightCompany.id;
+      postFlightCompany.addressId = this.flightCompany.addressId;
+      postFlightCompany.address.id = this.flightCompany.address.id;
+      postFlightCompany.destinations = this.flightCompany.destinations;
+      postFlightCompany.flights = this.flightCompany.flights;
+      postFlightCompany.ocene = this.flightCompany.ocene;
+      if (postFlightCompany.logo == undefined)
+        postFlightCompany.logo = this.flightCompany.logo;
+
+      this.httpService.putAction('FlightCompany', postFlightCompany).subscribe (
+        res => { 
+          this.successText = postFlightCompany.name + " changes ";
+          this.success = true;
+          this.error = false;
+        },
+        err => { 
+          this.errorText = err; 
+          this.error = true; 
+          this.success = false;
+        });
+    }
     
-    this.httpService.postAction('FlightCompany', 'AddFC', postFlightCompany).subscribe(
-      res => { 
-        this.form.reset(); 
-        this.successText = postFlightCompany.name;
-        this.success = true;
-        this.error = false;
-      },
-      err => { 
-        this.errorText = err; 
-        this.error = true; 
-        this.success = false;
-      }
-    );
     
   }
 
