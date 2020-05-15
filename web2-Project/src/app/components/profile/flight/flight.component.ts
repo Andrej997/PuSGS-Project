@@ -6,6 +6,7 @@ import { User } from 'src/app/entities/user/user';
 import { AvioCompaniesService } from 'src/app/services/avio-companies-service/avio-companies.service';
 import { FlightsService } from 'src/app/services/flights-service/flights.service';
 import { Friend } from 'src/app/entities/friend/friend';
+import { FlightReservation } from 'src/app/entities/flight-reservation/flight-reservation';
 
 @Component({
   selector: 'app-flight',
@@ -148,7 +149,27 @@ export class FlightComponent implements OnInit {
 
   bookFlight() {
     this.calledFriends = this.flightsService.getCalledFriends();
+    console.log(this.calledFriends);
+    let flightReservation = new FlightReservation();
+    flightReservation.avioCompanyId = this.flight.idCompany;
+    flightReservation.flightId = this.flight.id;
+
+    // ! ------------   ZA REZERVACIJU AUTA!!!!
+
+    for (let i = 0; i < this.calledFriends.length; ++i) {
+      let elStr: string = this.calledFriends[i].email + '//' + 
+          this.calledFriends[i].firstName + '//' + this.calledFriends[i].lastName + '//' + 
+          this.selectedSeats[i + 1];
+      flightReservation.friends.push(elStr);
+    } 
+    flightReservation.reservedSeatsIds = this.selectedSeats[0]; //! moje sediste
+    flightReservation.totalPrice = this.sumPriceForAll;
+
+    this.flightsService.addReservation(this.selectedSeats);
+
+    console.log(flightReservation);
   }
+
   luggageF() {
     let co = 0;
     let pb = 0;

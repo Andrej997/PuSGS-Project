@@ -1,5 +1,11 @@
 <div class="container">
-    <div class="row card-group" >
+    <div class="alert alert-danger" role="alert" *ngIf="error">
+        <b>{{errorText}}</b>
+    </div>
+    <div class="alert alert-warning" role="alert" *ngIf="!error && allAvioCompanies.length == 0">
+        <b>There is no company registrated!</b>
+    </div>
+    <div class="row card-group" *ngIf="allAvioCompanies.length != 0">
         <div class="col-sm-4" *ngFor="let avioCompany of allAvioCompanies">
             <div class="card" style="margin-bottom: 30px;">
                 <img [src]="avioCompany.logo" class="card-img-top" alt="..." 

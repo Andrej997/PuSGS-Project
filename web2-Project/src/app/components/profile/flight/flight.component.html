@@ -35,7 +35,7 @@
 
             <div class="container">
                 <label for="from">From</label>
-                <p class="ml-3" id="from">{{flight.from}}</p> 
+                <p class="ml-3" id="from">{{flight.from.city}}, {{flight.from.country}}</p> 
             </div>
             
             <div class="container">
@@ -45,7 +45,7 @@
 
             <div class="container">
                 <label for="to">To</label>
-                <p class="ml-3" id="to">{{flight.to}}</p>
+                <p class="ml-3" id="to">{{flight.to.city}}, {{flight.to.country}}</p>
             </div>
 
             <div class="container">
@@ -162,7 +162,7 @@
             </div>
 
             <div class="container mt-5" style="float: left;">
-                <button type="button" class="btn btn-success">BOOK FLIGHT</button>
+                <button type="button" class="btn btn-success" (click)="bookFlight()">BOOK FLIGHT</button>
             </div>
         </div>
     </div>

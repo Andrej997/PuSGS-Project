@@ -6,11 +6,11 @@ import { FlightDestination } from '../flight-destination/flight-destination';
 export class FlightCompany {
     id: number; // jedinstevi identifikacioni broj kompanije
     name: string;
+    addressId: number;
     address: Address; // adresa gde se aerodrom nalazi
     promotionalDesc: string; // promotivni opis
     destinations: Array<FlightDestination>; // adrese na koje lete avioni kompanije
     flights: Array<Flight>; // svi trenutni letovi kompanije
-    sedista: Array<AvioSediste>; // konfiguracija segmentana i mesta u avionu
     logo: string;
     ocene: Array<number>;
 
@@ -21,7 +21,6 @@ export class FlightCompany {
         promotionalDesc: string,
         destinations: Array<FlightDestination>,
         flights: Array<Flight>,
-        sedista: Array<AvioSediste>,
         logo: string,
         ocene: Array<number>) {
             this.id = id;
@@ -30,7 +29,6 @@ export class FlightCompany {
             this.promotionalDesc = promotionalDesc;
             this.destinations = destinations;
             this.flights = flights;
-            this.sedista = sedista;
             this.logo = logo;
             this.ocene = ocene;
     }

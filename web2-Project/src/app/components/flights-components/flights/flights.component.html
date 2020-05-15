@@ -47,7 +47,7 @@
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="from">
                     <img src="\assets\img\destination.jpg" height="40" width="40">
-                    {{ flight.from }}  
+                    {{ flight.from.city }}, {{ flight.from.country }}
                 </li>
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="flight date">
@@ -57,7 +57,7 @@
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="to">
                     <img src="\assets\img\destination.jpg" height="40" width="40">
-                    {{ flight.to }}
+                    {{ flight.to.city }}, {{ flight.to.country }}
                 </li>
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="landing date">
@@ -105,10 +105,11 @@
         </div>
     </div>
     
+    <!-- ! OVDE IZMENI DA MOZE SAMO ADMIN SISTEMA DA VIDI -->
     <div *ngIf='this.authenticationService.currentUserValue'>
         <div class="border-success col-sm-3" style="margin-bottom: 30px; "
             *ngIf='currentUser.role === 2 || currentUser.role === 1'>
-            <a style="cursor: pointer;" routerLink="/createFlight">
+            <a style="cursor: pointer;" routerLink="/createFlight/0">
                 <img id="myimgborder" src="\assets\img\add.png" class="card-img-top" alt="add new flight">
             </a>
         </div>

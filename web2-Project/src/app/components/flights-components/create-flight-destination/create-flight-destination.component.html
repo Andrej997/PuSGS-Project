@@ -1,0 +1,106 @@
+<!-- !THIS COMPONENT IS USED FOR CREATING OR CHANGING FLIGHT DESTINATION -->
+<div class="container"
+        *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
+    <div class="alert alert-danger" role="alert"> 
+        <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+    </div>
+    <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+</div>
+<div class="container"
+        *ngIf='this.authenticationService.currentUserValue'> <!-- AKO JE ULOGOVAN A NEMA DOZVOLU-->
+    <div *ngIf="currentUser.role != 1 && currentUser.role != 2">
+        <div class="alert alert-danger" role="alert">
+            <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+        </div>
+        <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+    </div>
+</div>
+
+<div *ngIf='this.authenticationService.currentUserValue'>
+    <div class="container" *ngIf="currentUser.role === 1 || currentUser.role === 2">
+        <div class="alert alert-warning" role="alert">
+            <b>All fields are required!</b>
+        </div>
+
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+            <b>{{errorText}}</b>
+        </div>
+
+        <div class="alert alert-success" role="alert" *ngIf="success">
+            <b>{{successText}} created!</b>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="form-group">
+                <label for="promotionalDesc">Address</label>
+                <div class="ml-2">
+                    <div class="form-group">
+                        <label for="streetAndNumber1">Street and number</label>
+                        <div class="input-group mb-3 border border-secondary rounded">
+                            <input type="text" id="streetAndNumber1" #streetAndNumber1 formControlName="streetAndNumber1" class="form-control" placeholder="street and number">
+                        </div>
+                        <div *ngIf="f.streetAndNumber1.touched && f.streetAndNumber1.invalid" class="alert alert-danger">
+                            <div *ngIf="f.streetAndNumber1.errors.required">Street name and number are required.</div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="city1">City</label>
+                        <div class="input-group mb-3 border border-secondary rounded">
+                            <input type="text" id="city1" #city1 formControlName="city1" class="form-control" placeholder="city">
+                        </div>
+                        <div *ngIf="f.city1.touched && f.city1.invalid" class="alert alert-danger">
+                            <div *ngIf="f.city1.errors.required">City is required.</div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="country1">Country</label>
+                        <div class="input-group mb-3 border border-secondary rounded">
+                            <input type="text" id="country1" #country1 formControlName="country1" class="form-control" placeholder="country">
+                        </div>
+                        <div *ngIf="f.country1.touched && f.country1.invalid" class="alert alert-danger">
+                            <div *ngIf="f.country1.errors.required">Country is required.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="promotionalDesc">Address</label>
+                <div class="ml-2">
+                    <div class="form-group">
+                        <label for="streetAndNumber2">Street and number</label>
+                        <div class="input-group mb-3 border border-secondary rounded">
+                            <input type="text" id="streetAndNumber2" #streetAndNumber2 formControlName="streetAndNumber2" class="form-control" placeholder="street and number">
+                        </div>
+                        <div *ngIf="f.streetAndNumber2.touched && f.streetAndNumber2.invalid" class="alert alert-danger">
+                            <div *ngIf="f.streetAndNumber2.errors.required">Street name and number are required.</div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="city2">City</label>
+                        <div class="input-group mb-3 border border-secondary rounded">
+                            <input type="text" id="city2" #city2 formControlName="city2" class="form-control" placeholder="city">
+                        </div>
+                        <div *ngIf="f.city2.touched && f.city2.invalid" class="alert alert-danger">
+                            <div *ngIf="f.city2.errors.required">City is required.</div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="country2">Country</label>
+                        <div class="input-group mb-3 border border-secondary rounded">
+                            <input type="text" id="country2" #country2 formControlName="country2" class="form-control" placeholder="country">
+                        </div>
+                        <div *ngIf="f.country2.touched && f.country2.invalid" class="alert alert-danger">
+                            <div *ngIf="f.country2.errors.required">Country is required.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
+        </form>
+    </div>
+</div>

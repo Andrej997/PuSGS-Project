@@ -20,6 +20,7 @@ import { FastFlightReservationComponent } from './components/flights-components/
 import { CreateAvioCompanyComponent } from './components/flights-components/create-avio-company/create-avio-company.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { RentDetailComponent } from './components/rent-a-car/rent-detail/rent-detail.component';
+import { CreateFlightDestinationComponent } from './components/flights-components/create-flight-destination/create-flight-destination.component';
 
 
 const routes: Routes = [
@@ -86,18 +87,41 @@ const routes: Routes = [
   },
   {
     path: "avio-companies",
-    children:[
+    children: [
       { path: "", component: AvioCompaniesComponent },
       { path: ":id/details", component: AvioCompanyDetailsComponent }
     ]
   },
   { 
     path : "createFlight", 
-    component: CcFlightComponent 
+    children: [
+      { 
+        path: ":idC", 
+        children: [
+          { path: "", component: CcFlightComponent }, //* ako dodajemo
+          { path: ":idF", component: CcFlightComponent } //! ako menjamo
+        ] 
+      }
+    ]
   },
   {
     path: "createAvioCompany",
-    component: CreateAvioCompanyComponent
+    children: [
+      { path: "", component: CreateAvioCompanyComponent }, //* ako se kreira nova
+      { path: ":id", component: CreateAvioCompanyComponent } //* ako se menja
+    ]
+  },
+  {
+    path: "createFlightDestinaion",
+    children: [
+      { 
+        path: ":idC", 
+        children: [
+          { path: "", component: CreateFlightDestinationComponent }, //* ako dodajemo
+          { path: ":idFD", component: CreateFlightDestinationComponent } //! ako menjamo
+        ] 
+      }
+    ]
   },
   {
     path: "statistics",

@@ -1,6 +1,8 @@
 import { Address } from '../address/address';
 
 export class FlightDestination {
+    id: number;
+    companyId: number;
     startAddress: Address;
     endAddress: Address;
 

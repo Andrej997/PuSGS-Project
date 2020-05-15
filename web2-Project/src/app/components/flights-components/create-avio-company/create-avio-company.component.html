@@ -21,14 +21,22 @@
     <div class="alert alert-warning" role="alert">
         <b>All fields are required!</b>
     </div>
+    <div class="alert alert-danger" role="alert" *ngIf="error">
+        <b>{{errorText}}</b>
+    </div>
+    <div class="alert alert-success" role="alert" *ngIf="success">
+        <b>{{successText}} created!</b>
+    </div>
     <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="form-group">
             <label for="company">Company</label>
             <div class="input-group mb-3 border border-secondary rounded">
-                <input type="text" id="company" #company formControlName="company" class="form-control" placeholder="company name">
+                <input type="text" id="company" #company
+                    formControlName="company" class="form-control" placeholder="company name">
             </div>
             <div *ngIf="f.company.touched && f.company.invalid" class="alert alert-danger">
                 <div *ngIf="f.company.errors.required">Company name is required.</div>
+                <div *ngIf="f.company.errors.maxlength">Length of company name must less than 20 character.</div>
             </div>
         </div>
 
@@ -78,7 +86,21 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" >
+            <label for="logo">Logo</label>
+            <div class="input-group mb-3">
+                <div class="border border-secondary rounded" id="btnImage">
+                    <label style="position: absolute; color: gray;">{{ imgName }}</label>
+                    <input type="file" accept="image/*" id="logoImg" (change)="onImg($event)"
+                            #logoImg formControlName="logoImg" class="form-control">
+                </div>
+            </div>
+            <div *ngIf="f.logoImg.touched && f.logoImg.invalid" class="alert alert-danger">
+                <div *ngIf="f.logoImg.errors.required">Logo is required.</div>
+            </div>
+        </div>
+
+        <!--div class="form-group">
             <label for="numdestinations">Number of destinations</label>
             <div class="input-group mb-3 border border-secondary rounded">
                 <input type="number" id="numdestinations" #numdestinations (input)="onChangeDestination($event.target.value)"
@@ -94,7 +116,7 @@
                             placeholder="destination {{i+1}}" (keyup)="onKey($event)">
                 </div>
             </div>
-        </div>
+        </div-->
 
         <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
     </form>

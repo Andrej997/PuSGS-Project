@@ -30,16 +30,17 @@ export class FlightCallFriendsComponent implements OnInit {
     friendEmail: new FormControl('', [Validators.required, Validators.email]),
     friendName: new FormControl('', [Validators.required]),
     friendSurname: new FormControl('', [Validators.required]),
-    friendPassport: new FormControl('', [Validators.required]),
+    //? friendPassport: new FormControl('', [Validators.required]),
   });
 
   get f(){
     return this.form.controls;
   }
 
-  private setFriend(user: User, passport: string) {
+  private setFriend(user: User) {
+    //console.log("flight-call-friend");
     //console.log(user);
-    this.flightService.setFriend(user, passport);
+    this.flightService.setFriend(user);
   }
 
   submit(){
@@ -48,12 +49,13 @@ export class FlightCallFriendsComponent implements OnInit {
       let name = this.form.value.friendName;
       let surname = this.form.value.friendSurname;
       let passport = this.form.value.friendPassport;
-      
+      let user: User = new User(0, name, surname, email, null, null, null, null, null, null, null);
+      this.setFriend(user);
     }
   }
   formS = new FormGroup({
     friendSelect: new FormControl([Validators.required]),
-    friendPassportS: new FormControl('', [Validators.required])
+    //? friendPassportS: new FormControl('', [Validators.required])
   });
 
   get fS(){
@@ -65,7 +67,7 @@ export class FlightCallFriendsComponent implements OnInit {
       let passport = this.formS.value.friendPassportS;
       for (let i = 0; i < this.currentUser.friends.length; ++i) {
         if (this.currentUser.friends[i].friend.id == friendId) {
-          this.setFriend(this.currentUser.friends[i].friend, passport);
+          this.setFriend(this.currentUser.friends[i].friend);
         }
       }
     }
