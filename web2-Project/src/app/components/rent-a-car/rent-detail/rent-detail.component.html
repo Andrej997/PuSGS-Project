@@ -1,0 +1,203 @@
+<div class="detail">
+    <div class="row card-group" >
+        <div class="col-sm-12">
+            <div class="card" style="margin-bottom: 10px;">
+              <div class="card-body">
+                    <div class="card-mb-4">
+                        <div class="row card-group " >
+                            <div class="col-md-8">
+                                <a class="card-title ml-1" routerLink="/rent-a-car-profile">
+                                    <b style="font-size:xx-large">{{ carService.name }}</b>
+                                </a>
+                                <div class="profile-stars" style="display: inline; padding-left: 1em;" >
+                                    <!-- START NO 1-->
+                                    <div *ngIf="carService.averageRating < 0.5; then thenBlock1 else elseBlock1"></div>
+                                    <ng-template #thenBlock1><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                    <ng-template #elseBlock1>
+                                        <div *ngIf="carService.averageRating < 1; then thenBlock11 else elseBlock11"></div>
+                                        <ng-template #thenBlock11><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                        <ng-template #elseBlock11><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                    </ng-template>
+                                    <!-- START NO 2-->
+                                    <div *ngIf="carService.averageRating < 1.5; then thenBlock2 else elseBlock2"></div>
+                                    <ng-template #thenBlock2><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                    <ng-template #elseBlock2>
+                                        <div *ngIf="carService.averageRating < 2; then thenBlock22 else elseBlock22"></div>
+                                        <ng-template #thenBlock22><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                        <ng-template #elseBlock22><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                    </ng-template>
+                                    <!-- START NO 3-->
+                                    <div *ngIf="carService.averageRating < 2.5; then thenBlock3 else elseBlock3"></div>
+                                    <ng-template #thenBlock3><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                    <ng-template #elseBlock3>
+                                        <div *ngIf="carService.averageRating < 3; then thenBlock33 else elseBlock33"></div>
+                                        <ng-template #thenBlock33><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                        <ng-template #elseBlock33><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                    </ng-template>
+                                    <!-- START NO 4-->
+                                    <div *ngIf="carService.averageRating < 3.5; then thenBlock4 else elseBlock4"></div>
+                                    <ng-template #thenBlock4><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                    <ng-template #elseBlock4>
+                                        <div *ngIf="carService.averageRating < 4; then thenBlock44 else elseBlock44"></div>
+                                        <ng-template #thenBlock44><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                        <ng-template #elseBlock44><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                    </ng-template>
+                                    <!-- START NO 5-->
+                                    <div *ngIf="carService.averageRating < 4.5; then thenBlock5 else elseBlock5"></div>
+                                    <ng-template #thenBlock5><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                    <ng-template #elseBlock5>
+                                        <div *ngIf="carService.averageRating < 5; then thenBlock55 else elseBlock55"></div>
+                                        <ng-template #thenBlock55><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                        <ng-template #elseBlock55><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                                    </ng-template>
+                                    
+                                </div>
+                                <p class="card-description">
+                                    {{carService.description}}
+                                </p>
+                                <h5 class="card-title">
+                                    {{ carService.address.streetAndNumber }}
+                                </h5>
+                                <h5 class="card-title">
+                                    {{ carService.address.city }}
+                                </h5>
+                                <h5 class="card-title">
+                                    {{ carService.address.country }}
+                                </h5>
+                                <h6>
+                                    Branch: {{branch}}
+                                </h6>
+                            </div>
+                            <div class="col-md-4">
+                                <img [src]="carService.logoImage" class="card-img-top" alt="..."  >
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-mb-4">
+                        <div class="row card-group " >
+                            <div class="col-md-4">
+                                <h3 class="card-title">{{car.brand}} {{car.model}}</h3>
+                                <div class="profile-stars" style="display: inline; " >
+                                    <!-- START NO 1-->
+                                    <div *ngIf="car.averageRating < 0.5; then thenBlock1 else elseBlock1"></div>
+                                    <ng-template #thenBlock1><img src="\assets\img\blank-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                    <ng-template #elseBlock1>
+                                        <div *ngIf="car.averageRating < 1; then thenBlock11 else elseBlock11"></div>
+                                        <ng-template #thenBlock11><img src="\assets\img\half-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                        <ng-template #elseBlock11><img src="\assets\img\star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                    </ng-template>
+                                    <!-- START NO 2-->
+                                    <div *ngIf="car.averageRating < 1.5; then thenBlock2 else elseBlock2"></div>
+                                    <ng-template #thenBlock2><img src="\assets\img\blank-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                    <ng-template #elseBlock2>
+                                        <div *ngIf="car.averageRating < 2; then thenBlock22 else elseBlock22"></div>
+                                        <ng-template #thenBlock22><img src="\assets\img\half-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                        <ng-template #elseBlock22><img src="\assets\img\star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                    </ng-template>
+                                    <!-- START NO 3-->
+                                    <div *ngIf="car.averageRating < 2.5; then thenBlock3 else elseBlock3"></div>
+                                    <ng-template #thenBlock3><img src="\assets\img\blank-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                    <ng-template #elseBlock3>
+                                        <div *ngIf="car.averageRating < 3; then thenBlock33 else elseBlock33"></div>
+                                        <ng-template #thenBlock33><img src="\assets\img\half-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                        <ng-template #elseBlock33><img src="\assets\img\star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                    </ng-template>
+                                    <!-- START NO 4-->
+                                    <div *ngIf="car.averageRating < 3.5; then thenBlock4 else elseBlock4"></div>
+                                    <ng-template #thenBlock4><img src="\assets\img\blank-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                    <ng-template #elseBlock4>
+                                        <div *ngIf="car.averageRating < 4; then thenBlock44 else elseBlock44"></div>
+                                        <ng-template #thenBlock44><img src="\assets\img\half-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                        <ng-template #elseBlock44><img src="\assets\img\star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                    </ng-template>
+                                    <!-- START NO 5-->
+                                    <div *ngIf="car.averageRating < 4.5; then thenBlock5 else elseBlock5"></div>
+                                    <ng-template #thenBlock5><img src="\assets\img\blank-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                    <ng-template #elseBlock5>
+                                        <div *ngIf="car.averageRating < 5; then thenBlock55 else elseBlock55"></div>
+                                        <ng-template #thenBlock55><img src="\assets\img\half-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                        <ng-template #elseBlock55><img src="\assets\img\star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                    </ng-template>
+                                </div>
+                                <p class="card-text"><small class="text-muted">Type: {{ car.type }}</small></p>
+                                <p class="car-text">CM<sup>3</sup>: {{ car.cm3 }}</p>
+                                <p class="car-text">KW/KS: {{ car.kw }}/{{car.kw * kwks}} </p>
+                                <p class="card-text">Year: {{ car.year }}</p>
+                                <p>Seats: {{ car.seats }}</p>
+                                <div>
+                                    <div *ngIf = "car.doors == 3; else petVrata">
+                                      Doors: 2/3
+                                    </div>
+                                    <ng-template #petVrata>
+                                      Doors: 4/5
+                                    </ng-template>
+                                </div>
+                                <br>
+                                <p>Trunk: {{ car.trunk }} l</p>
+                                <p>Gear: {{ car.gear }} </p>
+                                <p>Fuel: {{ car.fuel }} </p>
+                            </div>
+                            <div class="col-md-4">
+                                <h3 class="card-title">Accessories</h3>
+                                <div>
+                                    <label class="container" id="type">Baby seat (+ {{babySeatPrice}} €/per day)
+                                        <input type="checkbox" (change)="changed($event, 'babySeat')">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="container" id="type">Navigation (+ {{nav}} €/per day)
+                                        <input type="checkbox" (change)="changed($event, 'navigation')">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="container" id="type">Roof rack (+ {{roofR}} €/per day)
+                                        <input type="checkbox" (change)="changed($event, 'roofRack')">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+
+                                
+                            </div>
+                            <div class="col-md-4">
+                                <img [src]="car.image" class="card-img" alt="...">
+                                <br><br>
+                                <div class="card-text" style="width: 100%;">
+                                    <span>
+                                        <b>
+                                            31.5.2020. - 4.6.2020 (5 days)
+                                        </b>
+                                    </span>
+                                </div><br>
+                                <div class="card-text" style="width: 100%;">
+                                    <span >
+                                      <b>
+                                        {{ car.pricePerDay }} € / per day
+                                      </b>
+                                    </span>
+                                </div><br>
+                                <div class="card-text" style="width: 100%;">
+                                    <span >
+                                      <b>
+                                        Summary[{{car.pricePerDay * days}} €]
+                                      </b>
+                                    </span>
+                                </div><br>
+                                <div class="btn btn-primary" style="width: 100%;"
+                                       data-toggle="modal" 
+                                       data-target="#rentReview">Rent
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

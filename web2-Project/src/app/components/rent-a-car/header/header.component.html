@@ -1,12 +1,14 @@
 <div class="form-inline">
-    <button class="btn btn-success" routerLink="/rent-a-car">
+    <button class="btn btn-primary" routerLink="/rent-a-car">
         <img src="\assets\img\back-icon.png" height="30" width="30">
     </button>
-    <h4 style="padding-left: 1em; ">Your choose city is  </h4>
-    <h3 style="padding-left: 10px; font-size: xx-large;">
-        <a routerLink="/rent-a-car/{{city.city}}/just-rent">
+    <h5 style="padding-left: 10px; ">
+        Your choose city is  
+    </h5>
+    <h3 style="padding-left: 10px; font-size: xx-large; color:maroon;">
+        <!-- <a routerLink="/rent-a-car/{{city.city}}/just-rent"> -->
             {{city}}
-        </a>
+        <!-- </a> -->
     </h3>
     <div class="form-group" style="padding-left: 1em;">
         <label >Pick-up date: </label>
@@ -31,6 +33,9 @@
         <input type="time" 
                class="form-control"
                value="14:00">
+        <button class="btn btn-primary">
+            Search
+        </button>
     </div>
     <!-- <div class="form-group mb-4">
         <div class="datepicker date input-group p-0 shadow-sm">

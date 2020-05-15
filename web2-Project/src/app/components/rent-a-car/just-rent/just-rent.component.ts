@@ -19,10 +19,9 @@ export class JustRentComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private carServiceService: CarServiceService) {
     route.params.subscribe(params => { this.city = params['cityId']; });
-    console.log(this.city);
 
     this.services = carServiceService.getServicesInCity(this.city);
-    console.log(this.services);
+    //console.log(this.services);
     this.cars = this.services[0].carlist;
 
    }

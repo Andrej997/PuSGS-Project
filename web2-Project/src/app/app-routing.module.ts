@@ -19,6 +19,7 @@ import { CcFlightComponent } from './components/flights-components/cc-flight/cc-
 import { FastFlightReservationComponent } from './components/flights-components/fast-flight-reservation/fast-flight-reservation.component';
 import { CreateAvioCompanyComponent } from './components/flights-components/create-avio-company/create-avio-company.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
+import { RentDetailComponent } from './components/rent-a-car/rent-detail/rent-detail.component';
 
 
 const routes: Routes = [
@@ -37,7 +38,14 @@ const routes: Routes = [
       { path: "",
         component: CitiesComponent},
       { path: ":cityId/just-rent",
-        component: JustRentComponent
+        children: [
+          { path: "",
+            component: JustRentComponent},
+          { path: ":serviceId/:branchId/:carId/rent-detail",
+            component: RentDetailComponent
+          }
+        ]
+        
       }
     ]
     // canActivate: [UserGuard]

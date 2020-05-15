@@ -1,45 +1,80 @@
-<div style="overflow: scroll;" >
-    <label for="cars">Choose a specific service:</label>
-    <br>
-    <select id="services" >
-        <option value="volvo" *ngFor="let service of services">{{service.name}}</option>
+<div class="">
+    <h6 for="cars">Service:</h6>
+    <select id="services" class="dvestapx" >
+        <option value="volvo" *ngFor="let service of services" >{{service.name}}</option>
     </select>
-    <br>
-    <br>
-    <label for="cars">Price range:</label>
-    <br>
-
-    <form class="range-field">
-        <span class="font-weight-bold indigo-text ml-2 mt-1">234</span>
-        <input type="range" min="234" max="1000" />
+    <hr>
+    <h6 for="cars">Price range:</h6>
+    <input type="number" step="10" value="" min="0" placeholder="from e" class="dvestapx">
+    <input type="number" step="10" value="" min="0" placeholder="to e" class="dvestapx">
+    <!-- <form class="range-field">
+        <span class="font-weight-bold indigo-text ml-2 mt-1">0</span>
+        <input type="range" min="0" max="1000" value="400"/>
         <span class="font-weight-bold indigo-text ml-2 mt-1">1000</span>
-    </form>
-
-    <br>
-    <label for="cars">Choose a specific brand car:</label>
-    <br>
-    <select id="cars" >
-    <option value="volvo" href="#" *ngFor="let car of cars">{{car.brand}}</option>
+    </form> -->
+    <hr>
+    <h6 for="cars">Passenger:</h6>
+    <input type="number" step="1" value="1" min="1" max="7" class="dvestapx">
+    <hr>
+    <h6 for="cars">Doors:</h6>
+    <label class="container" id="type" >2/3
+        <input type="checkbox" checked="checked">
+        <span class="checkmark"></span>
+    </label>
+    <label class="container" id="type" >4/5
+        <input type="checkbox" checked="checked">
+        <span class="checkmark"></span>
+    </label>
+    <hr>
+    <h6 for="cars">Gear:</h6>
+    <label class="container" id="type" >Manual
+        <input type="checkbox" checked="checked">
+        <span class="checkmark"></span>
+    </label>
+    <label class="container" id="type" >Automatic
+        <input type="checkbox" checked="checked">
+        <span class="checkmark"></span>
+    </label>
+    <hr>
+    <h6 for="cars">Fuel:</h6>
+    <label class="container" id="type" >Persol
+        <input type="checkbox" checked="checked">
+        <span class="checkmark"></span>
+    </label>
+    <label class="container" id="type" >Diesel
+        <input type="checkbox" checked="checked">
+        <span class="checkmark"></span>
+    </label>
+    <label class="container" id="type" >Electric
+        <input type="checkbox" checked="checked">
+        <span class="checkmark"></span>
+    </label>
+    <label class="container" id="type" >Hybrid
+        <input type="checkbox" checked="checked">
+        <span class="checkmark"></span>
+    </label>
+    <hr>
+    <h6 for="cars">Brand car:</h6>
+    <select id="cars" class="dvestapx">
+        <option value="volvo" href="#" *ngFor="let car of cars">{{car.brand}}</option>
     </select>
-    <br>
-    <br>
-
-    <h6>Type</h6>
+    <hr>
+    <h6>Type car:</h6>
     <label class="container" id="type" >Convertable
-    <input type="checkbox" checked="checked">
-    <span class="checkmark"></span>
+        <input type="checkbox" checked="checked">
+        <span class="checkmark"></span>
     </label>
     <label class="container" id="type" >Coupe
-    <input type="checkbox">
-    <span class="checkmark"></span>
+        <input type="checkbox">
+        <span class="checkmark"></span>
     </label>
     <label class="container" id="type">Crossoover
-    <input type="checkbox" checked="checked">
-    <span class="checkmark"></span>
+        <input type="checkbox" checked="checked">
+        <span class="checkmark"></span>
     </label>
     <label class="container" id="type">Hatchback
-    <input type="checkbox">
-    <span class="checkmark"></span>
+        <input type="checkbox">
+        <span class="checkmark"></span>
     </label>
     <label class="container" id="type">Luxuary
         <input type="checkbox">
@@ -53,5 +88,13 @@
         <input type="checkbox" checked="checked">
         <span class="checkmark"></span>
     </label>
-
+    <hr style=" margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 3px solid rgb(0, 0, 0);">
+    <div class="btn btn-primary" style="margin-left: 25%; width: 50%;">
+        <span>
+            Search
+        </span>
+    </div>
 </div>

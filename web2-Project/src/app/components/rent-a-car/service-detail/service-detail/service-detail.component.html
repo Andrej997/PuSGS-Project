@@ -18,49 +18,49 @@ padding: 0;">
                     </b>
                     <div class="profile-stars" style="display: inline; padding-left: 1em;" >
                         <!-- START NO 1-->
-                        <div *ngIf="averageRating < 0.5; then thenBlock1 else elseBlock1"></div>
+                        <div *ngIf="myService.averageRating < 0.5; then thenBlock1 else elseBlock1"></div>
                         <ng-template #thenBlock1><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
                         <ng-template #elseBlock1>
-                            <div *ngIf="averageRating < 1; then thenBlock11 else elseBlock11"></div>
+                            <div *ngIf="myService.averageRating < 1; then thenBlock11 else elseBlock11"></div>
                             <ng-template #thenBlock11><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
                             <ng-template #elseBlock11><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
                         </ng-template>
                         <!-- START NO 2-->
-                        <div *ngIf="averageRating < 1.5; then thenBlock2 else elseBlock2"></div>
+                        <div *ngIf="myService.averageRating < 1.5; then thenBlock2 else elseBlock2"></div>
                         <ng-template #thenBlock2><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
                         <ng-template #elseBlock2>
-                            <div *ngIf="averageRating < 2; then thenBlock22 else elseBlock22"></div>
+                            <div *ngIf="myService.averageRating < 2; then thenBlock22 else elseBlock22"></div>
                             <ng-template #thenBlock22><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
                             <ng-template #elseBlock22><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
                         </ng-template>
                         <!-- START NO 3-->
-                        <div *ngIf="averageRating < 2.5; then thenBlock3 else elseBlock3"></div>
+                        <div *ngIf="myService.averageRating < 2.5; then thenBlock3 else elseBlock3"></div>
                         <ng-template #thenBlock3><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
                         <ng-template #elseBlock3>
-                            <div *ngIf="averageRating < 3; then thenBlock33 else elseBlock33"></div>
+                            <div *ngIf="myService.averageRating < 3; then thenBlock33 else elseBlock33"></div>
                             <ng-template #thenBlock33><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
                             <ng-template #elseBlock33><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
                         </ng-template>
                         <!-- START NO 4-->
-                        <div *ngIf="averageRating < 3.5; then thenBlock4 else elseBlock4"></div>
+                        <div *ngIf="myService.averageRating < 3.5; then thenBlock4 else elseBlock4"></div>
                         <ng-template #thenBlock4><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
                         <ng-template #elseBlock4>
-                            <div *ngIf="averageRating < 4; then thenBlock44 else elseBlock44"></div>
+                            <div *ngIf="myService.averageRating < 4; then thenBlock44 else elseBlock44"></div>
                             <ng-template #thenBlock44><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
                             <ng-template #elseBlock44><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
                         </ng-template>
                         <!-- START NO 5-->
-                        <div *ngIf="averageRating < 4.5; then thenBlock5 else elseBlock5"></div>
+                        <div *ngIf="myService.averageRating < 4.5; then thenBlock5 else elseBlock5"></div>
                         <ng-template #thenBlock5><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
                         <ng-template #elseBlock5>
-                            <div *ngIf="averageRating < 5; then thenBlock55 else elseBlock55"></div>
+                            <div *ngIf="myService.averageRating < 5; then thenBlock55 else elseBlock55"></div>
                             <ng-template #thenBlock55><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
                             <ng-template #elseBlock55><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
                         </ng-template>
                     </div>
                     <div style="display: inline; padding-left: 1em;">
                         <span>
-                            Vote: {{numberVote}} 
+                            Vote: {{myService.raiting.length}} 
                         </span>
                     </div>
 

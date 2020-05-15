@@ -12,26 +12,27 @@ export class ServiceDetailComponent implements OnInit {
 
   id: number;
   myService: RentACarService;
-  averageRating: number;
-  numberVote: number;
+  //averageRating: number;
+  //numberVote: number;
 
 
   constructor(private route: ActivatedRoute,
               private carServiceService: CarServiceService) { 
     route.params.subscribe(params => { this.id = params['id']; });
-    this.myService = carServiceService.getService(this.id);
-    this.calculateAvg();
+    this.myService = carServiceService.getServiceOverId(this.id);
+    //this.averageRating = carServiceService.calculateAvg(this.myService);
+    //this.calculateAvg();
   }
 
-  calculateAvg(){
-    var sum = 0;
-    this.myService.raiting.forEach(element => {
-      sum += element;
-    });
-    this.numberVote = this.myService.raiting.length;
+  // calculateAvg(){
+  //   var sum = 0;
+  //   this.myService.raiting.forEach(element => {
+  //     sum += element;
+  //   });
+  //   this.numberVote = this.myService.raiting.length;
 
-    this.averageRating =  sum / this.numberVote;
-  }
+  //   this.averageRating =  sum / this.numberVote;
+  // }
 
   ngOnInit(): void {
   }
