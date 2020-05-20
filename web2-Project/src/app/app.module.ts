@@ -39,7 +39,8 @@ import { FastFlightReservationComponent } from './components/flights-components/
 import { CreateAvioCompanyComponent } from './components/flights-components/create-avio-company/create-avio-company.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { RentDetailComponent } from './components/rent-a-car/rent-detail/rent-detail.component'
-import { CreateFlightDestinationComponent } from './components/flights-components/create-flight-destination/create-flight-destination.component'
+import { CreateFlightDestinationComponent } from './components/flights-components/create-flight-destination/create-flight-destination.component';
+import { CreateOrReplaceServiceComponent } from './components/rent-a-car/create-or-replace-service/create-or-replace-service.component'
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { CreateFlightDestinationComponent } from './components/flights-component
     StatisticsComponent,
     RentDetailComponent,
     CreateFlightDestinationComponent,
+    CreateOrReplaceServiceComponent,
 
   ],
   imports: [

@@ -1,0 +1,24 @@
+.svee{
+    margin-top: 60px;
+    z-index: 1;
+}
+.serviceLogo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    max-width: 60%;
+    max-height: 350px;
+}
+#btnImage{
+    cursor: auto;
+    width: 346px ;
+    min-width: 260px;
+}
+#customFile{
+    cursor: pointer;
+    opacity: 0; 
+    position: relative; 
+    width: 330px; 
+    height: "document.getElementById('btnImage').getBoundingClientRect().height";
+}

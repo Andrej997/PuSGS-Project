@@ -21,6 +21,10 @@
     <Compile Remove="Migrations\20200513170256_Image.Designer.cs" />
     <Compile Remove="Migrations\20200513170631_FlightCompanyLogoChange.cs" />
     <Compile Remove="Migrations\20200513170631_FlightCompanyLogoChange.Designer.cs" />
+    <Compile Remove="Migrations\20200516195838_User.cs" />
+    <Compile Remove="Migrations\20200516195838_User.Designer.cs" />
+    <Compile Remove="Migrations\20200517202531_User.cs" />
+    <Compile Remove="Migrations\20200517202531_User.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +36,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\Cars\" />
   </ItemGroup>
 
 

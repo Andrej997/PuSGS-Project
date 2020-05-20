@@ -1,7 +1,4 @@
 <div class="form-inline">
-    <button class="btn btn-primary" routerLink="/rent-a-car">
-        <img src="\assets\img\back-icon.png" height="30" width="30">
-    </button>
     <h5 style="padding-left: 10px; ">
         Your choose city is  
     </h5>
@@ -14,26 +11,28 @@
         <label >Pick-up date: </label>
         <pre style="padding-left: 10px;"></pre>
         <input type="date" 
-               name="bday" 
+               id="startDay" 
                max="3000-12-31" 
                min="1000-01-01" 
                class="form-control"
                value="2020-04-14">
         <input type="time" 
+               id="startTime"
                class="form-control"
                value="10:00">
         <label style="padding-left: 10px;">Drop-off date: </label>
         <pre style="padding-left: 10px;"></pre>
         <input type="date" 
-               name="bday" 
+               id="endDay" 
                max="3000-12-31" 
                min="1000-01-01" 
                class="form-control"
                value="2020-04-14">
         <input type="time" 
+               id="endTime"
                class="form-control"
                value="14:00">
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" style="margin-left: 20px;" (click)="newMessage()">
             Search
         </button>
     </div>

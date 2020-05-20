@@ -5,6 +5,7 @@ import { HttpParams } from '@angular/common/http';
 import { RentACarService } from 'src/app/entities/rent-a-car-service/rent-a-car-service';
 import { Car } from 'src/app/entities/car/car';
 import { RentACarBranch } from 'src/app/entities/rent-a-car-branch/rent-a-car-branch';
+import { ShareDataServiceService } from 'src/app/services/share-data-service/share-data-service.service';
 
 @Component({
   selector: 'app-rent-detail',
@@ -23,9 +24,12 @@ export class RentDetailComponent implements OnInit {
   @Output() nav: number;
   @Output() roofR: number;
 
+  message:string;
+
 
   constructor(private route: ActivatedRoute,
-    private carServiceService: CarServiceService) { 
+              private carServiceService: CarServiceService,
+              private data: ShareDataServiceService) { 
       this.kwks = 1.359621617;
       this.days = 5;
 
@@ -58,6 +62,7 @@ export class RentDetailComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.data.currentMessage.subscribe(message => this.message = message)
   }
 
   changed = (evt, paramName) => {    

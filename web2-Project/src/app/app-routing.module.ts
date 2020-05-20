@@ -21,6 +21,7 @@ import { CreateAvioCompanyComponent } from './components/flights-components/crea
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { RentDetailComponent } from './components/rent-a-car/rent-detail/rent-detail.component';
 import { CreateFlightDestinationComponent } from './components/flights-components/create-flight-destination/create-flight-destination.component';
+import { CreateOrReplaceServiceComponent } from './components/rent-a-car/create-or-replace-service/create-or-replace-service.component';
 
 
 const routes: Routes = [
@@ -58,6 +59,10 @@ const routes: Routes = [
         component: RentACarProfileComponent},
       { path: ":id/service-detail",
         component: ServiceDetailComponent
+      },
+      {
+        path: "create-or-replace-service",
+        component: CreateOrReplaceServiceComponent
       }
     ]
   },
