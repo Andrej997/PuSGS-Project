@@ -97,6 +97,85 @@ namespace MAANPP20.Migrations
                     b.ToTable("StringForICollections");
                 });
 
+            modelBuilder.Entity("MAANPP20.Models.Common.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("addressid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("authData")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("firstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("lastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("passportHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("profileImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("role")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("addressid");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("MAANPP20.Models.Flights.Aeroplane", b =>
                 {
                     b.Property<int>("id")
@@ -356,6 +435,13 @@ namespace MAANPP20.Migrations
                     b.HasOne("MAANPP20.Models.Flights.Presedanje", null)
                         .WithMany("gradoviPresedanja")
                         .HasForeignKey("Presedanjeid");
+                });
+
+            modelBuilder.Entity("MAANPP20.Models.Common.User", b =>
+                {
+                    b.HasOne("MAANPP20.Models.Common.Address", "address")
+                        .WithMany()
+                        .HasForeignKey("addressid");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Flights.AvioSediste", b =>

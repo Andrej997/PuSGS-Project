@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MAANPP20.Data;
 using MAANPP20.Models.Flights;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ namespace MAANPP20.Controllers.Flights
     public class FlightCompanyController : ControllerBase
     {
         private readonly MAANPP20Context _context;
+        //private UserManager<User> UserManager;
         public FlightCompanyController(MAANPP20Context context)
         {
             _context = context;

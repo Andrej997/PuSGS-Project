@@ -1,32 +1,33 @@
+<div class="svee">
+    <div id="container" style="margin-left: 15px; margin-right: 15px; margin-top: 15px;">
+        <div class="alert alert-info" role="alert"
+            *ngIf='!this.authenticationService.currentUserValue'>
+            To se the prise, you need to <a routerLink="/log-in"><b><u>login</u></b></a>
+            or <a routerLink="/sign-in"><b><u>register</u></b></a>!
+        </div>
+    </div>
+    <h3 style="text-align: center;">Pretraga gradovva</h3>
+    <br/>
+    <app-search-by-city></app-search-by-city>
+    <br/>
+    <!-- <div [hidden]="filteredCity.length !== 0">
+        <hr/>
+        <h5 style="text-align: center;">Trenutno nema trazenih rezultata.</h5>
+    </div> -->
+    <div [hidden]="filteredCity.length === 0">
+        <h5 style="text-align: center;">Rezultati pretrage:</h5>
+        <app-filtered-cities [filteredCity]="filteredCity"></app-filtered-cities>
+    </div>
 
-<div id="container" style="margin-left: 15px; margin-right: 15px; margin-top: 15px;">
-    <div class="alert alert-info" role="alert"
-         *ngIf='!this.authenticationService.currentUserValue'>
-        To se the prise, you need to <a routerLink="/log-in"><b><u>login</u></b></a>
-        or <a routerLink="/sign-in"><b><u>register</u></b></a>!
-      </div>
-</div>
-<h3 style="text-align: center;">Pretraga gradovva</h3>
-<br/>
-<app-search-by-city></app-search-by-city>
-<br/>
-<!-- <div [hidden]="filteredCity.length !== 0">
-    <hr/>
-    <h5 style="text-align: center;">Trenutno nema trazenih rezultata.</h5>
-</div> -->
-<div [hidden]="filteredCity.length === 0">
-    <h5 style="text-align: center;">Rezultati pretrage:</h5>
-    <app-filtered-cities [filteredCity]="filteredCity"></app-filtered-cities>
-</div>
-
-<h2 style="text-align: center;">
-    Predlozi
-</h2>
-<br/>
-<div [hidden]="suggestionCity.length !== 0">
-    <hr/>
-    <h5 style="text-align: center;">Trenutno nema predloga.</h5>
-</div>
-<div [hidden]="suggestionCity.length === 0">
-    <app-suggestion-cities [suggestionCity]="suggestionCity"></app-suggestion-cities>
+    <h2 style="text-align: center;">
+        Predlozi
+    </h2>
+    <br/>
+    <div [hidden]="suggestionCity.length !== 0">
+        <hr/>
+        <h5 style="text-align: center;">Trenutno nema predloga.</h5>
+    </div>
+    <div [hidden]="suggestionCity.length === 0">
+        <app-suggestion-cities [suggestionCity]="suggestionCity"></app-suggestion-cities>
+    </div>
 </div>

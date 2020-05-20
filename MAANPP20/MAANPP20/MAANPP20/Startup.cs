@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MAANPP20.Data;
+using MAANPP20.Models.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,7 @@ namespace MAANPP20
             services.AddDbContext<MAANPP20Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MAANPP20Context")));
 
+
             services.AddCors();
         }
 
@@ -50,6 +52,8 @@ namespace MAANPP20
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

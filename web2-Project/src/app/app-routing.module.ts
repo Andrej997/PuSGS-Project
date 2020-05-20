@@ -19,10 +19,12 @@ import { CcFlightComponent } from './components/flights-components/cc-flight/cc-
 import { FastFlightReservationComponent } from './components/flights-components/fast-flight-reservation/fast-flight-reservation.component';
 import { CreateAvioCompanyComponent } from './components/flights-components/create-avio-company/create-avio-company.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
+import { RentDetailComponent } from './components/rent-a-car/rent-detail/rent-detail.component';
 import { CreateFlightDestinationComponent } from './components/flights-components/create-flight-destination/create-flight-destination.component';
 import { CreatePlaneComponent } from './components/flights-components/create-plane/create-plane.component';
 import { PlanesComponent } from './components/flights-components/planes/planes.component';
 import { ChangeFlightComponent } from './components/flights-components/change-flight/change-flight.component';
+import { CreateOrReplaceServiceComponent } from './components/rent-a-car/create-or-replace-service/create-or-replace-service.component';
 
 
 const routes: Routes = [
@@ -41,7 +43,14 @@ const routes: Routes = [
       { path: "",
         component: CitiesComponent},
       { path: ":cityId/just-rent",
-        component: JustRentComponent
+        children: [
+          { path: "",
+            component: JustRentComponent},
+          { path: ":serviceId/:branchId/:carId/rent-detail",
+            component: RentDetailComponent
+          }
+        ]
+        
       }
     ]
     // canActivate: [UserGuard]
@@ -53,6 +62,10 @@ const routes: Routes = [
         component: RentACarProfileComponent},
       { path: ":id/service-detail",
         component: ServiceDetailComponent
+      },
+      {
+        path: "create-or-replace-service",
+        component: CreateOrReplaceServiceComponent
       }
     ]
   },

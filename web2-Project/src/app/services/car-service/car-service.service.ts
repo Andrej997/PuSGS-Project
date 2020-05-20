@@ -27,12 +27,15 @@ export class CarServiceService {
   mockedCarServices() {
     let allServices = new Array<RentACarService>();
     var pe = new Address("Yongdingmen Inner St", "Peking", "Kina");
-    var sm = new Address("500 W Temple St", "Los angeles", "SAD");
+    var sm = new Address("500 W Temple St", "New york", "SAD");
     var ns = new Address("30 Water St", "New york", "SAD"); 
     var tv = new Address("Никитский пер 2,", "Moskva", "Rusija"); 
 
-    var pricelist = new Array<number>();
-    pricelist.push(99, 88, 123, 456); 
+    var pricelist = new Array<[string, number]>();
+    pricelist.push(["babySeat", 2.02])
+    pricelist.push(["navigation", 2.3])
+    pricelist.push(["roofRack", 5])
+
     var carlist =  new Array<Car>();
     carlist = this.loadCars(); 
     var branches =  Array<RentACarBranch>();
@@ -43,7 +46,9 @@ export class CarServiceService {
     var raiting =  Array<number>();
     var raiting1 =  Array<number>();
     raiting.push(4, 5, 1, 2, 3);
+    var avg = this.calculateAvgArray(raiting); 
     raiting1.push(4, 1, 1, 2, 5);
+    var avg1 = this.calculateAvgArray(raiting1); 
     var comments = Array<string>();
     comments.push("Komentar1");
     comments.push("Komentar2");
@@ -59,6 +64,7 @@ export class CarServiceService {
                                          carlist, 
                                          branches, 
                                          raiting, 
+                                         avg,
                                          comments);
     const service2 = new RentACarService(456,
                                          "Cartize Company", 
@@ -69,6 +75,7 @@ export class CarServiceService {
                                         carlist, 
                                         branches, 
                                         raiting1, 
+                                        avg1,
                                         comments);
     const service3 = new RentACarService(789,
                                          "Queen", 
@@ -79,6 +86,7 @@ export class CarServiceService {
                                          carlist, 
                                          branches, 
                                          raiting, 
+                                         avg,
                                          comments);
     const service4 = new RentACarService(989,
                                           "Covid19+", 
@@ -89,6 +97,7 @@ export class CarServiceService {
                                           carlist, 
                                           branches, 
                                           raiting, 
+                                          avg,
                                           comments);
       
     allServices.push(service1);
@@ -98,11 +107,22 @@ export class CarServiceService {
 
     return allServices;
   }
-  getService(id: number) : RentACarService{
+  getServiceOverId(id: number) : RentACarService{
     var allServices = this.loadAllCarServices();
     var oneService: RentACarService;
     allServices.forEach(element => {
       if (element.id == id){
+        oneService = element;
+      }
+        
+    });
+    return oneService;
+  }
+  getService(name: string, city: string) : RentACarService{
+    var allServices = this.loadAllCarServices();
+    var oneService: RentACarService;
+    allServices.forEach(element => {
+      if (element.name == name && element.address.city == city){
         oneService = element;
       }
         
@@ -116,16 +136,16 @@ export class CarServiceService {
     allServices.forEach(element => {
       if (element.address.city.toString() == city.toString()){
         services.push(element);
-        console.log(element);
+        //console.log(element);
       }
       else{
-        console.log("else");
-        console.log(element);
+        //console.log("else");
+        //console.log(element);
 
       }
         
     });
-    console.log("gotovo");
+    //console.log("gotovo");
     return services;
   }
 
@@ -135,9 +155,77 @@ export class CarServiceService {
     var ford = "../../../assets/img/mustang.jpg";
     var vw = "../../../assets/img/vw-scirocco.jpg";
 
-    const car1 = new Car(1, audi, "Audi", "RS6", "Avant", 2020, 999);
-    const car2 = new Car(2, ford, "Ford", "Mustang GT", "Supercar", 2020, 899);
-    const car3 = new Car(3, vw,  "Volkswagen", "Scirocco", "Hatchback", 2020, 799);
+    var raiting =  Array<number>();
+    var raiting1 =  Array<number>();
+    var raiting2 =  Array<number>();
+    raiting.push(5, 1);
+    raiting1.push(4, 2, 5);
+    raiting2.push(4, 1, 5, 2, 5);
+    var avg = this.calculateAvgArray(raiting); 
+    var avg1 = this.calculateAvgArray(raiting1); 
+    var avg2 = this.calculateAvgArray(raiting2); 
+
+
+    const car1 = new Car(1, 
+                         audi, 
+                         "Audi", 
+                         "RS6", 
+                         "Avant", 
+                         4000,
+                         300, 
+                         5, 
+                         "Automatic", 
+                         "Persol", 
+                         2020,  
+                         5, 
+                         5, 
+                         800, 
+                         999, 
+                         raiting, 
+                         avg,
+                         true,
+                         true,
+                         true);
+    const car2 = new Car(2, 
+                         ford, 
+                         "Ford",
+                        "Mustang GT", 
+                        "Supercar", 
+                        5000,
+                        400, 
+                        3, 
+                        "Manual",  
+                        "Diesel", 
+                        2020, 
+                        2, 
+                        2, 
+                        200, 
+                        899, 
+                        raiting1, 
+                        avg1,
+                        false,
+                        true,
+                        false);
+    const car3 = new Car(3, 
+                         vw,  
+                         "Volkswagen", 
+                         "Scirocco", 
+                         "Hatchback", 
+                         2000,
+                         200, 
+                         3, 
+                         "Manual", 
+                         "Persol",
+                         2020, 
+                         4, 
+                         4, 
+                         300, 
+                         799, 
+                         raiting2, 
+                         avg2,
+                         true,
+                         true,
+                         false);
     
     allCars.push(car1);
     allCars.push(car2);
@@ -169,5 +257,33 @@ export class CarServiceService {
     allCards.push(card4);
 
     return allCards;
+  }
+
+  calculateAvgArray(votes: Array<number>) : number{
+    var sum = 0;
+    var numberVote = 0;
+    var averageRating = 0;
+    votes.forEach(element => {
+      sum += element;
+    });
+    numberVote = votes.length;
+
+    averageRating =  sum / numberVote;
+
+    return averageRating;
+  }
+
+  calculateAvg(service: RentACarService) : number{
+    var sum = 0;
+    var numberVote = 0;
+    var averageRating = 0;
+    service.raiting.forEach(element => {
+      sum += element;
+    });
+    numberVote = service.raiting.length;
+
+    averageRating =  sum / numberVote;
+
+    return averageRating;
   }
 }

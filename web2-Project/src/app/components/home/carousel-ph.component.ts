@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-carousel-ph',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CarouselPhComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+     }
 
   ngOnInit(): void {
+    
   }
+  
 
 }

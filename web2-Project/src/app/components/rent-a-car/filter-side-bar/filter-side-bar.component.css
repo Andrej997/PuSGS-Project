@@ -18,7 +18,9 @@
   height: 0;
   width: 0;
 }
-
+.dvestapx{
+  width: 200px
+}
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;

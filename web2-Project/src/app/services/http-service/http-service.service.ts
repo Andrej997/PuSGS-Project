@@ -34,6 +34,8 @@ export class HttpServiceService {
 
   //! this.httpService.getAction('FlightCompany').toPromise().then(result => this.list = result as FlightCompany[]);
   getAction(controllerName: string) {
+    //console.log(this.rootURL);
+    //console.log(this.http.get(this.rootURL + '/' + controllerName))
     return this.http.get(this.rootURL + '/' + controllerName);
   }
 

@@ -1,7 +1,7 @@
 .header {
     height: 65px;
     width: 100%;
-    position: absolute;
+    position: fixed;
     z-index: 1;
     top: 60px;
     left: 2px;
@@ -18,9 +18,8 @@
     left: 2px;
     bottom: 10px;
     background: rgba(209, 209, 209, 0.404);
-    overflow-x: hidden;
     padding: 2px 0;
-    overflow: hidden;
+    overflow: scroll;
     padding-top: 10px;
   }
   @media screen and (max-height: 450px) {
@@ -30,7 +29,7 @@
 #main {
   margin-left: 260px; /* Same as the width of the sidebar */
   margin-top: 60px;
-  position: sticky;
+  position: unset;
   left: 2px;
   background:  #eee;
   overflow-x: hidden;

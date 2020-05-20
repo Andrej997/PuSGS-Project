@@ -2,41 +2,164 @@
   Prikaz svih dostupnih vozila po servisima:
 </h2>
 <br>
-<div class="container">
+<div class="container-fluid kartice" >
     <div class="row card-group" >
         <div class="col-sm-12" *ngFor="let service of services">
             <div class="card" style="margin-bottom: 10px;">
-                <img [src]="service.logoImage" class="card-img-top" alt="..."  >
-                <div class="card-body">
-                  <a class="card-title ml-1" routerLink="/rent-a-car-profile">
-                    <b style="font-size:xx-large">{{ service.name }}</b>
-                  </a>
-                  <p class="card-description">
-                    {{service.description}}
-                  </p>
-                  <h5 class="card-title">
-                    {{ service.address.streetAndNumber }}
-                  </h5>
-                  <h5 class="card-title">
-                    {{ service.address.city }}
-                  </h5>
-                  <h5 class="card-title">
-                    {{ service.address.country }}
-                  </h5>
+              
+              <div class="card-body">
+                <div class="card-mb-4">
+                  <div class="row card-group " >
+                    <div class="col-md-8">
+                      <a class="card-title ml-1" routerLink="/rent-a-car-profile">
+                        <b style="font-size:xx-large">{{ service.name }}</b>
+                      </a>
+                      <div class="profile-stars" style="display: inline; padding-left: 1em;" >
+                        <!-- START NO 1-->
+                        <div *ngIf="service.averageRating < 0.5; then thenBlock1 else elseBlock1"></div>
+                        <ng-template #thenBlock1><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        <ng-template #elseBlock1>
+                            <div *ngIf="service.averageRating < 1; then thenBlock11 else elseBlock11"></div>
+                            <ng-template #thenBlock11><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                            <ng-template #elseBlock11><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        </ng-template>
+                        <!-- START NO 2-->
+                        <div *ngIf="service.averageRating < 1.5; then thenBlock2 else elseBlock2"></div>
+                        <ng-template #thenBlock2><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        <ng-template #elseBlock2>
+                            <div *ngIf="service.averageRating < 2; then thenBlock22 else elseBlock22"></div>
+                            <ng-template #thenBlock22><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                            <ng-template #elseBlock22><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        </ng-template>
+                        <!-- START NO 3-->
+                        <div *ngIf="service.averageRating < 2.5; then thenBlock3 else elseBlock3"></div>
+                        <ng-template #thenBlock3><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        <ng-template #elseBlock3>
+                            <div *ngIf="service.averageRating < 3; then thenBlock33 else elseBlock33"></div>
+                            <ng-template #thenBlock33><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                            <ng-template #elseBlock33><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        </ng-template>
+                        <!-- START NO 4-->
+                        <div *ngIf="service.averageRating < 3.5; then thenBlock4 else elseBlock4"></div>
+                        <ng-template #thenBlock4><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        <ng-template #elseBlock4>
+                            <div *ngIf="service.averageRating < 4; then thenBlock44 else elseBlock44"></div>
+                            <ng-template #thenBlock44><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                            <ng-template #elseBlock44><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        </ng-template>
+                        <!-- START NO 5-->
+                        <div *ngIf="service.averageRating < 4.5; then thenBlock5 else elseBlock5"></div>
+                        <ng-template #thenBlock5><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        <ng-template #elseBlock5>
+                            <div *ngIf="service.averageRating < 5; then thenBlock55 else elseBlock55"></div>
+                            <ng-template #thenBlock55><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                            <ng-template #elseBlock55><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        </ng-template>
+                    </div>
+                      <p class="card-description">
+                        {{service.description}}
+                      </p>
+                      <h5 class="card-title">
+                        {{ service.address.streetAndNumber }}
+                      </h5>
+                      
+                      <h5 class="card-title">
+                        {{ service.address.city }}
+                      </h5>
+                      <h5 class="card-title">
+                        {{ service.address.country }}
+                      </h5>
+                      <h6>
+                        Branches:
+                        <div style="display: inline; padding-left: 5em;">
+                          <select id="{{service.name}}" #selectBranches>
+                            <!-- <option [value]="1" >1</option>
+                            <option [value]="2" selected>2</option>
+                            <option [value]="3">3</option> -->
+                            <option *ngFor="let branch of service.branches" 
+                                    [value]="branch.address.streetAndNumber">
+                                    {{branch.address.streetAndNumber}}
+                            </option>
+                          </select>
+                        </div>
+                      </h6>
+                    </div>
+                    <div class="col-md-4">
+                      <img [src]="service.logoImage" class="card-img-top" alt="..."  >
+                    </div>
+                  </div>
                 </div>
-
+              </div>
                 <div class="container">
                   <div class="card mb-3" style="max-width: auto;" *ngFor="let car of service.carlist">
                     <div class="row card-group " >
                       <div class="col-md-4">
                         <img [src]="car.image" class="card-img" alt="...">
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-3">
                         <div class="card-body">
                           <h3 class="card-title">{{car.brand}} {{car.model}}</h3>
+                          <div class="profile-stars" style="display: inline; " >
+                            <!-- START NO 1-->
+                            <div *ngIf="car.averageRating < 0.5; then thenBlock1 else elseBlock1"></div>
+                            <ng-template #thenBlock1><img src="\assets\img\blank-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                            <ng-template #elseBlock1>
+                                <div *ngIf="car.averageRating < 1; then thenBlock11 else elseBlock11"></div>
+                                <ng-template #thenBlock11><img src="\assets\img\half-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                <ng-template #elseBlock11><img src="\assets\img\star.png" style="width: 15px; height: 15px;"/></ng-template>
+                            </ng-template>
+                            <!-- START NO 2-->
+                            <div *ngIf="car.averageRating < 1.5; then thenBlock2 else elseBlock2"></div>
+                            <ng-template #thenBlock2><img src="\assets\img\blank-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                            <ng-template #elseBlock2>
+                                <div *ngIf="car.averageRating < 2; then thenBlock22 else elseBlock22"></div>
+                                <ng-template #thenBlock22><img src="\assets\img\half-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                <ng-template #elseBlock22><img src="\assets\img\star.png" style="width: 15px; height: 15px;"/></ng-template>
+                            </ng-template>
+                            <!-- START NO 3-->
+                            <div *ngIf="car.averageRating < 2.5; then thenBlock3 else elseBlock3"></div>
+                            <ng-template #thenBlock3><img src="\assets\img\blank-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                            <ng-template #elseBlock3>
+                                <div *ngIf="car.averageRating < 3; then thenBlock33 else elseBlock33"></div>
+                                <ng-template #thenBlock33><img src="\assets\img\half-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                <ng-template #elseBlock33><img src="\assets\img\star.png" style="width: 15px; height: 15px;"/></ng-template>
+                            </ng-template>
+                            <!-- START NO 4-->
+                            <div *ngIf="car.averageRating < 3.5; then thenBlock4 else elseBlock4"></div>
+                            <ng-template #thenBlock4><img src="\assets\img\blank-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                            <ng-template #elseBlock4>
+                                <div *ngIf="car.averageRating < 4; then thenBlock44 else elseBlock44"></div>
+                                <ng-template #thenBlock44><img src="\assets\img\half-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                <ng-template #elseBlock44><img src="\assets\img\star.png" style="width: 15px; height: 15px;"/></ng-template>
+                            </ng-template>
+                            <!-- START NO 5-->
+                            <div *ngIf="car.averageRating < 4.5; then thenBlock5 else elseBlock5"></div>
+                            <ng-template #thenBlock5><img src="\assets\img\blank-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                            <ng-template #elseBlock5>
+                                <div *ngIf="car.averageRating < 5; then thenBlock55 else elseBlock55"></div>
+                                <ng-template #thenBlock55><img src="\assets\img\half-star.png" style="width: 15px; height: 15px;"/></ng-template>
+                                <ng-template #elseBlock55><img src="\assets\img\star.png" style="width: 15px; height: 15px;"/></ng-template>
+                            </ng-template>
+                        </div>
                           <p class="card-text"><small class="text-muted">Type: {{ car.type }}</small></p>
                           <p class="card-text">Year: {{ car.year }}</p>
-                          <p class="card-text">Price per day: {{ car.pricePerDay }}</p>
+                          <p>Seats: {{ car.seats }}</p>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="card-body">
+                          <div>
+                            <div *ngIf = "car.doors == 3; else petVrata">
+                              Doors: 2/3
+                            </div>
+                            <ng-template #petVrata>
+                              Doors: 4/5
+                            </ng-template>
+                          </div>
+                          <br>
+                          <p>Trunk: {{ car.trunk }} l</p>
+                          <p>Gear: {{ car.gear }} </p>
+                          <p>Fuel: {{ car.fuel }} </p>
                         </div>
                       </div>
                       <div class="col-md-1">
@@ -44,27 +167,25 @@
                           <div class="label" style="width: 120px;">
                             <span >
                               <b>
-                                140 e/per day
+                                {{ car.pricePerDay }} € / per day
                               </b>
                             </span>
                           </div>
                           <div class="label" style="width: 120px;">
                             <span >
                               <b>
-                                Summary[-]
+                                Summary[ €]
                               </b>
                             </span>
                           </div>
-                          <div class="btn btn-primary" style="width: 120px; ">
-                            <p class="card-text">
-                              Rent
-                            </p>
+                          <div class="btn btn-primary" style="width: 120px;"
+                               data-toggle="modal" 
+                               data-target="#rentReview">Rent
                           </div>
                           <br>
-                          <div class="btn btn-primary" style="width: 120px;">
-                            <p class="card-text">
-                              Detail
-                            </p>
+                          <div class="btn btn-primary" style="width: 120px; margin-top: 3px;"
+                               (click) = "func(service, car)"> 
+                            Detail
                           </div>
                         </div>
                       </div>
@@ -76,6 +197,7 @@
             </div>
         </div>
     </div>
+
 
 
 <h2>
@@ -125,6 +247,27 @@
                 </div>
               </div>
             </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="rentReview" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Review reservation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Sve potrebne informacije o pregledu rezervacije . . . 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Accept</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Discard</button>
         </div>
       </div>
     </div>

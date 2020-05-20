@@ -1,10 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { User, Role } from 'src/app/entities/user/user';
-import { Address } from 'src/app/entities/address/address';
-import { Message } from 'src/app/entities/message/message';
-import { Friend } from 'src/app/entities/friend/friend';
+import { RegisterServiceService } from 'src/app/services/register-service/register-service.service';
+import { ShareDataServiceService } from 'src/app/services/share-data-service/share-data-service.service';
+import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,88 +11,70 @@ import { Friend } from 'src/app/entities/friend/friend';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-
-  signInForm: FormGroup;
-
   @Input() source : string;
-  imgName : string;
+  imgName : any;
+  imgString : string;
+  logoImg: string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private authenticationService: AuthenticationService,
+              public registerService: RegisterServiceService, 
+              private shareService: ShareDataServiceService) {
     this.source = "../../../assets/img/person-icon.png";
-    this.imgName = "Choose image";
+    this.imgName = "Nesto";
+    this.imgString = "Choose image";
    }
-
    
   ngOnInit(): void {
-    this.initForm();
+    this.registerService.formModel.reset();
+    this.shareService.currentLogoImage.subscribe(logoImg => this.logoImg = logoImg);
   }
+ 
+  OnSubmit(){
+    console.log("onSubmit start");
+    this.registerService.register().subscribe(
+      (res: any) => {
+        console.log("res: " + res); //treba doraditi da se proveri auth korisnika i logovanje
 
-  private initForm() {
-    this.signInForm = new FormGroup({
-      'firstName': new FormControl("", Validators.required),
-      'lastName': new FormControl("", Validators.required),
-      'email': new FormControl('', [Validators.required, Validators.email]),
-      'password' : new FormControl('', [Validators.required, Validators.minLength(3)]),
-      'passwordRepeat' : new FormControl('', [Validators.required, Validators.minLength(3)]),
-      'phoneNumber' : new FormControl('', [
-                                            Validators.required, 
-                                            Validators.pattern("^[0-9]*$"),
-                                            Validators.minLength(8)]),
-      'streetAndNumber': new FormControl("", Validators.required),
-      'city': new FormControl("", Validators.required),
-      'profileImg': new FormControl("", Validators.nullValidator)
+        // this.authenticationService.login(user.email.toString(), user.password.toString())
+        //     .pipe(first())
+        //     .subscribe(
+        //         data => {
+        //             this.router.navigate([this.returnUrl]);
+        //         },
+        //         error => {
+        //             this.error = error;
+        //         });
 
-      
-    });
-  }
-
-  onSubmit() {
-    console.log(this.signInForm.value);
-    console.log(this.signInForm);
-
-    var address = new Address(this.signInForm.value.streetAndNumber, this.signInForm.value.city, "Srbija");
-
-    var user = new User(69, //ovde moramo ubaciti logiku da id bude jedinstven
-                        this.signInForm.value.firstName, 
-                        this.signInForm.value.lastName, 
-                        this.signInForm.value.email,
-                        this.signInForm.value.password,
-                        this.signInForm.value.profileImg,
-                        address,
-                        Role.user,
-                        new Array<Friend>(),
-                        new Array<User>(),
-                        new Array<User>());
-
-                        
-    console.log(user);
-
-    localStorage.setItem('userRole', JSON.stringify('USER'));
-
-    this.router.navigateByUrl('/home');
+        this.router.navigateByUrl("/home");
+      },
+      err => {
+        console.log("Err: " + err);
+      }
+    )
   }
 
   onClear() {
-    this.signInForm.reset();
+    this.registerService.formModel.reset();
   }
+
   readURL(event) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-
       reader.readAsDataURL(event.target.files[0]); // read file as data url
-      console.log(event.target.files[0].name);
-      this.imgName = event.target.files[0].name.toString();
-
+      this.imgString = event.target.files[0].name.toString();
       reader.onload = (event) => { // called once readAsDataURL is completed
         this.source = event.target.result.toString();
+        this.imgName = this.source;
+        this.logoImg = this.source;
+        this.shareService.changeLogoImage(this.source);
       }
     }
-    //this.source = "../../../assets/img/1.jpg";
   }
 
   deleteProfileImage(){
     this.source = "../../../assets/img/person-icon.png";
-    this.imgName = "Choose image";
+    this.imgString = "Choose image";
   }
 
 
