@@ -17,6 +17,8 @@ export class AvioCompaniesComponent implements OnInit {
 
   list: Array<FlightCompany>;
 
+  loading: boolean = true;
+
   allAvioCompanies: Array<FlightCompany> = new Array<FlightCompany>();
   constructor(private avioCompaniesService: AvioCompaniesService,
               private httpService: HttpServiceService) { 
@@ -28,13 +30,15 @@ export class AvioCompaniesComponent implements OnInit {
       .toPromise()
       .then(result => {
         this.allAvioCompanies = result as FlightCompany[];
-        console.log(this.allAvioCompanies);
+        //console.log(this.allAvioCompanies);
+        this.loading = false;
       })
       .catch(
         err => {
           console.log(err)
           this.error = true;
           this.errorText = "Error while loading companies!"
+          this.loading = false;
         });
   }
 

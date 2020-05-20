@@ -38,7 +38,12 @@ import { CcFlightComponent } from './components/flights-components/cc-flight/cc-
 import { FastFlightReservationComponent } from './components/flights-components/fast-flight-reservation/fast-flight-reservation.component';
 import { CreateAvioCompanyComponent } from './components/flights-components/create-avio-company/create-avio-company.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
-import { CreateFlightDestinationComponent } from './components/flights-components/create-flight-destination/create-flight-destination.component'
+import { CreateFlightDestinationComponent } from './components/flights-components/create-flight-destination/create-flight-destination.component';
+import { CreatePlaneComponent } from './components/flights-components/create-plane/create-plane.component';
+import { PlanesComponent } from './components/flights-components/planes/planes.component';
+import { ChangeFlightComponent } from './components/flights-components/change-flight/change-flight.component';
+import { MySpinnerComponent } from './components/flights-components/my-spinner/my-spinner.component';
+import { PlaneSeatsComponent } from './components/flights-components/plane-seats/plane-seats.component'
 
 @NgModule({
   declarations: [
@@ -76,6 +81,11 @@ import { CreateFlightDestinationComponent } from './components/flights-component
     CreateAvioCompanyComponent,
     StatisticsComponent,
     CreateFlightDestinationComponent,
+    CreatePlaneComponent,
+    PlanesComponent,
+    ChangeFlightComponent,
+    MySpinnerComponent,
+    PlaneSeatsComponent,
 
   ],
   imports: [

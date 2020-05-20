@@ -25,7 +25,7 @@ namespace MAANPP20.Models.Flights
 
         [ForeignKey("to")]
         public int addressToId { get; set; }
-        public Address to { get; set; } 
+        public Address to { get; set; }
 
         public string destImg { get; set; }
 
@@ -58,5 +58,9 @@ namespace MAANPP20.Models.Flights
         public double discountForFastReservation { get; set; }
 
         public ICollection<DoubleForICollection> ocene { get; set; }
+
+        public ICollection<AvioSediste> allSeatsForThisFlight { get; set; }
+
+        public bool deleted { get; set; }
     }
 }

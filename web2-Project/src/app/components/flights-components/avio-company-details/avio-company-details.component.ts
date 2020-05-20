@@ -29,6 +29,8 @@ export class AvioCompanyDetailsComponent implements OnInit {
 
   change: boolean = false;
 
+  loading: boolean = true;
+
   constructor(private route: ActivatedRoute, private httpService: HttpServiceService,
         private avioCompaniesService: AvioCompaniesService, private router: Router,
         public authenticationService: AuthenticationService) { 
@@ -49,7 +51,7 @@ export class AvioCompanyDetailsComponent implements OnInit {
         this.ocena = this.ocena / this.flightCompany.ocene.length;
 
       // console.log(this.ocena);
-
+      this.loading = false;
       console.log(this.flightCompany);
     })
     .catch(
@@ -57,22 +59,24 @@ export class AvioCompanyDetailsComponent implements OnInit {
         console.log(err)
         this.error = true;
         this.errorText = "Error while loading company!"
+        this.loading = false;
       });
   }
 
   ngOnInit(): void {
   }
 
-  createRange(allSeats: Array<AvioSediste>) {   // simulacija for petlje u html-u
-    let items: number[] = [];
-    let retItem: number[] = [];
-    for(var i = 0, j = 0; i < allSeats.length; i++){
-      if (!allSeats[i].reserved && !allSeats[i].isFastReservation)
-       items.push(++j);
-    }
-    retItem.push(items[items.length-1]);
-    return retItem;
-  }
+  // createRange(allSeats: Array<AvioSediste>) {   // simulacija for petlje u html-u
+  //   //console.log(allSeats)
+  //   let items: number[] = [];
+  //   let retItem: number[] = [];
+  //   for(var i = 0, j = 0; i < allSeats.length; i++){
+  //     if (!allSeats[i].reserved && !allSeats[i].isFastReservation)
+  //      items.push(++j);
+  //   }
+  //   retItem.push(items[items.length-1]);
+  //   return retItem;
+  // }
 
   hideShow() {
     if (!this.hideShowBTN)
@@ -110,6 +114,20 @@ export class AvioCompanyDetailsComponent implements OnInit {
   deleteFlightDestination(event) {
     const idDeleteFD = event.target.id;
     this.httpService.deleteAction("FlightDestination", "DeleteFlightDestination", idDeleteFD).toPromise()
+    .then(result => {
+      this.change = true;
+    })
+    .catch(
+      err => {
+        console.log(err);
+        this.error = true;
+        this.hideShowBTN = false;
+      });
+  }
+
+  deleteFlight(event) {
+    const idDeleteF = event.target.id;
+    this.httpService.deleteAction("Flight", "DeleteFlight", idDeleteF).toPromise()
     .then(result => {
       this.change = true;
     })

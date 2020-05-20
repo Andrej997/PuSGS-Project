@@ -43,6 +43,9 @@ export class FlightCallFriendsComponent implements OnInit {
     this.flightService.setFriend(user);
   }
 
+  seatBroj: number = 0;
+  addedFriendToList: number = 0;
+
   submit(){
     if (this.friendOption === 'option1') {
       let email = this.form.value.friendEmail;
@@ -51,6 +54,8 @@ export class FlightCallFriendsComponent implements OnInit {
       let passport = this.form.value.friendPassport;
       let user: User = new User(0, name, surname, email, null, null, null, null, null, null, null);
       this.setFriend(user);
+      this.seatBroj = this.flightService.getSeatBroj();
+      this.addedFriendToList = this.flightService.getAddedFriendToList();
     }
   }
   formS = new FormGroup({

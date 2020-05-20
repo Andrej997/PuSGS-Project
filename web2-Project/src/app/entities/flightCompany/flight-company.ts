@@ -14,6 +14,8 @@ export class FlightCompany {
     logo: string;
     ocene: Array<number>;
 
+    deleted: boolean;
+
     constructor(
         id: number,
         name: string, 
@@ -31,5 +33,7 @@ export class FlightCompany {
             this.flights = flights;
             this.logo = logo;
             this.ocene = ocene;
+
+            this.deleted = false;
     }
 }

@@ -11,7 +11,7 @@ namespace MAANPP20.Models.Flights
     public class FlightDestination
     {
         [Key]
-        public int destinationid { get; set; }
+        public int id { get; set; }
 
         // [ForeignKey] on the foreign key property in the dependent entity
         [ForeignKey("startAddress")]
@@ -26,5 +26,7 @@ namespace MAANPP20.Models.Flights
         // Stoji NotMapped jer ne zelim da ga mapiram u bazi, posto vec postoji iz veze 1:N izmedju kompanije i destinacije
         [NotMapped]
         public int CompanyID { get; set; }
+
+        public bool deleted { get; set; }
     }
 }

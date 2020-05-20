@@ -32,7 +32,7 @@ namespace MAANPP20.Controllers.Flights
             var flightDestinaion = await _context.FlightDestinations
                 .Include(address1 => address1.startAddress)
                 .Include(address2 => address2.endAddress)
-                .FirstOrDefaultAsync(i => i.destinationid == id);
+                .FirstOrDefaultAsync(i => i.id== id);
 
             if (flightDestinaion == null)
             {
@@ -70,7 +70,7 @@ namespace MAANPP20.Controllers.Flights
 
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetFlightDestination", new { id = flightDestination.destinationid }, flightDestination);
+                return CreatedAtAction("GetFlightDestination", new { id = flightDestination.id }, flightDestination);
             }
             else return BadRequest();
         }
@@ -89,7 +89,7 @@ namespace MAANPP20.Controllers.Flights
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FlightDestinationExists(flightDestination.destinationid))
+                    if (!FlightDestinationExists(flightDestination.id))
                     {
                         return NotFound();
                     }
@@ -112,7 +112,7 @@ namespace MAANPP20.Controllers.Flights
             var flightDestinaion = await _context.FlightDestinations
                 .Include(address1 => address1.startAddress)
                 .Include(address2 => address2.endAddress)
-                .FirstOrDefaultAsync(i => i.destinationid == id);
+                .FirstOrDefaultAsync(i => i.id == id);
 
             if (flightDestinaion == null)
             {
@@ -149,6 +149,6 @@ namespace MAANPP20.Controllers.Flights
             return true;
         }
 
-        private bool FlightDestinationExists(int id) => _context.FlightDestinations.Any(e => e.destinationid == id);
+        private bool FlightDestinationExists(int id) => _context.FlightDestinations.Any(e => e.id == id);
     }
 }

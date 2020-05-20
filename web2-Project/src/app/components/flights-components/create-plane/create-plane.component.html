@@ -1,0 +1,68 @@
+<div class="container"
+        *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
+    <div class="alert alert-danger" role="alert"> 
+        <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+    </div>
+    <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+</div>
+<div class="container"
+        *ngIf='this.authenticationService.currentUserValue'> <!-- AKO JE ULOGOVAN A NEMA DOZVOLU-->
+    <div *ngIf="currentUser.role != 1 && currentUser.role != 2">
+        <div class="alert alert-danger" role="alert">
+            <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+        </div>
+        <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+    </div>
+</div>
+
+<div *ngIf='this.authenticationService.currentUserValue'>
+    <div class="container" *ngIf="currentUser.role === 1 || currentUser.role === 2">
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+            <b>{{errorText}}</b>
+        </div>
+
+        <div class="alert alert-success" role="alert" *ngIf="success">
+            <b>{{successText}} created!</b>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()">
+
+            <div class="form-group">
+                <label for="name">Aeroplane name</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="name" #name formControlName="name"
+                            class="form-control" placeholder="aeroplane name">
+                </div>
+                <div *ngIf="f.name.touched && f.name.invalid" class="alert alert-danger">
+                    <div *ngIf="f.name.errors.required">Aeroplane name is required.</div>
+                </div>
+            </div>
+            
+            <div class="form-group" *ngIf="!isIt">
+                <label for="numSeats">Number of seats</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="number" id="numSeats" #numSeats min="1"
+                            formControlName="numSeats" class="form-control" placeholder="number of seats">
+                </div>
+                <div *ngIf="f.numSeats.touched && f.numSeats.invalid" class="alert alert-danger">
+                    <div *ngIf="f.numSeats.errors.required">Number of seats is required.</div>
+                    <div *ngIf="f.numSeats.errors.min">Min value of number of seats is 1.</div>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="isIt">
+                <label for="numSeats">Number of seats</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="number" id="numSeats1" #numSeats1 min="1" [readonly]="true"
+                            formControlName="numSeats" class="form-control" placeholder="number of seats">
+                </div>
+                <div *ngIf="f.numSeats.touched && f.numSeats.invalid" class="alert alert-danger">
+                    <div *ngIf="f.numSeats.errors.required">Number of seats is required.</div>
+                    <div *ngIf="f.numSeats.errors.min">Min value of number of seats is 1.</div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
+        </form>
+    </div>
+</div>

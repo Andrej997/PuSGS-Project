@@ -19,5 +19,7 @@ namespace MAANPP20.Models.Common
 
         [Required]
         public string country { get; set; }
+
+        public bool deleted { get; set; }
     }
 }

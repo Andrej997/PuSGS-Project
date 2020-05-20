@@ -26,9 +26,15 @@ namespace MAANPP20.Controllers.Flights
         {
             return await _context.FlightCompanies
                 .Include(address => address.address)
-                .Include(destinations => destinations.destinations)
-                .Include(flights => flights.flights)
-                .Include(ocene => ocene.ocene)
+                //.Include(destinations => destinations.destinations)
+                //    .ThenInclude(startAddress => startAddress.startAddress)
+                //.Include(destinations => destinations.destinations)
+                //    .ThenInclude(endAddress => endAddress.endAddress)
+                //.Include(flights => flights.flights)
+                //.Include(ocene => ocene.ocene)
+                /* izbacio sam sve ove parametre,
+                    jer nisu potrebni u prozoru koji
+                    poziva ovu metodu!*/
                 .ToListAsync();
         }
 
@@ -39,10 +45,11 @@ namespace MAANPP20.Controllers.Flights
             var flightCompany = await _context.FlightCompanies
                 .Include(address => address.address)
                 .Include(destinations => destinations.destinations)
-                .ThenInclude(startAddr => startAddr.startAddress)
+                    .ThenInclude(startAddr => startAddr.startAddress)
                 .Include(destinations => destinations.destinations)
-                .ThenInclude(endAddr => endAddr.endAddress)
+                    .ThenInclude(endAddr => endAddr.endAddress)
                 .Include(flights => flights.flights)
+                    //.ThenInclude(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
                 .Include(ocene => ocene.ocene)
                 .FirstOrDefaultAsync(i => i.id == id);
 
@@ -59,15 +66,15 @@ namespace MAANPP20.Controllers.Flights
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            //if (ValidateModel(flightCompany, true))
-            //{
+            if (ValidateModel(flightCompany, true))
+            {
                 _context.FlightCompanies.Add(flightCompany);
 
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction("GetFlightCompany", new { id = flightCompany.id }, flightCompany);
-            //}
-            //else return BadRequest();
+            }
+            else return BadRequest();
         }
 
         // PUT: api/FlightCompany
@@ -119,7 +126,7 @@ namespace MAANPP20.Controllers.Flights
             _context.FlightCompanies.Remove(flightCompany);
             await _context.SaveChangesAsync();
 
-            return flightCompany;
+            return Ok();
         }
 
         private bool FlightCompanyExists(int id) => _context.FlightCompanies.Any(e => e.id == id);

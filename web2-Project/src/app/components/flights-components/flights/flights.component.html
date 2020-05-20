@@ -1,4 +1,4 @@
-<div id="container" style="margin-left: 15px; margin-right: 15px; margin-top: 15px;">
+<div id="container" style="margin-left: 15px; margin-right: 15px; margin-top: 15px;" *ngIf="!loading  && !error">
     <div class="alert alert-info" role="alert"
          *ngIf='!this.authenticationService.currentUserValue'>
         To se the prise, you need to <a routerLink="/log-in"><b><u>login</u></b></a>
@@ -17,7 +17,12 @@
     </div>
 </div>
 
-<div class="container">
+<app-my-spinner *ngIf="loading"></app-my-spinner>
+
+<div class="container" *ngIf="!loading">
+    <div class="alert alert-danger" role="alert" *ngIf="error">
+        <b>{{errorText}}</b>
+    </div>
   <div class="row card-group" >
     <div class="col-sm-4" *ngFor="let flight of allFlights" ><!--[@myTrigger]='state'-->
         <div class="card" style="margin-bottom: 30px;">
@@ -27,7 +32,7 @@
                     data-toggle="tooltip" 
                     data-placement="right" title="details..."
                     style="cursor:pointer;"
-                    routerLink="/flights/{{flight.idCompany}}v{{flight.id}}/flightdetails">
+                    routerLink="/flights/{{flight.id}}/flightdetails">
             </ng-template>
             <ng-template #elseBlock1>
                 <img [src]="flight.destImg" class="card-img-top" alt="..." >
@@ -52,7 +57,7 @@
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="flight date">
                     <img src="\assets\img\calendar.png" height="40" width="40">
-                    {{ flight.datumPolaska.toUTCString() }}
+                    {{ flight.datumPolaska }}
                 </li>
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="to">
@@ -62,7 +67,7 @@
                 <li class="list-group-item" data-toggle="tooltip" 
                         data-placement="right" title="landing date">
                     <img src="\assets\img\calendar.png" height="40" width="40">
-                    {{ flight.datumSletanja.toUTCString() }}
+                    {{ flight.datumSletanja }}
                 </li>
                 <li class="list-group-item" 
                         data-toggle="tooltip" 
@@ -76,7 +81,7 @@
                         data-placement="right" title="free seats">
                     <div>
                         <img src="\assets\img\chair.png" height="40" width="40" style="float: left;">
-                        <div *ngFor="let countFreeSeats of createRange(flight.aeroplane.allSeats)">
+                        <div *ngFor="let countFreeSeats of createRange(flight.allSeatsForThisFlight)">
                             {{countFreeSeats}}
                         </div>
                     </div>
@@ -87,7 +92,7 @@
                                 type="button" class="btn btn-success" 
                                 data-toggle="tooltip" 
                                 data-placement="right" title="quick reservation"
-                                routerLink="/flights/{{flight.idCompany}}v{{flight.id}}/fastReservaion"
+                                routerLink="/flights/{{flight.id}}/fastReservaion"
                                 style="width: 50%; height: 60px;">
                             FAST RESERVATION
                         </button>
@@ -95,7 +100,7 @@
                                 style="float: right;" 
                                 data-toggle="tooltip" 
                                 data-placement="right" title="see details"
-                                routerLink="/flights/{{flight.idCompany}}v{{flight.id}}/flightdetails"
+                                routerLink="/flights/{{flight.id}}/flightdetails"
                                 style="width: 50%; height: 60px;">
                             DETAILS/BOOK 
                         </button>
@@ -106,7 +111,7 @@
     </div>
     
     <!-- ! OVDE IZMENI DA MOZE SAMO ADMIN SISTEMA DA VIDI -->
-    <div *ngIf='this.authenticationService.currentUserValue'>
+    <div *ngIf='this.authenticationService.currentUserValue && !error'>
         <div class="border-success col-sm-3" style="margin-bottom: 30px; "
             *ngIf='currentUser.role === 2 || currentUser.role === 1'>
             <a style="cursor: pointer;" routerLink="/createFlight/0">

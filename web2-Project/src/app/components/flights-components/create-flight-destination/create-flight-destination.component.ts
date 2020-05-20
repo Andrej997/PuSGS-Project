@@ -141,7 +141,8 @@ export class CreateFlightDestinationComponent implements OnInit {
         this.flightCompany.destinations.push(flightDestination);
         this.httpService.postAction('FlightDestination', 'AddFD', flightDestination).subscribe (
           res => { 
-            this.successText = " changes ";
+            this.form.reset();
+            this.successText = "!";
             this.success = true;
             this.error = false;
           },

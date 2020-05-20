@@ -21,6 +21,8 @@
     <Compile Remove="Migrations\20200513170256_Image.Designer.cs" />
     <Compile Remove="Migrations\20200513170631_FlightCompanyLogoChange.cs" />
     <Compile Remove="Migrations\20200513170631_FlightCompanyLogoChange.Designer.cs" />
+    <Compile Remove="Migrations\20200515172317_Address_newField.cs" />
+    <Compile Remove="Migrations\20200515172317_Address_newField.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

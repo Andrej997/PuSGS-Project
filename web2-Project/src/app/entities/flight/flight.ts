@@ -3,6 +3,7 @@ import { Aeroplane } from '../aeroplane/aeroplane';
 import { AvioLuggage } from '../avio-luggage/avio-luggage';
 import { FlightReservation } from '../flight-reservation/flight-reservation';
 import { Address } from '../address/address';
+import { AvioSediste } from '../avio-sediste/avio-sediste';
 
 export class Flight {
     id: number;
@@ -27,6 +28,10 @@ export class Flight {
     discountForFastReservation: number; // popust za brzu rezervaciju
     ocene: Array<number>;
 
+    allSeatsForThisFlight: Array<AvioSediste>;
+
+    deleted: boolean;
+
     //allReservations: Array<FlightReservation>;
     
     constructor(id: number, company: string, idCompany: number, logo: string, from: Address, to: Address, destImg: string,
@@ -50,6 +55,8 @@ export class Flight {
         this.aeroplane = aeroplane;
         this.ocene = new Array<number>();
         this.luggage = luggage;
+
+        this.deleted = false;
         //this.allReservations = new Array<FlightReservation>();
     }
 }
