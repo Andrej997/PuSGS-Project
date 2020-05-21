@@ -202,11 +202,23 @@ namespace MAANPP20.Controllers.Flights
             // ako je prilikom kreiranja komapnije dodato nesto u neku od listi, posto to iz osnovne forme ne moze!
             if ((flightCompany.destinations.Count != 0 || flightCompany.flights.Count != 0 || flightCompany.ocene.Count != 0) && isPost) return false;
 
+            // ne moze se registrovati kompanija sa imenom koji vec postoji
+            var flightC = _context.FlightCompanies.Where(naziv => naziv.name == flightCompany.name);
+            if (flightC != null) return false;
+
+            // ima grada i ime drzave moze biti isto,
+            // ali ne moze biti ime ulice i broj identicno kao ime grada ili drzave
+            if ((flightCompany.address.city == flightCompany.address.streetAndNumber) ||
+                (flightCompany.address.country == flightCompany.address.streetAndNumber)) return false;
+
             // provera da li su sva slova ili razmak
             foreach (var character in flightCompany.name)
                 if (!Char.IsLetter(character)) 
                     if (!Char.IsWhiteSpace(character))
                         return false;
+
+            // prilikom POST i PUT ne moze se logicki obrisati jer to je namenjeno za DELETE!
+            if (flightCompany.deleted == true) return false;
 
             return true;
         }

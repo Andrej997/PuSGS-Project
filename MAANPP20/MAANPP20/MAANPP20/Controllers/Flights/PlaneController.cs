@@ -121,9 +121,15 @@ namespace MAANPP20.Controllers.Flights
         {
             if (aeroplane.numSeats < 1) return false;
 
+            // na googlu pise da najveci putnicki avio prima max 525 putnika (Airbus A380-800)
+            if (aeroplane.numSeats > 525) return false;
+
             // TO DO:
             // Proveri da li vec postoji naziv aviona u bazi,
             // ako npr. postoji Boing 747, baci false!
+
+            // prilikom POST i PUT ne moze se logicki obrisati jer to je namenjeno za DELETE!
+            if (aeroplane.deleted == true) return false;
 
             return true;
         }

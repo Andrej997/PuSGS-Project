@@ -223,6 +223,46 @@ namespace MAANPP20.Controllers.Flights
 
         private bool ValidateModel(Flight flight)
         {
+            if (flight.datumPolaska > flight.datumSletanja) return false;
+
+            // ne moze se kreirati polazak leta u proslosti kao ni sletanje, 
+            // bar za sad ne!
+            if (flight.datumPolaska < DateTime.Now) return false;
+            if (flight.datumSletanja < DateTime.Now) return false;
+
+            // recimo da cena ne moze da bude veca od milion $
+            if (flight.prise < 0 || flight.prise > 1000000) return false;
+            if (flight.priceTwoWay < 0 || flight.priceTwoWay > 1000000) return false;
+
+            // TO DO: Vreme putovanja
+
+            if (flight.duzinaPutovanja < 0 || flight.duzinaPutovanja > 1000000) return false;
+
+            // ako se ne poklapa broj presedanja sa listom gradova
+            if (flight.presedanje.brojPresedanja != flight.presedanje.gradoviPresedanja.Count) return false;
+            // ne dozvoljam da postoji vise od 5 presedanja
+            if (flight.presedanje.brojPresedanja < 0 || flight.presedanje.brojPresedanja > 5) return false;
+            foreach (var presedanje in flight.presedanje.gradoviPresedanja)
+                if (presedanje.PlainString == "" || presedanje.PlainString == " " || presedanje.PlainString == null) return false;
+
+            // prilikom odabira avio mora biti isti broj sedista, 
+            // jer ne moze da bude npr. ako avio ima 100 sedista a da za let budu omogucene vise od 100
+            // opet, mogu biti slobodnih mesta manje od ukupnog kapaciteta, ali opet mora postojati isti broj
+            if (flight.aeroplane == null) return false;
+            if (flight.aeroplane.numSeats != flight.allSeatsForThisFlight.Count) return false;
+
+            if ((flight.luggage.priceCarryOn < 0 || flight.luggage.priceCarryOn > 1000) ||
+                (flight.luggage.priceFullSizeSpinner < 0 || flight.luggage.priceFullSizeSpinner > 1000) ||
+                (flight.luggage.priceLargeDuffel < 0 || flight.luggage.priceLargeDuffel > 1000) ||
+                (flight.luggage.pricePersonalBag < 0 || flight.luggage.pricePersonalBag > 1000)) return false;
+
+            if (flight.numOfFastReseravtions < 0 || flight.numOfFastReseravtions > flight.aeroplane.numSeats) return false;
+
+            // popust realno ne moze biti manji od 0 ili veci od 100 %
+            if (flight.discountForFastReservation < 0 || flight.discountForFastReservation > 100) return false;
+
+            // prilikom POST i PUT ne moze se logicki obrisati jer to je namenjeno za DELETE!
+            if (flight.deleted == true) return false;
 
             return true;
         }

@@ -152,9 +152,19 @@ namespace MAANPP20.Controllers.Flights
             if (flightDestination.startAddress.city == flightDestination.endAddress.city)
                 return false;
 
+            if (flightDestination.startAddress.country == null || flightDestination.endAddress.country == null)
+                return false;
+
             // samo necemo proveravati istu drzavu jer moze da se leti iz New York-a za Los Angeles
-            //if (flightDestination.startAddress.country == flightDestination.endAddress.country)
-            //    return false;
+
+            if ((flightDestination.startAddress.city == flightDestination.startAddress.streetAndNumber) ||
+                (flightDestination.startAddress.country == flightDestination.startAddress.streetAndNumber)) return false;
+
+            if ((flightDestination.endAddress.city == flightDestination.endAddress.streetAndNumber) ||
+                (flightDestination.endAddress.country == flightDestination.endAddress.streetAndNumber)) return false;
+
+            // prilikom POST i PUT ne moze se logicki obrisati jer to je namenjeno za DELETE!
+            if (flightDestination.deleted == true) return false;
 
             return true;
         }
