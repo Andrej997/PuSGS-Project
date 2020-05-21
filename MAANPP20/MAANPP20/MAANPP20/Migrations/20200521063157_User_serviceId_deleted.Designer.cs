@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200521063157_User_serviceId_deleted")]
+    partial class User_serviceId_deleted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -234,6 +236,9 @@ namespace MAANPP20.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("Aeroplaneid")
+                        .HasColumnType("int");
+
                     b.Property<int?>("Flightid")
                         .HasColumnType("int");
 
@@ -250,6 +255,8 @@ namespace MAANPP20.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("id");
+
+                    b.HasIndex("Aeroplaneid");
 
                     b.HasIndex("Flightid");
 
@@ -444,6 +451,10 @@ namespace MAANPP20.Migrations
 
             modelBuilder.Entity("MAANPP20.Models.Flights.AvioSediste", b =>
                 {
+                    b.HasOne("MAANPP20.Models.Flights.Aeroplane", null)
+                        .WithMany("allSeats")
+                        .HasForeignKey("Aeroplaneid");
+
                     b.HasOne("MAANPP20.Models.Flights.Flight", null)
                         .WithMany("allSeatsForThisFlight")
                         .HasForeignKey("Flightid");

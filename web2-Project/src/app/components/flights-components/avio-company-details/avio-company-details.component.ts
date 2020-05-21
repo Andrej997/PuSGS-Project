@@ -113,13 +113,14 @@ export class AvioCompanyDetailsComponent implements OnInit {
 
   deleteFlightDestination(event) {
     const idDeleteFD = event.target.id;
+    console.log(idDeleteFD)
     this.httpService.deleteAction("FlightDestination", "DeleteFlightDestination", idDeleteFD).toPromise()
     .then(result => {
       this.change = true;
     })
     .catch(
       err => {
-        console.log(err);
+        //console.log(err);
         this.error = true;
         this.hideShowBTN = false;
       });

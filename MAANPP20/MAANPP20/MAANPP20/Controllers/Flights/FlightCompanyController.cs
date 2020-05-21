@@ -26,25 +26,43 @@ namespace MAANPP20.Controllers.Flights
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FlightCompany>>> GetFlightCompany()
         {
-            return await _context.FlightCompanies
+            var flightCompanies = await _context.FlightCompanies.Where(x => x.deleted == false)
                 .Include(address => address.address)
-                //.Include(destinations => destinations.destinations)
-                //    .ThenInclude(startAddress => startAddress.startAddress)
-                //.Include(destinations => destinations.destinations)
-                //    .ThenInclude(endAddress => endAddress.endAddress)
+                .Include(destinations => destinations.destinations)
+                    .ThenInclude(startAddress => startAddress.startAddress)
+                .Include(destinations => destinations.destinations)
+                    .ThenInclude(endAddress => endAddress.endAddress)
                 //.Include(flights => flights.flights)
                 //.Include(ocene => ocene.ocene)
                 /* izbacio sam sve ove parametre,
                     jer nisu potrebni u prozoru koji
                     poziva ovu metodu!*/
                 .ToListAsync();
+
+            var retFlightCompanies = new List<FlightCompany>();
+            foreach (var flightCompany in flightCompanies)
+                if (flightCompany.deleted == false)
+                {
+                    var retFlightDestinations = new List<FlightDestination>();
+                    foreach (var flightDestination in flightCompany.destinations)
+                    {
+                        if (flightDestination.deleted == false)
+                            retFlightDestinations.Add(flightDestination);
+                    }
+                    flightCompany.destinations = retFlightDestinations;
+                    retFlightCompanies.Add(flightCompany);
+                }
+
+
+
+            return retFlightCompanies;
         }
 
         // GET: api/FlightCompany/1
         [HttpGet("{id}")]
         public async Task<ActionResult<FlightCompany>> GetFlightCompany(int id)
         {
-            var flightCompany = await _context.FlightCompanies
+            var flightCompany = await _context.FlightCompanies.Where(x => x.deleted == false)
                 .Include(address => address.address)
                 .Include(destinations => destinations.destinations)
                     .ThenInclude(startAddr => startAddr.startAddress)
@@ -59,6 +77,25 @@ namespace MAANPP20.Controllers.Flights
             {
                 return NotFound();
             }
+            else if (flightCompany.deleted == true)
+            {
+                return NotFound();
+            }
+
+            var flightDestinations = new List<FlightDestination>();
+            foreach (var flightDestination in flightCompany.destinations)
+                if (flightDestination.deleted == false)
+                    flightDestinations.Add(flightDestination);
+            flightCompany.destinations = flightDestinations;
+
+            var flights = new List<Flight>();
+            foreach (var flight in flightCompany.flights)
+                if (flight.deleted == false)
+                    flights.Add(flight);
+            flightCompany.flights = flights;
+
+            // TO DO : isto i za ocene
+
             return flightCompany;
         }
 
@@ -116,7 +153,11 @@ namespace MAANPP20.Controllers.Flights
             var flightCompany = await _context.FlightCompanies
                 .Include(address => address.address)
                 .Include(destinations => destinations.destinations)
+                    .ThenInclude(startAddr => startAddr.startAddress)
+                .Include(destinations => destinations.destinations)
+                    .ThenInclude(endAddr => endAddr.endAddress)
                 .Include(flights => flights.flights)
+                    .ThenInclude(allSeats => allSeats.allSeatsForThisFlight)
                 .Include(ocene => ocene.ocene)
                 .FirstOrDefaultAsync(i => i.id == id);
 
@@ -124,8 +165,31 @@ namespace MAANPP20.Controllers.Flights
             {
                 return NotFound();
             }
+            else if (flightCompany.deleted == true)
+            {
+                //flightCompany.deleted = false;
+                return NotFound();
+            }
 
-            _context.FlightCompanies.Remove(flightCompany);
+            flightCompany.deleted = true;
+            flightCompany.address.deleted = true;
+            foreach (var destination in flightCompany.destinations)
+            {
+                destination.deleted = true;
+                destination.startAddress.deleted = true;
+                destination.endAddress.deleted = true;
+            }
+            foreach (var flight in flightCompany.flights)
+            {
+                flight.deleted = true;
+                foreach (var seat in flight.allSeatsForThisFlight)
+                {
+                    seat.deleted = true;
+                }
+            }
+            _context.Entry(flightCompany).State = EntityState.Modified;
+
+            //_context.FlightCompanies.Remove(flightCompany);
             await _context.SaveChangesAsync();
 
             return Ok();

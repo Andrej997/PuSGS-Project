@@ -17,7 +17,7 @@ namespace MAANPP20.Models.Flights
         //[Required]
         public int numSeats { get; set; }
 
-        public ICollection<AvioSediste> allSeats { get; set; }
+        //public ICollection<AvioSediste> allSeats { get; set; }
 
         public bool deleted { get; set; }
     }

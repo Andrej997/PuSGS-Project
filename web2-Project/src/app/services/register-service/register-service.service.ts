@@ -7,7 +7,7 @@ import * as CryptoJS from 'crypto-js';
 import { HttpServiceService } from '../http-service/http-service.service';
 import { User } from 'src/app/entities/user/user';
 
-@Injectable({
+@Injectable({ 
   providedIn: 'root'
 })
 
@@ -15,7 +15,7 @@ export class RegisterServiceService {
 
   userId: string;
   logoImg: string;
-  readonly BaseURI = 'http://localhost:57429/api';
+  readonly BaseURI = 'http://localhost:57428/api';
 
   constructor(private route: ActivatedRoute, 
               private http: HttpClient, 

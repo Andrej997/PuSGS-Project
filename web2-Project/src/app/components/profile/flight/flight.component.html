@@ -1,4 +1,4 @@
-<div class="container"
+<div class="container down"
         *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
     <div class="alert alert-danger" role="alert"> 
         <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
@@ -6,7 +6,7 @@
     <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
 </div>
 
-<div class="container" *ngIf='this.authenticationService.currentUserValue'>
+<div class="container down" *ngIf='this.authenticationService.currentUserValue'>
     <app-my-spinner *ngIf="loading"></app-my-spinner>
 
     <div class="alert alert-danger" role="alert" *ngIf="errorPagination && !loading">

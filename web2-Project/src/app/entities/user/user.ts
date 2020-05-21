@@ -25,6 +25,7 @@ export class User {
 
     //* passport: number;
     
+    serviceId: number;
 
     constructor(id: number, firstName: string, lastName: string, 
         email: string, password: string, 

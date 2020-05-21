@@ -22,22 +22,22 @@ export class AeroplaneServiceService {
     let allAeroplanes = new Array<Aeroplane>();
     const aeroplane1NumSeats = 200;
     let aeroplane1Seats = this.CreateMockedSeats(aeroplane1NumSeats);
-    let aeroplane1 = new Aeroplane(1, "Boing 747-100", aeroplane1NumSeats, aeroplane1Seats);
+    let aeroplane1 = new Aeroplane(1, "Boing 747-100", aeroplane1NumSeats);
     allAeroplanes.push(aeroplane1);
 
     const aeroplane2NumSeats = 8;
     let aeroplane2Seats = this.CreateMockedSeats(aeroplane2NumSeats);
-    let aeroplane2 = new Aeroplane(2, "Boing 777", aeroplane2NumSeats, aeroplane2Seats);
+    let aeroplane2 = new Aeroplane(2, "Boing 777", aeroplane2NumSeats);
     allAeroplanes.push(aeroplane2);
 
     const aeroplane3NumSeats = 12;
     let aeroplane3Seats = this.CreateMockedSeats(aeroplane3NumSeats);
-    let aeroplane3 = new Aeroplane(3, "Boing 747-300", aeroplane3NumSeats, aeroplane3Seats);
+    let aeroplane3 = new Aeroplane(3, "Boing 747-300", aeroplane3NumSeats);
     allAeroplanes.push(aeroplane3);
 
     const aeroplane4NumSeats = 16;
     let aeroplane4Seats = this.CreateMockedSeats(aeroplane4NumSeats);
-    let aeroplane4 = new Aeroplane(3, "Boing 747SP", aeroplane4NumSeats, aeroplane4Seats);
+    let aeroplane4 = new Aeroplane(3, "Boing 747SP", aeroplane4NumSeats);
     allAeroplanes.push(aeroplane4);
 
     return allAeroplanes;

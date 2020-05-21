@@ -33,7 +33,8 @@ export const users: User[] = [
     role: Role.admin,
     friends: new Array<Friend>(),
     friendRequests: new Array<User>(),
-    waitingForAccept: new Array<User>()
+    waitingForAccept: new Array<User>(),
+    serviceId: 0
   },
   { 
     id: 2,
@@ -87,7 +88,8 @@ export const users: User[] = [
         new Array<User>()
       )
     ),
-    waitingForAccept: new Array<User>()
+    waitingForAccept: new Array<User>(),
+    serviceId: 0
   },
   { 
     id: 3,
@@ -106,7 +108,8 @@ export const users: User[] = [
     role: Role.adminM,
     friends: new Array<Friend>(),
     friendRequests: new Array<User>(),
-    waitingForAccept: new Array<User>()
+    waitingForAccept: new Array<User>(),
+    serviceId: 0
   },
   { 
     id: 4,
@@ -125,7 +128,8 @@ export const users: User[] = [
     role: Role.user,
     friends: new Array<Friend>(),
     friendRequests: new Array<User>(),
-    waitingForAccept: new Array<User>()
+    waitingForAccept: new Array<User>(),
+    serviceId: 0
   },
 ];
 
@@ -177,7 +181,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 role: user.role,
                 friends: user.friends,
                 friendRequests: user.friendRequests,
-                waitingForAccept: user.waitingForAccept
+                waitingForAccept: user.waitingForAccept,
+                serviceId: user.serviceId
             })
         }
 

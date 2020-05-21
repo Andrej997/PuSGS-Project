@@ -88,14 +88,14 @@ export class CreatePlaneComponent implements OnInit {
     if (this.planeId === -1) {
       let name = this.form.value.name;
       let numSeats = this.form.value.numSeats;
-      let allSeats: Array<AvioSediste> = new Array<AvioSediste>();
+      // let allSeats: Array<AvioSediste> = new Array<AvioSediste>();
   
-      for (let i = 0; i < numSeats; ++i) {
-        let newSeat = new AvioSediste(0, false, false);
-        allSeats.push(newSeat);
-      }
+      // for (let i = 0; i < numSeats; ++i) {
+      //   let newSeat = new AvioSediste(0, false, false);
+      //   allSeats.push(newSeat);
+      // }
   
-      let aeroplane = new Aeroplane(0, name, numSeats, allSeats);
+      let aeroplane = new Aeroplane(0, name, numSeats);
   
       this.httpService.postAction('Plane', 'AddPlane', aeroplane).subscribe(
         res => { 

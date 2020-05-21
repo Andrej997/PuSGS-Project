@@ -1,18 +1,23 @@
+.down {
+  margin-top: 60px;
+  z-index: 6;
+}
 .centerSTOPimg {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 75%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
 }
 
 #btnImage{
-    cursor: auto;
-    width: 100% ;
-  }
+  cursor: auto;
+  width: 100% ;
+}
 #logoImg{
-    cursor: pointer;
-    opacity: 0; 
-    position: relative; 
-    width: 100%;
-    height: auto;
-  }
+  cursor: pointer;
+  opacity: 0; 
+  position: relative; 
+  width: 100%;
+  height: auto;
+}
+

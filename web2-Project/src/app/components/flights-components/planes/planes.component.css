@@ -4,3 +4,7 @@
     margin-right: auto;
     width: 75%;
 }
+.down {
+    margin-top: 60px;
+    z-index: 6;
+}

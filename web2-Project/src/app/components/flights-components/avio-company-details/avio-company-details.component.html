@@ -1,11 +1,11 @@
 <app-my-spinner *ngIf="loading"></app-my-spinner>
 
-<div class="container" *ngIf="!flightCompany">
+<div class="container down" *ngIf="!flightCompany">
     <div class="alert alert-danger" role="alert" *ngIf="error">
         <b>{{errorText}}</b>
     </div>
 </div>
-<div class="container-fluid" *ngIf="flightCompany"> <!-- ako postoji -->
+<div class="container-fluid down" *ngIf="flightCompany"> <!-- ako postoji -->
     <div class="alert alert-success" role="alert" *ngIf="deleted">
         <b>You have successfully deleted this company!</b>
     </div>
@@ -128,7 +128,7 @@
                                 <div *ngIf='this.authenticationService.currentUserValue'>
                                     <span style="float: right;" *ngIf="currentUser.role == 1 || currentUser.role == 2">
                                         <a style="cursor: pointer;">
-                                            <img id={{desAddr.destinationid}} src="\assets\img\delete.png" (click)="deleteFlightDestination($event)"
+                                            <img id={{desAddr.id}} src="\assets\img\delete.png" (click)="deleteFlightDestination($event)"
                                                 class="card-img-top" alt="add new flight" style="width: 50px;">
                                         </a>
                                     </span>

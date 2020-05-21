@@ -25,7 +25,7 @@ namespace MAANPP20.Controllers.Flights
         public async Task<ActionResult<IEnumerable<Aeroplane>>> GetAeroplanes()
         {
             return await _context.Aeroplanes
-                .Include(allSeats => allSeats.allSeats)
+                .Where(x => x.deleted == false)
                 .ToListAsync();
         }
 
@@ -34,7 +34,7 @@ namespace MAANPP20.Controllers.Flights
         public async Task<ActionResult<Aeroplane>> GetAeroplane(int id)
         {
             var aeroplane = await _context.Aeroplanes
-                .Include(allSeats => allSeats.allSeats)
+                .Where(x => x.deleted == false)
                 .FirstOrDefaultAsync(i => i.id == id);
 
             if (aeroplane == null)
@@ -93,15 +93,23 @@ namespace MAANPP20.Controllers.Flights
         public async Task<ActionResult<Aeroplane>> DeletePlane(int id)
         {
             var plane = await _context.Aeroplanes
-                .Include(allSeats => allSeats.allSeats)
+                .Where(x => x.deleted == false)
                 .FirstOrDefaultAsync(i => i.id == id);
 
             if (plane == null)
             {
                 return NotFound();
             }
+            else if (plane.deleted == true)
+            {
+                return NotFound();
+            }
 
-            _context.Aeroplanes.Remove(plane);
+            plane.deleted = true;
+
+            _context.Entry(plane).State = EntityState.Modified;
+
+            //_context.Aeroplanes.Remove(plane);
             await _context.SaveChangesAsync();
 
             return Ok();
@@ -111,7 +119,7 @@ namespace MAANPP20.Controllers.Flights
 
         private bool ValidateModel(Aeroplane aeroplane, bool isPost)
         {
-            if (aeroplane.allSeats.Count < 1 || aeroplane.numSeats < 1) return false;
+            if (aeroplane.numSeats < 1) return false;
 
             // TO DO:
             // Proveri da li vec postoji naziv aviona u bazi,

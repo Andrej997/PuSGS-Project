@@ -29,20 +29,20 @@ export class AirplaneSeatsComponent implements OnInit {
   checkUncheckSeat(event) {
     let selectedId = event.target.id;
     // ako mesto vec nije rezervisano, moze da se rezervise
-    if (!this.flight.aeroplane.allSeats[selectedId].reserved) { 
-      let img = document.getElementById(selectedId);
-      if (!this.clickedImg[selectedId]) {
-        this.clickedImg[selectedId] = true;
-        img.style.backgroundColor = 'green';
-        ++this.seats;
-      }
-      else {
-        this.clickedImg[selectedId] = false;
-        img.style.backgroundColor = 'white';
-        --this.seats;
-      }
-      //console.log(img);
-    }
+    // if (!this.flight.aeroplane.allSeats[selectedId].reserved) { 
+    //   let img = document.getElementById(selectedId);
+    //   if (!this.clickedImg[selectedId]) {
+    //     this.clickedImg[selectedId] = true;
+    //     img.style.backgroundColor = 'green';
+    //     ++this.seats;
+    //   }
+    //   else {
+    //     this.clickedImg[selectedId] = false;
+    //     img.style.backgroundColor = 'white';
+    //     --this.seats;
+    //   }
+    //   //console.log(img);
+    // }
     let selectedIdNum = Number.parseInt(selectedId) + 1;
     this.flightsService.setSeatsNumber(this.seats, this.clickedImg, selectedIdNum);
     //console.log(this.seats);

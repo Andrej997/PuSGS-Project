@@ -38,6 +38,10 @@ namespace MAANPP20.Controllers.Flights
             {
                 return NotFound();
             }
+            else if (flightDestinaion.deleted == true)
+            {
+                return NotFound();
+            }
             return flightDestinaion;
         }
 
@@ -119,7 +123,13 @@ namespace MAANPP20.Controllers.Flights
                 return NotFound();
             }
 
-            _context.FlightDestinations.Remove(flightDestinaion);
+            flightDestinaion.deleted = true;
+            flightDestinaion.startAddress.deleted = true;
+            flightDestinaion.endAddress.deleted = true;
+
+            _context.Entry(flightDestinaion).State = EntityState.Modified;
+
+            //_context.FlightDestinations.Remove(flightDestinaion);
             await _context.SaveChangesAsync();
 
             return Ok();

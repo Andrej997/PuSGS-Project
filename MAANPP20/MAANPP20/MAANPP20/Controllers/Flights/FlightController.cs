@@ -24,7 +24,7 @@ namespace MAANPP20.Controllers.Flights
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Flight>>> GetFlights()
         {
-            return await _context.Flights
+            var flights = await _context.Flights.Where(x => x.deleted == false)
                 .Include(from => from.from)
                 .Include(to => to.to)
                 .Include(presedanje => presedanje.presedanje)
@@ -34,7 +34,14 @@ namespace MAANPP20.Controllers.Flights
                 .Include(luggage => luggage.luggage)
                 .Include(ocene => ocene.ocene)
                 .ToListAsync();
-        }
+
+            var retFlights = new List<Flight>();
+            foreach (var flight in flights)
+                if (flight.deleted == false)
+                    retFlights.Add(flight);
+
+            return retFlights;
+        }   
 
         // GET: api/Flight/1
         [HttpGet("{id}")]
@@ -43,7 +50,7 @@ namespace MAANPP20.Controllers.Flights
             Flight flight = null;
             try
             {
-                flight = await _context.Flights
+                flight = await _context.Flights.Where(x => x.deleted == false)
                 .Include(from => from.from)
                 .Include(to => to.to)
                 .Include(presedanje => presedanje.presedanje)
@@ -55,6 +62,10 @@ namespace MAANPP20.Controllers.Flights
                 .FirstOrDefaultAsync(i => i.id == id);
 
                 if (flight == null)
+                {
+                    return NotFound();
+                }
+                if (flight.deleted == true)
                 {
                     return NotFound();
                 }
@@ -184,8 +195,27 @@ namespace MAANPP20.Controllers.Flights
             {
                 return NotFound();
             }
+            else if (flight.deleted == true)
+            {
+                return NotFound();
+            }
 
-            _context.Flights.Remove(flight);
+            flight.deleted = true;
+            foreach (var seat in flight.allSeatsForThisFlight)
+            {
+                seat.deleted = true;
+            }
+
+            flight.presedanje.deleted = true;
+            foreach (var gradPresedanja in flight.presedanje.gradoviPresedanja)
+                gradPresedanja.deleted = true;
+
+            flight.luggage.deleted = true;
+
+            // TO DO: brisanje ocena
+
+            _context.Entry(flight).State = EntityState.Modified;
+            //_context.Flights.Remove(flight);
             await _context.SaveChangesAsync();
 
             return Ok();

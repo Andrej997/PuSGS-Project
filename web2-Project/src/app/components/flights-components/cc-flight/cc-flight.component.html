@@ -1,12 +1,12 @@
 <!-- THIS COMPONENT IS USED FOR CREATING OR CHANGING FLIGHTS -->
-<div class="container"
+<div class="container down"
         *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
     <div class="alert alert-danger" role="alert"> 
         <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
     </div>
     <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
 </div>
-<div class="container"
+<div class="container down"
         *ngIf='this.authenticationService.currentUserValue'> <!-- AKO JE ULOGOVAN A NEMA DOZVOLU-->
     <div *ngIf="currentUser.role != 1 && currentUser.role != 2">
         <div class="alert alert-danger" role="alert">
@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<div *ngIf='this.authenticationService.currentUserValue'>
+<div *ngIf='this.authenticationService.currentUserValue' class="down">
     <div class="container" *ngIf="currentUser.role === 1 || currentUser.role === 2">
         <div class="alert alert-danger" role="alert" *ngIf="error">
             <b>{{errorText}}</b>

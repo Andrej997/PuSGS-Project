@@ -77,7 +77,7 @@ export class CcFlightComponent implements OnInit {
             this.oneCompanyName = this.flightCompany.name;
             this.logo = this.flightCompany.logo;
             this.fdofc = this.flightCompany.destinations;
-            //console.log(this.flightCompany);
+            
           })
           .catch(
             err => {
@@ -93,7 +93,8 @@ export class CcFlightComponent implements OnInit {
           .toPromise()
           .then(result => {
             this.allAvioCompanies = result as FlightCompany[];
-            //console.log(this.allAvioCompanies);
+            // console.log(this.allAvioCompanies);
+            //console.log(this.fdofc);
           })
           .catch(
             err => {
@@ -186,6 +187,7 @@ export class CcFlightComponent implements OnInit {
         this.logo = this.allAvioCompanies[i].logo;
         this.fdofc = this.allAvioCompanies[i].destinations;
         this.flightCompany = this.allAvioCompanies[i];
+        // console.log(this.allAvioCompanies[i])
         break;
       }
     }

@@ -25,13 +25,13 @@ export class AvioCompaniesService {
   }
 
   private setSeatsForFastReservation(flight: Flight, idS :Array<number>): Flight {
-    flight.aeroplane.allSeats.forEach(element => {
-      idS.forEach(element1 => {
-        if (element1 === element.id) {
-          element.isFastReservation = true;
-        }
-      });
-    });
+    // flight.aeroplane.allSeats.forEach(element => {
+    //   idS.forEach(element1 => {
+    //     if (element1 === element.id) {
+    //       element.isFastReservation = true;
+    //     }
+    //   });
+    // });
     return flight;
   }
 
