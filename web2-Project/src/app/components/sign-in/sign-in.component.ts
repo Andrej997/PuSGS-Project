@@ -4,6 +4,7 @@ import { RegisterServiceService } from 'src/app/services/register-service/regist
 import { ShareDataServiceService } from 'src/app/services/share-data-service/share-data-service.service';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { first } from 'rxjs/operators';
+import { User } from 'src/app/entities/user/user';
 
 @Component({
   selector: 'app-sign-in',
@@ -15,6 +16,7 @@ export class SignInComponent implements OnInit {
   imgName : any;
   imgString : string;
   logoImg: string;
+  tmpUser: User;
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService,
@@ -34,23 +36,42 @@ export class SignInComponent implements OnInit {
     console.log("onSubmit start");
     this.registerService.register().subscribe(
       (res: any) => {
-        console.log("res: " + res); //treba doraditi da se proveri auth korisnika i logovanje
-
-        // this.authenticationService.login(user.email.toString(), user.password.toString())
-        //     .pipe(first())
-        //     .subscribe(
-        //         data => {
-        //             this.router.navigate([this.returnUrl]);
-        //         },
-        //         error => {
-        //             this.error = error;
-        //         });
-
+        this.tmpUser  = res;
+        //console.log(this.tmpUser);
+        //console.log("res: " + res); //treba doraditi da se proveri auth korisnika i logovanje
+        //console.log("res: " + res.email); //treba doraditi da se proveri auth korisnika i logovanje
+        //localStorage.setItem('token', res.token);
+        localStorage.setItem('userRole', this.tmpUser.role.toString());
+        localStorage.setItem('currentUser', JSON.stringify(this.tmpUser));
+        localStorage.setItem('idCurrentUser', this.tmpUser.id.toString());
+        //alert("New user created . .. ")
         this.router.navigateByUrl("/home");
       },
       err => {
         console.log("Err: " + err);
+        alert(err);
       }
+
+      /* 
+      
+      if (res.succeeded) {
+        this.service.formModel.reset();
+        this.toastr.success('New user created!', 'Registration successful.');
+      } else {
+        res.errors.forEach(element => {
+          switch (element.code) {
+            case 'DuplicateUserName':
+              this.toastr.error('Username is already taken','Registration failed.');
+              break;
+
+            default:
+            this.toastr.error(element.description,'Registration failed.');
+              break;
+          }
+        });
+      }
+      
+      */
     )
   }
 

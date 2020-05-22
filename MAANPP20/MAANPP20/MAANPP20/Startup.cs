@@ -53,7 +53,7 @@ namespace MAANPP20
 
             app.UseAuthorization();
 
-            //app.UseAuthentication();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

@@ -15,7 +15,7 @@ export class RegisterServiceService {
 
   userId: string;
   logoImg: string;
-  readonly BaseURI = 'http://localhost:57429/api';
+  readonly BaseURI = 'http://localhost:57428/api';
 
   constructor(private route: ActivatedRoute, 
               private http: HttpClient, 
@@ -46,44 +46,44 @@ export class RegisterServiceService {
     register() {
 
     //retrun all users
-      this.http.get(this.BaseURI + '/MyUser/GetUsers')
-          .toPromise()
-          .then(result => {
-            console.log(result);
-            var users = result as User[];
-            //console.log("Users all: " + users);
-            this.userId = users[0].id.toString();
-            //console.log("User id: " + this.userId);
-          })
-          .catch(
-            err => {
-              console.log(err)
-            });
+      // this.http.get(this.BaseURI + '/MyUser/GetUsers')
+      //     .toPromise()
+      //     .then(result => {
+      //       console.log(result);
+      //       var users = result as User[];
+      //       //console.log("Users all: " + users);
+      //       this.userId = users[0].id.toString();
+      //       //console.log("User id: " + this.userId);
+      //     })
+      //     .catch(
+      //       err => {
+      //         console.log(err)
+      //       });
       //vraca jednog usera, prosledjuje mu se id koji se kreira prilikom upisa u bazu  
-      this.http.get(this.BaseURI + '/MyUser/19551dc8-972f-43d4-83ee-7c6439267702') //ovaj string je id usera, ovde jos uvek ne mogu da ga dobavim pa je stavljeno samo za probu
-            .toPromise()
-            .then(result => {
-              //console.log("Result: " + result);
-              var user = result as User;
-              console.log("User: " + user);
-            })
-            .catch(
-              err => {
-                console.log(err)
-              });
+      // this.http.get(this.BaseURI + '/MyUser/19551dc8-972f-43d4-83ee-7c6439267702') //ovaj string je id usera, ovde jos uvek ne mogu da ga dobavim pa je stavljeno samo za probu
+      //       .toPromise()
+      //       .then(result => {
+      //         //console.log("Result: " + result);
+      //         var user = result as User;
+      //         console.log("User: " + user);
+      //       })
+      //       .catch(
+      //         err => {
+      //           console.log(err)
+      //         });
       
       //za update usera, moze se iskoristit i za brisanje        
-      var idUserstr = '19551dc8-972f-43d4-83ee-7c6439267702';
-      this.http.put(this.BaseURI + '/MyUser/UpdateUser',  idUserstr).toPromise()
-            .then(result => {
-              //console.log("Result: " + result);
-              var user = result as User;
-              console.log("User: " + user);
-            })
-            .catch(
-              err => {
-                console.log(err)
-              });
+      // var idUserstr = '19551dc8-972f-43d4-83ee-7c6439267702';
+      // this.http.put(this.BaseURI + '/MyUser',  idUserstr).toPromise()
+      //       .then(result => {
+      //         //console.log("Result: " + result);
+      //         var user = result as User;
+      //         console.log("User: " + user);
+      //       })
+      //       .catch(
+      //         err => {
+      //           console.log(err)
+      //         });
 
       var key = CryptoJS.enc.Utf8.parse('8080808080808080');  
       var iv = CryptoJS.enc.Utf8.parse('8080808080808080'); 

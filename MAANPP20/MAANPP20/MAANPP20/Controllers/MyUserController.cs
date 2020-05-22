@@ -11,6 +11,9 @@ using System.IO;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace MAANPP20.Controllers
 {
@@ -31,6 +34,17 @@ namespace MAANPP20.Controllers
         public async Task<Object> PostRegisterUser(UserModel model)
         {
             Console.WriteLine("Stigao do post register!!!!!");
+
+            var tmpUser = await _context.Users
+                .Include(address => address.address)
+                .FirstOrDefaultAsync(i => i.Email == model.Email);
+
+            if(tmpUser != null)
+            {
+                return BadRequest(new { message = "Vec postoji korisnik sa istim email-om." });
+            }
+
+
             var adr = new Address();
             adr.streetAndNumber = model.StreetAndNumber;
             adr.city = model.City;
@@ -62,9 +76,7 @@ namespace MAANPP20.Controllers
                 _context.Users.Add(user);
                 int result = await _context.SaveChangesAsync(); //ako ne sacuvamo dzabe smo krecili
 
-                //var result = await _userManager.CreateAsync(user, model.Password);
-                //var result = await UserManager<User>.CreateAsync(user, model.Password);
-                //var result = await _userManager.CreateAsync(user, model.Password);
+
                 return user;
             }
             catch (Exception ex)
@@ -98,8 +110,8 @@ namespace MAANPP20.Controllers
             return user;
         }
 
-        [HttpPut]
-        [Route("UpdateUser")]
+        [HttpPut("{id}")]
+        //[Route("UpdateUser")]
         public async Task<IActionResult> UpdateUser(string id)
         {
             //var user = GetUser(id);
