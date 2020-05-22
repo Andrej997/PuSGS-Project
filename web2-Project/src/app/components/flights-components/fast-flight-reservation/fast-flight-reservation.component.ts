@@ -5,6 +5,7 @@ import { AvioCompaniesService } from 'src/app/services/avio-companies-service/av
 import { FlightsService } from 'src/app/services/flights-service/flights.service';
 import { Flight } from 'src/app/entities/flight/flight';
 import { User } from 'src/app/entities/user/user';
+import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 
 @Component({
   selector: 'app-fast-flight-reservation',
@@ -12,19 +13,24 @@ import { User } from 'src/app/entities/user/user';
   styleUrls: ['./fast-flight-reservation.component.css']
 })
 export class FastFlightReservationComponent implements OnInit {
-  id: string; // this is from link and will contain companyid and flightid
+  id: number; 
   flight: Flight;
   currentUser: User;
-  idF: number; // flightID
-  idC: number; // companyID
   seatsNumber: number = 0;
 
   discountPrice: number = 0;
 
   firstAwaibleSeat: number = 0;
 
+  ocena: number = 0;
+
+  loading: boolean = true;
+
+  error: boolean = false;
+  errorText: string = "";
+
   constructor(private route: ActivatedRoute, private router: Router,
-    public authenticationService: AuthenticationService,
+    public authenticationService: AuthenticationService, private httpService: HttpServiceService,
     private avioCompaniesService: AvioCompaniesService,
     private flightsService: FlightsService) {
       if (this.authenticationService.currentUserValue) { 
@@ -33,8 +39,6 @@ export class FastFlightReservationComponent implements OnInit {
       else {
         this.kick();
       }
-      route.params.subscribe(params => { this.id = params['id']; });
-      //console.log(this.id);
     }
 
     private async kick() {
@@ -46,16 +50,32 @@ export class FastFlightReservationComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.parseId(this.id);
-    this.flight = this.avioCompaniesService.getFlightProfile(this.idC, this.idF);
-    this.flightsService.setFlight(this.flight);
-    this.discountPrice = this.discount();
-    this.firstAwaibleSeat = this.fas();
-  }
+    this.route.params.subscribe(params => { this.id = params['id']; });
+    this.httpService.getIdAction("Flight", this.id).toPromise()
+    .then(result => {
+      this.flight = result as Flight;
+      this.ocena = 0;
+      for (let index = 0; index < this.flight.ocene.length; index++) {
+        this.ocena += this.flight.ocene[index];
+      }
+      if (this.flight.ocene.length != 0)
+        this.ocena = this.ocena / this.flight.ocene.length;
 
-  private parseId(id: string): void {
-    this.idC = parseInt(id.split('v')[0]);
-    this.idF = parseInt(id.split('v')[1]);
+      // console.log(this.ocena);
+      this.loading = false;
+
+      this.discountPrice = this.discount();
+      this.firstAwaibleSeat = this.fas();
+      
+      console.log(this.flight);
+    })
+    .catch(
+      err => {
+        console.log(err)
+        this.error = true;
+        this.errorText = "Error while loading flight data!"
+        this.loading = false;
+      });
   }
 
   private discount(): number {
@@ -66,11 +86,15 @@ export class FastFlightReservationComponent implements OnInit {
 
   // prvo slobodno mesto koje je za przu rezervaciju
   private fas(): number {
-    for (let i = 0; i < this.flight.aeroplane.allSeats.length; ++i) {
+    for (let i = 0; i < this.flight.allSeatsForThisFlight.length; ++i) {
       // ako je namenjeno za brzu rezervaciju i ako je slobodno
-      if (this.flight.aeroplane.allSeats[i].isFastReservation === true && this.flight.aeroplane.allSeats[i].reserved === false) {
+      if (this.flight.allSeatsForThisFlight[i].isFastReservation === true && this.flight.allSeatsForThisFlight[i].reserved === false) {
         return ++i;
       }
     }
+  }
+
+  reserveFastFlight() {
+    this.loading = true;
   }
 }

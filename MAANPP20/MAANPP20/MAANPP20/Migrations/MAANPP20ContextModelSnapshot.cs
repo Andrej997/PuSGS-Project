@@ -27,15 +27,15 @@ namespace MAANPP20.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("city")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("country")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("streetAndNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
@@ -59,6 +59,9 @@ namespace MAANPP20.Migrations
                     b.Property<int?>("Flightid")
                         .HasColumnType("int");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("id");
 
                     b.HasIndex("FlightCompanyid");
@@ -80,6 +83,9 @@ namespace MAANPP20.Migrations
 
                     b.Property<int?>("Presedanjeid")
                         .HasColumnType("int");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("id");
 
@@ -141,6 +147,9 @@ namespace MAANPP20.Migrations
                     b.Property<string>("authData")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("firstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(25)")
@@ -160,6 +169,9 @@ namespace MAANPP20.Migrations
                     b.Property<int>("role")
                         .HasColumnType("int");
 
+                    b.Property<int>("serviceId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("addressid");
@@ -173,6 +185,9 @@ namespace MAANPP20.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
@@ -191,6 +206,9 @@ namespace MAANPP20.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
 
                     b.Property<double>("priceCarryOn")
                         .HasColumnType("float");
@@ -216,8 +234,14 @@ namespace MAANPP20.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("Aeroplaneid")
+                    b.Property<int?>("Flightid")
                         .HasColumnType("int");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("isDisabled")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("isFastReservation")
                         .HasColumnType("bit");
@@ -227,7 +251,7 @@ namespace MAANPP20.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Aeroplaneid");
+                    b.HasIndex("Flightid");
 
                     b.ToTable("AvioSedista");
                 });
@@ -259,6 +283,9 @@ namespace MAANPP20.Migrations
 
                     b.Property<DateTime>("datumSletanja")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("destImg")
                         .HasColumnType("nvarchar(max)");
@@ -320,6 +347,9 @@ namespace MAANPP20.Migrations
                     b.Property<int>("addressId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("logo")
                         .HasColumnType("nvarchar(max)");
 
@@ -341,7 +371,7 @@ namespace MAANPP20.Migrations
 
             modelBuilder.Entity("MAANPP20.Models.Flights.FlightDestination", b =>
                 {
-                    b.Property<int>("destinationid")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -349,13 +379,16 @@ namespace MAANPP20.Migrations
                     b.Property<int?>("FlightCompanyid")
                         .HasColumnType("int");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("eId")
                         .HasColumnType("int");
 
                     b.Property<int>("sId")
                         .HasColumnType("int");
 
-                    b.HasKey("destinationid");
+                    b.HasKey("id");
 
                     b.HasIndex("FlightCompanyid");
 
@@ -375,6 +408,9 @@ namespace MAANPP20.Migrations
 
                     b.Property<int>("brojPresedanja")
                         .HasColumnType("int");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("id");
 
@@ -408,9 +444,9 @@ namespace MAANPP20.Migrations
 
             modelBuilder.Entity("MAANPP20.Models.Flights.AvioSediste", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Flights.Aeroplane", null)
-                        .WithMany("allSeats")
-                        .HasForeignKey("Aeroplaneid");
+                    b.HasOne("MAANPP20.Models.Flights.Flight", null)
+                        .WithMany("allSeatsForThisFlight")
+                        .HasForeignKey("Flightid");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Flights.Flight", b =>

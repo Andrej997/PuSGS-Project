@@ -14,5 +14,7 @@ namespace MAANPP20.Models.Flights
         public double pricePersonalBag { get; set; }
         public double priceFullSizeSpinner { get; set; }
         public double priceLargeDuffel { get; set; }
+
+        public bool deleted { get; set; }
     }
 }

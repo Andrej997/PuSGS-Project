@@ -21,6 +21,9 @@ import { CreateAvioCompanyComponent } from './components/flights-components/crea
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { RentDetailComponent } from './components/rent-a-car/rent-detail/rent-detail.component';
 import { CreateFlightDestinationComponent } from './components/flights-components/create-flight-destination/create-flight-destination.component';
+import { CreatePlaneComponent } from './components/flights-components/create-plane/create-plane.component';
+import { PlanesComponent } from './components/flights-components/planes/planes.component';
+import { ChangeFlightComponent } from './components/flights-components/change-flight/change-flight.component';
 import { CreateOrReplaceServiceComponent } from './components/rent-a-car/create-or-replace-service/create-or-replace-service.component';
 
 
@@ -98,7 +101,7 @@ const routes: Routes = [
     ]
   },
   { 
-    path : "createFlight", 
+    path: "createFlight", 
     children: [
       { 
         path: ":idC", 
@@ -107,6 +110,12 @@ const routes: Routes = [
           { path: ":idF", component: CcFlightComponent } //! ako menjamo
         ] 
       }
+    ]
+  },
+  {
+    path: "changeFlight",
+    children: [
+      { path: ":id", component: ChangeFlightComponent}
     ]
   },
   {
@@ -131,6 +140,17 @@ const routes: Routes = [
   {
     path: "statistics",
     component: StatisticsComponent
+  },
+  {
+    path: "createPlane",
+    children: [
+      { path: "", component: CreatePlaneComponent },
+      { path: ":id", component: CreatePlaneComponent}
+    ]
+  },
+  {
+    path: "planes",
+    component: PlanesComponent
   },
   {
     path: "**",

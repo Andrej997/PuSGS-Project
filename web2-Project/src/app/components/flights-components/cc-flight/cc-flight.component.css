@@ -16,3 +16,8 @@
   width: 100%;
   height: auto;
 }
+
+.down {
+  margin-top: 60px;
+  z-index: 6;
+}

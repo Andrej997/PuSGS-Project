@@ -4,9 +4,13 @@ export class Address {
     city: string;
     country: string;
 
+    deleted: boolean;
+
     constructor(streetAndNumber: string, city: string, country: string) {
         this.streetAndNumber = streetAndNumber;
         this.city = city;
         this.country = country;
+
+        this.deleted = false;
     }
 }

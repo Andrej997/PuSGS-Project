@@ -32,9 +32,13 @@ namespace MAANPP20.Controllers.Flights
             var flightDestinaion = await _context.FlightDestinations
                 .Include(address1 => address1.startAddress)
                 .Include(address2 => address2.endAddress)
-                .FirstOrDefaultAsync(i => i.destinationid == id);
+                .FirstOrDefaultAsync(i => i.id== id);
 
             if (flightDestinaion == null)
+            {
+                return NotFound();
+            }
+            else if (flightDestinaion.deleted == true)
             {
                 return NotFound();
             }
@@ -70,7 +74,7 @@ namespace MAANPP20.Controllers.Flights
 
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetFlightDestination", new { id = flightDestination.destinationid }, flightDestination);
+                return CreatedAtAction("GetFlightDestination", new { id = flightDestination.id }, flightDestination);
             }
             else return BadRequest();
         }
@@ -89,7 +93,7 @@ namespace MAANPP20.Controllers.Flights
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FlightDestinationExists(flightDestination.destinationid))
+                    if (!FlightDestinationExists(flightDestination.id))
                     {
                         return NotFound();
                     }
@@ -112,14 +116,20 @@ namespace MAANPP20.Controllers.Flights
             var flightDestinaion = await _context.FlightDestinations
                 .Include(address1 => address1.startAddress)
                 .Include(address2 => address2.endAddress)
-                .FirstOrDefaultAsync(i => i.destinationid == id);
+                .FirstOrDefaultAsync(i => i.id == id);
 
             if (flightDestinaion == null)
             {
                 return NotFound();
             }
 
-            _context.FlightDestinations.Remove(flightDestinaion);
+            flightDestinaion.deleted = true;
+            flightDestinaion.startAddress.deleted = true;
+            flightDestinaion.endAddress.deleted = true;
+
+            _context.Entry(flightDestinaion).State = EntityState.Modified;
+
+            //_context.FlightDestinations.Remove(flightDestinaion);
             await _context.SaveChangesAsync();
 
             return Ok();
@@ -142,13 +152,23 @@ namespace MAANPP20.Controllers.Flights
             if (flightDestination.startAddress.city == flightDestination.endAddress.city)
                 return false;
 
+            if (flightDestination.startAddress.country == null || flightDestination.endAddress.country == null)
+                return false;
+
             // samo necemo proveravati istu drzavu jer moze da se leti iz New York-a za Los Angeles
-            //if (flightDestination.startAddress.country == flightDestination.endAddress.country)
-            //    return false;
+
+            if ((flightDestination.startAddress.city == flightDestination.startAddress.streetAndNumber) ||
+                (flightDestination.startAddress.country == flightDestination.startAddress.streetAndNumber)) return false;
+
+            if ((flightDestination.endAddress.city == flightDestination.endAddress.streetAndNumber) ||
+                (flightDestination.endAddress.country == flightDestination.endAddress.streetAndNumber)) return false;
+
+            // prilikom POST i PUT ne moze se logicki obrisati jer to je namenjeno za DELETE!
+            if (flightDestination.deleted == true) return false;
 
             return true;
         }
 
-        private bool FlightDestinationExists(int id) => _context.FlightDestinations.Any(e => e.destinationid == id);
+        private bool FlightDestinationExists(int id) => _context.FlightDestinations.Any(e => e.id == id);
     }
 }

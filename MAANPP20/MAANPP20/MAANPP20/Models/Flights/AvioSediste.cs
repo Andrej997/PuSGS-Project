@@ -12,5 +12,8 @@ namespace MAANPP20.Models.Flights
         public int id { get; set; }
         public bool reserved { get; set; }
         public bool isFastReservation { get; set; }
+        public bool isDisabled { get; set; }
+
+        public bool deleted { get; set; }
     }
 }

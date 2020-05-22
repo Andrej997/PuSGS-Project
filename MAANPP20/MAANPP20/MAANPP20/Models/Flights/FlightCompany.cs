@@ -31,5 +31,7 @@ namespace MAANPP20.Models.Flights
         public string logo { get; set; }
 
         public ICollection<DoubleForICollection> ocene { get; set; }
+
+        public bool deleted { get; set; }
     }
 }

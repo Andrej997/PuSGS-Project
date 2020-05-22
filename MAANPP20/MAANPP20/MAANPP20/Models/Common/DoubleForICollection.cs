@@ -12,5 +12,7 @@ namespace MAANPP20.Models.Common
         public int id { get; set; }
 
         public double DoubleValue { get; set; }
+
+        public bool deleted { get; set; }
     }
 }

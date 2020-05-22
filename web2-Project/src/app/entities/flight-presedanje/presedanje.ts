@@ -1,9 +1,16 @@
-export class Presedanje {
-    brojPresedanja: number;
-    gradoviPresedanja: Array<string>;
+import { StringForICollection } from '../StringForICollection/string-for-icollection';
 
-    constructor(brojPresedanja: number, gradoviPresedanja: Array<string>) {
+export class Presedanje {
+    id: number;
+    brojPresedanja: number;
+    gradoviPresedanja: Array<StringForICollection>;
+
+    deleted: boolean;
+
+    constructor(brojPresedanja: number, gradoviPresedanja: Array<StringForICollection>) {
         this.brojPresedanja = brojPresedanja;
         this.gradoviPresedanja = gradoviPresedanja;
+
+        this.deleted = false;
     }
 }

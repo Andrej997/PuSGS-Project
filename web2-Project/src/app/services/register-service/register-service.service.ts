@@ -7,7 +7,7 @@ import * as CryptoJS from 'crypto-js';
 import { HttpServiceService } from '../http-service/http-service.service';
 import { User } from 'src/app/entities/user/user';
 
-@Injectable({
+@Injectable({ 
   providedIn: 'root'
 })
 

@@ -1,4 +1,4 @@
-<div class="container"
+<div class="container down"
         *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
     <div class="alert alert-danger" role="alert"> 
         <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
@@ -6,163 +6,174 @@
     <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
 </div>
 
-<div class="container" *ngIf='this.authenticationService.currentUserValue'>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item">
-                <a class="page-link" style="cursor: pointer;" (click)="previousView()"
-                    data-toggle="tooltip" data-placement="bottom" 
-                    title="{{prev}}">
-                    {{prev}}
-                </a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" style="cursor: pointer;" (click)="nextView()"
-                    data-toggle="tooltip" data-placement="bottom" 
-                    title="{{next}}">
-                    {{next}}
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <div class="card">
-        <!--img src={{flight.destImg}} class="mr-4" alt=""-->
-        <div class="media-body" *ngIf="paginationNum === 0">
-            
-            <h3 class="mt-0" >{{flight.company}}
-                <img src={{flight.logo}} class="mr-4" alt="" width="35px">
-            </h3>
+<div class="container down" *ngIf='this.authenticationService.currentUserValue'>
+    <app-my-spinner *ngIf="loading"></app-my-spinner>
 
-            <div class="container">
-                <label for="from">From</label>
-                <p class="ml-3" id="from">{{flight.from.city}}, {{flight.from.country}}</p> 
-            </div>
-            
-            <div class="container">
-                <label for="datumPolaska">Date</label>
-                <p class="ml-3" id="datumPolaska">{{flight.datumPolaska}}</p> 
-            </div>
+    <div class="alert alert-danger" role="alert" *ngIf="errorPagination && !loading">
+        <b>{{errorText}}</b>
+    </div>
 
-            <div class="container">
-                <label for="to">To</label>
-                <p class="ml-3" id="to">{{flight.to.city}}, {{flight.to.country}}</p>
-            </div>
+    <div class="alert alert-danger" role="alert" *ngIf="error && !loading">
+        <b>{{errorText}}</b>
+    </div>
+    
+    <div class="alert alert-success" role="alert" *ngIf="success && !loading">
+        <b>{{successText}} created!</b>
+    </div>
+    <div *ngIf="!loading && !error">
 
-            <div class="container">
-                <label for="datumSletanja">Date</label>
-                <p class="ml-3" id="datumSletanja">{{flight.datumSletanja}}</p> 
-            </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" style="cursor: pointer;" (click)="previousView()"
+                        data-toggle="tooltip" data-placement="bottom" 
+                        title="{{prev}}">
+                        {{prev}}
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" style="cursor: pointer;" (click)="nextView()"
+                        data-toggle="tooltip" data-placement="bottom" 
+                        title="{{next}}">
+                        {{next}}
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="card mb-3">
+            <div class="media-body" *ngIf="paginationNum === 0">
+                <img src={{flight.destImg}} style="width: 100%;" class="mr-4" alt="">
+                
+                <h3 class="mt-0" >{{flight.company}}
+                    <img src={{flight.logo}} class="mr-4" alt="" width="35px">
+                </h3>
 
-            <div class="container">
-                <label for="vremePutovanja">Travel time</label>
-                <p class="ml-3" id="vremePutovanja">{{flight.vremePutovanja}}</p>
-            </div>
+                <div class="container">
+                    <label for="from">From</label>
+                    <p class="ml-3" id="from">{{flight.from.city}}, {{flight.from.country}}</p> 
+                </div>
+                
+                <div class="container">
+                    <label for="datumPolaska">Date</label>
+                    <p class="ml-3" id="datumPolaska">{{flight.datumPolaska}}</p> 
+                </div>
 
-            <div class="container">
-                <label for="duzinaPutovanja">Travel distance</label>
-                <p class="ml-3" id="duzinaPutovanja">{{flight.duzinaPutovanja}}</p>
-            </div>
+                <div class="container">
+                    <label for="to">To</label>
+                    <p class="ml-3" id="to">{{flight.to.city}}, {{flight.to.country}}</p>
+                </div>
 
-            <div class="container">
-                <label for="presedanje" data-toggle="collapse" href="#collapseChangeover"
-                        style="cursor: pointer;">
-                    Changeover({{flight.presedanje.brojPresedanja}})
-                </label>
-                <p class="ml-3" id="presedanje"  class="container collapse" id="collapseChangeover"
-                    *ngFor="let presedanje of flight.presedanje.gradoviPresedanja">{{presedanje}}</p>
-            </div>
+                <div class="container">
+                    <label for="datumSletanja">Date</label>
+                    <p class="ml-3" id="datumSletanja">{{flight.datumSletanja}}</p> 
+                </div>
 
-            <div class="container">
-                <label for="exampleFormControlSelect1">Ticket type</label>
-                <div>
-                    <select class="form-control ml-3" [(ngModel)]="selectedTicket" >
-                        <option value=1 selected> One way - ${{flight.prise}}</option>
-                        <option value=2> Two way - ${{flight.priceTwoWay}}</option>
-                    </select>
+                <div class="container">
+                    <label for="vremePutovanja">Travel time</label>
+                    <p class="ml-3" id="vremePutovanja">{{flight.vremePutovanja}}</p>
+                </div>
+
+                <div class="container">
+                    <label for="duzinaPutovanja">Travel distance</label>
+                    <p class="ml-3" id="duzinaPutovanja">{{flight.duzinaPutovanja}}</p>
+                </div>
+
+                <div class="container">
+                    <label for="presedanje" data-toggle="collapse" href="#collapseChangeover"
+                            style="cursor: pointer;">
+                        Changeover({{flight.presedanje.brojPresedanja}})
+                    </label>
+                    <p class="ml-3" id="presedanje"  class="container collapse" id="collapseChangeover"
+                        *ngFor="let presedanje of flight.presedanje.gradoviPresedanja">{{presedanje.plainString}}</p>
+                </div>
+
+                <div class="container">
+                    <label for="exampleFormControlSelect1">Ticket type</label>
+                    <div>
+                        <select class="form-control ml-3" [(ngModel)]="selectedTicket" >
+                            <option value=1 selected> One way - ${{flight.prise}}</option>
+                            <option value=2> Two way - ${{flight.priceTwoWay}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <label for="aeroplane">Aeroplane</label>
+                    <p class="ml-3" id="aeroplane">{{flight.aeroplane.name}}</p>
                 </div>
             </div>
 
-            <div class="container">
-                <label for="aeroplane">Aeroplane</label>
-                <p class="ml-3" id="aeroplane">{{flight.aeroplane.name}}</p>
-            </div>
-        </div>
-
-        <div class="media-body" *ngIf="paginationNum === 1">
-            <div class="container" width="30px" >
-                <app-airplane-seats (click)="getActivatedSeat()"></app-airplane-seats>
-            </div>
-
-            <div class="container mt-5" style="float: left;">
-                <span *ngIf='sumPrice>0'>
-                    Sum: <b>${{sumPrice}}</b>
-                </span>
-            </div>
-        </div>
-
-        <div class="media-body" *ngIf="paginationNum === 2">
-            <div class="container" *ngIf='seatsNumber>1' style="display: inline;">
-                <div class="alert alert-warning" role="alert">
-                    After entering data for each friend, <b>submit</b> his data by clicking on button SUBMIT Friend!
-                    <br/><u>Data will be lost for every unsubmitet frind!</u>
+            <div class="media-body" *ngIf="paginationNum === 1">
+                <div class="container" width="30px" >
+                    <app-plane-seats (click)="getActivatedSeat()"></app-plane-seats>
                 </div>
-                <div class="border border-secondary pb-1 pl-1 pr-1" 
-                    *ngFor="let item of createRange(seatsNumber)">
-                    <label>Call Friends {{item}}</label>
-                    <app-flight-call-friends></app-flight-call-friends>
+
+                <div class="container mt-5" style="float: left;">
+                    <span *ngIf='sumPrice>0'>
+                        Sum: <b>${{sumPrice}}</b>
+                    </span>
                 </div>
             </div>
-        </div>
 
-        <div class="media-body" *ngIf="paginationNum === 3">
-            RENT A CAR 
-            <div class="container mt-5" style="float: left;">
-                <button type="button" class="btn btn-info">RENT A CAR</button>
-            </div>
-        </div>
-
-        <div class="media-body" *ngIf="paginationNum === 4">
-
-            <div class="container">
-                <label>Carry-On</label>
-                <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="carryOn" (change)="luggageF()">
-            </div>
-
-            <div class="container">
-                <label>Personal Bag</label>
-                <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="personalBag" (change)="luggageF()">
+            <div class="media-body" *ngIf="paginationNum === 2">
+                <div class="container" *ngIf='seatsNumber>1' style="display: inline;">
+                    <div class="alert alert-warning" role="alert">
+                        After entering data for each friend, <b>submit</b> his data by clicking on button SUBMIT Friend!
+                        <br/><u>Data will be lost for every unsubmitet frind!</u>
+                    </div>
+                    <div class="alert alert-warning" role="alert">
+                        Enter data for <b>{{seatsNumber-1}}</b> friends!
+                    </div>
+                    <div class="border border-secondary pb-1 pl-1 pr-1">
+                        <label>Call Friends</label>
+                        <app-flight-call-friends></app-flight-call-friends>
+                    </div>
+                </div>
             </div>
 
-            <div class="container">
-                <label>Full-Size Spinner</label>
-                <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="fullSizeSpiner" (change)="luggageF()">
-            </div>
+            <div class="media-body" *ngIf="paginationNum === 3">
 
-            <div class="container">
-                <label>Large Duffel</label>
-                <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="largeDuffel" (change)="luggageF()">
-            </div>
+                <div class="container">
+                    <label>Carry-On</label>
+                    <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="carryOn" (change)="luggageF()">
+                </div>
 
-            <div class="container">
-                <label>Number of reserved seats</label>
-                <p class="ml-3"><b>{{seatsNumber}}</b></p> 
-                <p>
-                    Seats numerations: 
-                    <b>
-                        <span *ngFor="let seatId of selectedSeats"> 
-                            {{seatId}} 
-                        </span>
-                    </b>
-                </p>
-            </div>
+                <div class="container">
+                    <label>Personal Bag</label>
+                    <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="personalBag" (change)="luggageF()">
+                </div>
 
-            <div class="container">
-                <label>Sum price</label>
-                <p class="ml-3"><b><span title="ticket sum">${{sumPrice}}</span> + <span  title="luggage sum">${{sumLuggagePrice}}</span> = <span  title="total sum">${{sumPriceForAll}}</span></b></p> 
-            </div>
+                <div class="container">
+                    <label>Full-Size Spinner</label>
+                    <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="fullSizeSpiner" (change)="luggageF()">
+                </div>
 
-            <div class="container mt-5" style="float: left;">
-                <button type="button" class="btn btn-success" (click)="bookFlight()">BOOK FLIGHT</button>
+                <div class="container">
+                    <label>Large Duffel</label>
+                    <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="largeDuffel" (change)="luggageF()">
+                </div>
+
+                <div class="container">
+                    <label>Number of reserved seats</label>
+                    <p class="ml-3"><b>{{seatsNumber}}</b></p> 
+                    <p>
+                        Seats numerations: 
+                        <b>
+                            <span *ngFor="let seatId of selectedSeats"> 
+                                {{seatId}} 
+                            </span>
+                        </b>
+                    </p>
+                </div>
+
+                <div class="container">
+                    <label>Sum price</label>
+                    <p class="ml-3"><b><span title="ticket sum">${{sumPrice}}</span> + <span  title="luggage sum">${{sumLuggagePrice}}</span> = <span  title="total sum">${{sumPrice + sumLuggagePrice}}</span></b></p> 
+                </div>
+
+                <div class="container mt-5" style="float: left;">
+                    <button type="button" class="btn btn-success" (click)="bookFlight()">BOOK FLIGHT</button>
+                </div>
             </div>
         </div>
     </div>

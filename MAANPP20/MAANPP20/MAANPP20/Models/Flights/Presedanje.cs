@@ -15,5 +15,7 @@ namespace MAANPP20.Models.Flights
         public int brojPresedanja { get; set; }
 
         public ICollection<StringForICollection> gradoviPresedanja { get; set; }
+
+        public bool deleted { get; set; }
     }
 }

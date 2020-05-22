@@ -1,12 +1,12 @@
 <!-- THIS COMPONENT IS USED FOR CREATING OR CHANGING FLIGHTS -->
-<div class="container"
+<div class="container down"
         *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
     <div class="alert alert-danger" role="alert"> 
         <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
     </div>
     <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
 </div>
-<div class="container"
+<div class="container down"
         *ngIf='this.authenticationService.currentUserValue'> <!-- AKO JE ULOGOVAN A NEMA DOZVOLU-->
     <div *ngIf="currentUser.role != 1 && currentUser.role != 2">
         <div class="alert alert-danger" role="alert">
@@ -16,15 +16,21 @@
     </div>
 </div>
 
-<div *ngIf='this.authenticationService.currentUserValue'>
+<div *ngIf='this.authenticationService.currentUserValue' class="down">
     <div class="container" *ngIf="currentUser.role === 1 || currentUser.role === 2">
         <div class="alert alert-danger" role="alert" *ngIf="error">
             <b>{{errorText}}</b>
         </div>
+
+        <div class="alert alert-success" role="alert" *ngIf="success">
+            <b>{{successText}}</b>
+        </div>
+
         <div class="alert alert-warning" role="alert">
             <b>All fields are required!</b>
         </div>
         <img src={{logo}} class="centerSTOPimg" alt="" style="width: 300px;"> 
+        
         <form [formGroup]="form" (ngSubmit)="submit()">
             
             <div *ngIf="!oneCompany">
@@ -52,49 +58,31 @@
                 </div>
             </div>
 
-            <div class="form-group" >
-                <label for="from">From</label>
+            <div class="form-group">
+                <label for="company">Destination</label>
                 <div class="input-group mb-3 border border-secondary rounded">
-                    <input type="text" id="from" #from formControlName="from" class="form-control" placeholder="city">
+                    <select id="destinations" #destinations formControlName="destinations" class="form-control" (change)="onChangeFD($event.target.value)">
+                        <option value="{{destination.id}}" *ngFor="let destination of fdofc">
+                            {{ destination.startAddress.city }}, {{ destination.startAddress.country }}
+                             ->  
+                             {{ destination.endAddress.city }}, {{ destination.endAddress.country }}
+                        </option>
+                    </select>
                 </div>
-                <div *ngIf="f.from.touched && f.from.invalid" class="alert alert-danger">
-                    <div *ngIf="f.from.errors.required">City is required.</div>
-                </div>
-            </div>
-
-            <div class="form-group" >
-                <label for="to">To</label>
-                <div class="input-group mb-3 border border-secondary rounded">
-                    <input type="text" id="to" #to formControlName="to" class="form-control" placeholder="city">
-                </div>
-                <div *ngIf="f.to.touched && f.to.invalid" class="alert alert-danger">
-                    <div *ngIf="f.to.errors.required">City is required.</div>
+                <div *ngIf="f.destinations.touched && f.destinations.invalid" class="alert alert-danger">
+                    <div *ngIf="f.destinations.errors.required">Detinations is required.</div>
                 </div>
             </div>
 
             <div class="form-group" >
-                <label for="destImg">Destination image</label>
-                <div class="input-group mb-3">
-                    <div class="border border-secondary rounded" id="btnImage">
-                        <label style="position: absolute;">{{ imgName }}</label>
-                        <input type="file" accept="image/*" id="destImg" 
-                                #destImg formControlName="destImg" class="form-control">
-                    </div>
-                </div>
-                <div *ngIf="f.destImg.touched && f.destImg.invalid" class="alert alert-danger">
-                    <div *ngIf="f.destImg.errors.required">Destination image is required.</div>
-                </div>
-            </div>
-
-            <div class="form-group" >
-                <label for="dateFrom">Date</label>
+                <label for="dateFrom">Flight date</label>
                 <div class="input-group mb-3 border border-secondary rounded">
                     <input type="datetime-local" id="dateFrom" #dateFrom formControlName="dateFrom" class="form-control">
                 </div>
             </div>
 
             <div class="form-group" >
-                <label for="dateTo">Date</label>
+                <label for="dateTo">Landing date</label>
                 <div class="input-group mb-3 border border-secondary rounded">
                     <input type="datetime-local" id="dateTo" #dateTo formControlName="dateTo" class="form-control">
                 </div>
@@ -128,11 +116,16 @@
                 <label for="vremePutovanja">Travel time</label>
                 <div class="input-group mb-3 border border-secondary rounded">
                     <input type="number" id="vremePutovanjahh" #vremePutovanjahh min="0" onkeydown="return false"
-                            formControlName="vremePutovanjahh" class="form-control mr-1" placeholder="hours">
+                            formControlName="vremePutovanjahh" max="99"
+                            class="form-control mr-1" placeholder="hours">
+                            <b>:</b> 
                     <input type="number" id="vremePutovanjamm" #vremePutovanjamm min="0" onkeydown="return false"
-                            formControlName="vremePutovanjamm" class="form-control mr-1 ml-1" placeholder="minutes">
+                            formControlName="vremePutovanjamm" max="59"
+                            class="form-control mr-1 ml-1" placeholder="minutes">
+                            <b>:</b>
                     <input type="number" id="vremePutovanjass" #vremePutovanjass min="0" onkeydown="return false"
-                            formControlName="vremePutovanjass" class="form-control ml-1" placeholder="seconds">
+                            formControlName="vremePutovanjass" max="59"
+                            class="form-control ml-1" placeholder="seconds">
                 </div>
                 <div *ngIf="f.vremePutovanjahh.touched && f.vremePutovanjahh.invalid" class="alert alert-danger">
                     <div *ngIf="f.vremePutovanjahh.errors.required">Travel time is required.</div>
@@ -160,7 +153,7 @@
             <div class="form-group" >
                 <label for="price">Changeover</label>
                 <div class="input-group mb-3 border border-secondary rounded">
-                    <input type="number" id="presedanjeCnt" #presedanjeCnt min="0" max="5" (keyup)="onKey($event)"
+                    <input type="number" id="presedanjeCnt" #presedanjeCnt min="0" max="5" (change)="onKey($event)"
                             formControlName="presedanjeCnt" class="form-control" placeholder="number" onkeydown="return false">
                 </div>
                 <div *ngIf="f.presedanjeCnt.touched && f.presedanjeCnt.invalid" class="alert alert-danger">
@@ -169,6 +162,9 @@
                     <div *ngIf="f.presedanjeCnt.errors.max">Max value of changeover is 5.</div>
                 </div>
             </div>
+
+            <!-- *stavio krerirao sam ovako namerno 5 fiksiranih, jer to je po mom misljenju max mogucih presedanja
+                 *ali, naravno, ne kazem da postoji mozda i vise -->
 
             <div class="form-group" *ngIf="show1">
                 <label for="presedanje1">Changeover city one</label>
@@ -219,8 +215,109 @@
                     <div *ngIf="f.presedanje5.errors.required">City is required.</div>
                 </div>
             </div>
+
+            <div class="form-group" >
+                <label for="destImg">Destination image</label>
+                <div class="input-group mb-3">
+                    <div class="border border-secondary rounded" id="btnImage">
+                        <label style="position: absolute;">{{ imgName }}</label>
+                        <input type="file" accept="image/*" id="destImg" (change)="onImg($event)"
+                                #destImg formControlName="destImg" class="form-control">
+                    </div>
+                </div>
+                <div *ngIf="f.destImg.touched && f.destImg.invalid" class="alert alert-danger">
+                    <div *ngIf="f.destImg.errors.required">Destination image is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="plane">Aeroplane</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <select id="plane" #plane formControlName="plane" class="form-control" (change)="onChangePlane($event.target.value)">
+                        <option value="{{plane.id}}" *ngFor="let plane of allAeroplanes">
+                            {{plane.name}} [{{plane.numSeats}}]
+                        </option>
+                    </select>
+                </div>
+                <div *ngIf="f.plane.touched && f.plane.invalid" class="alert alert-danger">
+                    <div *ngIf="f.plane.errors.required">Aeroplane name is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="promotionalDesc">Luggage price</label>
+                <div class="ml-2">
+                    <div class="form-group">
+                        <label for="priceCarryOn">Carry-On</label>
+                        <div class="input-group mb-3 border border-secondary rounded">
+                            <input type="number" id="priceCarryOn" #priceCarryOn min="0" formControlName="priceCarryOn" class="form-control">
+                        </div>
+                        <div *ngIf="f.priceCarryOn.touched && f.priceCarryOn.invalid" class="alert alert-danger">
+                            <div *ngIf="f.priceCarryOn.errors.required">Carry-On price is required.</div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="pricePersonalBag">Personal Bag</label>
+                        <div class="input-group mb-3 border border-secondary rounded">
+                            <input type="number" id="pricePersonalBag" #pricePersonalBag min="0" formControlName="pricePersonalBag" class="form-control">
+                        </div>
+                        <div *ngIf="f.pricePersonalBag.touched && f.pricePersonalBag.invalid" class="alert alert-danger">
+                            <div *ngIf="f.pricePersonalBag.errors.required">Personal Bag price is required.</div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="priceFullSizeSpinner">Full-Size-Spinner</label>
+                        <div class="input-group mb-3 border border-secondary rounded">
+                            <input type="number" id="priceFullSizeSpinner" #priceFullSizeSpinner min="0" formControlName="priceFullSizeSpinner" class="form-control">
+                        </div>
+                        <div *ngIf="f.priceFullSizeSpinner.touched && f.priceFullSizeSpinner.invalid" class="alert alert-danger">
+                            <div *ngIf="f.priceFullSizeSpinner.errors.required">Full-Size-Spinner is required.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="priceLargeDuffel">Large-Duffel</label>
+                        <div class="input-group mb-3 border border-secondary rounded">
+                            <input type="number" id="priceLargeDuffel" #priceLargeDuffel min="0" formControlName="priceLargeDuffel" class="form-control">
+                        </div>
+                        <div *ngIf="f.priceLargeDuffel.touched && f.priceLargeDuffel.invalid" class="alert alert-danger">
+                            <div *ngIf="f.priceLargeDuffel.errors.required">Large-Duffel is required.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="numOfFastReseravtions">Number of seats for fast reservations</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="number" id="numOfFastReseravtionsid" #numOfFastReseravtionsid 
+                            min="0" (input)="onChangeAddFRF($event.target.value)" max={{numOfChosenPlaneSeats}}
+                            formControlName="numOfFastReseravtions" class="form-control"
+                            onkeydown="return false">
+                </div>
+                <div class="form-group ml-2" *ngFor="let i of createRange(numOfFastReseravtions)">
+                    <div class="alert alert-warning" role="alert">
+                        <b>PRESS ENTER TO SAVE ID!</b>
+                    </div>
+                    <label for="seatid">Enter seat id</label>
+                    <div class="input-group mb-3 border border-secondary rounded">
+                        <input type="number" id="d{{i}}"class="form-control" min="1"
+                                placeholder="enter id" (keyup)="onKeySid($event)"
+                                onkeydown="return false" max={{numOfChosenPlaneSeats}}>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="discountForFastReservation">Discount for fast reservation</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="number" id="discountForFastReservation" #discountForFastReservation min="0" formControlName="discountForFastReservation" class="form-control">
+                </div>
+            </div>
         
-            <button class="btn btn-primary" type="submit" [disabled]="form.valid">Submit</button>
+            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
         </form>
     </div>
 </div>

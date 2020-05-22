@@ -4,3 +4,7 @@
     padding: 5px;
     width: 150px;
 }
+.down {
+    margin-top: 60px;
+    z-index: 6;
+}

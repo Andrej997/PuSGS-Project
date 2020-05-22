@@ -37,7 +37,18 @@ export class FlightsService {
 
   private allFriendsToCall: Array<User> = new Array<User>();
   setFriend(user: User) {
-    this.allFriendsToCall.push(user);
+    let includes = false;
+    for (let i = 0; i < this.allFriendsToCall.length; ++i) {
+      if (this.allFriendsToCall[i].email === user.email && 
+          this.allFriendsToCall[i].firstName === user.firstName &&
+          this.allFriendsToCall[i].lastName === user.lastName) {
+        includes = true;
+        // console.log("sadrzi")
+        break;
+      }
+    }
+    if (includes === false)
+      this.allFriendsToCall.push(user);
     //console.log(this.allFriendsToCall)
   }
 
@@ -45,15 +56,22 @@ export class FlightsService {
     return this.allFriendsToCall;
   }
 
-  //* DOBIJEM LISTU SEDISTA, I NA OSNOVU TOGA JA PROMENIM U AVIONU TA SEDISTA
-  addReservation(selectedSeats: Array<number>) {
-    selectedSeats.forEach(element => {
-      let index = element - 1;
-      //console.log(index);
-      if (this.flight.aeroplane.allSeats[index].reserved === false){
-        this.flight.aeroplane.allSeats[index].reserved = true;
-      }
-    });
-    //console.log(this.flight);
-  } 
+  resetService() {
+    this.numberOfSeats = 0;
+    this.reservedSeats = new Array<boolean>();
+    this.seatId = 0;
+    this.allFriendsToCall = new Array<User>();
+    this.seatBroj = 0;
+  }
+
+  seatBroj: number = 0;
+  setSeatCount(br: number) {
+    this.seatBroj = br;
+  }
+  getSeatBroj(): number {
+    return this.seatBroj;
+  }
+  getAddedFriendToList(): number {
+    return this.allFriendsToCall.length;
+  }
 }

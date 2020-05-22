@@ -1,4 +1,4 @@
-<div class="container"
+<div class="container down"
         *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
     <div class="alert alert-danger" role="alert"> 
         <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
@@ -6,8 +6,17 @@
     <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
 </div>
 
-<div class="container" *ngIf='this.authenticationService.currentUserValue'>
-    <div class="card">
+<app-my-spinner *ngIf="loading"></app-my-spinner>
+
+<div class="container down" *ngIf='this.authenticationService.currentUserValue && !loading'>
+    <div class="alert alert-danger" role="alert" *ngIf="error && !loading">
+        <b>{{errorText}}</b>
+    </div>
+    
+    <!-- <div class="alert alert-success" role="alert" *ngIf="success && !loading">
+        <b>{{successText}} created!</b>
+    </div> -->
+    <div class="card" *ngIf="!error && !loading">
         <div class="media-body">
             
             <h3 class="mt-0" >{{flight.company}}
@@ -50,7 +59,7 @@
                     Changeover({{flight.presedanje.brojPresedanja}})
                 </label>
                 <p class="ml-3" id="presedanje"  class="container collapse" id="collapseChangeover"
-                    *ngFor="let presedanje of flight.presedanje.gradoviPresedanja">{{presedanje}}</p>
+                    *ngFor="let presedanje of flight.presedanje.gradoviPresedanja">{{presedanje.plainString}}</p>
             </div>
 
             <div class="container">
@@ -69,7 +78,7 @@
             </div>
 
             <div class="container">
-                <button type="button" class="btn btn-success">
+                <button type="button" class="btn btn-success" (click)="reserveFastFlight()">
                     BOOK FLIGHT
                 </button>
             </div>

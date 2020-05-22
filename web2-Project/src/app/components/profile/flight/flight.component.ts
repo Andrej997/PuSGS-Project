@@ -5,8 +5,9 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 import { User } from 'src/app/entities/user/user';
 import { AvioCompaniesService } from 'src/app/services/avio-companies-service/avio-companies.service';
 import { FlightsService } from 'src/app/services/flights-service/flights.service';
-import { Friend } from 'src/app/entities/friend/friend';
 import { FlightReservation } from 'src/app/entities/flight-reservation/flight-reservation';
+import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
+import { PlanSeatServiceService } from 'src/app/services/plain-seat-service/plan-seat-service.service';
 
 @Component({
   selector: 'app-flight',
@@ -14,11 +15,10 @@ import { FlightReservation } from 'src/app/entities/flight-reservation/flight-re
   styleUrls: ['./flight.component.css']
 })
 export class FlightComponent implements OnInit {
-  id: string; // !this is from link and will contain companyid and flightid
+  id: number; 
   flight: Flight;
   currentUser: User;
-  idF: number; // flightID
-  idC: number; // companyID
+
   seatsNumber: number = 0;
   selectedSeats: Array<number>;
   sumPrice: number = 0;
@@ -40,19 +40,28 @@ export class FlightComponent implements OnInit {
 
   sumPriceForAll = 0;
 
+  ocena: number = 0;
+
+  loading: boolean = true;
+
+  error: boolean = false;
+  errorText: string = "";
+  errorPagination: boolean = false;
+
+  success: boolean = false;
+  successText: string = "";
+
   constructor(private route: ActivatedRoute, private router: Router,
-    public authenticationService: AuthenticationService,
-    private avioCompaniesService: AvioCompaniesService,
-    private flightsService: FlightsService) {
-      if (this.authenticationService.currentUserValue) { 
-        this.currentUser = this.authenticationService.currentUserValue;
-      }
-      else {
-        this.kick();
-      }
-      route.params.subscribe(params => { this.id = params['id']; });
-      //console.log(this.id);
+      public authenticationService: AuthenticationService,
+      private avioCompaniesService: AvioCompaniesService, private httpService: HttpServiceService,
+      private flightsService: FlightsService, private planSeatServiceService: PlanSeatServiceService) {
+    if (this.authenticationService.currentUserValue) { 
+      this.currentUser = this.authenticationService.currentUserValue;
     }
+    else {
+      this.kick();
+    }
+  }
 
   private async kick() {
     await this.delay(3000);
@@ -62,41 +71,61 @@ export class FlightComponent implements OnInit {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
   ngOnInit(): void {
-    this.parseId(this.id);
-    this.flight = this.avioCompaniesService.getFlightProfile(this.idC, this.idF);
-    this.flightsService.setFlight(this.flight);
-    console.log(this.flight);
-  }
-
-  private parseId(id: string): void {
-    this.idC = parseInt(id.split('v')[0]);
-    this.idF = parseInt(id.split('v')[1]);
-  }
-
-  getActivatedSeat() {
-
-    let seatId: number = 0;
-    [this.seatsNumber, this.reservedSeats, seatId] = this.flightsService.getSeatsNumber();
-
-    if (this.selectedSeats.includes(seatId))
-      for (let i = 0; i < this.selectedSeats.length; ++i) {
-        if (this.selectedSeats[i] == seatId) {
-          this.selectedSeats.splice(i, 1);
-          break;
-        }
+    this.route.params.subscribe(params => { this.id = params['id']; });
+    this.httpService.getIdAction("Flight", this.id).toPromise()
+    .then(result => {
+      this.flight = result as Flight;
+      this.ocena = 0;
+      for (let index = 0; index < this.flight.ocene.length; index++) {
+        this.ocena += this.flight.ocene[index];
       }
-    else 
-      this.selectedSeats.push(seatId);
+      if (this.flight.ocene.length != 0)
+        this.ocena = this.ocena / this.flight.ocene.length;
 
-    //! sortiraj po rastucem
-    this.selectedSeats.sort(function(a, b) { return a - b });
+      // console.log(this.ocena);
+      this.loading = false;
+      this.planSeatServiceService.setFlight(this.flight);
+      console.log(this.flight);
+    })
+    .catch(
+      err => {
+        console.log(err)
+        this.error = true;
+        this.errorText = "Error while loading flight data!"
+        this.loading = false;
+      });
+  }
 
-    //*console.log(this.selectedSeats)
-    if (this.selectedTicket == 1) {
-      this.sumPrice = this.seatsNumber * this.flight.prise;
+  passedFirst: boolean = false;
+  getActivatedSeat() {
+    //* preskacem prvi jer poziva se get sa servisa koji je inicalno prazan, 
+    //* ali prilikom promene stranice, pozvace se jos jednom taj get i bice vraceno
+    //* i poslednje sediste.
+    if (this.passedFirst === true) {
+      let seatId: number = 0;
+      [this.seatsNumber, this.reservedSeats, seatId] = this.flightsService.getSeatsNumber();
+      // console.log(this.flightsService.getSeatsNumber())
+      // console.log(this.selectedSeats);
+      if (this.selectedSeats.includes(seatId))
+        for (let i = 0; i < this.selectedSeats.length; ++i) {
+          if (this.selectedSeats[i] == seatId) {
+            this.selectedSeats.splice(i, 1);
+            break;
+          }
+        }
+      else 
+        this.selectedSeats.push(seatId);
+  
+      //! sortiraj po rastucem
+      this.selectedSeats.sort(function(a, b) { return a - b });
+  
+      // console.log(this.selectedSeats)
+      // console.log(this.seatsNumber)
+      // console.log('--------------------')
     }
-    else if (this.selectedTicket == 2) {
-      this.sumPrice = this.seatsNumber * this.flight.priceTwoWay;
+    else {
+      this.passedFirst = true;
+      
     }
   }
 
@@ -117,31 +146,77 @@ export class FlightComponent implements OnInit {
       this.next = 'Call friends';
       this.prev = 'Flight details';
       this.sumPrice = 0;
+      this.seatsNumber = 0;
       this.selectedSeats = new Array<number>();
+      this.calledFriends = new Array<User>();
+      this.passedFirst = false;
+      // console.log('tatatatatatatatatta')
+      this.flightsService.resetService();
     }
     else if (num === 2) {
-      this.next = 'Rent a car';
+      this.next = 'Book flight';
       this.prev = 'Choose seats';
-      this.calledFriends = new Array<User>();
+      this.getActivatedSeat();
+      // console.log(this.seatsNumber-1)
+      this.flightsService.setSeatCount(this.seatsNumber-1);
+      // console.log('-------------------')
+      // console.log("this.selectedSeats.length " + this.selectedSeats.length)
+      // console.log("this.seatsNumber " + this.seatsNumber)
+      // console.log('-------------------')
     }
     else if (num === 3) {
-      this.next = 'Book flight';
-      this.prev = 'Call friends';
-    }
-    else if (num === 4) {
       this.sumPriceForAll = this.sumPrice;
       this.next = 'None';
-      this.prev = 'Rent a car';
+      this.prev = 'Cancel';
+      if (this.selectedTicket == 1) {
+        this.sumPrice = this.seatsNumber * this.flight.prise;
+      }
+      else if (this.selectedTicket == 2) {
+        this.sumPrice = this.seatsNumber * this.flight.priceTwoWay;
+      }
     }
   }
-
   nextView(): void {
-    if (this.paginationNum < 4)
-      this.paginationNum += 1;
-    this.setControlerNextPrev(this.paginationNum);
+    if (this.paginationNum === 1) {
+      // this.getActivatedSeat();
+      // console.log("this.selectedSeats.length " + this.selectedSeats.length)
+      if (this.selectedSeats.length === 0 && this.passedFirst === false) {
+        this.errorPagination = true;
+        this.errorText = "You need to choose at least 1 seat!";
+        return;
+      }
+      else {
+        this.errorPagination = false;
+      }
+    }
+    else if (this.paginationNum === 2) {
+      let friends = this.flightsService.getCalledFriends();
+      // console.log(friends.length)
+      // console.log(this.selectedSeats.length)
+      if (friends.length != (this.selectedSeats.length - 1)) {
+        this.errorPagination = true;
+        this.errorText = "Enter data for all frineds before you go to the next step!";
+        return;
+      }
+      else {
+        this.errorPagination = false;
+      }
+    }
+    if (this.errorPagination === false){
+      // console.log("Usao")
+      if (this.paginationNum < 3)
+        this.paginationNum += 1;
+      this.setControlerNextPrev(this.paginationNum);
+    }
   }
 
   previousView(): void {
+    if (this.paginationNum == 3) {
+      this.paginationNum = 0;
+      this.setControlerNextPrev(0);
+      return;
+    }
+    this.errorPagination = false;
     if (this.paginationNum > 0)
       this.paginationNum -= 1;
     this.setControlerNextPrev(this.paginationNum);
@@ -164,8 +239,6 @@ export class FlightComponent implements OnInit {
     } 
     flightReservation.reservedSeatsIds = this.selectedSeats[0]; //! moje sediste
     flightReservation.totalPrice = this.sumPriceForAll;
-
-    this.flightsService.addReservation(this.selectedSeats);
 
     console.log(flightReservation);
   }

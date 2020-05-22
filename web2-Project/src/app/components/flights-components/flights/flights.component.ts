@@ -10,6 +10,7 @@ import { User } from 'src/app/entities/user/user';
 import { SearchFlight } from 'src/app/entities/search-flight/search-flight';
 import { FilterFlight } from 'src/app/entities/filter-flight/filter-flight';
 import { AvioSediste } from 'src/app/entities/avio-sediste/avio-sediste';
+import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 
 @Component({
   selector: 'app-flights',
@@ -33,24 +34,46 @@ export class FlightsComponent implements OnInit {
   searchedBool: boolean;
   filteredBool: boolean;
 
+  loading: boolean = true;
+
   newId: number; // broj koji se dodeljuje automatski pri kreiranju novog leta
 
   allFlights: Array<Flight>;
   allFlightsCopy: Array<Flight>; // jer ne postoji baza trenutno
+
+  error: boolean = false;
+  errorText: string = "";
+
   constructor(
       private flightsService: FlightsService,
       public authenticationService: AuthenticationService,
-      private avioCompaniesService: AvioCompaniesService) {
+      private avioCompaniesService: AvioCompaniesService,
+      private httpService: HttpServiceService) {
         if (this.authenticationService.currentUserValue) { 
           this.currentUser = this.authenticationService.currentUserValue;
         }
-      this.allFlights = avioCompaniesService.getAllFligths();
-      this.allFlightsCopy = this.allFlights;
+      // this.allFlights = avioCompaniesService.getAllFligths();
+      // this.allFlightsCopy = this.allFlights;
       //console.log(this.allFlights);
       //this.allFlights = this.flightsService.loadFlights();
    }
 
   ngOnInit(): void {
+    this.httpService.getAction('Flight')
+      .toPromise()
+      .then(result => {
+        this.allFlights = result as Flight[];
+        this.allFlightsCopy = this.allFlights;
+        console.log(this.allFlights);
+        this.loading = false;
+      })
+      .catch(
+        err => {
+          console.log(err)
+          this.error = true;
+          this.errorText = "Error while loading flights!"
+          this.loading = false;
+        });
     this.searchedBool = false;
     this.filteredBool = false;
   }

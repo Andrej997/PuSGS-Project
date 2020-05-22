@@ -9,6 +9,7 @@ import { Presedanje } from 'src/app/entities/flight-presedanje/presedanje';
 import { Aeroplane } from 'src/app/entities/aeroplane/aeroplane';
 import { AeroplaneServiceService } from '../aeroplane-service/aeroplane-service.service';
 import { AvioLuggage } from 'src/app/entities/avio-luggage/avio-luggage';
+import { StringForICollection } from 'src/app/entities/StringForICollection/string-for-icollection';
 
 @Injectable({
   providedIn: 'root'
@@ -24,13 +25,13 @@ export class AvioCompaniesService {
   }
 
   private setSeatsForFastReservation(flight: Flight, idS :Array<number>): Flight {
-    flight.aeroplane.allSeats.forEach(element => {
-      idS.forEach(element1 => {
-        if (element1 === element.id) {
-          element.isFastReservation = true;
-        }
-      });
-    });
+    // flight.aeroplane.allSeats.forEach(element => {
+    //   idS.forEach(element1 => {
+    //     if (element1 === element.id) {
+    //       element.isFastReservation = true;
+    //     }
+    //   });
+    // });
     return flight;
   }
 
@@ -54,7 +55,7 @@ export class AvioCompaniesService {
             new Address("ulica i broj", 'New York', 'USA'), 
             "../../../assets/img/new york.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            658, 2*658-100, "14:15:00", 1500, new Presedanje(0, ["NONE"]), 
+            658, 2*658-100, "14:15:00", 1500, new Presedanje(0, new Array<StringForICollection>()), 
             this.aeroplaneServiceService.mockedAvioCompanies()[0], new AvioLuggage(20, 5, 40, 120));
     flight1A1.numOfFastReseravtions = 5;
     flight1A1.discountForFastReservation = 10;
@@ -64,7 +65,7 @@ export class AvioCompaniesService {
             new Address("ulica i broj", 'Los Angeles', 'USA'), 
             "../../../assets/img/los angeles.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            1202.69, 1202.69*2-100,"14:15:00", 1500, new Presedanje(2, ["Paris", "New York"]),
+            1202.69, 1202.69*2-100,"14:15:00", 1500, new Presedanje(0, new Array<StringForICollection>()),
             this.aeroplaneServiceService.mockedAvioCompanies()[1], new AvioLuggage(13, 3, 40, 90));
     flights.push(flight1A1);
     flights.push(flight2A1);
@@ -99,14 +100,14 @@ export class AvioCompaniesService {
             new Address("ulica i broj", 'Bejing', 'China'), 
             "../../../assets/img/peking.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            1995, 1995*2-100, "14:15:00", 1500, new Presedanje(0, ["NONE"]),
+            1995, 1995*2-100, "14:15:00", 1500, new Presedanje(0, new Array<StringForICollection>()),
             this.aeroplaneServiceService.mockedAvioCompanies()[2], new AvioLuggage(20, 5, 40, 90));
     const flight2A2 = new Flight(2, A2name, A2id, "../../../assets/img/avio companies/turkish airlines.png",
             new Address("ulica i broj", 'Belgrade', 'Serbia'), 
             new Address("ulica i broj", 'Los Angeles', 'USA'), 
             "../../../assets/img/los angeles.jpg",
             new Date(Date.parse("2020-04-24 22:00:00+0000")), new Date(Date.parse("2020-04-25 12:15:00+0000")),
-            766, 766*2-100,"14:15:00", 1500, new Presedanje(2, ["Frankfurt", "New York"]),
+            766, 766*2-100,"14:15:00", 1500, new Presedanje(0, new Array<StringForICollection>()),
             this.aeroplaneServiceService.mockedAvioCompanies()[3], new AvioLuggage(22, 5, 30, 70));
     flights2.push(flight1A2);
     flights2.push(flight2A2);
