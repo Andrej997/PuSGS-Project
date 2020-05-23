@@ -2,6 +2,7 @@ import { Address } from '../address/address';
 import { Flight } from '../flight/flight'
 import { AvioSediste } from '../avio-sediste/avio-sediste'
 import { FlightDestination } from '../flight-destination/flight-destination';
+import { User } from '../user/user';
 
 export class FlightCompany {
     id: number; // jedinstevi identifikacioni broj kompanije
@@ -13,6 +14,8 @@ export class FlightCompany {
     flights: Array<Flight>; // svi trenutni letovi kompanije
     logo: string;
     ocene: Array<number>;
+
+    admins: Array<User>;
 
     deleted: boolean;
 
@@ -33,6 +36,8 @@ export class FlightCompany {
             this.flights = flights;
             this.logo = logo;
             this.ocene = ocene;
+
+            this.admins = new Array<User>();
 
             this.deleted = false;
     }

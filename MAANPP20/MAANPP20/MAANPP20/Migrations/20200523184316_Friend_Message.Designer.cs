@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200523184316_Friend_Message")]
+    partial class Friend_Message
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,9 +188,6 @@ namespace MAANPP20.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
@@ -223,8 +222,6 @@ namespace MAANPP20.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FlightCompanyid");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("addressid");
 
@@ -508,10 +505,6 @@ namespace MAANPP20.Migrations
                     b.HasOne("MAANPP20.Models.Flights.FlightCompany", null)
                         .WithMany("admins")
                         .HasForeignKey("FlightCompanyid");
-
-                    b.HasOne("MAANPP20.Models.Common.User", null)
-                        .WithMany("waitingForAccept")
-                        .HasForeignKey("UserId");
 
                     b.HasOne("MAANPP20.Models.Common.Address", "address")
                         .WithMany()

@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container down">
     <div class="media">
-        <img src={{currentUser.profileImage}} class="mr-4" alt="">
+        <img src={{currentUser.profileImage}} style="width: 100px;" class="mr-4" alt="">
         <div class="media-body">
             <h3 class="mt-0" >{{currentUser.firstName}} {{currentUser.lastName}}
                 (<span *ngIf="currentUser.role == 1">admin</span>
@@ -15,8 +15,13 @@
             </div>
             
             <div class="container">
-                <label for="password">Password</label>
-                <p class="ml-3" id="password">**************</p>
+                <label for="passport">Passport</label>
+                <p class="ml-3" id="passport">{{currentUser.passportHash}}</p>
+            </div>
+
+            <div class="container">
+                <label for="phoneNumber">Phone number</label>
+                <p class="ml-3" id="phoneNumber">{{currentUser.phoneNumber}}</p>
             </div>
 
             <div class="container">
@@ -28,15 +33,15 @@
 
             <div class="container">
                 <p style="cursor: pointer;" 
-                    routerLink="/friends" ><u>Friends</u>
-                    <span><b *ngIf="friendReq > 0">({{friendReq}})</b></span>
+                        routerLink="/friends" >
+                    <u>Friends</u>
                 </p>
             </div>
 
             <div class="container">
                 <p style="cursor: pointer;"
-                    routerLink="/messages">
-                        <u>Messages</u> <span><b *ngIf="unreadMessages > 0">({{unreadMessages}})</b></span>
+                        routerLink="/messages">
+                    <u>Messages</u>
                 </p>
             </div>
         </div>

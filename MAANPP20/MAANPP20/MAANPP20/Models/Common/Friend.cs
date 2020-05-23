@@ -5,6 +5,9 @@ namespace MAANPP20.Models.Common
 {
 	public class Friend
 	{
+		[Key]
+		public int id { get; set; }
+
 		[Required]
 		public User user { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MAANPP20.Models.Flights;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -46,19 +47,16 @@ namespace MAANPP20.Models.Common
 
         public string authData { get; set; }
 
-        public int serviceId { get; set; }
+        //public int serviceId { get; set; }
+
 
         public bool deleted { get; set; }
 
-        //public ICollection<Friend> friends { get; set; }
+        public ICollection<Friend> friends { get; set; }
 
-        //[ForeignKey("friendRequests")]
-        //public int friendRequestsId { get; set; }
         //public ICollection<User> friendRequests { get; set; }
 
-        //[ForeignKey("waitingForAccept")]
-        //public int waitingForAcceptId { get; set; }
-        //public ICollection<User> waitingForAccept { get; set; }
+        public ICollection<User> waitingForAccept { get; set; }
 
 
     }

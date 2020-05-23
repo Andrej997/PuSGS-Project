@@ -34,7 +34,10 @@ export const users: User[] = [
     friends: new Array<Friend>(),
     friendRequests: new Array<User>(),
     waitingForAccept: new Array<User>(),
-    serviceId: 0
+    serviceId: 0,
+    passportHash: "",
+    phoneNumber: "",
+    flightCompany: null
   },
   { 
     id: 2,
@@ -89,7 +92,10 @@ export const users: User[] = [
       )
     ),
     waitingForAccept: new Array<User>(),
-    serviceId: 0
+    serviceId: 0,
+    passportHash: "",
+    phoneNumber: "",
+    flightCompany: null
   },
   { 
     id: 3,
@@ -109,7 +115,10 @@ export const users: User[] = [
     friends: new Array<Friend>(),
     friendRequests: new Array<User>(),
     waitingForAccept: new Array<User>(),
-    serviceId: 0
+    serviceId: 0,
+    passportHash: "",
+    phoneNumber: "",
+    flightCompany: null
   },
   { 
     id: 4,
@@ -129,7 +138,10 @@ export const users: User[] = [
     friends: new Array<Friend>(),
     friendRequests: new Array<User>(),
     waitingForAccept: new Array<User>(),
-    serviceId: 0
+    serviceId: 0,
+    passportHash: "",
+    phoneNumber: "",
+    flightCompany: null
   },
 ];
 
@@ -182,7 +194,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 friends: user.friends,
                 friendRequests: user.friendRequests,
                 waitingForAccept: user.waitingForAccept,
-                serviceId: user.serviceId
+                serviceId: user.serviceId,
+                phoneNumber: user.phoneNumber,
+                passportHash: user.passportHash,
+                flightCompany: user.flightCompany
             })
         }
 

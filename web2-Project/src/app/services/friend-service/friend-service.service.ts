@@ -4,6 +4,7 @@ import { User } from 'src/app/entities/user/user';
 import { users } from 'src/app/interceptors/fake-backend/fake-backend.interceptor'
 import { Friend } from 'src/app/entities/friend/friend';
 import { Message } from 'src/app/entities/message/message';
+import { HttpServiceService } from '../http-service/http-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,10 @@ import { Message } from 'src/app/entities/message/message';
 export class FriendServiceService {
   allUsers: Array<User> = users;
   currentUser: User;
-  constructor(private authenticationService: AuthenticationService) { 
+  foundedUser: User;
+  constructor(private authenticationService: AuthenticationService, private httpService: HttpServiceService) { 
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    console.log(this.allUsers);
+    //console.log(this.allUsers);
   }
 
   acceptFriend(friendEmail: string) {
@@ -60,7 +62,7 @@ export class FriendServiceService {
         break;
       }
     }
-    console.log(this.allUsers);
+    //console.log(this.allUsers);
   }
 
   declineFriend(friendEmail: string) {
@@ -87,17 +89,26 @@ export class FriendServiceService {
         break;
       }
     }
-    console.log(this.allUsers);
+    //console.log(this.allUsers);
   }
 
   findUser(userEmail: string): any {
-    for (let i = 0; i < this.allUsers.length; ++i) {
-      if (this.allUsers[i].email === userEmail) {
-        return this.allUsers[i];
-      }
-    }
-    // ako nije nasao
-    return false;
+    // this.httpService.getEmailAction("Friend", userEmail).toPromise()
+    // .then(result => {
+    //   this.foundedUser = result as User;
+    //   console.log('------------');
+    //   console.log(this.foundedUser);
+    //   console.log('------------');
+    //   return this.foundedUser;
+    // })
+    // .catch(
+    //   err => {
+    //     console.log(err)
+    //     return false;
+    //     // this.error = true;
+    //     // this.errorText = "Error while loading company!"
+    //     // this.loading = false;
+    //   });
   }
 
   addUserToMyWaitingList(user: User) {
@@ -116,7 +127,7 @@ export class FriendServiceService {
         break;
       }
     }
-    console.log(this.allUsers);
+    //console.log(this.allUsers);
   }
 
   deleteFriend(email: string) {
@@ -143,7 +154,7 @@ export class FriendServiceService {
         break;
       }
     }
-    console.log(this.allUsers);
+    //console.log(this.allUsers);
   }
 
   saveMessage(email: string, message: Message): void {
@@ -169,6 +180,6 @@ export class FriendServiceService {
         break;
       }
     }
-    console.log(this.allUsers);
+    // console.log(this.allUsers);
   }
 }

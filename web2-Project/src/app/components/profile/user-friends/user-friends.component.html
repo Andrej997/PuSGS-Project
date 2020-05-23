@@ -1,4 +1,4 @@
-<div class="container"
+<div class="container down"
         *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
     <div class="alert alert-danger" role="alert"> 
         <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
@@ -6,7 +6,7 @@
     <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
 </div>
 
-<div class="container" *ngIf='this.authenticationService.currentUserValue'>
+<div class="container down" *ngIf='this.authenticationService.currentUserValue'>
     <h1>FRIEND REQUEST</h1>
     <div class="card mb-3" *ngFor="let fr of currentUser.friendRequests">
         <div class="row no-gutters">
@@ -78,15 +78,16 @@
         </div>
     </div>
     <h1>WAITING LIST</h1>
-    <div class="card mb-3" *ngFor="let fr of currentUser.waitingForAccept">
+    <div class="card mb-3" *ngFor="let fr of waitingForAccept">
         <div class="row no-gutters">
             <div class="col-md-1">
-                <img src={{fr.profileImage}} alt="">
+                <!-- <img src={{fr.profileImage}} width="100px" alt=""> -->
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <h5 class="card-title">{{fr.email}}</h5>
-                <p class="card-text">{{fr.firstName}} {{fr.lastName}}</p>
+                <img src={{fr.profileImage}} style="float: right;" width="100px" alt="">
+                <h5 class="card-title" style="float: left;">{{fr.email}}</h5> <br/> <br/>
+                <p class="card-text" style="float: left;">{{fr.firstName}} {{fr.lastName}}</p>
               </div>
             </div>
         </div>

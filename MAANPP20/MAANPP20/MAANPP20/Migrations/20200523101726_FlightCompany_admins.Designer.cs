@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200523101726_FlightCompany_admins")]
+    partial class FlightCompany_admins
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,51 +71,6 @@ namespace MAANPP20.Migrations
                     b.HasIndex("Flightid");
 
                     b.ToTable("DoubleForICollections");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.Friend", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("userId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("userId");
-
-                    b.ToTable("Friends");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.Message", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("Friendid")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("dateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("isUnread")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("Friendid");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Common.StringForICollection", b =>
@@ -186,9 +143,6 @@ namespace MAANPP20.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
@@ -220,11 +174,12 @@ namespace MAANPP20.Migrations
                     b.Property<int>("role")
                         .HasColumnType("int");
 
+                    b.Property<int>("serviceId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FlightCompanyid");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("addressid");
 
@@ -480,22 +435,6 @@ namespace MAANPP20.Migrations
                         .HasForeignKey("Flightid");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Common.Friend", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Common.User", "user")
-                        .WithMany("friends")
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.Message", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Common.Friend", null)
-                        .WithMany("messages")
-                        .HasForeignKey("Friendid");
-                });
-
             modelBuilder.Entity("MAANPP20.Models.Common.StringForICollection", b =>
                 {
                     b.HasOne("MAANPP20.Models.Flights.Presedanje", null)
@@ -508,10 +447,6 @@ namespace MAANPP20.Migrations
                     b.HasOne("MAANPP20.Models.Flights.FlightCompany", null)
                         .WithMany("admins")
                         .HasForeignKey("FlightCompanyid");
-
-                    b.HasOne("MAANPP20.Models.Common.User", null)
-                        .WithMany("waitingForAccept")
-                        .HasForeignKey("UserId");
 
                     b.HasOne("MAANPP20.Models.Common.Address", "address")
                         .WithMany()

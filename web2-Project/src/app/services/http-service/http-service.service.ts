@@ -12,7 +12,7 @@ import { HttpClient } from "@angular/common/http";
 export class HttpServiceService {
 
   //! osnovna putanja
-  readonly rootURL = "http://localhost:57428/api";
+  readonly rootURL = "http://localhost:57427/api";
 
   constructor(private http: HttpClient) { }
 
@@ -41,5 +41,9 @@ export class HttpServiceService {
 
   getIdAction(controllerName: string, id: number) {
     return this.http.get(this.rootURL + '/' + controllerName + '/' + id);
+  }
+
+  getEmailAction(controllerName: string, email: string) {
+    return this.http.get(this.rootURL + '/' + controllerName + '/' + email);
   }
 }

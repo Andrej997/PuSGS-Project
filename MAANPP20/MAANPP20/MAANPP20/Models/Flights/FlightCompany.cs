@@ -32,6 +32,8 @@ namespace MAANPP20.Models.Flights
 
         public ICollection<DoubleForICollection> ocene { get; set; }
 
+        public ICollection<User> admins { get; set; }
+
         public bool deleted { get; set; }
     }
 }

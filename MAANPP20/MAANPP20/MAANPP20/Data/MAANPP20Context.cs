@@ -16,7 +16,8 @@ namespace MAANPP20.Data
         #region Common
         public DbSet<Address> Addresses { get; set; }
         public DbSet<User> Users { get; set; }
-
+        public DbSet<Friend> Friends { get; set; }
+        public DbSet<Message> Messages { get; set; }
         #endregion
 
         #region Flights

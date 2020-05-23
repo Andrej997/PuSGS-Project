@@ -1,6 +1,7 @@
 import { Address } from '../address/address';
 import { Message } from '../message/message';
 import { Friend } from '../friend/friend';
+import { FlightCompany } from '../flightCompany/flight-company';
 
 export enum Role {
     admin = 1,
@@ -24,8 +25,13 @@ export class User {
     authdata?: string;
 
     //* passport: number;
+
+    phoneNumber: string;
+    passportHash: string;
     
     serviceId: number;
+
+    flightCompany: FlightCompany;
 
     constructor(id: number, firstName: string, lastName: string, 
         email: string, password: string, 

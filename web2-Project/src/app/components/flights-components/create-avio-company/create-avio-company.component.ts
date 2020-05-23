@@ -145,6 +145,9 @@ export class CreateAvioCompanyComponent implements OnInit {
       new Array<number>()
     );
 
+    //this.currentUser.flightCompany = postFlightCompany;
+    // postFlightCompany.admins.push(this.currentUser);
+
     //* ako ne postoji id, znaci da je u pitanju kreiranje companije
     if (this.companyId === -1) {
       this.httpService.postAction('FlightCompany', 'AddFC', postFlightCompany).subscribe(
@@ -153,6 +156,19 @@ export class CreateAvioCompanyComponent implements OnInit {
           this.successText = postFlightCompany.name;
           this.success = true;
           this.error = false;
+          postFlightCompany = res as FlightCompany;
+          postFlightCompany.admins.push(this.currentUser)
+          this.httpService.putAction('FlightCompany', postFlightCompany).subscribe (
+            res => { 
+              this.successText = postFlightCompany.name + " changes ";
+              this.success = true;
+              this.error = false;
+            },
+            err => { 
+              this.errorText = err; 
+              this.error = true; 
+              this.success = false;
+            });
         },
         err => { 
           this.errorText = err; 

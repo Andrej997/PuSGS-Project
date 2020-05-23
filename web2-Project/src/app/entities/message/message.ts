@@ -1,5 +1,6 @@
 
 export class Message {
+    id: number;
     name: string; // ime posiljaoca ove poruke
     text: string; // sadrzaj poruke
     date: Date; // vreme kad je poslata

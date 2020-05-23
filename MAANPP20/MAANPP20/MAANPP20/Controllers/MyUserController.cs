@@ -71,8 +71,10 @@ namespace MAANPP20.Controllers
                 role = GetRole(model.RoleRole),
                 passportHash = model.PassportNumber
             };
+            user.waitingForAccept = new List<User>();
             try
             {
+                user.role = Role.adminA;
                 _context.Users.Add(user);
                 int result = await _context.SaveChangesAsync(); //ako ne sacuvamo dzabe smo krecili
 
@@ -101,6 +103,7 @@ namespace MAANPP20.Controllers
         {
             var user = await _context.Users
                 .Include(address => address.address)
+                .Include(waitingForAccept => waitingForAccept.waitingForAccept)
                 .FirstOrDefaultAsync(i => i.Id == id);
 
             if (user == null)

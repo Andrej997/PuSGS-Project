@@ -7,6 +7,7 @@ import { Friend } from 'src/app/entities/friend/friend';
 import { FriendServiceService } from 'src/app/services/friend-service/friend-service.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 
 @Component({
   selector: 'app-user-friends',
@@ -22,10 +23,14 @@ export class UserFriendsComponent implements OnInit {
   searchedUserSurname: string = '';
 
   currentUser: User;
+
+  waitingForAccept: Array<User> = new Array<User>();
+
   constructor(public authenticationService: AuthenticationService, private router: Router,
-      private friendServiceService: FriendServiceService) {
+      private friendServiceService: FriendServiceService, private httpService: HttpServiceService) {
     if (this.authenticationService.currentUserValue) { 
       this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+      console.log(this.currentUser);
     }
     else {
       this.kick();
@@ -43,6 +48,20 @@ export class UserFriendsComponent implements OnInit {
 
   ngOnInit(): void { 
     this.scrollToBottom();
+    this.httpService.getEmailAction('Friend/Awu', this.currentUser.email)
+      .toPromise()
+      .then(result => {
+        this.waitingForAccept = (result as User).waitingForAccept;
+        // console.log(this.waitingForAccept);
+        // this.loading = false;
+      })
+      .catch(
+        err => {
+          console.log(err)
+          // this.error = true;
+          // this.errorText = "Error while loading companies!"
+          // this.loading = false;
+        });
   }
 
   ngAfterViewChecked() {        
@@ -75,24 +94,45 @@ export class UserFriendsComponent implements OnInit {
 
   searchUser() {
     let email = this.form.value.email;
-    if (email != this.currentUser.email) { // ako je user ukucao svoj mail, nece se nista desiti
-      let retVal = this.friendServiceService.findUser(email);
-      if (retVal === false) {
-        this.foundUser = false;
-      }
-      else {
-        this.searchedUser = (retVal as User);
-        this.searchedUserName = this.searchedUser.firstName;
-        this.searchedUserSurname = this.searchedUser.lastName;
+    this.httpService.getEmailAction("Friend", email).toPromise()
+    .then(result => {
+      this.searchedUser = result as User;
+      this.foundUser = true;
+      this.searchedUserName = this.searchedUser.firstName;
+      this.searchedUserSurname = this.searchedUser.lastName;
+      //console.log(this.searchedUser)
+    })
+    .catch(
+      err => {
+        console.log(err)
         this.foundUser = true;
-        // console.log(this.searchedUser);
-      }
-    }
+        // this.error = true;
+        // this.errorText = "Error while loading company!"
+        // this.loading = false;
+      });
   }
 
   addFriend(): void {
-    this.friendServiceService.addUserToMyWaitingList(this.searchedUser);
-    this.foundUser = false;
+    if (this.currentUser.waitingForAccept == (null || undefined)) {
+      this.currentUser.waitingForAccept = new Array<User>();
+      this.currentUser.waitingForAccept.push(this.searchedUser)
+    }
+    else
+      this.currentUser.waitingForAccept.push(this.searchedUser)
+    //this.friendServiceService.addUserToMyWaitingList(this.searchedUser);
+    this.httpService.putAction('Friend/AddToWL', this.currentUser).subscribe (
+      res => { 
+    //     this.successText = postFlightCompany.name + " changes ";
+    //     this.success = true;
+    //     this.error = false;
+           this.foundUser = false;
+      },
+      err => { 
+        console.log(err);
+        // this.errorText = err; 
+        // this.error = true; 
+        // this.success = false;
+      });
   }
 
   cancelAdd(): void {

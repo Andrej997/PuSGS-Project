@@ -6,7 +6,7 @@ namespace MAANPP20.Models.Common
 	public class Message
 	{
 		[Key]
-		public int idMessage { get; set; }
+		public int id { get; set; }
 
 		[Required]
 		public string text { get; set; }
