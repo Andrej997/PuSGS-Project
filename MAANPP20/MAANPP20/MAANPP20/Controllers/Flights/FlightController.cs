@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MAANPP20.Data;
+using MAANPP20.Models.Common;
 using MAANPP20.Models.Flights;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -186,6 +187,7 @@ namespace MAANPP20.Controllers.Flights
         {
             var flight = await _context.Flights
                 .Include(presedanje => presedanje.presedanje)
+                    .ThenInclude(gradoviPresedanja => gradoviPresedanja.gradoviPresedanja)
                 .Include(luggage => luggage.luggage)
                 .Include(ocene => ocene.ocene)
                 .Include(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
@@ -239,7 +241,9 @@ namespace MAANPP20.Controllers.Flights
             if (flight.duzinaPutovanja < 0 || flight.duzinaPutovanja > 1000000) return false;
 
             // ako se ne poklapa broj presedanja sa listom gradova
-            if (flight.presedanje.brojPresedanja != flight.presedanje.gradoviPresedanja.Count) return false;
+            if (flight.presedanje.brojPresedanja != flight.presedanje.gradoviPresedanja.Count) 
+                if ((flight.presedanje.gradoviPresedanja as List<StringForICollection>).ElementAt(0).PlainString != "NONE") return false;
+            
             // ne dozvoljam da postoji vise od 5 presedanja
             if (flight.presedanje.brojPresedanja < 0 || flight.presedanje.brojPresedanja > 5) return false;
             foreach (var presedanje in flight.presedanje.gradoviPresedanja)

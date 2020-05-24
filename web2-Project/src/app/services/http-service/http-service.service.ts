@@ -46,4 +46,8 @@ export class HttpServiceService {
   getEmailAction(controllerName: string, email: string) {
     return this.http.get(this.rootURL + '/' + controllerName + '/' + email);
   }
+
+  getUserIdAction(controllerName: string, id: string) {
+    return this.http.get(this.rootURL + '/' + controllerName + '/' + id);
+  }
 }

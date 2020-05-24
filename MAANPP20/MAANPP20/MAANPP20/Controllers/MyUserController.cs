@@ -90,7 +90,7 @@ namespace MAANPP20.Controllers
 
         }
 
-        // GET: api/FlightCompany
+        // GET: api/MyUser
         [HttpGet]
         [Route("GetUsers")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
@@ -100,11 +100,13 @@ namespace MAANPP20.Controllers
                 .ToListAsync();
         }
 
+        // GET: api/MyUser/1s231-12sf23...
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(string id)
         {
             var user = await _context.Users
                 .Include(address => address.address)
+                .Include(friends => friends.friends)
                 .Include(friendRequests => friendRequests.friendRequests)
                 .FirstOrDefaultAsync(i => i.Id == id);
 
@@ -115,15 +117,23 @@ namespace MAANPP20.Controllers
             return user;
         }
 
-        [HttpPut("{id}")]
-        //[Route("UpdateUser")]
-        public async Task<IActionResult> UpdateUser(string id)
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser(User user)
         {
-            //var user = GetUser(id);
-            var user = await _context.Users
-                .Include(address => address.address)
-                .FirstOrDefaultAsync(i => i.Id == id);
+            /*
+             Na front stigne slika, ali je prazna??? 
+             Ne mogu da provalim zasto se to desava,
+             to moze da se izbegne tako sto ce se ovde izvuci 
+             user iz baze preko id-a koji je u ovom user-u iz 
+             parametra i samo upisati sliku i sacuvati...
+             Nzm kako si resio to za password pa mozes dodati.
+             */
+            //if (user.profileImage == null || user.profileImage == "")
+            //    _context.Entry(user.profileImage).State = EntityState.Unchanged;
 
+            //_context.Entry(user.PasswordHash).State = EntityState.Detached;
+
+            _context.Entry(user.address).State = EntityState.Modified;
             _context.Entry(user).State = EntityState.Modified;
 
             try

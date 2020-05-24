@@ -25,6 +25,7 @@ import { CreatePlaneComponent } from './components/flights-components/create-pla
 import { PlanesComponent } from './components/flights-components/planes/planes.component';
 import { ChangeFlightComponent } from './components/flights-components/change-flight/change-flight.component';
 import { CreateOrReplaceServiceComponent } from './components/rent-a-car/create-or-replace-service/create-or-replace-service.component';
+import { ChangeProfileComponent } from './components/profile/change-profile/change-profile.component';
 
 
 const routes: Routes = [
@@ -75,7 +76,17 @@ const routes: Routes = [
   },
   {
     path: "sign-in",
-    component: SignInComponent
+    children: [
+      { path: "", component: SignInComponent },
+      { path: ":id", component: SignInComponent }
+    ]
+  },
+  {
+    path: "change-profile",
+    children: [
+      { path: "", component: ChangeProfileComponent },
+      { path: ":id", component: ChangeProfileComponent }
+    ]
   },
   {
     path: "home",

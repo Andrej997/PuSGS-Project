@@ -163,7 +163,7 @@ export class CcFlightComponent implements OnInit {
     vremePutovanjamm: new FormControl(0, [Validators.required, Validators.min(0), Validators.max(59)]),
     vremePutovanjahh: new FormControl(0, [Validators.required, Validators.min(0), Validators.max(99)]),
     duzinaPutovanja: new FormControl([Validators.required, Validators.min(1)]),
-    presedanjeCnt: new FormControl([Validators.required, Validators.min(0), Validators.max(5)]),
+    presedanjeCnt: new FormControl(0, [Validators.required, Validators.min(0), Validators.max(5)]),
     presedanje1: new FormControl('city',[Validators.required]),
     presedanje2: new FormControl('city',[Validators.required]),
     presedanje3: new FormControl('city',[Validators.required]),
@@ -355,83 +355,93 @@ export class CcFlightComponent implements OnInit {
     if (this.form.value.discountForFastReservation < 0) send = false;
 
     //#region JEDAN VEOMA RUZAN KOD, ALI FUNKCIONALAN ZA PROVERU IMENA GRADOVA PRESEDANJA
+    let presedanje: Presedanje;
     let chNum = this.form.value.presedanjeCnt;
-    let chCitiesGood = Array<boolean>(chNum);
-    let allChangeovers = new Array<StringForICollection>();
-    if (this.form.value.presedanje1 != 'city' && chNum <= 1) {
-      let sfic = new StringForICollection();
-      sfic.id = 0;
-      sfic.PlainString = this.form.value.presedanje1;
-      allChangeovers.push(sfic);
-      chCitiesGood[0]= true;
-    }
-    else if (this.form.value.presedanje1 == 'city' && chNum <= 1) {
-      chCitiesGood[0]= false;
-      this.error = true;
-      this.errorText = "Changeover city can't be named 'city'!";
-    }
-
-    if (this.form.value.presedanje2 != 'city' && chNum <= 2) {
-      let sfic = new StringForICollection();
-      sfic.id = 0;
-      sfic.PlainString = this.form.value.presedanje2;
-      allChangeovers.push(sfic);
-      chCitiesGood[1]= true;
-    }
-    else if (this.form.value.presedanje2 == 'city' && chNum <= 2) {
-      chCitiesGood[1]= false;
-      this.error = true;
-      this.errorText = "Changeover city can't be named 'city'!";
-    }
-
-    if (this.form.value.presedanje3 != 'city' && chNum <= 3) {
-      let sfic = new StringForICollection();
-      sfic.id = 0;
-      sfic.PlainString = this.form.value.presedanje3;
-      allChangeovers.push(sfic);
-      chCitiesGood[2]= true;
-    }
-    else if (this.form.value.presedanje3 == 'city' && chNum <= 3) {
-      chCitiesGood[2]= false;
-      this.error = true;
-      this.errorText = "Changeover city can't be named 'city'!";
-    }
-
-    if (this.form.value.presedanje4 != 'city' && chNum <= 4) {
-      let sfic = new StringForICollection();
-      sfic.id = 0;
-      sfic.PlainString = this.form.value.presedanje4;
-      allChangeovers.push(sfic);
-      chCitiesGood[3]= true;
-    }
-    else if (this.form.value.presedanje4 == 'city' && chNum <= 4) {
-      chCitiesGood[3]= false;
-      this.error = true;
-      this.errorText = "Changeover city can't be named 'city'!";
-    }
-
-    if (this.form.value.presedanje5 != 'city' && chNum <= 5) {
-      let sfic = new StringForICollection();
-      sfic.id = 0;
-      sfic.PlainString = this.form.value.presedanje5;
-      allChangeovers.push(sfic);
-      chCitiesGood[4]= true;
-    }
-    else if (this.form.value.presedanje5 == 'city' && chNum <= 5) {
-      chCitiesGood[4]= false;
-      this.error = true;
-      this.errorText = "Changeover city can't be named 'city'!";
-    }
-
-    for (let i = 0; i < chNum; ++i) {
-      if (chCitiesGood[i] == false) {
-        break;
+    if (chNum > 0) {
+      let chCitiesGood = Array<boolean>(chNum);
+      let allChangeovers = new Array<StringForICollection>();
+      if (this.form.value.presedanje1 != 'city' && chNum <= 1) {
+        let sfic = new StringForICollection();
+        sfic.id = 0;
+        sfic.PlainString = this.form.value.presedanje1;
+        allChangeovers.push(sfic);
+        chCitiesGood[0]= true;
       }
-      if (i === chNum - 1) {
-        this.error = false;
+      else if (this.form.value.presedanje1 == 'city' && chNum <= 1) {
+        chCitiesGood[0]= false;
+        this.error = true;
+        this.errorText = "Changeover city can't be named 'city'!";
       }
+  
+      if (this.form.value.presedanje2 != 'city' && chNum <= 2) {
+        let sfic = new StringForICollection();
+        sfic.id = 0;
+        sfic.PlainString = this.form.value.presedanje2;
+        allChangeovers.push(sfic);
+        chCitiesGood[1]= true;
+      }
+      else if (this.form.value.presedanje2 == 'city' && chNum <= 2) {
+        chCitiesGood[1]= false;
+        this.error = true;
+        this.errorText = "Changeover city can't be named 'city'!";
+      }
+  
+      if (this.form.value.presedanje3 != 'city' && chNum <= 3) {
+        let sfic = new StringForICollection();
+        sfic.id = 0;
+        sfic.PlainString = this.form.value.presedanje3;
+        allChangeovers.push(sfic);
+        chCitiesGood[2]= true;
+      }
+      else if (this.form.value.presedanje3 == 'city' && chNum <= 3) {
+        chCitiesGood[2]= false;
+        this.error = true;
+        this.errorText = "Changeover city can't be named 'city'!";
+      }
+  
+      if (this.form.value.presedanje4 != 'city' && chNum <= 4) {
+        let sfic = new StringForICollection();
+        sfic.id = 0;
+        sfic.PlainString = this.form.value.presedanje4;
+        allChangeovers.push(sfic);
+        chCitiesGood[3]= true;
+      }
+      else if (this.form.value.presedanje4 == 'city' && chNum <= 4) {
+        chCitiesGood[3]= false;
+        this.error = true;
+        this.errorText = "Changeover city can't be named 'city'!";
+      }
+  
+      if (this.form.value.presedanje5 != 'city' && chNum <= 5) {
+        let sfic = new StringForICollection();
+        sfic.id = 0;
+        sfic.PlainString = this.form.value.presedanje5;
+        allChangeovers.push(sfic);
+        chCitiesGood[4]= true;
+      }
+      else if (this.form.value.presedanje5 == 'city' && chNum <= 5) {
+        chCitiesGood[4]= false;
+        this.error = true;
+        this.errorText = "Changeover city can't be named 'city'!";
+      }
+  
+      for (let i = 0; i < chNum; ++i) {
+        if (chCitiesGood[i] == false) {
+          break;
+        }
+        if (i === chNum - 1) {
+          this.error = false;
+        }
+      }
+      presedanje = new Presedanje(chNum, allChangeovers);
     }
-    let presedanje: Presedanje = new Presedanje(chNum, allChangeovers);
+    else {
+      let allChangeovers = new Array<StringForICollection>();
+      let stringForICollection = new StringForICollection();
+      stringForICollection.PlainString = "NONE";
+      allChangeovers.push(stringForICollection);
+      presedanje = new Presedanje(chNum, allChangeovers);
+    }
     presedanje.id = 0;
     //#endregion
 

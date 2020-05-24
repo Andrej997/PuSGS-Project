@@ -45,7 +45,8 @@ import { MySpinnerComponent } from './components/flights-components/my-spinner/m
 import { PlaneSeatsComponent } from './components/flights-components/plane-seats/plane-seats.component'
 import { RentDetailComponent } from './components/rent-a-car/rent-detail/rent-detail.component'
 import { CreateFlightDestinationComponent } from './components/flights-components/create-flight-destination/create-flight-destination.component';
-import { CreateOrReplaceServiceComponent } from './components/rent-a-car/create-or-replace-service/create-or-replace-service.component'
+import { CreateOrReplaceServiceComponent } from './components/rent-a-car/create-or-replace-service/create-or-replace-service.component';
+import { ChangeProfileComponent } from './components/profile/change-profile/change-profile.component'
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { CreateOrReplaceServiceComponent } from './components/rent-a-car/create-
     MySpinnerComponent,
     PlaneSeatsComponent,
     CreateOrReplaceServiceComponent,
+    ChangeProfileComponent,
 
   ],
   imports: [

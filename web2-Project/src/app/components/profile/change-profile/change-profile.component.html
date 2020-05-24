@@ -1,0 +1,136 @@
+<div class="container down">
+    <div *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
+        <div class="alert alert-danger down" role="alert"> 
+            <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+        </div>
+        <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+    </div>
+</div>
+
+<div class="container down">
+    <div *ngIf='this.authenticationService.currentUserValue'>
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+            <b>{{errorText}}</b>
+        </div>
+        <div class="alert alert-success" role="alert" *ngIf="success">
+            <b>{{successText}} created!</b>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="email" id="email" #email formControlName="email" class="form-control" placeholder="email">
+                </div>
+                <div *ngIf="f.email.touched && f.email.invalid" class="alert alert-danger">
+                    <div *ngIf="f.email.errors.required">Email is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="password" id="password" #password formControlName="password" class="form-control" placeholder="you don't need to fill this field if you don't want to!">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="passwordRepeat">Repeat your password</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="password" id="passwordRepeat" #passwordRepeat formControlName="passwordRepeat" class="form-control" placeholder="you don't need to fill this field if you don't want to!">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="firstName" #firstName formControlName="firstName" class="form-control" placeholder="first name">
+                </div>
+                <div *ngIf="f.firstName.touched && f.firstName.invalid" class="alert alert-danger">
+                    <div *ngIf="f.firstName.errors.required">First Name is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="lastName" #lastName formControlName="lastName" class="form-control" placeholder="last name">
+                </div>
+                <div *ngIf="f.lastName.touched && f.lastName.invalid" class="alert alert-danger">
+                    <div *ngIf="f.lastName.errors.required">Last Name is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="promotionalDesc">Address</label>
+                <div class="ml-2">
+                    <div class="form-group">
+                        <label for="streetAndNumber">Street and number</label>
+                        <div class="input-group mb-3 border border-secondary rounded">
+                            <input type="text" id="streetAndNumber" #streetAndNumber formControlName="streetAndNumber" class="form-control" placeholder="street and number">
+                        </div>
+                        <div *ngIf="f.streetAndNumber.touched && f.streetAndNumber.invalid" class="alert alert-danger">
+                            <div *ngIf="f.streetAndNumber.errors.required">Street name and number are required.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <div class="input-group mb-3 border border-secondary rounded">
+                            <input type="text" id="city" #city formControlName="city" class="form-control" placeholder="city">
+                        </div>
+                        <div *ngIf="f.city.touched && f.city.invalid" class="alert alert-danger">
+                            <div *ngIf="f.city.errors.required">City is required.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <div class="input-group mb-3 border border-secondary rounded">
+                            <input type="text" id="country" #country formControlName="country" class="form-control" placeholder="country">
+                        </div>
+                        <div *ngIf="f.country.touched && f.country.invalid" class="alert alert-danger">
+                            <div *ngIf="f.country.errors.required">Country is required.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phoneNumber">Phone number</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="phoneNumber" #phoneNumber formControlName="phoneNumber" class="form-control" placeholder="phone number">
+                </div>
+                <div *ngIf="f.phoneNumber.touched && f.phoneNumber.invalid" class="alert alert-danger">
+                    <div *ngIf="f.phoneNumber.errors.required">Phone number is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="passportNumber">Passport Number</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="passportNumber" #passportNumber formControlName="passportNumber" class="form-control" placeholder="passport number">
+                </div>
+                <div *ngIf="f.passportNumber.touched && f.passportNumber.invalid" class="alert alert-danger">
+                    <div *ngIf="f.passportNumber.errors.required">Passport Number is required.</div>
+                </div>
+            </div>
+
+            <div class="form-group" >
+                <label for="profileImage">Logo</label>
+                <div class="input-group mb-3">
+                    <div class="border border-secondary rounded" id="btnImage">
+                        <label style="position: absolute; color: gray;">{{ imgName }}</label>
+                        <input type="file" accept="image/*" id="logoImg" (change)="onImg($event)"
+                                #profileImage formControlName="profileImage" class="form-control">
+                    </div>
+                </div>
+                <div *ngIf="f.profileImage.touched && f.profileImage.invalid" class="alert alert-danger">
+                    <div *ngIf="f.profileImage.errors.required">Logo is required.</div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
+        </form>
+    </div>
+</div>

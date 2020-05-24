@@ -1,10 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { RegisterServiceService } from 'src/app/services/register-service/register-service.service';
 import { ShareDataServiceService } from 'src/app/services/share-data-service/share-data-service.service';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { first } from 'rxjs/operators';
 import { User } from 'src/app/entities/user/user';
+import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -18,10 +19,15 @@ export class SignInComponent implements OnInit {
   logoImg: string;
   tmpUser: User;
 
+  // id: string = "";
+  currentUserForPUT: User;
+
   constructor(private router: Router,
               private authenticationService: AuthenticationService,
               public registerService: RegisterServiceService, 
-              private shareService: ShareDataServiceService) {
+              private shareService: ShareDataServiceService,
+              private route: ActivatedRoute, 
+              private httpService: HttpServiceService) {
     this.source = "../../../assets/img/person-icon.png";
     this.imgName = "Nesto";
     this.imgString = "Choose image";
@@ -29,6 +35,24 @@ export class SignInComponent implements OnInit {
    
   ngOnInit(): void {
     this.registerService.formModel.reset();
+    // this.route.params.subscribe(params => { this.id = params['id']; });
+    // console.log(this.id)
+    // if (this.id != "" && this.id != undefined) {
+    //   this.httpService.getUserIdAction("MyUser", this.id).toPromise()
+    //   .then(result => {
+    //     this.currentUserForPUT = result as User;
+        
+    //     // this.loading = false;
+    //     console.log(this.currentUserForPUT);
+    //   })
+    //   .catch(
+    //     err => {
+    //       console.log(err)
+    //       // this.error = true;
+    //       // this.errorText = "Error while loading company!"
+    //       // this.loading = false;
+    //     });
+    // }
     this.shareService.currentLogoImage.subscribe(logoImg => this.logoImg = logoImg);
   }
  

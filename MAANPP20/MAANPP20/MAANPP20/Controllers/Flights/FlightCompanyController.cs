@@ -54,8 +54,6 @@ namespace MAANPP20.Controllers.Flights
                     retFlightCompanies.Add(flightCompany);
                 }
 
-
-
             return retFlightCompanies;
         }
 
@@ -111,30 +109,8 @@ namespace MAANPP20.Controllers.Flights
             {
                 _context.FlightCompanies.Add(flightCompany);
 
-                //foreach (var user in flightCompany.admins)
-                //{
-                //    try
-                //    {
-                //        _context.Entry(user).State = EntityState.Detached;
-                //        _context.Entry(user.address).State = EntityState.Detached;
-                //    }
-                //    catch (Exception e)
-                //    {
-
-                //        throw;
-                //    }
-
-                try
-                {
-
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-
-                    throw;
-                }
-
+                await _context.SaveChangesAsync();
+               
                 return CreatedAtAction("GetFlightCompany", new { id = flightCompany.id }, flightCompany);
             }
             else return BadRequest();
@@ -199,14 +175,8 @@ namespace MAANPP20.Controllers.Flights
             }
             else if (flightCompany.deleted == true)
             {
-                //flightCompany.deleted = false;
                 return NotFound();
             }
-
-            //var user = await _context.Users.Where(x => x.deleted == false)
-            //    .FirstOrDefaultAsync(i => i.Id == flightCompany.idAdmin);
-            //if (user == null) return NotFound();
-            //else user.serviceId = 0;
 
             flightCompany.admin.serviceId = 0;
             _context.Entry(flightCompany.admin).State = EntityState.Modified;

@@ -43,6 +43,22 @@ export class RegisterServiceService {
                                              Validators.pattern("^[0-9]*$")])
     });
 
+    // putUser(user: User) {
+    //   this.formModel.setValue(
+    //     firstName: user.firstName,
+    //     lastName: user.lastName,
+    //     email: user.email,
+    //     password: user.password,
+    //     passwordRepeat: user.password,
+    //     phoneNumber: user.phoneNumber,
+    //     streetAndNumber: user.address.streetAndNumber,
+    //     city: user.address.city,
+    //     profileImage: user.profileImage,
+    //     country: user.address.country,
+    //     passportNumber: user.passportHash
+    //   );
+    // }
+
     register() {
 
     //retrun all users
