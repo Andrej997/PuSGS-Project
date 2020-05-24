@@ -32,7 +32,9 @@ namespace MAANPP20.Models.Flights
 
         public ICollection<DoubleForICollection> ocene { get; set; }
 
-        public ICollection<User> admins { get; set; }
+        [ForeignKey("admin")]
+        public string idAdmin { get; set; }
+        public User admin { get; set; }
 
         public bool deleted { get; set; }
     }

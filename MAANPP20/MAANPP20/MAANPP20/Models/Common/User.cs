@@ -47,8 +47,7 @@ namespace MAANPP20.Models.Common
 
         public string authData { get; set; }
 
-        //public int serviceId { get; set; }
-
+        public int serviceId { get; set; }
 
         public bool deleted { get; set; }
 
@@ -56,8 +55,8 @@ namespace MAANPP20.Models.Common
 
         //public ICollection<User> friendRequests { get; set; }
 
-        public ICollection<User> waitingForAccept { get; set; }
+        //public ICollection<User> waitingForAccept { get; set; }
 
-
+        public ICollection<FriendRequest> friendRequests { get; set; }
     }
 }

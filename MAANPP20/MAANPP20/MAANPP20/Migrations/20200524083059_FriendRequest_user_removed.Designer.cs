@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200524083059_FriendRequest_user_removed")]
+    partial class FriendRequest_user_removed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,9 +100,6 @@ namespace MAANPP20.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("hisId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isRequest")
                         .HasColumnType("bit");
@@ -238,9 +237,6 @@ namespace MAANPP20.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("role")
-                        .HasColumnType("int");
-
-                    b.Property<int>("serviceId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

@@ -71,7 +71,9 @@ namespace MAANPP20.Controllers
                 role = GetRole(model.RoleRole),
                 passportHash = model.PassportNumber
             };
-            user.waitingForAccept = new List<User>();
+            user.serviceId = 0;
+            user.friendRequests = new List<FriendRequest>();
+            user.friends = new List<Friend>();
             try
             {
                 user.role = Role.adminA;
@@ -103,7 +105,7 @@ namespace MAANPP20.Controllers
         {
             var user = await _context.Users
                 .Include(address => address.address)
-                .Include(waitingForAccept => waitingForAccept.waitingForAccept)
+                .Include(friendRequests => friendRequests.friendRequests)
                 .FirstOrDefaultAsync(i => i.Id == id);
 
             if (user == null)

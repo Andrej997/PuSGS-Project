@@ -8,7 +8,7 @@
 
 <div class="container down" *ngIf='this.authenticationService.currentUserValue'>
     <h1>FRIEND REQUEST</h1>
-    <div class="card mb-3" *ngFor="let fr of currentUser.friendRequests">
+    <div class="card mb-3" *ngFor="let fr of friendRequestsAccept">
         <div class="row no-gutters">
             <div class="col-md-1">
                 <img src={{fr.profileImage}} alt="">

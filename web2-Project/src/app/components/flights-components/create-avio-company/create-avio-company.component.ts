@@ -57,6 +57,7 @@ export class CreateAvioCompanyComponent implements OnInit {
         this.httpService.getIdAction("FlightCompany", this.companyId).toPromise()
           .then(result => {
             this.flightCompany = result as FlightCompany;
+            console.log(this.flightCompany)
             this.form.setValue({
               company: this.flightCompany.name,
               promotionalDesc: this.flightCompany.promotionalDesc,
@@ -157,7 +158,7 @@ export class CreateAvioCompanyComponent implements OnInit {
           this.success = true;
           this.error = false;
           postFlightCompany = res as FlightCompany;
-          postFlightCompany.admins.push(this.currentUser)
+          postFlightCompany.admin = this.currentUser;
           this.httpService.putAction('FlightCompany', postFlightCompany).subscribe (
             res => { 
               this.successText = postFlightCompany.name + " changes ";
@@ -185,6 +186,8 @@ export class CreateAvioCompanyComponent implements OnInit {
       postFlightCompany.destinations = this.flightCompany.destinations;
       postFlightCompany.flights = this.flightCompany.flights;
       postFlightCompany.ocene = this.flightCompany.ocene;
+      postFlightCompany.adminId = this.flightCompany.adminId;
+      postFlightCompany.admin = this.flightCompany.admin
       if (postFlightCompany.logo == undefined)
         postFlightCompany.logo = this.flightCompany.logo;
 

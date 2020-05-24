@@ -5,7 +5,7 @@
         <b>{{errorText}}</b>
     </div>
 </div>
-<div class="container-fluid down" *ngIf="flightCompany"> <!-- ako postoji -->
+<div class="container-fluid down" *ngIf="flightCompany && !loading"> <!-- ako postoji -->
     <div class="alert alert-success" role="alert" *ngIf="deleted">
         <b>You have successfully deleted this company!</b>
     </div>

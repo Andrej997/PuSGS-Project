@@ -17,7 +17,6 @@ namespace MAANPP20.Controllers.Flights
     public class FlightCompanyController : ControllerBase
     {
         private readonly MAANPP20Context _context;
-        //private UserManager<User> UserManager;
         public FlightCompanyController(MAANPP20Context context)
         {
             _context = context;
@@ -33,6 +32,7 @@ namespace MAANPP20.Controllers.Flights
                     .ThenInclude(startAddress => startAddress.startAddress)
                 .Include(destinations => destinations.destinations)
                     .ThenInclude(endAddress => endAddress.endAddress)
+                .Include(admin => admin.admin)
                 //.Include(flights => flights.flights)
                 //.Include(ocene => ocene.ocene)
                 /* izbacio sam sve ove parametre,
@@ -64,6 +64,7 @@ namespace MAANPP20.Controllers.Flights
         public async Task<ActionResult<FlightCompany>> GetFlightCompany(int id)
         {
             var flightCompany = await _context.FlightCompanies.Where(x => x.deleted == false)
+                .Include(admin => admin.admin)
                 .Include(address => address.address)
                 .Include(destinations => destinations.destinations)
                     .ThenInclude(startAddr => startAddr.startAddress)
@@ -72,7 +73,6 @@ namespace MAANPP20.Controllers.Flights
                 .Include(flights => flights.flights)
                     //.ThenInclude(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
                 .Include(ocene => ocene.ocene)
-                .Include(admins => admins.admins)
                 .FirstOrDefaultAsync(i => i.id == id);
 
             if (flightCompany == null)
@@ -146,11 +146,12 @@ namespace MAANPP20.Controllers.Flights
         {
             if (ValidateModel(flightCompany, false))
             {
-                foreach (var admin in flightCompany.admins)
+                if (flightCompany.admin != null)
                 {
-                    //admin.serviceId = flightCompany.id;
-                    _context.Entry(admin).State = EntityState.Modified;
+                    flightCompany.admin.serviceId = flightCompany.id;
+                    _context.Entry(flightCompany.admin).State = EntityState.Modified;
                 }
+
                 _context.Entry(flightCompany.address).State = EntityState.Modified;
                 _context.Entry(flightCompany).State = EntityState.Modified;
 
@@ -188,6 +189,7 @@ namespace MAANPP20.Controllers.Flights
                     .ThenInclude(endAddr => endAddr.endAddress)
                 .Include(flights => flights.flights)
                     .ThenInclude(allSeats => allSeats.allSeatsForThisFlight)
+                .Include(admin => admin.admin)
                 .Include(ocene => ocene.ocene)
                 .FirstOrDefaultAsync(i => i.id == id);
 
@@ -200,6 +202,14 @@ namespace MAANPP20.Controllers.Flights
                 //flightCompany.deleted = false;
                 return NotFound();
             }
+
+            //var user = await _context.Users.Where(x => x.deleted == false)
+            //    .FirstOrDefaultAsync(i => i.Id == flightCompany.idAdmin);
+            //if (user == null) return NotFound();
+            //else user.serviceId = 0;
+
+            flightCompany.admin.serviceId = 0;
+            _context.Entry(flightCompany.admin).State = EntityState.Modified;
 
             flightCompany.deleted = true;
             flightCompany.address.deleted = true;

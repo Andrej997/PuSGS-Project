@@ -31,6 +31,8 @@
     <Compile Remove="Migrations\20200523105820_User_flightCompany.Designer.cs" />
     <Compile Remove="Migrations\20200523183810_Friend_id.cs" />
     <Compile Remove="Migrations\20200523183810_Friend_id.Designer.cs" />
+    <Compile Remove="Migrations\20200523191855_User_waitingForAccept.cs" />
+    <Compile Remove="Migrations\20200523191855_User_waitingForAccept.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

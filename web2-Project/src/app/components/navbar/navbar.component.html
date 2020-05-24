@@ -46,8 +46,8 @@
                     role="button" style="margin-right: 10px;"
                     aria-haspopup="true" 
                     aria-expanded="false"
-                    *ngIf='this.authenticationService.currentUserValue.email === "andrej.km997@gmail.com" || 
-                          this.authenticationService.currentUserValue.email === "admin@admin.com"'>
+                    *ngIf='this.authenticationService.currentUserValue.role === 2 || 
+                          this.authenticationService.currentUserValue.role === 1'>
                     <img src="\assets\img\airplane-icon.png" 
                         height="37" 
                         width="37" >

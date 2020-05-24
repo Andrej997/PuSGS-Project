@@ -94,17 +94,22 @@ export class AvioCompanyDetailsComponent implements OnInit {
   deleteEntity() {
     // this.deleted = true;
     // this.kick();
+    this.loading = true;
+    console.log(this.loading)
     this.httpService.deleteAction("FlightCompany", "DeleteFlightCompany", this.id).toPromise()
     .then(result => {
+      this.loading = false;
       this.deleted = true;
       this.kick();
     })
     .catch(
       err => {
+        this.loading = false;
         console.log(err);
         this.error = true;
         this.hideShowBTN = false;
       });
+      console.log(this.loading)
   }
 
   refreshPage() {

@@ -15,7 +15,7 @@ export class RegisterServiceService {
 
   userId: string;
   logoImg: string;
-  readonly BaseURI = 'http://localhost:57428/api';
+  readonly BaseURI = 'http://localhost:57427/api';
 
   constructor(private route: ActivatedRoute, 
               private http: HttpClient, 

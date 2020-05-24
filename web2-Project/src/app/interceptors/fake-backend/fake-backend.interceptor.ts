@@ -14,9 +14,11 @@ import { User, Role } from 'src/app/entities/user/user';
 import { Message } from 'src/app/entities/message/message';
 import { Address } from 'src/app/entities/address/address';
 import { Friend } from 'src/app/entities/friend/friend';
+import { FriendRequest } from 'src/app/entities/friendRequest/friend-request';
 
 export const users: User[] = [
   { 
+    Id: "",
     id: 1,
     firstName: 'admin',
     lastName: 'admin',
@@ -32,14 +34,14 @@ export const users: User[] = [
     },
     role: Role.admin,
     friends: new Array<Friend>(),
-    friendRequests: new Array<User>(),
-    waitingForAccept: new Array<User>(),
+    friendRequests: new Array<FriendRequest>(),
     serviceId: 0,
     passportHash: "",
     phoneNumber: "",
     flightCompany: null
   },
   { 
+    Id: "",
     id: 2,
     firstName: 'Andrej',
     lastName: 'Kalocanj Mohaci',
@@ -55,49 +57,14 @@ export const users: User[] = [
     },
     role: Role.adminA,
     friends: new Array<Friend>(),
-    friendRequests: new Array<User>(
-      new User(
-        5,
-        'Test1',
-        'User1',
-        'test1@user1.com',
-        'admin',
-        '\\assets\\img\\user.png',
-        new Address(
-          'ulica i broj',
-          'grad',
-          'drzava'
-        ),
-        Role.user,
-        new Array<Friend>(),
-        new Array<User>(),
-        new Array<User>()
-      ),
-      new User(
-        6,
-        'Tes2',
-        'User2',
-        'test2@user2.com',
-        'admin',
-        '\\assets\\img\\user.png',
-        new Address(
-          'ulica i broj',
-          'grad',
-          'drzava'
-        ),
-        Role.user,
-        new Array<Friend>(),
-        new Array<User>(),
-        new Array<User>()
-      )
-    ),
-    waitingForAccept: new Array<User>(),
+    friendRequests: new Array<FriendRequest>(),
     serviceId: 0,
     passportHash: "",
     phoneNumber: "",
     flightCompany: null
   },
   { 
+    Id: "",
     id: 3,
     firstName: 'Marko',
     lastName: 'Misojcic',
@@ -113,14 +80,14 @@ export const users: User[] = [
     },
     role: Role.adminM,
     friends: new Array<Friend>(),
-    friendRequests: new Array<User>(),
-    waitingForAccept: new Array<User>(),
+    friendRequests: new Array<FriendRequest>(),
     serviceId: 0,
     passportHash: "",
     phoneNumber: "",
     flightCompany: null
   },
   { 
+    Id: "",
     id: 4,
     firstName: 'Test',
     lastName: 'User',
@@ -136,8 +103,7 @@ export const users: User[] = [
     },
     role: Role.user,
     friends: new Array<Friend>(),
-    friendRequests: new Array<User>(),
-    waitingForAccept: new Array<User>(),
+    friendRequests: new Array<FriendRequest>(),
     serviceId: 0,
     passportHash: "",
     phoneNumber: "",
@@ -178,6 +144,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const user = users.find(x => x.email === email && x.password === password);
             if (!user) return error('Username or password is incorrect');
             return ok({
+                Id: user.Id,
                 id: user.id,
                 email: user.email,
                 firstName: user.firstName,
@@ -193,7 +160,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 role: user.role,
                 friends: user.friends,
                 friendRequests: user.friendRequests,
-                waitingForAccept: user.waitingForAccept,
                 serviceId: user.serviceId,
                 phoneNumber: user.phoneNumber,
                 passportHash: user.passportHash,

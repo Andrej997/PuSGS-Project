@@ -52,7 +52,7 @@ export class FlightCallFriendsComponent implements OnInit {
       let name = this.form.value.friendName;
       let surname = this.form.value.friendSurname;
       let passport = this.form.value.friendPassport;
-      let user: User = new User(0, name, surname, email, null, null, null, null, null, null, null);
+      let user: User = new User(0, name, surname, email, null, null, null, null, null, null);
       this.setFriend(user);
       this.seatBroj = this.flightService.getSeatBroj();
       this.addedFriendToList = this.flightService.getAddedFriendToList();

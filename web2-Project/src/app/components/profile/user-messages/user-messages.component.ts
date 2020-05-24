@@ -6,6 +6,7 @@ import { Message } from 'src/app/entities/message/message';
 import { FriendServiceService } from 'src/app/services/friend-service/friend-service.service';
 import { Friend } from 'src/app/entities/friend/friend';
 import { Address } from 'src/app/entities/address/address';
+import { FriendRequest } from 'src/app/entities/friendRequest/friend-request';
 
 @Component({
   selector: 'app-user-messages',
@@ -28,8 +29,7 @@ export class UserMessagesComponent implements OnInit {
   ngOnInit(): void {
     this.usersChar = new Friend(
       new User(
-        0,"","","","","",new Address("","",""),Role.user, new Array<Friend>(), new Array<User>(), new Array<User>()
-      ),
+        0,"","","","","",new Address("","",""),Role.user, new Array<Friend>(), new Array<FriendRequest>()),
       new Array<Message>());
       this.scrollToBottom();   
   }

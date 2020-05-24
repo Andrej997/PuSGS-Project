@@ -15,7 +15,8 @@ export class FlightCompany {
     logo: string;
     ocene: Array<number>;
 
-    admins: Array<User>;
+    adminId: string;
+    admin: User;
 
     deleted: boolean;
 
@@ -36,8 +37,6 @@ export class FlightCompany {
             this.flights = flights;
             this.logo = logo;
             this.ocene = ocene;
-
-            this.admins = new Array<User>();
 
             this.deleted = false;
     }

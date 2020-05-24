@@ -8,6 +8,7 @@ import { FriendServiceService } from 'src/app/services/friend-service/friend-ser
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
+import { FriendRequest } from 'src/app/entities/friendRequest/friend-request';
 
 @Component({
   selector: 'app-user-friends',
@@ -24,6 +25,8 @@ export class UserFriendsComponent implements OnInit {
 
   currentUser: User;
 
+  friendRequests: Array<FriendRequest> = new Array<FriendRequest>();
+  friendRequestsAccept: Array<User> = new Array<User>();
   waitingForAccept: Array<User> = new Array<User>();
 
   constructor(public authenticationService: AuthenticationService, private router: Router,
@@ -51,12 +54,16 @@ export class UserFriendsComponent implements OnInit {
     this.httpService.getEmailAction('Friend/Awu', this.currentUser.email)
       .toPromise()
       .then(result => {
-        this.waitingForAccept = (result as User).waitingForAccept;
+        // console.log(result)
+        // console.log("!")
+        this.waitingForAccept = result as User[];
+          
         // console.log(this.waitingForAccept);
         // this.loading = false;
       })
       .catch(
         err => {
+          // console.log("?")
           console.log(err)
           // this.error = true;
           // this.errorText = "Error while loading companies!"
@@ -113,15 +120,22 @@ export class UserFriendsComponent implements OnInit {
   }
 
   addFriend(): void {
-    if (this.currentUser.waitingForAccept == (null || undefined)) {
-      this.currentUser.waitingForAccept = new Array<User>();
-      this.currentUser.waitingForAccept.push(this.searchedUser)
-    }
-    else
-      this.currentUser.waitingForAccept.push(this.searchedUser)
+    // if (this.currentUser.waitingForAccept == (null || undefined)) {
+    //   this.currentUser.waitingForAccept = new Array<User>();
+    //   this.currentUser.waitingForAccept.push(this.searchedUser)
+    // }
+    // else
+    let friendRequest = new FriendRequest();
+    friendRequest.id = 0;
+    friendRequest.myId = this.currentUser.id.toString();
+    friendRequest.hisId = this.searchedUser.id.toString();
+    friendRequest.isRequest = false;
+    console.log(this.currentUser);
+    this.currentUser.friendRequests.push(friendRequest)
     //this.friendServiceService.addUserToMyWaitingList(this.searchedUser);
-    this.httpService.putAction('Friend/AddToWL', this.currentUser).subscribe (
+    this.httpService.postAction('Friend', 'SendReq', friendRequest).subscribe (
       res => { 
+        //this.waitingForAccept.push(friendRequest.user);
     //     this.successText = postFlightCompany.name + " changes ";
     //     this.success = true;
     //     this.error = false;

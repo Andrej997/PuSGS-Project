@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    [Migration("20200523191855_User_waitingForAccept")]
-    partial class User_waitingForAccept
+    [Migration("20200524085217_FriendRequest_hisId")]
+    partial class FriendRequest_hisId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,6 +91,32 @@ namespace MAANPP20.Migrations
                     b.ToTable("Friends");
                 });
 
+            modelBuilder.Entity("MAANPP20.Models.Common.FriendRequest", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("hisId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isRequest")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("myId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FriendRequests");
+                });
+
             modelBuilder.Entity("MAANPP20.Models.Common.Message", b =>
                 {
                     b.Property<int>("id")
@@ -158,9 +184,6 @@ namespace MAANPP20.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("FlightCompanyid")
-                        .HasColumnType("int");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -187,9 +210,6 @@ namespace MAANPP20.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
@@ -223,10 +243,6 @@ namespace MAANPP20.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FlightCompanyid");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("addressid");
 
@@ -404,6 +420,9 @@ namespace MAANPP20.Migrations
                     b.Property<bool>("deleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("idAdmin")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("logo")
                         .HasColumnType("nvarchar(max)");
 
@@ -419,6 +438,8 @@ namespace MAANPP20.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("addressId");
+
+                    b.HasIndex("idAdmin");
 
                     b.ToTable("FlightCompanies");
                 });
@@ -491,6 +512,13 @@ namespace MAANPP20.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MAANPP20.Models.Common.FriendRequest", b =>
+                {
+                    b.HasOne("MAANPP20.Models.Common.User", null)
+                        .WithMany("friendRequests")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("MAANPP20.Models.Common.Message", b =>
                 {
                     b.HasOne("MAANPP20.Models.Common.Friend", null)
@@ -507,14 +535,6 @@ namespace MAANPP20.Migrations
 
             modelBuilder.Entity("MAANPP20.Models.Common.User", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Flights.FlightCompany", null)
-                        .WithMany("admins")
-                        .HasForeignKey("FlightCompanyid");
-
-                    b.HasOne("MAANPP20.Models.Common.User", null)
-                        .WithMany("waitingForAccept")
-                        .HasForeignKey("UserId");
-
                     b.HasOne("MAANPP20.Models.Common.Address", "address")
                         .WithMany()
                         .HasForeignKey("addressid");
@@ -571,6 +591,10 @@ namespace MAANPP20.Migrations
                         .HasForeignKey("addressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("MAANPP20.Models.Common.User", "admin")
+                        .WithMany()
+                        .HasForeignKey("idAdmin");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Flights.FlightDestination", b =>
