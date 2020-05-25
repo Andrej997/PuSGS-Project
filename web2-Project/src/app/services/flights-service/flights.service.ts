@@ -24,6 +24,21 @@ export class FlightsService {
     return this.flight;
   }
 
+  //#region disable seat
+  numberOfDisabledSeats: number;
+  disableSeatId: number;
+  disabledSeats: Array<boolean>;
+  setDisabledSeatNumber(sn: number, as: Array<boolean>, seatId: number) {
+    this.numberOfDisabledSeats = sn;
+    this.disabledSeats = as;
+    this.disableSeatId = seatId;
+  }
+
+  getDisabledSeatNumber(): [number, Array<boolean>, number] {
+    return [this.numberOfDisabledSeats, this.disabledSeats, this.disableSeatId];
+  }
+  //#endregion
+
   seatId: number;
   setSeatsNumber(sn: number, as: Array<boolean>, seatId: number) {
     this.numberOfSeats = sn;
