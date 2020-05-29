@@ -14,6 +14,10 @@ using System.Linq;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace MAANPP20.Controllers
 {
@@ -22,10 +26,12 @@ namespace MAANPP20.Controllers
     public class MyUserController : ControllerBase
     {
         private readonly MAANPP20Context _context;
+        private readonly ApplicationSettings _applicationSettings;
 
-        public MyUserController(MAANPP20Context context)
+        public MyUserController(IOptions<ApplicationSettings> applicationSettings, MAANPP20Context context )
         {
             _context = context;
+            _applicationSettings = applicationSettings.Value;
         }
 
         [HttpPost]
@@ -37,13 +43,14 @@ namespace MAANPP20.Controllers
 
             var tmpUser = await _context.Users
                 .Include(address => address.address)
+                .Include(friends => friends.friends)
+                .Include(friendRequests => friendRequests.friendRequests)
                 .FirstOrDefaultAsync(i => i.Email == model.Email);
 
             if(tmpUser != null)
             {
                 return BadRequest(new { message = "Vec postoji korisnik sa istim email-om." });
             }
-
 
             var adr = new Address();
             adr.streetAndNumber = model.StreetAndNumber;
@@ -80,13 +87,58 @@ namespace MAANPP20.Controllers
                 _context.Users.Add(user);
                 int result = await _context.SaveChangesAsync(); //ako ne sacuvamo dzabe smo krecili
 
-
                 return user;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        //POST : /api/MyUser/Login
+        public async Task<IActionResult> Login(LoginModel model)
+        {
+            string hashMessage;
+
+            var user = await _context.Users
+                //.Include(address => address.address)
+                //.Include(friends => friends.friends)
+                //.Include(friendRequests => friendRequests.friendRequests)
+                .FirstOrDefaultAsync(i => i.Email == model.email);
+
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                hashMessage = GetHash(sha256, model.password);
+            }
+
+            if (user != null && (user.PasswordHash == hashMessage))
+            {
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim("UserID",user.Id.ToString()),
+                        new Claim("Roles", user.role.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_applicationSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                var token = tokenHandler.WriteToken(securityToken);
+                return Ok(new Token_plus_User(){ User = user, Token = token });
+            }
+            else
+                return BadRequest(new { message = "Username or password is incorrect." });
+        }
+
+        public class Token_plus_User
+        {
+            public string Token { get; set; }
+            public User User { get; set; }
 
         }
 
@@ -97,13 +149,18 @@ namespace MAANPP20.Controllers
         {
             return await _context.Users
                 .Include(address => address.address)
+                .Include(friends => friends.friends)
+                .Include(friendRequests => friendRequests.friendRequests)
                 .ToListAsync();
         }
 
         // GET: api/MyUser/1s231-12sf23...
         [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<User>> GetUser(string id)
         {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+
             var user = await _context.Users
                 .Include(address => address.address)
                 .Include(friends => friends.friends)
@@ -134,6 +191,30 @@ namespace MAANPP20.Controllers
             //_context.Entry(user.PasswordHash).State = EntityState.Detached;
 
             _context.Entry(user.address).State = EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(user.Id.ToString()))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok();
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser(User user)
+        {
+            //_context.Entry(user.address).State = EntityState.Modified;
             _context.Entry(user).State = EntityState.Modified;
 
             try

@@ -23,19 +23,24 @@ export class AuthenticationService {
       return this.currentUserSubject.value;
   }
 
-  login(email: string, password: string) {
-    return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { email, password })
-        .pipe(map(user => {
-            // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
-            user.authdata = window.btoa(email + ':' + password);
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
-            return user;
-        }));
+  login(user: User){
+    this.currentUserSubject.next(user);
   }
 
-  logout() {
-      // remove user from local storage to log user out
+  // login(email: string, password: string) {
+  //   return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { email, password })
+  //       .pipe(map(user => {
+  //           // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
+  //           user.authdata = window.btoa(email + ':' + password);
+  //           localStorage.setItem('currentUser', JSON.stringify(user));
+  //           this.currentUserSubject.next(user);
+  //           return user;
+  //       }));
+  // }
+
+  logout() { // remove user from local storage to log user out
+      localStorage.removeItem('token');
+      localStorage.removeItem('userRole');
       localStorage.removeItem('currentUser');
       this.currentUserSubject.next(null);
   }

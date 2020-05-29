@@ -61,15 +61,11 @@ export class SignInComponent implements OnInit {
     this.registerService.register().subscribe(
       (res: any) => {
         this.tmpUser  = res;
-        //console.log(this.tmpUser);
-        //console.log("res: " + res); //treba doraditi da se proveri auth korisnika i logovanje
-        //console.log("res: " + res.email); //treba doraditi da se proveri auth korisnika i logovanje
         //localStorage.setItem('token', res.token);
-        localStorage.setItem('userRole', this.tmpUser.role.toString());
-        localStorage.setItem('currentUser', JSON.stringify(this.tmpUser));
-        localStorage.setItem('idCurrentUser', this.tmpUser.id.toString());
-        //alert("New user created . .. ")
-        this.router.navigateByUrl("/home");
+        //localStorage.setItem('userRole', this.tmpUser.role.toString());
+        //localStorage.setItem('currentUser', JSON.stringify(this.tmpUser));
+        alert("User created . . . Please login")
+        this.router.navigateByUrl("/log-in");
       },
       err => {
         console.log("Err: " + err);
@@ -77,7 +73,6 @@ export class SignInComponent implements OnInit {
       }
 
       /* 
-      
       if (res.succeeded) {
         this.service.formModel.reset();
         this.toastr.success('New user created!', 'Registration successful.');

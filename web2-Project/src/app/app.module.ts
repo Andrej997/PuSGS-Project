@@ -47,6 +47,8 @@ import { RentDetailComponent } from './components/rent-a-car/rent-detail/rent-de
 import { CreateFlightDestinationComponent } from './components/flights-components/create-flight-destination/create-flight-destination.component';
 import { CreateOrReplaceServiceComponent } from './components/rent-a-car/create-or-replace-service/create-or-replace-service.component';
 import { ChangeProfileComponent } from './components/profile/change-profile/change-profile.component'
+import { AuthInterceptorService } from './services/authentication-service/auth-interceptor.service';
+import { TokenInterceptorService } from './services/authentication-service/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -105,7 +107,17 @@ import { ChangeProfileComponent } from './components/profile/change-profile/chan
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    fakeBackendProvider
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+      },
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: TokenInterceptorService,
+        multi: true,
+        },
+    //fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })
