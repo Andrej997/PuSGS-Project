@@ -1,5 +1,6 @@
 <div class="alert alert-warning" role="alert" *ngIf="!loading && !loadedFromService">
-    <b>Double click on seat to disable it!</b>
+    <b>Double click on seat to disable it!</b> <br />
+    <b>Two times double click on a seat to enable it!</b>
 </div>
 
 <div class="alert alert-danger" role="alert" *ngIf="error && !loading">
@@ -22,32 +23,41 @@
         <div *ngIf="flight.allSeatsForThisFlight[i].reserved ; then thenBlock1 else elseBlock1"></div>
         <ng-template #thenBlock1>
             <!--ovi tipovi imaju id z0, z1... i oni se nece ni citati-->
-            <div *ngIf="!flight.allSeatsForThisFlight[i].isDisabled ; then thenBlock12 else elseBlock12"></div>
-            <ng-template #thenBlock12>
+            <!-- <div *ngIf="!flight.allSeatsForThisFlight[i].isDisabled ; then thenBlock12 else elseBlock12"></div> -->
+            <!-- <ng-template #thenBlock12> -->
                 <img src="../assets/img/chair.png"
                     class="rounded-circle"  id=z{{i}} width="30px" alt="reserved"  
                     data-toggle="tooltip" data-placement="right" title="reserved"
                     style="background-color: red;" >
-            </ng-template>
-            <ng-template #elseBlock12>
+            <!-- </ng-template> -->
+            <!-- <ng-template #elseBlock12>
                 <img src="../assets/img/chair.png"
                     class="rounded-circle"  id=z{{i}} width="30px" alt="disabled"  
                     data-toggle="tooltip" data-placement="right" title="disabled"
                     style="background-color: gray;" >
-            </ng-template>
+            </ng-template> -->
         </ng-template>
         <ng-template #elseBlock1>
-            <div *ngIf="!flight.allSeatsForThisFlight[i].isFastReservation ; then thenBlock11 else elseBlock11"></div>
-            <ng-template #thenBlock11>
-                <img src="../assets/img/chair.png" (click)="checkUncheckSeat($event)" (dblclick)="checkUncheckSeat1($event)" 
-                    data-toggle="tooltip" data-placement="right" title="avaible"
-                    class="rounded-circle"  id={{i}} width="30px" alt="avaible">
+            <div *ngIf="flight.allSeatsForThisFlight[i].isDisabled ; then thenBlock12 else elseBlock12"></div>
+            <ng-template #thenBlock12>
+                <img src="../assets/img/chair.png"
+                    class="rounded-circle"  id={{i}} width="30px" alt="disabled"  
+                    data-toggle="tooltip" data-placement="right" title="disabled"
+                    style="background-color: gray;" (dblclick)="checkUncheckSeat1($event)">
             </ng-template>
-            <ng-template #elseBlock11>
-                <img src="../assets/img/chair.png" 
-                    class="rounded-circle"  id={{i}} width="30px" alt="fast rezervation"  
-                    data-toggle="tooltip" data-placement="right" title="reserved for fast rezervation"
-                    style="background-color: turquoise;" >
+            <ng-template #elseBlock12>
+                <div *ngIf="!flight.allSeatsForThisFlight[i].isFastReservation ; then thenBlock22 else elseBlock22"></div>
+                <ng-template #thenBlock22>
+                    <img src="../assets/img/chair.png" (click)="checkUncheckSeat($event)" (dblclick)="checkUncheckSeat1($event)" 
+                        data-toggle="tooltip" data-placement="right" title="avaible"
+                        class="rounded-circle"  id={{i}} width="30px" alt="avaible">
+                </ng-template>
+                <ng-template #elseBlock22>
+                    <img src="../assets/img/chair.png" 
+                        class="rounded-circle"  id={{i}} width="30px" alt="fast rezervation"  
+                        data-toggle="tooltip" data-placement="right" title="reserved for fast rezervation"
+                        style="background-color: turquoise;" >
+                </ng-template>
             </ng-template>
         </ng-template>
     </span>

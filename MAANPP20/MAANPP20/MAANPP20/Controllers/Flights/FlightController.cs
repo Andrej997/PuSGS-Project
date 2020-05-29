@@ -154,29 +154,29 @@ namespace MAANPP20.Controllers.Flights
         [HttpPut]
         public async Task<IActionResult> UpdateFlight(Flight flight)
         {
-            //if (ValidateModel(flightCompany, false))
-            //{
-                _context.Entry(flight).State = EntityState.Modified;
+            foreach (var seat in flight.allSeatsForThisFlight)
+            {
+                _context.Entry(seat).State = EntityState.Modified;
+            }
+            _context.Entry(flight).State = EntityState.Modified;
 
-                try
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FlightExists(flight.id))
                 {
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!FlightExists(flight.id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
+            }
 
-                return Ok();
-            //}
-            //else return BadRequest();
+            return Ok();
         }
 
 

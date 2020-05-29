@@ -131,6 +131,8 @@ export class PlaneSeatsComponent implements OnInit {
         }
       }
       else {
+        console.log("USAO")
+        console.log(selectedId)
         this.clickedImg[selectedId] = false;
         img.style.backgroundColor = 'white';
         --this.seats;
@@ -138,7 +140,8 @@ export class PlaneSeatsComponent implements OnInit {
           this.flight.allSeatsForThisFlight[selectedId].isDisabled = false;
       }
     }
-    
+    // let selectedIdNum = Number.parseInt(selectedId) + 1;
+    // this.flightsService.setDisabledSeatNumber(this.seats, this.clickedImg, selectedIdNum);
   }
 
   createRange(number) {   // simulacija for petlje u html-u

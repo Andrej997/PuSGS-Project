@@ -4,6 +4,7 @@ import { User } from 'src/app/entities/user/user';
 import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
+import { FlightsService } from 'src/app/services/flights-service/flights.service';
 
 @Component({
   selector: 'app-change-flight',
@@ -25,7 +26,8 @@ export class ChangeFlightComponent implements OnInit {
   // loading: boolean = true;
 
   constructor(private httpService: HttpServiceService, private router: Router,
-    public authenticationService: AuthenticationService, private route: ActivatedRoute) {
+    public authenticationService: AuthenticationService, private route: ActivatedRoute,
+    private flightsService: FlightsService) {
   if (this.authenticationService.currentUserValue) { 
     this.currentUser = this.authenticationService.currentUserValue;
     if (this.currentUser.role != 1 && this.currentUser.role != 2) {
@@ -69,6 +71,6 @@ export class ChangeFlightComponent implements OnInit {
   }
 
   getActivatedSeat() {
-
+    // console.log(this.flightsService.getDisabledSeatNumber());
   }
 }
