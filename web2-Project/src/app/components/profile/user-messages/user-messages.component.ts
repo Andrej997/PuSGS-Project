@@ -7,6 +7,7 @@ import { FriendServiceService } from 'src/app/services/friend-service/friend-ser
 import { Friend } from 'src/app/entities/friend/friend';
 import { Address } from 'src/app/entities/address/address';
 import { FriendRequest } from 'src/app/entities/friendRequest/friend-request';
+import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 
 @Component({
   selector: 'app-user-messages',
@@ -16,22 +17,40 @@ import { FriendRequest } from 'src/app/entities/friendRequest/friend-request';
 export class UserMessagesComponent implements OnInit {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
+  id: string = "";
   currentUser: User;
 
-  usersChar: Friend;
+  usersChar: User = null;
+
+  friends: Array<User> = new Array<User>();
+  messages: Array<Message> = new Array<Message>();
+
+  showChat: boolean = false;
   
   constructor(private authenticationService: AuthenticationService,
-      private friendServiceService: FriendServiceService) {
+      private friendServiceService: FriendServiceService, private httpService: HttpServiceService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    console.log(this.currentUser.friends);
+    this.id = this.currentUser.id.toString();
+    console.log(this.id)
+    // console.log(this.currentUser.friends);
   } 
 
   ngOnInit(): void {
-    this.usersChar = new Friend(
-      new User(
-        0,"","","","","",new Address("","",""),Role.user, new Array<Friend>(), new Array<FriendRequest>()),
-      new Array<Message>());
-      this.scrollToBottom();   
+    this.httpService.getEmailAction('Friend/MyFriends', this.currentUser.email)
+      .toPromise()
+      .then(result => {
+        // console.log(result);
+        this.friends = result as User[];
+        // this.loading = false;
+      })
+      .catch(
+        err => {
+          console.log(err)
+          // this.error = true;
+          // this.errorText = "Error while loading companies!"
+          // this.loading = false;
+        });
+    this.scrollToBottom();   
   }
 
   ngAfterViewChecked() {        
@@ -52,21 +71,52 @@ export class UserMessagesComponent implements OnInit {
     return this.formChat.controls;
   }
 
-  chatWithFriend(email: string): void {
+  chatWithFriend(id: any): void {
+    // console.log(id);
     let text = this.formChat.value.chatText;
-    let message = new Message(this.currentUser.firstName, text, new Date(), true);
-    this.friendServiceService.saveMessage(email, message);
+    // console.log(text);
+    if (text == "" || text == null) return;
+    let message = new Message(this.currentUser.id.toString(), text, new Date(), true);
+    message.hisId = id;
+
+    this.httpService.postAction('Message', 'SaveMessage', message).subscribe (
+      res => { 
+        this.loadChat(id);
+        //this.waitingForAccept.push(friendRequest.user);
+    //     this.successText = postFlightCompany.name + " changes ";
+    //     this.success = true;
+    //     this.error = false;
+      },
+      err => { 
+        console.log(err);
+        // this.errorText = err; 
+        // this.error = true; 
+        // this.success = false;
+      });
   }
 
-  loadChat(email: string): void {
-
-    for (let i = 0; i < this.currentUser.friends.length; ++i) {
-      if (this.currentUser.friends[i].friend.email === email) {
-        this.usersChar = this.currentUser.friends[i];
-        console.log(this.usersChar.friend.id);
-        break;
+  loadChat(id: any): void {
+    for (let i = 0; i < this.friends.length; ++i) {
+      if (id == this.friends[i].id.toString()) {
+        this.usersChar = this.friends[i];
       }
     }
+    this.showChat = true;
+    let sendId: string = this.currentUser.id + '|' + id;
+    this.httpService.getEmailAction('Message', sendId)
+    .toPromise()
+    .then(result => {
+      console.log(result);
+      this.messages = result as Message[];
+      // this.loading = false;
+    })
+    .catch(
+      err => {
+        console.log(err)
+        // this.error = true;
+        // this.errorText = "Error while loading companies!"
+        // this.loading = false;
+      });
   }
 
 }

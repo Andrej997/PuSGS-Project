@@ -8,10 +8,18 @@ namespace MAANPP20.Models.Common
 		[Key]
 		public int id { get; set; }
 
-		[Required]
-		public User user { get; set; }
+		public string myId { get; set; }
+
+		public string hisId { get; set; }
 
 		public ICollection<Message> messages { get; set; }
 
+		public bool deleted { get; set; }
+
+		public Friend()
+		{
+			messages = new List<Message>();
+			deleted = false;
+		}
 	}
 }

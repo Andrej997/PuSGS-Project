@@ -1,11 +1,11 @@
 <!-- 1/4 ekrana-->
 <div class="w-25 p-3 down" style="background-color: whitesmoke; float: left;">
-    <div *ngFor="let fr of currentUser.friends" class="container rounded border border-secondary mb-1 mt-1"
-            (click)="loadChat(fr.friend.email)" style="cursor: pointer;">
+    <div *ngFor="let fr of friends" class="container rounded border border-secondary mb-1 mt-1"
+            (click)="loadChat(fr.id)" style="cursor: pointer;">
         <h1>
-            <img src={{fr.friend.profileImage}} width="60px" alt="">
+            <img src={{fr.profileImage}} width="60px" alt="">
             <span>
-                {{fr.friend.firstName}} {{fr.friend.lastName}}
+                {{fr.firstName}} {{fr.lastName}}
             </span>
         </h1>
         <br/>
@@ -13,21 +13,24 @@
 </div>
 
 <!-- 3/4 ekrana-->
-<div class="w-75 p-3 down" style="float: right;" >
+<div class="w-75 p-3 down" style="float: right;" *ngIf="showChat">
     <div class="border border-secondary mb-1 mt-1 pb-3" style="overflow: scroll; height: 500px;"
-            *ngIf="usersChar.friend.id != 0" #scrollMe>
+             #scrollMe>
     
-        <div *ngFor="let mess of usersChar.messages">
+        <div *ngFor="let mess of messages">
             <p style="font-size: x-large; max-width: 60px">
                 <span> <!-- ostaje da se sredi kad su duze poruke-->
-                    {{mess.name}}: <b *ngIf="mess.isUnread" class="badge badge-pill badge-primary">{{mess.text}}</b><span class="badge badge-pill badge-primary" *ngIf="!mess.isUnread">{{mess.text}}</span>
+                    <b class="badge badge-pill badge-primary" 
+                    data-toggle="tooltip" data-placement="right" title="{{mess.dateTime}}">
+                        {{mess.text}}
+                    </b>
                 </span>
             </p>
             <hr/>
         </div>
         
         <div >
-            <form [formGroup]="formChat" (ngSubmit)="chatWithFriend(usersChar.friend.email)">
+            <form [formGroup]="formChat" (ngSubmit)="chatWithFriend(usersChar.id)">
                 <div class="form-group">
                 <input type="text" class="form-control" id="chatText" formControlName="chatText"  #chatText 
                         aria-describedby="chatTextHelp" style="width: 90%; float: left;" placeholder="text...">

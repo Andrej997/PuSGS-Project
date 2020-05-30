@@ -1,15 +1,16 @@
 
 export class Message {
     id: number;
-    name: string; // ime posiljaoca ove poruke
+    myId: string; 
+    hisId: string;
     text: string; // sadrzaj poruke
-    date: Date; // vreme kad je poslata
+    dateTime: Date; // vreme kad je poslata
     isUnread: boolean; // da li je procitana
 
-    constructor(name: string, text: string, date: Date, isUnread: boolean) {
-        this.name = name;
+    constructor(myId: string, text: string, date: Date, isUnread: boolean) {
+        this.myId = myId;
         this.text = text;
-        this.date = date;
+        this.dateTime = date;
         this.isUnread = isUnread;
     }
 }

@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200530090043_Friend_changed2")]
+    partial class Friend_changed2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,19 +138,11 @@ namespace MAANPP20.Migrations
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("hisId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("isUnread")
                         .HasColumnType("bit");
 
-                    b.Property<string>("myId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("text")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
