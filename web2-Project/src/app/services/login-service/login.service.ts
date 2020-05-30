@@ -8,10 +8,15 @@ import { Login } from 'src/app/entities/login/login'
   providedIn: 'root'
 })
 export class LoginService {
+  readonly BaseURI = 'http://localhost:57428/api';
 
   constructor(private http: HttpClient) { }
 
   getAll() {
     return this.http.get(`${environment.apiUrl}/users`);
+  }
+
+  login(formData) {
+    return this.http.post(this.BaseURI + '/MyUser/Login', formData);
   }
 }
