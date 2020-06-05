@@ -26,6 +26,7 @@ import { PlanesComponent } from './components/flights-components/planes/planes.c
 import { ChangeFlightComponent } from './components/flights-components/change-flight/change-flight.component';
 import { CreateOrReplaceServiceComponent } from './components/rent-a-car/create-or-replace-service/create-or-replace-service.component';
 import { ChangeProfileComponent } from './components/profile/change-profile/change-profile.component';
+import { FlightReservationComponent } from './components/flights-components/flight-reservation/flight-reservation.component';
 
 
 const routes: Routes = [
@@ -109,6 +110,13 @@ const routes: Routes = [
     children: [
       { path: "", component: AvioCompaniesComponent },
       { path: ":id/details", component: AvioCompanyDetailsComponent }
+    ]
+  },
+  {
+    path: "reservations",
+    children: [
+      { path: "", component: FlightReservationComponent},
+      { path: ":id", component: FlightReservationComponent}
     ]
   },
   { 

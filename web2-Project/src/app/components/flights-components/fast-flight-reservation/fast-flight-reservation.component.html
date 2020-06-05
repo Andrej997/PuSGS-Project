@@ -12,11 +12,14 @@
     <div class="alert alert-danger" role="alert" *ngIf="error && !loading">
         <b>{{errorText}}</b>
     </div>
+    <div class="alert alert-success" role="alert" *ngIf="success && !loading">
+        <b>{{successText}}</b>
+    </div>
     
     <!-- <div class="alert alert-success" role="alert" *ngIf="success && !loading">
         <b>{{successText}} created!</b>
     </div> -->
-    <div class="card" *ngIf="!error && !loading">
+    <div class="card"><!--<*ngIf="!error && !loading"> -->
         <div class="media-body">
             
             <h3 class="mt-0" >{{flight.company}}
@@ -77,7 +80,7 @@
                 <p class="ml-3" id="aeroplane">{{flight.aeroplane.name}}</p>
             </div>
 
-            <div class="container">
+            <div class="container" *ngIf="!success">
                 <button type="button" class="btn btn-success" (click)="reserveFastFlight()">
                     BOOK FLIGHT
                 </button>

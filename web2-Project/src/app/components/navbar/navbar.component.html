@@ -42,7 +42,7 @@
                         height="37" 
                         width="37" >
                   </a>
-                  <a routerLink="avio-companies" 
+                  <a routerLink="/avio-companies/{{currentUser.serviceId}}/details" 
                     role="button" style="margin-right: 10px;"
                     aria-haspopup="true" 
                     aria-expanded="false"
@@ -102,7 +102,7 @@
                     </a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" 
-                       routerLink="#">My flights
+                       routerLink="/reservations/{{this.authenticationService.currentUserValue.id}}">Reservations
                     </a>
                     <div *ngIf="this.authenticationService.currentUserValue.role == 2">
                       <div class="dropdown-divider"></div>

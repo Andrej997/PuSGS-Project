@@ -6,6 +6,7 @@ import { FlightsService } from 'src/app/services/flights-service/flights.service
 import { Flight } from 'src/app/entities/flight/flight';
 import { User } from 'src/app/entities/user/user';
 import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
+import { FastFlightReservation } from 'src/app/entities/fast-flight-reservation/fast-flight-reservation';
 
 @Component({
   selector: 'app-fast-flight-reservation',
@@ -21,6 +22,7 @@ export class FastFlightReservationComponent implements OnInit {
   discountPrice: number = 0;
 
   firstAwaibleSeat: number = 0;
+  seatId: number = 0;
 
   ocena: number = 0;
 
@@ -28,6 +30,9 @@ export class FastFlightReservationComponent implements OnInit {
 
   error: boolean = false;
   errorText: string = "";
+
+  success: boolean = false;
+  successText: string = "";
 
   constructor(private route: ActivatedRoute, private router: Router,
     public authenticationService: AuthenticationService, private httpService: HttpServiceService,
@@ -89,12 +94,34 @@ export class FastFlightReservationComponent implements OnInit {
     for (let i = 0; i < this.flight.allSeatsForThisFlight.length; ++i) {
       // ako je namenjeno za brzu rezervaciju i ako je slobodno
       if (this.flight.allSeatsForThisFlight[i].isFastReservation === true && this.flight.allSeatsForThisFlight[i].reserved === false) {
+        //console.log(this.flight.allSeatsForThisFlight[i].id)
+        this.seatId = this.flight.allSeatsForThisFlight[i].id;
         return ++i;
       }
     }
   }
 
   reserveFastFlight() {
-    this.loading = true;
+    //this.loading = true;
+    let fastFlightReservation: FastFlightReservation = new FastFlightReservation();
+    fastFlightReservation.flight = this.flight;
+    fastFlightReservation.price = this.discountPrice;
+    fastFlightReservation.seatNumeration = this.firstAwaibleSeat;
+    fastFlightReservation.UserIdForPOST = this.currentUser.id.toString();
+    fastFlightReservation.seatId = this.seatId;
+
+    this.httpService.postAction('FastFlightReservation', 'Reserve', fastFlightReservation).subscribe(
+      res => { 
+        this.successText = "Reservation successfully created!";
+        this.success = true;
+      },
+      err => { 
+        this.errorText = err; 
+        this.error = true; 
+        this.success = false;
+      }
+    );
+    
+    //console.log(fastFlightReservation);
   }
 }

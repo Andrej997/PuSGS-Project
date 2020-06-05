@@ -1,0 +1,50 @@
+<div class="container down"
+        *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
+    <div class="alert alert-danger" role="alert"> 
+        <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+    </div>
+    <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+</div>
+
+<div *ngIf='this.authenticationService.currentUserValue' class="container down">
+    <div class="alert alert-danger" role="alert" *ngIf="error || errorFFR">
+        <b>{{errorText}}</b>
+    </div>
+    <div class="alert alert-warning" role="alert" *ngIf="change">
+        Changes have been made, please refresh page or click <a style="cursor: pointer;" (click)="refreshPage()"><b>here</b></a>!
+    </div>
+    <div *ngIf="!error">
+        <h3>Fast reserations</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">id</th>
+                    <th scope="col">Flight date</th>
+                    <th scope="col">From</th>
+                    <th scope="col">Landing date</th>
+                    <th scope="col">To</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Seat numeration</th>
+                    <th scope="col">Cancel fast reservation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let fastFlightReservation of allFastFlightReservation">
+                    <th scope="row">{{fastFlightReservation.id}}</th>
+                    <td>{{fastFlightReservation.flight.datumPolaska}}</td>
+                    <td>{{fastFlightReservation.flight.from.city}}</td>
+                    <td>{{fastFlightReservation.flight.datumSletanja}}</td>
+                    <td>{{fastFlightReservation.flight.to.city}}</td>
+                    <td>{{fastFlightReservation.price}}</td>
+                    <td>{{fastFlightReservation.seatNumeration}}</td>
+                    <td>
+                        <a style="cursor: pointer;">
+                            <img id={{fastFlightReservation.id}} src="\assets\img\delete.png" (click)="cancelFastReservation($event)"
+                                class="card-img-top" alt="add new flight" style="width: 50px;">
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

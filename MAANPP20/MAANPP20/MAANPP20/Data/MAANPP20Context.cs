@@ -28,6 +28,7 @@ namespace MAANPP20.Data
         public DbSet<AvioSediste> AvioSedista { get; set; }
         public DbSet<StringForICollection> StringForICollections { get; set; }
         public DbSet<DoubleForICollection> DoubleForICollections { get; set; }
+        public DbSet<FastFlightReservation> FastFlightReservations { get; set; }
         #endregion
 
         #region Tables only with ICollection

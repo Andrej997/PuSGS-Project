@@ -31,6 +31,10 @@ export class AvioCompanyDetailsComponent implements OnInit {
 
   loading: boolean = true;
 
+  noCompany: boolean = false;
+
+  isMyCompany: boolean = false;
+
   constructor(private route: ActivatedRoute, private httpService: HttpServiceService,
         private avioCompaniesService: AvioCompaniesService, private router: Router,
         public authenticationService: AuthenticationService) { 
@@ -38,32 +42,42 @@ export class AvioCompanyDetailsComponent implements OnInit {
       this.currentUser = this.authenticationService.currentUserValue;
       this.currentUserEmail = this.currentUser.email;
     }
-    route.params.subscribe(params => { this.id = params['id']; });
-    //this.flightCompany = avioCompaniesService.getCompany(this.id);
-    this.httpService.getIdAction("FlightCompany", this.id).toPromise()
-    .then(result => {
-      this.flightCompany = result as FlightCompany;
-      this.ocena = 0;
-      for (let index = 0; index < this.flightCompany.ocene.length; index++) {
-        this.ocena += this.flightCompany.ocene[index];
-      }
-      if (this.flightCompany.ocene.length != 0)
-        this.ocena = this.ocena / this.flightCompany.ocene.length;
-
-      // console.log(this.ocena);
-      this.loading = false;
-      console.log(this.flightCompany);
-    })
-    .catch(
-      err => {
-        console.log(err)
-        this.error = true;
-        this.errorText = "Error while loading company!"
-        this.loading = false;
-      });
   }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => { this.id = params['id']; });
+    //this.flightCompany = avioCompaniesService.getCompany(this.id);
+    if (this.id == 0) {
+      this.noCompany = true;
+      this.loading = false;
+    }
+    else {
+      this.httpService.getIdAction("FlightCompany", this.id).toPromise()
+      .then(result => {
+        this.flightCompany = result as FlightCompany;
+
+        if (this.flightCompany.id == this.currentUser.serviceId) 
+          this.isMyCompany = true;
+
+        this.ocena = 0;
+        for (let index = 0; index < this.flightCompany.ocene.length; index++) {
+          this.ocena += this.flightCompany.ocene[index];
+        }
+        if (this.flightCompany.ocene.length != 0)
+          this.ocena = this.ocena / this.flightCompany.ocene.length;
+  
+        // console.log(this.ocena);
+        this.loading = false;
+        console.log(this.flightCompany);
+      })
+      .catch(
+        err => {
+          console.log(err)
+          this.error = true;
+          this.errorText = "Error while loading company!"
+          this.loading = false;
+        });
+    }
   }
 
   // createRange(allSeats: Array<AvioSediste>) {   // simulacija for petlje u html-u

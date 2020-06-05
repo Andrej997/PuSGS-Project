@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200605124958_FastFlightReservation_deleted")]
+    partial class FastFlightReservation_deleted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -353,9 +355,6 @@ namespace MAANPP20.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserIdForPOST")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("deleted")
                         .HasColumnType("bit");
 
@@ -364,9 +363,6 @@ namespace MAANPP20.Migrations
 
                     b.Property<double>("price")
                         .HasColumnType("float");
-
-                    b.Property<int>("seatId")
-                        .HasColumnType("int");
 
                     b.Property<int>("seatNumeration")
                         .HasColumnType("int");

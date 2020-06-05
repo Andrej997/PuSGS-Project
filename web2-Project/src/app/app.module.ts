@@ -49,6 +49,7 @@ import { CreateOrReplaceServiceComponent } from './components/rent-a-car/create-
 import { ChangeProfileComponent } from './components/profile/change-profile/change-profile.component'
 import { AuthInterceptorService } from './services/authentication-service/auth-interceptor.service';
 import { TokenInterceptorService } from './services/authentication-service/token-interceptor.service';
+import { FlightReservationComponent } from './components/flights-components/flight-reservation/flight-reservation.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { TokenInterceptorService } from './services/authentication-service/token
     PlaneSeatsComponent,
     CreateOrReplaceServiceComponent,
     ChangeProfileComponent,
+    FlightReservationComponent,
 
   ],
   imports: [
