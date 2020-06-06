@@ -23,6 +23,10 @@ namespace MAANPP20.Models.Flights
 
         public bool userBonus { get; set; }
 
+        public int ocenaLeta { get; set; }
+
+        public int ocenaKompanije { get; set; }
+
         public bool deleted { get; set; }
     }
 }

@@ -8,6 +8,8 @@ export class FastFlightReservation {
     seatId: number;
     UserIdForPOST: string;
     userBonus: boolean;
+    ocenaLeta: number;
+    ocenaKompanije: number;
 
     constructor() {
     }

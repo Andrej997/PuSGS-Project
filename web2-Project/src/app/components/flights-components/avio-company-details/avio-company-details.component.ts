@@ -58,17 +58,21 @@ export class AvioCompanyDetailsComponent implements OnInit {
 
         if (this.flightCompany.id == this.currentUser.serviceId) 
           this.isMyCompany = true;
-
+          
+        // console.log(this.flightCompany);
+        
         this.ocena = 0;
         for (let index = 0; index < this.flightCompany.ocene.length; index++) {
-          this.ocena += this.flightCompany.ocene[index];
+          this.ocena += this.flightCompany.ocene[index].doubleValue;
+          // console.log(this.flightCompany.ocene[index].doubleValue);
         }
+        // console.log(this.ocena);
         if (this.flightCompany.ocene.length != 0)
           this.ocena = this.ocena / this.flightCompany.ocene.length;
-  
+        // console.log(this.ocena);
         // console.log(this.ocena);
         this.loading = false;
-        console.log(this.flightCompany);
+        //console.log(this.flightCompany);
       })
       .catch(
         err => {

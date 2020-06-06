@@ -13,7 +13,7 @@
     <div class="alert alert-info" role="alert">
         <b>Click on id to see flight details!</b>
     </div>
-    <div class="alert alert-warning" role="alert" *ngIf="change">
+    <div class="alert alert-warning" role="alert" *ngIf="change && !error">
         Changes have been made, please refresh page or click <a style="cursor: pointer;" (click)="refreshPage()"><b>here</b></a>!
     </div>
     <div *ngIf="!error">
@@ -22,12 +22,11 @@
             <thead>
                 <tr class="table-primary">
                     <th scope="col">id</th>
-                    <!-- <th scope="col">Flight date</th>
-                    <th scope="col">From</th>
-                    <th scope="col">Landing date</th>
-                    <th scope="col">To</th> -->
                     <th scope="col">Price</th>
                     <th scope="col">Seat numeration</th>
+                    <th scope="col">Rate flight</th>
+                    <th scope="col">Rate flight company</th>
+                    <th scope="col">Submit rate</th>
                     <th scope="col">Cancel fast reservation</th>
                 </tr>
             </thead>
@@ -37,16 +36,26 @@
                             style="cursor: pointer;">
                         {{fastFlightReservation.id}}
                     </th>
-                    <!-- <td>{{fastFlightReservation.flight.datumPolaska}}</td>
-                    <td>{{fastFlightReservation.flight.from.city}}</td>
-                    <td>{{fastFlightReservation.flight.datumSletanja}}</td>
-                    <td>{{fastFlightReservation.flight.to.city}}</td> -->
                     <td>{{fastFlightReservation.price}}</td>
                     <td>{{fastFlightReservation.seatNumeration}}</td>
                     <td>
+                        <input type="number" class="form-control" min="0" max="5"
+                            onkeydown="return false" [(ngModel)]="ocenaLeta">
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" min="0" max="5" 
+                            onkeydown="return false" [(ngModel)]="ocenaKompanije">
+                    </td>
+                    <td>
+                        <a style="cursor: pointer;" *ngIf="!loading">
+                            <img id={{fastFlightReservation.id}} src="\assets\img\change.png" (click)="changeRate($event)"
+                                class="card-img-top" alt="change rate" style="width: 50px;">
+                        </a>
+                    </td>
+                    <td>
                         <a style="cursor: pointer;" *ngIf="!loading">
                             <img id={{fastFlightReservation.id}} src="\assets\img\delete.png" (click)="cancelFastReservation($event)"
-                                class="card-img-top" alt="add new flight" style="width: 50px;">
+                                class="card-img-top" alt="delete" style="width: 50px;">
                         </a>
                     </td>
                 </tr>

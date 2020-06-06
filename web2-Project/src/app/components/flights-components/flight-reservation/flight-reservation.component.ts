@@ -28,6 +28,9 @@ export class FlightReservationComponent implements OnInit {
 
   showFlightDetails: boolean = false;
 
+  ocenaLeta: number = 0;
+  ocenaKompanije: number = 0;
+
   constructor(private httpService: HttpServiceService, private router: Router,
     public authenticationService: AuthenticationService,
     private route: ActivatedRoute) { 
@@ -162,4 +165,91 @@ export class FlightReservationComponent implements OnInit {
     }
   }
 
+  putFastFlightReservation(ffr: FastFlightReservation) {
+    this.httpService.putAction('FastFlightReservation', ffr).subscribe (
+      res => { 
+        // this.successText = "";
+        // this.success = true;
+        this.error = false;
+      },
+      err => { 
+        this.errorFFR = err; 
+        this.error = true; 
+        // this.success = false;
+      });
+  }
+
+  changeRate(event) {
+    if (this.ocenaLeta > 0 || this.ocenaKompanije > 0) {
+      const idChangeRateFFR = event.target.id;
+    
+      let ffr: FastFlightReservation = null;
+      for (let i = 0; i < this.allFastFlightReservation.length; ++i) {
+        if (this.allFastFlightReservation[i].id == idChangeRateFFR) {
+          ffr = this.allFastFlightReservation[i];
+          ffr.ocenaLeta = this.ocenaLeta;
+          ffr.ocenaKompanije = this.ocenaKompanije;
+          this.loading = true;
+          this.httpService.getIdAction("Flight", ffr.flightId).toPromise()
+            .then(result => {
+              this.flight = (result as Flight);
+              if (ffr != null) {
+                let date = new Date();
+                let deteOfFlight = new Date(this.flight.datumPolaska);
+                if (date.getFullYear() > deteOfFlight.getFullYear()) {
+                  this.putFastFlightReservation(ffr);
+                  
+                }
+                else if (date.getFullYear() == deteOfFlight.getFullYear()) {
+                  if (date.getMonth() > deteOfFlight.getMonth()) {
+                    this.putFastFlightReservation(ffr);
+                    
+                  }
+                  else if (date.getMonth() == deteOfFlight.getMonth()) {
+                    if (date.getDay() > deteOfFlight.getDay()) {
+                      this.putFastFlightReservation(ffr);
+                      
+                    }
+                    else if (date.getDay() == deteOfFlight.getDay()) {
+                      if (date.getHours() > deteOfFlight.getHours()) {
+                        this.errorFFR = false;
+                        this.errorText = "";
+                        this.putFastFlightReservation(ffr);
+                      }
+                      else {
+                        this.errorFFR = true;
+                        this.errorText = "You can't rate now!";
+                      }
+                    }
+                    else {
+                      this.errorFFR = true;
+                      this.errorText = "You can't rate now!";
+                    }
+                  }
+                  else {
+                    this.errorFFR = true;
+                    this.errorText = "You can't rate now!";
+                  }
+                }
+                else {
+                  this.errorFFR = true;
+                  this.errorText = "You can't rate now!";
+                }
+              }
+              this.showFlightDetails = true;
+              this.loading = false;
+            })
+            .catch(
+              err => {
+                console.log(err)
+                this.error = true;
+                this.errorText = "Error while loading flight data!"
+                this.loading = false;
+              });
+          
+          break;
+        }
+      }
+    }
+  }
 }

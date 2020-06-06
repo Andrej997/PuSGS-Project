@@ -10,6 +10,7 @@ import { FlightCompany } from 'src/app/entities/flightCompany/flight-company';
 import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 import { FlightDestination } from 'src/app/entities/flight-destination/flight-destination';
 import { Flight } from 'src/app/entities/flight/flight';
+import { DoubleForICollection } from 'src/app/entities/DoubleForICollection/double-for-icollection';
 
 @Component({
   selector: 'app-create-avio-company',
@@ -143,7 +144,7 @@ export class CreateAvioCompanyComponent implements OnInit {
       new Array<FlightDestination>(),
       new Array<Flight>(),
       this.logo,
-      new Array<number>()
+      new Array<DoubleForICollection>()
     );
 
     //this.currentUser.flightCompany = postFlightCompany;

@@ -109,6 +109,55 @@ namespace MAANPP20.Controllers.Flights
             else return BadRequest();
         }
 
+        // PUT: api/FastFlightReservation
+        [HttpPut]
+        public async Task<IActionResult> UpdateFastFlightReservation(FastFlightReservation fastFlightReservation)
+        {
+            Flight flight = await _context.Flights.Where(x => x.deleted == false)
+                    .Include(ocene => ocene.ocene)
+                    .FirstOrDefaultAsync(id => id.id == fastFlightReservation.flightId);
+            if (flight == null) return BadRequest();
+            if (fastFlightReservation.ocenaLeta > 0)
+            {
+                DoubleForICollection doubleForICollection = new DoubleForICollection();
+                doubleForICollection.DoubleValue = fastFlightReservation.ocenaLeta;
+                flight.ocene.Add(doubleForICollection);
+                _context.Entry(flight).State = EntityState.Modified;
+            }
+
+            if (fastFlightReservation.ocenaKompanije > 0)
+            {
+                FlightCompany flightCompany = await _context.FlightCompanies.Where(x => x.deleted == false)
+                    .Include(ocene => ocene.ocene)
+                    .FirstOrDefaultAsync(id => id.id == flight.idCompany);
+                if (flightCompany == null) return BadRequest();
+                DoubleForICollection doubleForICollection = new DoubleForICollection();
+                doubleForICollection.DoubleValue = fastFlightReservation.ocenaKompanije;
+                flightCompany.ocene.Add(doubleForICollection);
+                _context.Entry(flightCompany).State = EntityState.Modified;
+            }
+
+            _context.Entry(fastFlightReservation).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FastFlightReservationExists(fastFlightReservation.id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok();
+        }
+
         // DELETE: api/FastFlightReservation/DeleteFFR/1
         [HttpDelete]
         [Route("DeleteFFR/{id}")]
@@ -145,8 +194,12 @@ namespace MAANPP20.Controllers.Flights
             return Ok();
         }
 
+        private bool FastFlightReservationExists(int id) => _context.FastFlightReservations.Any(e => e.id == id);
+
         private bool ValidateModel(FastFlightReservation fastFlightReservation, bool isPost)
         {
+            if (fastFlightReservation.ocenaLeta < 0 && isPost == true) return false; 
+            if (fastFlightReservation.ocenaKompanije < 0 && isPost == true) return false; 
             if (fastFlightReservation.flightId < 1) return false;
             if (fastFlightReservation.UserIdForPOST == null || fastFlightReservation.UserIdForPOST == "") return false;
             if (fastFlightReservation.price <= 0) return false;

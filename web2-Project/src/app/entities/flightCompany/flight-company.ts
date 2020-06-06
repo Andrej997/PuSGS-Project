@@ -3,6 +3,7 @@ import { Flight } from '../flight/flight'
 import { AvioSediste } from '../avio-sediste/avio-sediste'
 import { FlightDestination } from '../flight-destination/flight-destination';
 import { User } from '../user/user';
+import { DoubleForICollection } from '../DoubleForICollection/double-for-icollection';
 
 export class FlightCompany {
     id: number; // jedinstevi identifikacioni broj kompanije
@@ -13,7 +14,7 @@ export class FlightCompany {
     destinations: Array<FlightDestination>; // adrese na koje lete avioni kompanije
     flights: Array<Flight>; // svi trenutni letovi kompanije
     logo: string;
-    ocene: Array<number>;
+    ocene: Array<DoubleForICollection>;
 
     adminId: string;
     admin: User;
@@ -28,7 +29,7 @@ export class FlightCompany {
         destinations: Array<FlightDestination>,
         flights: Array<Flight>,
         logo: string,
-        ocene: Array<number>) {
+        ocene: Array<DoubleForICollection>) {
             this.id = id;
             this.name = name;
             this.address = address;

@@ -10,6 +10,7 @@ import { Aeroplane } from 'src/app/entities/aeroplane/aeroplane';
 import { AeroplaneServiceService } from '../aeroplane-service/aeroplane-service.service';
 import { AvioLuggage } from 'src/app/entities/avio-luggage/avio-luggage';
 import { StringForICollection } from 'src/app/entities/StringForICollection/string-for-icollection';
+import { DoubleForICollection } from 'src/app/entities/DoubleForICollection/double-for-icollection';
 
 @Injectable({
   providedIn: 'root'
@@ -71,9 +72,7 @@ export class AvioCompaniesService {
     flights.push(flight2A1);
     const fastReservation = new Array<Flight>();
     const sedista = new Array<AvioSediste>();
-    const oceneA1 = new Array<number>();
-    oceneA1.push(4.5);
-    oceneA1.push(3.5);
+    const oceneA1 = new Array<DoubleForICollection>();
     const f1 = new FlightCompany(
       A1id, 
       'Air Serbia', 
@@ -113,9 +112,7 @@ export class AvioCompaniesService {
     flights2.push(flight2A2);
     const fastReservation2 = new Array<Flight>();
     const sedista2 = new Array<AvioSediste>();
-    const oceneA2 = new Array<number>();
-    oceneA2.push(4);
-    oceneA2.push(5);
+    const oceneA2 = new Array<DoubleForICollection>();
     const f2 = new FlightCompany(
       A2id, 
       A2name, 
@@ -135,9 +132,7 @@ destListA3.push(d1a3);
 const flights3 = new Array<Flight>();
 const fastReservation3 = new Array<Flight>();
 const sedista3 = new Array<AvioSediste>();
-const oceneA3 = new Array<number>();
-oceneA3.push(5);
-oceneA3.push(1.5);
+const oceneA3 = new Array<DoubleForICollection>();
 const f3 = new FlightCompany(
   3, 
   'Lufthansa', 
