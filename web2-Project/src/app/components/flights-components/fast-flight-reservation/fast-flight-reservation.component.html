@@ -65,6 +65,18 @@
                     *ngFor="let presedanje of flight.presedanje.gradoviPresedanja">{{presedanje.plainString}}</p>
             </div>
 
+            <div class="container" *ngIf="currentUser.bonus>0">
+                <div class="input-group mb-3">
+                    <label for="sn">Add my bonus</label>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <input type="checkbox" aria-label="Add discount (user bonus)"
+                                    (change)="checkCheckBoxvalue($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="container">
                 <label for="price">Price <span title="original price">{{flight.prise}}</span> with discount of {{flight.discountForFastReservation}}%</label>
                 <p class="ml-3" id="price">{{discountPrice}}</p>

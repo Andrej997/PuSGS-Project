@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200606054614_FastFlightReservation_userBonus")]
+    partial class FastFlightReservation_userBonus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -362,7 +364,7 @@ namespace MAANPP20.Migrations
                     b.Property<bool>("deleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("flightId")
+                    b.Property<int?>("flightid")
                         .HasColumnType("int");
 
                     b.Property<double>("price")
@@ -380,6 +382,8 @@ namespace MAANPP20.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("flightid");
 
                     b.ToTable("FastFlightReservations");
                 });
@@ -608,6 +612,10 @@ namespace MAANPP20.Migrations
                     b.HasOne("MAANPP20.Models.Common.User", null)
                         .WithMany("fastFlightReservations")
                         .HasForeignKey("UserId");
+
+                    b.HasOne("MAANPP20.Models.Flights.Flight", "flight")
+                        .WithMany()
+                        .HasForeignKey("flightid");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Flights.Flight", b =>

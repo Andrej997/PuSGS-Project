@@ -4,6 +4,7 @@ import { User } from 'src/app/entities/user/user';
 import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
+import { Flight } from 'src/app/entities/flight/flight';
 
 @Component({
   selector: 'app-flight-reservation',
@@ -13,6 +14,7 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 export class FlightReservationComponent implements OnInit {
   currentUser: User;
   id: string = "";
+  flight: Flight;
 
   allFastFlightReservation: Array<FastFlightReservation> = new Array<FastFlightReservation>(); 
 
@@ -21,6 +23,11 @@ export class FlightReservationComponent implements OnInit {
   errorText: string = "";
 
   change: boolean = false;
+
+  loading: boolean = false;
+
+  showFlightDetails: boolean = false;
+
   constructor(private httpService: HttpServiceService, private router: Router,
     public authenticationService: AuthenticationService,
     private route: ActivatedRoute) { 
@@ -48,7 +55,6 @@ export class FlightReservationComponent implements OnInit {
       .toPromise()
       .then(result => {
         this.allFastFlightReservation = result as FastFlightReservation[];
-        //console.log(this.allFastFlightReservation);
       })
       .catch(
         err => {
@@ -62,6 +68,33 @@ export class FlightReservationComponent implements OnInit {
     location.reload();
   }
 
+  getFlight(event){
+    let ffrId = event.target.id;
+    this.allFastFlightReservation.forEach(element => {
+      if (ffrId == element.id){
+        this.loading = true;
+        this.getFlightFromServer(element.flightId);
+      }
+    });
+  }
+
+  getFlightFromServer(id: number) {
+    this.httpService.getIdAction("Flight", id).toPromise()
+    .then(result => {
+      this.flight = (result as Flight);
+      //console.log(this.flight)
+      this.showFlightDetails = true;
+      this.loading = false;
+    })
+    .catch(
+      err => {
+        console.log(err)
+        this.error = true;
+        this.errorText = "Error while loading flight data!"
+        this.loading = false;
+      });
+  }
+
   cancelFastReservation(event) {
     const idDeleteFFR = event.target.id;
     
@@ -69,47 +102,62 @@ export class FlightReservationComponent implements OnInit {
     for (let i = 0; i < this.allFastFlightReservation.length; ++i) {
       if (this.allFastFlightReservation[i].id == idDeleteFFR) {
         ffr = this.allFastFlightReservation[i];
+        this.loading = true;
+        this.httpService.getIdAction("Flight", ffr.flightId).toPromise()
+          .then(result => {
+            this.flight = (result as Flight);
+            if (ffr != null) {
+              let date = new Date();
+              let deteOfFlight = new Date(this.flight.datumPolaska);
+              if (date.getFullYear() <= deteOfFlight.getFullYear()) {
+                if (date.getMonth() <= deteOfFlight.getMonth()) {
+                  if (date.getDay() <= deteOfFlight.getDay()) {
+                    let hours = deteOfFlight.getHours() - date.getHours();
+                    if (hours > 3) {
+                      this.errorFFR = false;
+                      this.errorText = "";
+                      this.httpService.deleteAction("FastFlightReservation", "DeleteFFR", idDeleteFFR).toPromise()
+                          .then(result => {
+                            this.change = true;
+                          })
+                          .catch(
+                            err => {
+                              console.log(err);
+                              this.error = true;
+                            });
+                    }
+                    else {
+                      this.errorFFR = true;
+                      this.errorText = "You can't that cancel flight!";
+                    }
+                  }
+                  else {
+                    this.errorFFR = true;
+                    this.errorText = "You can't that cancel flight!";
+                  }
+                }
+                else {
+                  this.errorFFR = true;
+                  this.errorText = "You can't that cancel flight!";
+                }
+              }
+              else {
+                this.errorFFR = true;
+                this.errorText = "You can't that cancel flight!";
+              }
+            }
+            this.showFlightDetails = true;
+            this.loading = false;
+          })
+          .catch(
+            err => {
+              console.log(err)
+              this.error = true;
+              this.errorText = "Error while loading flight data!"
+              this.loading = false;
+            });
+        
         break;
-      }
-    }
-    if (ffr != null) {
-      let date = new Date();
-      let deteOfFlight = new Date(ffr.flight.datumPolaska);
-      if (date.getFullYear() <= deteOfFlight.getFullYear()) {
-        if (date.getMonth() <= deteOfFlight.getMonth()) {
-          if (date.getDay() <= deteOfFlight.getDay()) {
-            let hours = deteOfFlight.getHours() - date.getHours();
-            if (hours > 3) {
-              this.errorFFR = false;
-              this.errorText = "";
-              this.httpService.deleteAction("FastFlightReservation", "DeleteFFR", idDeleteFFR).toPromise()
-                  .then(result => {
-                    this.change = true;
-                  })
-                  .catch(
-                    err => {
-                      console.log(err);
-                      this.error = true;
-                    });
-            }
-            else {
-              this.errorFFR = true;
-              this.errorText = "You can't that cancel flight!";
-            }
-          }
-          else {
-            this.errorFFR = true;
-            this.errorText = "You can't that cancel flight!";
-          }
-        }
-        else {
-          this.errorFFR = true;
-          this.errorText = "You can't that cancel flight!";
-        }
-      }
-      else {
-        this.errorFFR = true;
-        this.errorText = "You can't that cancel flight!";
       }
     }
   }

@@ -101,15 +101,31 @@ export class FastFlightReservationComponent implements OnInit {
     }
   }
 
+  checked: boolean = false;
+  checkCheckBoxvalue(event) {
+    if (this.currentUser.bonus > 0) {
+      this.checked = event.target.checked;
+      if (this.checked === true) {
+        let discount1:number = this.currentUser.bonus / 100;
+        let minusPrice:number = this.discountPrice * discount1;
+        this.discountPrice -= minusPrice;
+      }
+      else {
+        this.discountPrice = this.discount();
+      }
+    }
+  }
+
   reserveFastFlight() {
     //this.loading = true;
     let fastFlightReservation: FastFlightReservation = new FastFlightReservation();
-    fastFlightReservation.flight = this.flight;
+    fastFlightReservation.flightId = this.flight.id;
     fastFlightReservation.price = this.discountPrice;
     fastFlightReservation.seatNumeration = this.firstAwaibleSeat;
     fastFlightReservation.UserIdForPOST = this.currentUser.id.toString();
     fastFlightReservation.seatId = this.seatId;
-
+    fastFlightReservation.userBonus = this.checked;
+    //console.log(fastFlightReservation);
     this.httpService.postAction('FastFlightReservation', 'Reserve', fastFlightReservation).subscribe(
       res => { 
         this.successText = "Reservation successfully created!";

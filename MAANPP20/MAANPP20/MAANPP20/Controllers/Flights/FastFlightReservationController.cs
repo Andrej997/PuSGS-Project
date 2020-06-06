@@ -28,10 +28,6 @@ namespace MAANPP20.Controllers.Flights
             return await _context.FastFlightReservations
                 .Where(x => x.deleted == false)
                 .Where(usersId => usersId.UserIdForPOST == idUser)
-                .Include(flight => flight.flight)
-                    .ThenInclude(from => from.from)
-                .Include(flight => flight.flight)
-                    .ThenInclude(to => to.to)
                 .ToListAsync();
         }
 
@@ -68,12 +64,20 @@ namespace MAANPP20.Controllers.Flights
                     throw;
                 }
 
-                foreach (var item in fastFlightReservation.flight.allSeatsForThisFlight)
-                {
-                    _context.Entry(item).State = EntityState.Detached;
-                }
-
                 user.fastFlightReservations.Add(fastFlightReservation);
+                // ako je user iskoristion svoj bonus
+                if (fastFlightReservation.userBonus == true)
+                {
+                    user.bonus = 0;
+                }
+                else
+                {
+                    // ako nije, proverava se da li je dosao do 100%?
+                    if (user.bonus < 100)
+                    {
+                        user.bonus += 1;
+                    }
+                }
 
                 try
                 {
@@ -84,11 +88,6 @@ namespace MAANPP20.Controllers.Flights
 
                     throw;
                 }
-               
-
-                _context.Entry(fastFlightReservation.flight).State = EntityState.Unchanged;
-
-                _context.Entry(fastFlightReservation.flight).State = EntityState.Unchanged;
 
                 _context.FastFlightReservations.Add(fastFlightReservation);
 
@@ -118,7 +117,6 @@ namespace MAANPP20.Controllers.Flights
             var fastFlightReservation = await _context.FastFlightReservations
                 .Where(x => x.deleted == false)
                 .FirstOrDefaultAsync(i => i.id == id);
-
             if (fastFlightReservation == null)
             {
                 return NotFound();
@@ -127,6 +125,16 @@ namespace MAANPP20.Controllers.Flights
             {
                 return NotFound();
             }
+
+            AvioSediste avioSediste = await _context.AvioSedista
+                    .Where(x => x.deleted == false)
+                    .FirstOrDefaultAsync(id => id.id == fastFlightReservation.seatId);
+            if (avioSediste == null) return BadRequest();
+            if (avioSediste.isFastReservation == false) return BadRequest();
+            if (avioSediste.deleted == true) return BadRequest();
+            if (avioSediste.reserved == false) return BadRequest();
+            avioSediste.reserved = false;
+            _context.Entry(avioSediste).State = EntityState.Modified;
 
             fastFlightReservation.deleted = true;
 
@@ -139,7 +147,7 @@ namespace MAANPP20.Controllers.Flights
 
         private bool ValidateModel(FastFlightReservation fastFlightReservation, bool isPost)
         {
-            if (fastFlightReservation.flight == null) return false;
+            if (fastFlightReservation.flightId < 1) return false;
             if (fastFlightReservation.UserIdForPOST == null || fastFlightReservation.UserIdForPOST == "") return false;
             if (fastFlightReservation.price <= 0) return false;
             if (fastFlightReservation.seatNumeration <= 0) return false;

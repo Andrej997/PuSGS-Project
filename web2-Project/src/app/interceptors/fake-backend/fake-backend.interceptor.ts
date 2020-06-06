@@ -38,76 +38,8 @@ export const users: User[] = [
     serviceId: 0,
     passportHash: "",
     phoneNumber: "",
-    flightCompany: null
-  },
-  { 
-    Id: "",
-    id: 2,
-    firstName: 'Andrej',
-    lastName: 'Kalocanj Mohaci',
-    email: 'andrej.km997@gmail.com', 
-    password: 'admin',
-    profileImage: '\\assets\\img\\user.png',
-    address: {
-      id: 2,
-      streetAndNumber: 'Mise Dimitrijevica 1C',
-      city: 'Novi Sad',
-      country: 'Serbia',
-      deleted: false
-    },
-    role: Role.adminA,
-    friends: new Array<Friend>(),
-    friendRequests: new Array<FriendRequest>(),
-    serviceId: 0,
-    passportHash: "",
-    phoneNumber: "",
-    flightCompany: null
-  },
-  { 
-    Id: "",
-    id: 3,
-    firstName: 'Marko',
-    lastName: 'Misojcic',
-    email: 'markomisojcic@gmail.com', 
-    password: 'admin',
-    profileImage: '\\assets\\img\\user.png',
-    address: {
-      id: 3,
-      streetAndNumber: 'string',
-      city: 'string',
-      country: 'string',
-      deleted: false
-    },
-    role: Role.adminM,
-    friends: new Array<Friend>(),
-    friendRequests: new Array<FriendRequest>(),
-    serviceId: 0,
-    passportHash: "",
-    phoneNumber: "",
-    flightCompany: null
-  },
-  { 
-    Id: "",
-    id: 4,
-    firstName: 'Test',
-    lastName: 'User',
-    email: 'user@user.com', 
-    password: 'admin',
-    profileImage: '\\assets\\img\\user.png',
-    address: {
-      id: 4,
-      streetAndNumber: 'string',
-      city: 'string',
-      country: 'string',
-      deleted: false
-    },
-    role: Role.user,
-    friends: new Array<Friend>(),
-    friendRequests: new Array<FriendRequest>(),
-    serviceId: 0,
-    passportHash: "",
-    phoneNumber: "",
-    flightCompany: null
+    flightCompany: null,
+    bonus: 0
   },
 ];
 
@@ -163,7 +95,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 serviceId: user.serviceId,
                 phoneNumber: user.phoneNumber,
                 passportHash: user.passportHash,
-                flightCompany: user.flightCompany
+                flightCompany: user.flightCompany,
+                bonus: user.bonus
             })
         }
 

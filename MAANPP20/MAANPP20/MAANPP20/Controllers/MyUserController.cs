@@ -18,6 +18,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MAANPP20.Models.Flights;
 
 namespace MAANPP20.Controllers
 {
@@ -81,6 +82,8 @@ namespace MAANPP20.Controllers
             user.serviceId = 0;
             user.friendRequests = new List<FriendRequest>();
             user.friends = new List<Friend>();
+            user.fastFlightReservations = new List<FastFlightReservation>();
+            user.bonus = 0;
             try
             {
                 user.role = Role.adminA;

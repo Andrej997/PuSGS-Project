@@ -11,7 +11,7 @@ namespace MAANPP20.Models.Flights
         [Key]
         public int id { get; set; }
 
-        public Flight flight { get; set; }
+        public int flightId { get; set; }
 
         public double price { get; set; }
 
@@ -20,6 +20,8 @@ namespace MAANPP20.Models.Flights
         public int seatId { get; set; }
 
         public string UserIdForPOST { get; set; }
+
+        public bool userBonus { get; set; }
 
         public bool deleted { get; set; }
     }
