@@ -4,6 +4,7 @@ import { AvioLuggage } from '../avio-luggage/avio-luggage';
 import { FlightReservation } from '../flight-reservation/flight-reservation';
 import { Address } from '../address/address';
 import { AvioSediste } from '../avio-sediste/avio-sediste';
+import { DoubleForICollection } from '../DoubleForICollection/double-for-icollection';
 
 export class Flight {
     id: number;
@@ -26,7 +27,7 @@ export class Flight {
     // polja koja ne prosledjujem kroz konstruktor, jer nisu obavezna za let
     numOfFastReseravtions: number; // broj sedista koja moze da ima za brzu rezervaciju
     discountForFastReservation: number; // popust za brzu rezervaciju
-    ocene: Array<number>;
+    ocene: Array<DoubleForICollection>;
 
     allSeatsForThisFlight: Array<AvioSediste>;
 
@@ -53,7 +54,7 @@ export class Flight {
         this.duzinaPutovanja = duzinaPutovanja;
         this.presedanje = presedanje;
         this.aeroplane = aeroplane;
-        this.ocene = new Array<number>();
+        this.ocene = new Array<DoubleForICollection>();
         this.luggage = luggage;
 
         this.deleted = false;

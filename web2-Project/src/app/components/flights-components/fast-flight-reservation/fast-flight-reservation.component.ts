@@ -61,7 +61,7 @@ export class FastFlightReservationComponent implements OnInit {
       this.flight = result as Flight;
       this.ocena = 0;
       for (let index = 0; index < this.flight.ocene.length; index++) {
-        this.ocena += this.flight.ocene[index];
+        this.ocena += this.flight.ocene[index].doubleValue;
       }
       if (this.flight.ocene.length != 0)
         this.ocena = this.ocena / this.flight.ocene.length;

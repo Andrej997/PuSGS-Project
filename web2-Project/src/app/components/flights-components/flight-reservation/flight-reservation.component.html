@@ -17,6 +17,14 @@
         Changes have been made, please refresh page or click <a style="cursor: pointer;" (click)="refreshPage()"><b>here</b></a>!
     </div>
     <div *ngIf="!error">
+        <app-my-spinner *ngIf="loading"></app-my-spinner>
+        <div *ngIf="showFlightDetails">
+            <h4>Flight[{{flight.company}}]</h4>
+            <h5 class="ml-1">from: {{flight.from.city}}</h5>
+            <label class="ml-2">[{{flight.datumPolaska}}]</label>
+            <h5 class="ml-1">to: {{flight.to.city}}</h5>
+            <label class="ml-2">[{{flight.datumSletanja}}]</label>
+        </div>
         <h3>Fast reserations</h3>
         <table class="table table-hover">
             <thead>
@@ -39,12 +47,24 @@
                     <td>{{fastFlightReservation.price}}</td>
                     <td>{{fastFlightReservation.seatNumeration}}</td>
                     <td>
-                        <input type="number" class="form-control" min="0" max="5"
-                            onkeydown="return false" [(ngModel)]="ocenaLeta">
+                        <div *ngIf="fastFlightReservation.ocenaLeta > 0; then thenBlock1 else elseBlock1"></div>
+                        <ng-template #thenBlock1>
+                            {{fastFlightReservation.ocenaLeta}}
+                        </ng-template>
+                        <ng-template #elseBlock1>
+                            <input type="number" class="form-control" min="0" max="5"
+                                onkeydown="return false" [(ngModel)]="ocenaLeta">
+                        </ng-template>
                     </td>
                     <td>
-                        <input type="number" class="form-control" min="0" max="5" 
-                            onkeydown="return false" [(ngModel)]="ocenaKompanije">
+                        <div *ngIf="fastFlightReservation.ocenaKompanije > 0; then thenBlock1 else elseBlock1"></div>
+                        <ng-template #thenBlock1>
+                            {{fastFlightReservation.ocenaKompanije}}
+                        </ng-template>
+                        <ng-template #elseBlock1>
+                            <input type="number" class="form-control" min="0" max="5" 
+                                onkeydown="return false" [(ngModel)]="ocenaKompanije">
+                        </ng-template>
                     </td>
                     <td>
                         <a style="cursor: pointer;" *ngIf="!loading">
@@ -61,13 +81,5 @@
                 </tr>
             </tbody>
         </table>
-        <app-my-spinner *ngIf="loading"></app-my-spinner>
-        <div *ngIf="showFlightDetails">
-            <h4>Flight{{flight.company}}</h4>
-            <h5 class="ml-1">from: {{flight.from.city}}</h5>
-            <label class="ml-2">[{{flight.datumPolaska}}]</label>
-            <h5 class="ml-1">to: {{flight.to.city}}</h5>
-            <label class="ml-2">[{{flight.datumSletanja}}]</label>
-        </div>
     </div>
 </div>
