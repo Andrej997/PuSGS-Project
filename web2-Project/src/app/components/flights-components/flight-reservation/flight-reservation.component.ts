@@ -5,6 +5,7 @@ import { HttpServiceService } from 'src/app/services/http-service/http-service.s
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { Flight } from 'src/app/entities/flight/flight';
+import { FlightReservation } from 'src/app/entities/flight-reservation/flight-reservation';
 
 @Component({
   selector: 'app-flight-reservation',
@@ -17,6 +18,7 @@ export class FlightReservationComponent implements OnInit {
   flight: Flight;
 
   allFastFlightReservation: Array<FastFlightReservation> = new Array<FastFlightReservation>(); 
+  allFlightReservation: Array<FlightReservation> = new Array<FlightReservation>(); 
 
   error: boolean = false;
   errorFFR: boolean = false;
@@ -58,6 +60,18 @@ export class FlightReservationComponent implements OnInit {
       .toPromise()
       .then(result => {
         this.allFastFlightReservation = result as FastFlightReservation[];
+      })
+      .catch(
+        err => {
+          console.log(err)
+          this.error = true;
+          this.errorText = "Error while loading reservations!"
+        });
+
+    this.httpService.getUserIdAction('FlightReservation', this.id)
+      .toPromise()
+      .then(result => {
+        this.allFlightReservation = result as FlightReservation[];
       })
       .catch(
         err => {
@@ -165,8 +179,89 @@ export class FlightReservationComponent implements OnInit {
     }
   }
 
+  cancelReservation(event) {
+    const idDeleteFR = event.target.id;
+    
+    let ffr: FlightReservation = null;
+    for (let i = 0; i < this.allFlightReservation.length; ++i) {
+      if (this.allFlightReservation[i].id == idDeleteFR) {
+        ffr = this.allFlightReservation[i];
+        this.loading = true;
+        this.httpService.getIdAction("Flight", ffr.flightId).toPromise()
+          .then(result => {
+            this.flight = (result as Flight);
+            if (ffr != null) {
+              let date = new Date();
+              let deteOfFlight = new Date(this.flight.datumPolaska);
+              if (date.getFullYear() <= deteOfFlight.getFullYear()) {
+                if (date.getMonth() <= deteOfFlight.getMonth()) {
+                  if (date.getDay() <= deteOfFlight.getDay()) {
+                    let hours = deteOfFlight.getHours() - date.getHours();
+                    if (hours > 3) {
+                      this.errorFFR = false;
+                      this.errorText = "";
+                      this.httpService.deleteAction("FlightReservation", "DeleteFR", idDeleteFR).toPromise()
+                          .then(result => {
+                            this.change = true;
+                          })
+                          .catch(
+                            err => {
+                              console.log(err);
+                              this.error = true;
+                            });
+                    }
+                    else {
+                      this.errorFFR = true;
+                      this.errorText = "You can't that cancel flight!";
+                    }
+                  }
+                  else {
+                    this.errorFFR = true;
+                    this.errorText = "You can't that cancel flight!";
+                  }
+                }
+                else {
+                  this.errorFFR = true;
+                  this.errorText = "You can't that cancel flight!";
+                }
+              }
+              else {
+                this.errorFFR = true;
+                this.errorText = "You can't that cancel flight!";
+              }
+            }
+            this.showFlightDetails = true;
+            this.loading = false;
+          })
+          .catch(
+            err => {
+              console.log(err)
+              this.error = true;
+              this.errorText = "Error while loading flight data!"
+              this.loading = false;
+            });
+        
+        break;
+      }
+    }
+  }
+
   putFastFlightReservation(ffr: FastFlightReservation) {
     this.httpService.putAction('FastFlightReservation', ffr).subscribe (
+      res => { 
+        // this.successText = "";
+        // this.success = true;
+        this.error = false;
+      },
+      err => { 
+        this.errorFFR = err; 
+        this.error = true; 
+        // this.success = false;
+      });
+  }
+
+  putFlightReservation(fr: FlightReservation) {
+    this.httpService.putAction('FlightReservation', fr).subscribe (
       res => { 
         // this.successText = "";
         // this.success = true;
@@ -215,6 +310,80 @@ export class FlightReservationComponent implements OnInit {
                         this.errorFFR = false;
                         this.errorText = "";
                         this.putFastFlightReservation(ffr);
+                      }
+                      else {
+                        this.errorFFR = true;
+                        this.errorText = "You can't rate now!";
+                      }
+                    }
+                    else {
+                      this.errorFFR = true;
+                      this.errorText = "You can't rate now!";
+                    }
+                  }
+                  else {
+                    this.errorFFR = true;
+                    this.errorText = "You can't rate now!";
+                  }
+                }
+                else {
+                  this.errorFFR = true;
+                  this.errorText = "You can't rate now!";
+                }
+              }
+              this.showFlightDetails = true;
+              this.loading = false;
+            })
+            .catch(
+              err => {
+                console.log(err)
+                this.error = true;
+                this.errorText = "Error while loading flight data!"
+                this.loading = false;
+              });
+          
+          break;
+        }
+      }
+    }
+  }
+
+  changeReservationRate(event) {
+    if (this.ocenaLeta > 0 || this.ocenaKompanije > 0) {
+      const idChangeRateFR = event.target.id;
+    
+      let fr: FastFlightReservation = null;
+      for (let i = 0; i < this.allFlightReservation.length; ++i) {
+        if (this.allFlightReservation[i].id == idChangeRateFR) {
+          fr = this.allFlightReservation[i];
+          fr.ocenaLeta = this.ocenaLeta;
+          fr.ocenaKompanije = this.ocenaKompanije;
+          this.loading = true;
+          this.httpService.getIdAction("Flight", fr.flightId).toPromise()
+            .then(result => {
+              this.flight = (result as Flight);
+              if (fr != null) {
+                let date = new Date();
+                let deteOfFlight = new Date(this.flight.datumPolaska);
+                if (date.getFullYear() > deteOfFlight.getFullYear()) {
+                  this.putFlightReservation(fr);
+                  
+                }
+                else if (date.getFullYear() == deteOfFlight.getFullYear()) {
+                  if (date.getMonth() > deteOfFlight.getMonth()) {
+                    this.putFlightReservation(fr);
+                    
+                  }
+                  else if (date.getMonth() == deteOfFlight.getMonth()) {
+                    if (date.getDay() > deteOfFlight.getDay()) {
+                      this.putFlightReservation(fr);
+                      
+                    }
+                    else if (date.getDay() == deteOfFlight.getDay()) {
+                      if (date.getHours() > deteOfFlight.getHours()) {
+                        this.errorFFR = false;
+                        this.errorText = "";
+                        this.putFlightReservation(fr);
                       }
                       else {
                         this.errorFFR = true;

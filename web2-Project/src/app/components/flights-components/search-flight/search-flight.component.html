@@ -4,8 +4,8 @@
         <select class="form-control" id="selectSearch"
                 #selectSearch formControlName="selectSearch">
           <option value="1" selected>Company name</option>
-          <option value="2">Start destination</option>
-          <option value="3">Landing destination</option>
+          <option value="2">Start city destination</option>
+          <option value="3">Landing city destination</option>
         </select>
         <div *ngIf="f.selectSearch.touched && f.selectSearch.invalid" class="alert alert-danger">
             <div *ngIf="f.selectSearch.errors.required">Select is required.</div>

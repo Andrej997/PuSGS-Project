@@ -5,6 +5,7 @@ import { AvioCompaniesComponent } from '../avio-companies/avio-companies.compone
 import { FlightCompany } from 'src/app/entities/flightCompany/flight-company';
 import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 
+// ! PRETRAGA ZA AVIO KOMAPNIJE
 @Component({
   selector: 'app-search-flights',
   templateUrl: './search-flights.component.html',

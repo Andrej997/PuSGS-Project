@@ -71,5 +71,58 @@ namespace MAANPP20.Controllers.Flights
 
             return BadRequest();
         }
+
+        // POST: api/SearchFlights/SearchFlights
+        [HttpPost]
+        [Route("SearchFlights")]
+        public async Task<ActionResult<IEnumerable<Flight>>> GetFlights(SearchFlight search)
+        {
+            List<Flight> flights;
+            if (search.selectType == 1)
+            {
+                return flights = await _context.Flights
+                    .Where(x => x.deleted == false && x.company == search.inputSearch)
+                    .Include(from => from.from)
+                    .Include(to => to.to)
+                    .Include(presedanje => presedanje.presedanje)
+                        .ThenInclude(gradoviPresedanja => gradoviPresedanja.gradoviPresedanja)
+                    .Include(aeroplane => aeroplane.aeroplane)
+                    .Include(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
+                    .Include(luggage => luggage.luggage)
+                    .Include(ocene => ocene.ocene)
+                    .ToListAsync();
+            }
+            else if (search.selectType == 2)
+            {
+                return flights = await _context.Flights
+                    .Where(x => x.deleted == false && x.from.city == search.inputSearch)
+                    .Include(from => from.from)
+                    .Include(to => to.to)
+                    .Include(presedanje => presedanje.presedanje)
+                        .ThenInclude(gradoviPresedanja => gradoviPresedanja.gradoviPresedanja)
+                    .Include(aeroplane => aeroplane.aeroplane)
+                    .Include(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
+                    .Include(luggage => luggage.luggage)
+                    .Include(ocene => ocene.ocene)
+                    .ToListAsync();
+            }
+            else if (search.selectType == 3)
+            {
+                return flights = await _context.Flights
+                    .Where(x => x.deleted == false && x.to.city == search.inputSearch)
+                    .Include(from => from.from)
+                    .Include(to => to.to)
+                    .Include(presedanje => presedanje.presedanje)
+                        .ThenInclude(gradoviPresedanja => gradoviPresedanja.gradoviPresedanja)
+                    .Include(aeroplane => aeroplane.aeroplane)
+                    .Include(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
+                    .Include(luggage => luggage.luggage)
+                    .Include(ocene => ocene.ocene)
+                    .ToListAsync();
+            }
+
+
+            return BadRequest();
+        }
     }
 }

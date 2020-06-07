@@ -29,6 +29,7 @@ namespace MAANPP20.Data
         public DbSet<StringForICollection> StringForICollections { get; set; }
         public DbSet<DoubleForICollection> DoubleForICollections { get; set; }
         public DbSet<FastFlightReservation> FastFlightReservations { get; set; }
+        public DbSet<FlightReservation> FlightReservations { get; set; }
         #endregion
 
         #region Tables only with ICollection

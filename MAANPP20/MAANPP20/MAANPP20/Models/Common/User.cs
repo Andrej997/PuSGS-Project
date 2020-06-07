@@ -61,6 +61,8 @@ namespace MAANPP20.Models.Common
 
         public ICollection<FastFlightReservation> fastFlightReservations { get; set; }
 
+        public ICollection<FlightReservation> flightReservations { get; set; }
+
         public int bonus { get; set; }
     }
 }

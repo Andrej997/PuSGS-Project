@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200607160526_FlightReservation")]
+    partial class FlightReservation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -545,9 +547,6 @@ namespace MAANPP20.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("UserIdForPOST")
                         .HasColumnType("nvarchar(max)");
 
@@ -576,8 +575,6 @@ namespace MAANPP20.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("FlightReservations");
                 });
@@ -727,13 +724,6 @@ namespace MAANPP20.Migrations
                         .HasForeignKey("sId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Flights.FlightReservation", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Common.User", null)
-                        .WithMany("flightReservations")
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

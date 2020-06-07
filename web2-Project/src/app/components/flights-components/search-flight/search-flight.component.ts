@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { SearchFlight } from 'src/app/entities/search-flight/search-flight';
 import { FlightsComponent } from '../flights/flights.component';
+import { Flight } from 'src/app/entities/flight/flight';
+import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 
 @Component({
   selector: 'app-search-flight',
@@ -11,7 +13,8 @@ import { FlightsComponent } from '../flights/flights.component';
 export class SearchFlightComponent implements OnInit {
 
   searchClass: SearchFlight;
-  constructor(private flightsComponent: FlightsComponent) { }
+  constructor(private flightsComponent: FlightsComponent,
+    private httpService: HttpServiceService) { }
 
   ngOnInit(): void {
   }
@@ -26,12 +29,43 @@ export class SearchFlightComponent implements OnInit {
   }
   
   submit(){
-    this.searchClass = new SearchFlight(this.form.value.selectSearch, this.form.value.search);
-    this.flightsComponent.search(this.searchClass);
+    this.flightsComponent.loading = true;
+    let selectType: number = Number.parseInt(this.form.value.selectSearch);
+    let inputSearch: string = this.form.value.search;
+    let searchClass = new SearchFlight(selectType, inputSearch);
+    // this.flightsComponent.search(this.searchClass);
+    this.httpService.postAction('SearchFlights', 'SearchFlights', searchClass).subscribe(
+      res => { 
+        this.flightsComponent.error = false;
+        this.flightsComponent.searchedCompanies(res as Array<Flight>);
+        this.flightsComponent.loading = false;
+        
+      },
+      err => { 
+        this.flightsComponent.errorText = err; 
+        this.flightsComponent.error = true; 
+        this.flightsComponent.loading = false;
+      }
+    );
   }
 
   showAll(){
-    this.flightsComponent.cancelSearch();
+    this.flightsComponent.loading = true;
+    this.httpService.getAction('Flight')
+      .toPromise()
+      .then(result => {
+        this.flightsComponent.searchedCompanies(result as Array<Flight>);
+        //console.log(this.allAvioCompanies);
+        this.flightsComponent.loading = false;
+        this.flightsComponent.error = false;
+      })
+      .catch(
+        err => {
+          console.log(err)
+          this.flightsComponent.error = true;
+          this.flightsComponent.errorText = "Error while loading companies!";
+          this.flightsComponent.loading = false;
+        });
   }
 
 }

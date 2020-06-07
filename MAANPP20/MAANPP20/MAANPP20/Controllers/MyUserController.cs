@@ -83,6 +83,7 @@ namespace MAANPP20.Controllers
             user.friendRequests = new List<FriendRequest>();
             user.friends = new List<Friend>();
             user.fastFlightReservations = new List<FastFlightReservation>();
+            user.flightReservations = new List<FlightReservation>();
             user.bonus = 0;
             try
             {

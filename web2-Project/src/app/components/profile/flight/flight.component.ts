@@ -54,6 +54,8 @@ export class FlightComponent implements OnInit {
   priceOneWayForFlight: number = 0
   priceTwoWayForFlight: number = 0
 
+  seatId: number = 0;
+
   constructor(private route: ActivatedRoute, private router: Router,
       public authenticationService: AuthenticationService,
       private avioCompaniesService: AvioCompaniesService, private httpService: HttpServiceService,
@@ -175,6 +177,9 @@ export class FlightComponent implements OnInit {
     }
     else if (num === 3) {
       this.sumPriceForAll = this.sumPrice;
+      // console.log(this.sumLuggagePrice);
+      // console.log(this.sumPrice);
+      
       this.next = 'None';
       this.prev = 'Cancel';
       if (this.selectedTicket == 1) {
@@ -183,6 +188,8 @@ export class FlightComponent implements OnInit {
       else if (this.selectedTicket == 2) {
         this.sumPrice = this.seatsNumber * this.priceTwoWayForFlight;
       }
+      // console.log(this.sumLuggagePrice);
+      // console.log(this.sumPrice);
     }
   }
   nextView(): void {
@@ -290,11 +297,43 @@ export class FlightComponent implements OnInit {
     }
   }
 
+  cancelReservationi() {
+    this.paginationNum = 0;
+    this.next = 'Choose seats';
+    this.prev = 'None';
+    this.setPrices();
+  }
+
   setRentACat() {
     console.log("YES");
   }
 
   dontSetRentACat() {
-    console.log("NO");
+    let flightReservation = new FlightReservation();
+    flightReservation.flightId = this.flight.id;
+
+    if (this.sumPriceForAll === 0)
+      flightReservation.price = this.sumPrice;
+    else
+      flightReservation.price = this.sumPriceForAll;
+
+    flightReservation.seatNumeration = this.selectedSeats[0];
+    flightReservation.UserIdForPOST = this.currentUser.id.toString();
+    flightReservation.seatId = this.flight.allSeatsForThisFlight[this.selectedSeats[0]-1].id;
+    flightReservation.userBonus = this.checked;
+    console.log(flightReservation);
+
+    this.httpService.postAction('FlightReservation', 'Reserve', flightReservation).subscribe(
+      res => { 
+        this.successText = "Reservation successfully created!";
+        this.router.navigate(['/reservations/' + this.currentUser.id.toString()]);
+        this.success = true;
+      },
+      err => { 
+        this.errorText = err; 
+        this.error = true; 
+        this.success = false;
+      }
+    );
   }
 }
