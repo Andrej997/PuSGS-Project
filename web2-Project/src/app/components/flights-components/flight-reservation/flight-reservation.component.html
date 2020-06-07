@@ -57,11 +57,11 @@
                         </ng-template>
                     </td>
                     <td>
-                        <div *ngIf="fastFlightReservation.ocenaKompanije > 0; then thenBlock1 else elseBlock1"></div>
-                        <ng-template #thenBlock1>
+                        <div *ngIf="fastFlightReservation.ocenaKompanije > 0; then thenBlock11 else elseBlock11"></div>
+                        <ng-template #thenBlock11>
                             {{fastFlightReservation.ocenaKompanije}}
                         </ng-template>
-                        <ng-template #elseBlock1>
+                        <ng-template #elseBlock11>
                             <input type="number" class="form-control" min="0" max="5" 
                                 onkeydown="return false" [(ngModel)]="ocenaKompanije">
                         </ng-template>

@@ -44,9 +44,20 @@ export class AvioCompaniesComponent implements OnInit {
         err => {
           console.log(err)
           this.error = true;
-          this.errorText = "Error while loading companies!"
+          this.errorText = "Error while loading companies!";
           this.loading = false;
         });
   }
 
+  searchedCompanies(avioCompanies: Array<FlightCompany>) {
+    this.allAvioCompanies = avioCompanies;
+    if (this.allAvioCompanies.length == 0) {
+      this.error = true;
+      this.errorText = "List is empty!";
+      this.loading = false;
+    }
+    else {
+      this.loading = false;
+    }
+  }
 }
