@@ -22,7 +22,7 @@
     </div>
     <div *ngIf="!loading && !error">
 
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation example" *ngIf="paginationNum != 4">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
                     <a class="page-link" style="cursor: pointer;" (click)="previousView()"
@@ -44,6 +44,50 @@
             <div class="media-body" *ngIf="paginationNum === 0">
                 <img src={{flight.destImg}} style="width: 100%;" class="mr-4" alt="">
                 
+                <h4>Flight rate</h4>
+                <div class="profile-stars">
+                    <!-- START NO 1-->
+                    <div *ngIf="ocena < 0.5; then thenBlock1 else elseBlock1"></div>
+                    <ng-template #thenBlock1><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock1>
+                        <div *ngIf="ocena < 1; then thenBlock11 else elseBlock11"></div>
+                        <ng-template #thenBlock11><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        <ng-template #elseBlock11><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    </ng-template>
+                    <!-- START NO 2-->
+                    <div *ngIf="ocena < 1.5; then thenBlock2 else elseBlock2"></div>
+                    <ng-template #thenBlock2><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock2>
+                        <div *ngIf="ocena < 2; then thenBlock22 else elseBlock22"></div>
+                        <ng-template #thenBlock22><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        <ng-template #elseBlock22><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    </ng-template>
+                    <!-- START NO 3-->
+                    <div *ngIf="ocena < 2.5; then thenBlock3 else elseBlock3"></div>
+                    <ng-template #thenBlock3><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock3>
+                        <div *ngIf="ocena < 3; then thenBlock33 else elseBlock33"></div>
+                        <ng-template #thenBlock33><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        <ng-template #elseBlock33><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    </ng-template>
+                    <!-- START NO 4-->
+                    <div *ngIf="ocena < 3.5; then thenBlock4 else elseBlock4"></div>
+                    <ng-template #thenBlock4><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock4>
+                        <div *ngIf="ocena < 4; then thenBlock44 else elseBlock44"></div>
+                        <ng-template #thenBlock44><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        <ng-template #elseBlock44><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    </ng-template>
+                    <!-- START NO 5-->
+                    <div *ngIf="ocena < 4.5; then thenBlock5 else elseBlock5"></div>
+                    <ng-template #thenBlock5><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock5>
+                        <div *ngIf="ocena < 5; then thenBlock55 else elseBlock55"></div>
+                        <ng-template #thenBlock55><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                        <ng-template #elseBlock55><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    </ng-template>
+                </div>
+
                 <h3 class="mt-0" >{{flight.company}}
                     <img src={{flight.logo}} class="mr-4" alt="" width="35px">
                 </h3>
@@ -87,12 +131,24 @@
                         *ngFor="let presedanje of flight.presedanje.gradoviPresedanja">{{presedanje.plainString}}</p>
                 </div>
 
+                <div class="container" *ngIf="currentUser.bonus>0">
+                    <div class="input-group mb-3">
+                        <label for="sn">Add my bonus</label>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" aria-label="Add discount (user bonus)"
+                                        (change)="checkCheckBoxvalue($event)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="container">
                     <label for="exampleFormControlSelect1">Ticket type</label>
                     <div>
                         <select class="form-control ml-3" [(ngModel)]="selectedTicket" >
-                            <option value=1 selected> One way - ${{flight.prise}}</option>
-                            <option value=2> Two way - ${{flight.priceTwoWay}}</option>
+                            <option value=1 selected> One way - ${{priceOneWayForFlight}}</option>
+                            <option value=2> Two way - ${{priceTwoWayForFlight}}</option>
                         </select>
                     </div>
                 </div>
@@ -134,22 +190,22 @@
             <div class="media-body" *ngIf="paginationNum === 3">
 
                 <div class="container">
-                    <label>Carry-On</label>
+                    <label>Carry-On(${{flight.luggage.priceCarryOn}})</label>
                     <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="carryOn" (change)="luggageF()">
                 </div>
 
                 <div class="container">
-                    <label>Personal Bag</label>
+                    <label>Personal Bag(${{flight.luggage.pricePersonalBag}})</label>
                     <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="personalBag" (change)="luggageF()">
                 </div>
 
                 <div class="container">
-                    <label>Full-Size Spinner</label>
+                    <label>Full-Size Spinner(${{flight.luggage.priceFullSizeSpinner}})</label>
                     <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="fullSizeSpiner" (change)="luggageF()">
                 </div>
 
                 <div class="container">
-                    <label>Large Duffel</label>
+                    <label>Large Duffel(${{flight.luggage.priceLargeDuffel}})</label>
                     <input type="number" class="form-control" min="1" onkeydown="return false" [(ngModel)]="largeDuffel" (change)="luggageF()">
                 </div>
 
@@ -174,6 +230,22 @@
                 <div class="container mt-5" style="float: left;">
                     <button type="button" class="btn btn-success" (click)="bookFlight()">BOOK FLIGHT</button>
                 </div>
+            </div>
+
+            <div class="" *ngIf="paginationNum === 4">
+                <h1>WOULD YOU LIKE TO RENT A CAR SERVICE WITH YOUR FLIGHT?</h1>
+                <button type="button" class="btn btn-success btn-lg btn-block mb-3"
+                        (click)="setRentACat()">
+                    YES
+                </button>
+                <button type="button" class="btn btn-danger btn-lg btn-block mt-3"
+                        (click)="dontSetRentACat()">
+                    NO
+                </button>
+                <button type="button" class="btn btn-secondary btn-lg btn-block mt-3"
+                        (click)="cancelReservationi()">
+                    CANCEL
+                </button>
             </div>
         </div>
     </div>

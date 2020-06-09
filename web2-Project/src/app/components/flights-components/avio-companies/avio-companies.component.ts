@@ -4,6 +4,8 @@ import { AvioCompaniesService } from 'src/app/services/avio-companies-service/av
 import { FlightCompany } from 'src/app/entities/flightCompany/flight-company';
 import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
+import { User } from 'src/app/entities/user/user';
 
 @Component({
   selector: 'app-avio-companies',
@@ -11,7 +13,8 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./avio-companies.component.css']
 })
 export class AvioCompaniesComponent implements OnInit {
-
+  currentUser: User;
+  
   error: boolean = false;
   errorText: string = "";
 
@@ -21,8 +24,12 @@ export class AvioCompaniesComponent implements OnInit {
 
   allAvioCompanies: Array<FlightCompany> = new Array<FlightCompany>();
   constructor(private avioCompaniesService: AvioCompaniesService,
-              private httpService: HttpServiceService) { 
+              private httpService: HttpServiceService,
+              public authenticationService: AuthenticationService) { 
     //this.allAvioCompanies = this.avioCompaniesService.loadAvioCompanies();
+    if (this.authenticationService.currentUserValue) { 
+      this.currentUser = this.authenticationService.currentUserValue;
+    }
   }
 
   ngOnInit(): void {
@@ -37,9 +44,20 @@ export class AvioCompaniesComponent implements OnInit {
         err => {
           console.log(err)
           this.error = true;
-          this.errorText = "Error while loading companies!"
+          this.errorText = "Error while loading companies!";
           this.loading = false;
         });
   }
 
+  searchedCompanies(avioCompanies: Array<FlightCompany>) {
+    this.allAvioCompanies = avioCompanies;
+    if (this.allAvioCompanies.length == 0) {
+      this.error = true;
+      this.errorText = "List is empty!";
+      this.loading = false;
+    }
+    else {
+      this.loading = false;
+    }
+  }
 }

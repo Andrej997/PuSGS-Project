@@ -8,3 +8,6 @@
     margin-top: 60px;
     z-index: 6;
 }
+a {
+    cursor: pointer;
+}

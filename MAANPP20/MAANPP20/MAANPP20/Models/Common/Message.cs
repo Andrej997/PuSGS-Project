@@ -8,13 +8,21 @@ namespace MAANPP20.Models.Common
 		[Key]
 		public int id { get; set; }
 
-		[Required]
 		public string text { get; set; }
 
-		[Required]
 		public DateTime dateTime { get; set; }
 
-		[Required]
+		public string myId { get; set; }
+
+		public string hisId { get; set; }
+
 		public bool isUnread { get; set; }
+
+		public bool deleted { get; set; }
+
+		public Message()
+		{
+			deleted = false;
+		}
 	}
 }

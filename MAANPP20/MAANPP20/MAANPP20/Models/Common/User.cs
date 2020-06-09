@@ -60,5 +60,11 @@ namespace MAANPP20.Models.Common
         //public ICollection<User> waitingForAccept { get; set; }
 
         public ICollection<FriendRequest> friendRequests { get; set; }
+
+        public ICollection<FastFlightReservation> fastFlightReservations { get; set; }
+
+        public ICollection<FlightReservation> flightReservations { get; set; }
+
+        public int bonus { get; set; }
     }
 }

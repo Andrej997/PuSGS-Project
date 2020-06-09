@@ -24,6 +24,8 @@ export class NavbarComponent implements OnInit {
       this.fR = 5;
       //this.uM = this.currentUser.friends.;
       this.uM = 2;
+
+      console.log(this.currentUser);
     }
   }
 

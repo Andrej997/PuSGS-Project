@@ -179,7 +179,6 @@ namespace MAANPP20.Controllers.Flights
             return Ok();
         }
 
-
         // DELETE: api/Flight/DeleteFlight/1
         [HttpDelete]
         [Route("DeleteFlight/{id}")]

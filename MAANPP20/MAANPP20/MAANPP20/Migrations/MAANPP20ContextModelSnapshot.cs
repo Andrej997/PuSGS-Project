@@ -78,13 +78,21 @@ namespace MAANPP20.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("userId")
-                        .IsRequired()
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("hisId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("myId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Friends");
                 });
@@ -128,11 +136,19 @@ namespace MAANPP20.Migrations
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("hisId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("isUnread")
                         .HasColumnType("bit");
 
+                    b.Property<string>("myId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("text")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
@@ -220,6 +236,9 @@ namespace MAANPP20.Migrations
 
                     b.Property<string>("authData")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("bonus")
+                        .HasColumnType("int");
 
                     b.Property<bool>("deleted")
                         .HasColumnType("bit");
@@ -328,6 +347,50 @@ namespace MAANPP20.Migrations
                     b.HasIndex("Flightid");
 
                     b.ToTable("AvioSedista");
+                });
+
+            modelBuilder.Entity("MAANPP20.Models.Flights.FastFlightReservation", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserIdForPOST")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("flightId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ocenaKompanije")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ocenaLeta")
+                        .HasColumnType("int");
+
+                    b.Property<double>("price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("seatId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("seatNumeration")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("userBonus")
+                        .HasColumnType("bit");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FastFlightReservations");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Flights.Flight", b =>
@@ -478,6 +541,50 @@ namespace MAANPP20.Migrations
                     b.ToTable("FlightDestinations");
                 });
 
+            modelBuilder.Entity("MAANPP20.Models.Flights.FlightReservation", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserIdForPOST")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("flightId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ocenaKompanije")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ocenaLeta")
+                        .HasColumnType("int");
+
+                    b.Property<double>("price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("seatId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("seatNumeration")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("userBonus")
+                        .HasColumnType("bit");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FlightReservations");
+                });
+
             modelBuilder.Entity("MAANPP20.Models.Flights.Presedanje", b =>
                 {
                     b.Property<int>("id")
@@ -509,11 +616,9 @@ namespace MAANPP20.Migrations
 
             modelBuilder.Entity("MAANPP20.Models.Common.Friend", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Common.User", "user")
+                    b.HasOne("MAANPP20.Models.Common.User", null)
                         .WithMany("friends")
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Common.FriendRequest", b =>
@@ -549,6 +654,13 @@ namespace MAANPP20.Migrations
                     b.HasOne("MAANPP20.Models.Flights.Flight", null)
                         .WithMany("allSeatsForThisFlight")
                         .HasForeignKey("Flightid");
+                });
+
+            modelBuilder.Entity("MAANPP20.Models.Flights.FastFlightReservation", b =>
+                {
+                    b.HasOne("MAANPP20.Models.Common.User", null)
+                        .WithMany("fastFlightReservations")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Flights.Flight", b =>
@@ -618,6 +730,13 @@ namespace MAANPP20.Migrations
                         .HasForeignKey("sId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MAANPP20.Models.Flights.FlightReservation", b =>
+                {
+                    b.HasOne("MAANPP20.Models.Common.User", null)
+                        .WithMany("flightReservations")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

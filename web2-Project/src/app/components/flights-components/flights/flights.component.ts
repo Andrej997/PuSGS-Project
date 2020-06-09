@@ -205,4 +205,16 @@ export class FlightsComponent implements OnInit {
     retItem.push(items[items.length-1]);
     return retItem;
   }
+
+  searchedCompanies(allFlights: Array<Flight>) {
+    this.allFlights = allFlights;
+    if (this.allFlights.length == 0) {
+      this.error = true;
+      this.errorText = "List is empty!";
+      this.loading = false;
+    }
+    else {
+      this.loading = false;
+    }
+  }
 }

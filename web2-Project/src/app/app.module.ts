@@ -83,6 +83,8 @@ export function socialConfigs() {
   );  
   return config;  
 }  
+import { FlightReservationComponent } from './components/flights-components/flight-reservation/flight-reservation.component';
+import { SearchFlightsComponent } from './components/flights-components/search-flights/search-flights.component';
 
 @NgModule({
   declarations: [
@@ -128,6 +130,8 @@ export function socialConfigs() {
     PlaneSeatsComponent,
     CreateOrReplaceServiceComponent,
     ChangeProfileComponent,
+    FlightReservationComponent,
+    SearchFlightsComponent,
 
   ],
   imports: [

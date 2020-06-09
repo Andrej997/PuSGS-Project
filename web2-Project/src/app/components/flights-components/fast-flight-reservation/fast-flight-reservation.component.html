@@ -12,12 +12,60 @@
     <div class="alert alert-danger" role="alert" *ngIf="error && !loading">
         <b>{{errorText}}</b>
     </div>
+    <div class="alert alert-success" role="alert" *ngIf="success && !loading">
+        <b>{{successText}}</b>
+    </div>
     
     <!-- <div class="alert alert-success" role="alert" *ngIf="success && !loading">
         <b>{{successText}} created!</b>
     </div> -->
-    <div class="card" *ngIf="!error && !loading">
+    <div class="card"><!--<*ngIf="!error && !loading"> -->
         <div class="media-body">
+            <img src={{flight.destImg}} style="width: 100%;" class="mr-4" alt="">
+            
+            <h4>Flight rate</h4>
+            <div class="profile-stars">
+                <!-- START NO 1-->
+                <div *ngIf="ocena < 0.5; then thenBlock1 else elseBlock1"></div>
+                <ng-template #thenBlock1><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                <ng-template #elseBlock1>
+                    <div *ngIf="ocena < 1; then thenBlock11 else elseBlock11"></div>
+                    <ng-template #thenBlock11><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock11><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                </ng-template>
+                <!-- START NO 2-->
+                <div *ngIf="ocena < 1.5; then thenBlock2 else elseBlock2"></div>
+                <ng-template #thenBlock2><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                <ng-template #elseBlock2>
+                    <div *ngIf="ocena < 2; then thenBlock22 else elseBlock22"></div>
+                    <ng-template #thenBlock22><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock22><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                </ng-template>
+                <!-- START NO 3-->
+                <div *ngIf="ocena < 2.5; then thenBlock3 else elseBlock3"></div>
+                <ng-template #thenBlock3><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                <ng-template #elseBlock3>
+                    <div *ngIf="ocena < 3; then thenBlock33 else elseBlock33"></div>
+                    <ng-template #thenBlock33><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock33><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                </ng-template>
+                <!-- START NO 4-->
+                <div *ngIf="ocena < 3.5; then thenBlock4 else elseBlock4"></div>
+                <ng-template #thenBlock4><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                <ng-template #elseBlock4>
+                    <div *ngIf="ocena < 4; then thenBlock44 else elseBlock44"></div>
+                    <ng-template #thenBlock44><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock44><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                </ng-template>
+                <!-- START NO 5-->
+                <div *ngIf="ocena < 4.5; then thenBlock5 else elseBlock5"></div>
+                <ng-template #thenBlock5><img src="\assets\img\blank-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                <ng-template #elseBlock5>
+                    <div *ngIf="ocena < 5; then thenBlock55 else elseBlock55"></div>
+                    <ng-template #thenBlock55><img src="\assets\img\half-star.png" style="width: 30px; height: 30px;"/></ng-template>
+                    <ng-template #elseBlock55><img src="\assets\img\star.png" style="width: 30px; height: 30px;"/></ng-template>
+                </ng-template>
+            </div>
             
             <h3 class="mt-0" >{{flight.company}}
                 <img src={{flight.logo}} class="mr-4" alt="" width="35px">
@@ -62,6 +110,18 @@
                     *ngFor="let presedanje of flight.presedanje.gradoviPresedanja">{{presedanje.plainString}}</p>
             </div>
 
+            <div class="container" *ngIf="currentUser.bonus>0">
+                <div class="input-group mb-3">
+                    <label for="sn">Add my bonus</label>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <input type="checkbox" aria-label="Add discount (user bonus)"
+                                    (change)="checkCheckBoxvalue($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="container">
                 <label for="price">Price <span title="original price">{{flight.prise}}</span> with discount of {{flight.discountForFastReservation}}%</label>
                 <p class="ml-3" id="price">{{discountPrice}}</p>
@@ -77,7 +137,7 @@
                 <p class="ml-3" id="aeroplane">{{flight.aeroplane.name}}</p>
             </div>
 
-            <div class="container">
+            <div class="container" *ngIf="!success">
                 <button type="button" class="btn btn-success" (click)="reserveFastFlight()">
                     BOOK FLIGHT
                 </button>

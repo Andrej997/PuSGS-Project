@@ -6,6 +6,12 @@
     <div class="alert alert-warning" role="alert" *ngIf="!error && allAvioCompanies.length == 0  && !loading">
         <b>There is no company registrated!</b>
     </div>
+    <div class="alert alert-info down" role="alert" *ngIf="!loading && !error">
+        To <b>search</b> avio companies click <a data-toggle="collapse" href="#collapseSeach"><b><u>here</u></b></a>!<br/>
+    </div>
+    <div class="container collapse border border-secondary rounded mb-3" id="collapseSeach">
+        <app-search-flights></app-search-flights>
+    </div>
     <div class="row card-group" *ngIf="allAvioCompanies.length != 0 && !loading">
         <div class="col-sm-4" *ngFor="let avioCompany of allAvioCompanies">
             <div class="card" style="margin-bottom: 30px;">
@@ -19,7 +25,9 @@
             </div>
         </div>
     </div>
-    <div class="row card-group" *ngIf="!loading && allAvioCompanies.length == 0">
+
+    <!-- ! MOGU DA VIDIM OVO DUGME, SAMO AKO SERVER NIJE PUKAO, ADMIN SAM AVIO KOMPANIJA I AKO NEMAM SVOJU-->
+    <div class="row card-group" *ngIf="!loading && currentUser.serviceId === 0 && currentUser.role === 2 && !error">
         <div class="border-success col-sm-3" style="margin-bottom: 30px; " >
             <a style="cursor: pointer;" routerLink="/createAvioCompany">
                 <img id="myimgborder" src="\assets\img\add.png" class="card-img-top" alt="add new flight">

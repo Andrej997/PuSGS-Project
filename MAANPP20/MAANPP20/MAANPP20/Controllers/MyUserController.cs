@@ -22,6 +22,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Mail;
+using MAANPP20.Models.Flights;
 
 namespace MAANPP20.Controllers
 {
@@ -84,6 +85,9 @@ namespace MAANPP20.Controllers
             user.serviceId = 0;
             user.friendRequests = new List<FriendRequest>();
             user.friends = new List<Friend>();
+            user.fastFlightReservations = new List<FastFlightReservation>();
+            user.flightReservations = new List<FlightReservation>();
+            user.bonus = 0;
             try
             {
                 user.role = Role.adminA;

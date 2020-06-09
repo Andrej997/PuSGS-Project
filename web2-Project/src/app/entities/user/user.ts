@@ -38,6 +38,8 @@ export class User {
 
     flightCompany: FlightCompany;
 
+    bonus: number;
+
     constructor(id: number, firstName: string, lastName: string, 
         email: string, password: string, 
         profileImage: string, address: Address, role: Role, 

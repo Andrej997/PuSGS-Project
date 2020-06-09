@@ -28,6 +28,7 @@ export class UserFriendsComponent implements OnInit {
   friendRequests: Array<FriendRequest> = new Array<FriendRequest>();
   friendRequestsAccept: Array<User> = new Array<User>();
   waitingForAccept: Array<User> = new Array<User>();
+  friends: Array<User> = new Array<User>();
 
   constructor(public authenticationService: AuthenticationService, private router: Router,
       private friendServiceService: FriendServiceService, private httpService: HttpServiceService) {
@@ -51,24 +52,50 @@ export class UserFriendsComponent implements OnInit {
 
   ngOnInit(): void { 
     this.scrollToBottom();
-    this.httpService.getEmailAction('Friend/Awu', this.currentUser.email)
+    this.loadLists();
+  }
+
+  loadLists() {
+    this.httpService.getEmailAction('Friend/Fru', this.currentUser.email)
+    .toPromise()
+    .then(result => {
+      this.friendRequestsAccept = result as User[];
+      // this.loading = false;
+    })
+    .catch(
+      err => {
+        console.log(err)
+        // this.error = true;
+        // this.errorText = "Error while loading companies!"
+        // this.loading = false;
+      });
+    this.httpService.getEmailAction('Friend/MyFriends', this.currentUser.email)
       .toPromise()
       .then(result => {
-        // console.log(result)
-        // console.log("!")
-        this.waitingForAccept = result as User[];
-          
-        // console.log(this.waitingForAccept);
+        console.log(result);
+        this.friends = result as User[];
         // this.loading = false;
       })
       .catch(
         err => {
-          // console.log("?")
           console.log(err)
           // this.error = true;
           // this.errorText = "Error while loading companies!"
           // this.loading = false;
         });
+  this.httpService.getEmailAction('Friend/Awu', this.currentUser.email)
+    .toPromise()
+    .then(result => {
+      this.waitingForAccept = result as User[];
+      // this.loading = false;
+    })
+    .catch(
+      err => {
+        console.log(err)
+        // this.error = true;
+        // this.errorText = "Error while loading companies!"
+        // this.loading = false;
+      });
   }
 
   ngAfterViewChecked() {        
@@ -83,12 +110,38 @@ export class UserFriendsComponent implements OnInit {
 
   
 
-  accept(email: string) {
-    this.friendServiceService.acceptFriend(email);
+  accept(id: string) {
+    let sendId: string = this.currentUser.id + '|' + id;
+    // console.log(sendId);
+    this.httpService.deleteUserIdAction('Friend', "AddFriend", sendId).subscribe (
+      res => { 
+        //* ako PUT prodje, obrisi te zahteve za prijateljstvo
+        this.decline(id);
+      },
+      err => { 
+        console.log(err);
+        // this.errorText = err; 
+        // this.error = true; 
+        // this.success = false;
+      });
   }
 
-  decline(email: string) {
-    this.friendServiceService.declineFriend(email);
+  decline(id: string) {
+    // this.friendServiceService.declineFriend(email);
+    let sendId: string = this.currentUser.id + '|' + id;
+    // console.log(sendId)
+    this.httpService.deleteUserIdAction("Friend", "DeleteFriendRequest", sendId).toPromise()
+    .then(result => {
+      // this.loading = false;
+      this.loadLists();
+    })
+    .catch(
+      err => {
+        // this.loading = false;
+        console.log(err);
+        // this.error = true;
+        // this.hideShowBTN = false;
+      });
   }
 
   form = new FormGroup({
@@ -153,8 +206,21 @@ export class UserFriendsComponent implements OnInit {
     this.foundUser = false;
   }
 
-  deleteFriend(email: string): void {
-    this.friendServiceService.deleteFriend(email);
+  deleteFriend(id: string): void {
+    let sendId: string = this.currentUser.id + '|' + id;
+    // this.friendServiceService.deleteFriend(email);
+    this.httpService.deleteUserIdAction("Friend", "DeleteFriend", sendId).toPromise()
+    .then(result => {
+      // this.loading = false;
+      this.loadLists();
+    })
+    .catch(
+      err => {
+        // this.loading = false;
+        console.log(err);
+        // this.error = true;
+        // this.hideShowBTN = false;
+      });
   }
 
   formChat = new FormGroup({

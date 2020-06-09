@@ -11,14 +11,14 @@
     <div class="card mb-3" *ngFor="let fr of friendRequestsAccept">
         <div class="row no-gutters">
             <div class="col-md-1">
-                <img src={{fr.profileImage}} alt="">
+                <img src={{fr.profileImage}} class="imgFriend mr-4" alt="">
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <h5 class="card-title">{{fr.email}}</h5>
-                <p class="card-text">{{fr.firstName}} {{fr.lastName}}</p>
-                <button type="button" class="btn btn-success" (click)="accept(fr.email)">ACCEPT</button>
-                <button type="button" class="btn btn-danger ml-4" (click)="decline(fr.email)">DECLINE</button>
+                <h5 class="ml-4 card-title">{{fr.email}}</h5>
+                <p class="ml-4 card-text">{{fr.firstName}} {{fr.lastName}}</p>
+                <button type="button" class="btn btn-success" (click)="accept(fr.id)">ACCEPT</button>
+                <button type="button" class="btn btn-danger ml-4" (click)="decline(fr.id)">DECLINE</button>
               </div>
             </div>
         </div>
@@ -46,34 +46,17 @@
         </button>
       </div>
     </div>
-    <div class="card mb-3" *ngFor="let fr of currentUser.friends">
+    <div class="card mb-3" *ngFor="let fr of friends">
         <div class="row no-gutters">
             <div class="col-md-1">
-                <img src={{fr.friend.profileImage}} alt="">
+                <img src={{fr.profileImage}} class="imgFriend" alt="">
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <h5 class="card-title">{{fr.friend.email}}</h5>
-                <p class="card-text">{{fr.friend.firstName}} {{fr.friend.lastName}}</p>
-                <button type="button" class="btn btn-primary" data-toggle="collapse" href="#overflowchat">CHAT</button>
-                <button type="button" class="btn btn-danger ml-4" (click)="deleteFriend(fr.friend.email)">DELETE</button>
+                <h5 class="ml-4 card-title">{{fr.email}}</h5>
+                <p class="ml-4 card-text">{{fr.firstName}} {{fr.lastName}}</p>
+                <button type="button" class="btn btn-danger ml-4" (click)="deleteFriend(fr.id)">DELETE</button>
               </div>
-            </div>
-            <div #scrollMe class="collapse overflowChat" id="overflowchat">
-              <div *ngFor="let message of fr.messages">
-                <p><b>{{message.name}}:</b> {{message.text}}</p>
-                <b>{{message.date}}</b>
-                <hr style="background-color: black;">
-              </div>
-              <form [formGroup]="formChat" (ngSubmit)="chatWithFriend(fr.friend.email)">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="chatText" formControlName="chatText"  #chatText 
-                        aria-describedby="chatTextHelp" style="width: 90%; float: left;" placeholder="text...">
-                  <button type="submit" (click) = "chatText.value = ''" class="btn btn-primary" style="float: right;">
-                    Send
-                  </button>
-                </div>
-              </form>
             </div>
         </div>
     </div>
@@ -81,13 +64,12 @@
     <div class="card mb-3" *ngFor="let fr of waitingForAccept">
         <div class="row no-gutters">
             <div class="col-md-1">
-                <!-- <img src={{fr.profileImage}} width="100px" alt=""> -->
+              <img src={{fr.profileImage}} class="imgFriend" alt="">
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <img src={{fr.profileImage}} style="float: right;" width="100px" alt="">
-                <h5 class="card-title" style="float: left;">{{fr.email}}</h5> <br/> <br/>
-                <p class="card-text" style="float: left;">{{fr.firstName}} {{fr.lastName}}</p>
+                <h5 class="ml-4 card-title">{{fr.email}}</h5>
+                <p class="ml-4 card-text" >{{fr.firstName}} {{fr.lastName}}</p>
               </div>
             </div>
         </div>

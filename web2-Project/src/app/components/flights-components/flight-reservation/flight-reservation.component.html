@@ -1,0 +1,142 @@
+<div class="container down"
+        *ngIf='!this.authenticationService.currentUserValue'> <!-- AKO NIJE NIKO ULOGOVAN -->
+    <div class="alert alert-danger" role="alert"> 
+        <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
+    </div>
+    <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
+</div>
+
+<div *ngIf='this.authenticationService.currentUserValue' class="container down">
+    <div class="alert alert-danger" role="alert" *ngIf="error || errorFFR">
+        <b>{{errorText}}</b>
+    </div>
+    <div class="alert alert-info" role="alert">
+        <b>Click on id to see flight details!</b>
+    </div>
+    <div class="alert alert-warning" role="alert" *ngIf="change && !error">
+        Changes have been made, please refresh page or click <a style="cursor: pointer;" (click)="refreshPage()"><b>here</b></a>!
+    </div>
+    <div *ngIf="!error">
+        <app-my-spinner *ngIf="loading"></app-my-spinner>
+        <div *ngIf="showFlightDetails">
+            <h4>Flight[{{flight.company}}]</h4>
+            <h5 class="ml-1">from: {{flight.from.city}}</h5>
+            <label class="ml-2">[{{flight.datumPolaska}}]</label>
+            <h5 class="ml-1">to: {{flight.to.city}}</h5>
+            <label class="ml-2">[{{flight.datumSletanja}}]</label>
+        </div>
+        <h3>Fast reservations</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">id</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Seat numeration</th>
+                    <th scope="col">Rate flight</th>
+                    <th scope="col">Rate flight company</th>
+                    <th scope="col">Submit rate</th>
+                    <th scope="col">Cancel fast reservation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let fastFlightReservation of allFastFlightReservation">
+                    <th id={{fastFlightReservation.id}} scope="row" (click)="getFlight($event)"
+                            style="cursor: pointer;">
+                        {{fastFlightReservation.id}}
+                    </th>
+                    <td>{{fastFlightReservation.price}}</td>
+                    <td>{{fastFlightReservation.seatNumeration}}</td>
+                    <td>
+                        <div *ngIf="fastFlightReservation.ocenaLeta > 0; then thenBlock1 else elseBlock1"></div>
+                        <ng-template #thenBlock1>
+                            {{fastFlightReservation.ocenaLeta}}
+                        </ng-template>
+                        <ng-template #elseBlock1>
+                            <input type="number" class="form-control" min="0" max="5"
+                                onkeydown="return false" [(ngModel)]="ocenaLeta">
+                        </ng-template>
+                    </td>
+                    <td>
+                        <div *ngIf="fastFlightReservation.ocenaKompanije > 0; then thenBlock11 else elseBlock11"></div>
+                        <ng-template #thenBlock11>
+                            {{fastFlightReservation.ocenaKompanije}}
+                        </ng-template>
+                        <ng-template #elseBlock11>
+                            <input type="number" class="form-control" min="0" max="5" 
+                                onkeydown="return false" [(ngModel)]="ocenaKompanije">
+                        </ng-template>
+                    </td>
+                    <td>
+                        <a style="cursor: pointer;" *ngIf="!loading">
+                            <img id={{fastFlightReservation.id}} src="\assets\img\change.png" (click)="changeRate($event)"
+                                class="card-img-top" alt="change rate" style="width: 50px;">
+                        </a>
+                    </td>
+                    <td>
+                        <a style="cursor: pointer;" *ngIf="!loading">
+                            <img id={{fastFlightReservation.id}} src="\assets\img\delete.png" (click)="cancelFastReservation($event)"
+                                class="card-img-top" alt="delete" style="width: 50px;">
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Reservations</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">id</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Seat numeration</th>
+                    <th scope="col">Rate flight</th>
+                    <th scope="col">Rate flight company</th>
+                    <th scope="col">Submit rate</th>
+                    <th scope="col">Cancel fast reservation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let flightReservation of allFlightReservation">
+                    <th id={{flightReservation.id}} scope="row" (click)="getFlight($event)"
+                            style="cursor: pointer;">
+                        {{flightReservation.id}}
+                    </th>
+                    <td>{{flightReservation.price}}</td>
+                    <td>{{flightReservation.seatNumeration}}</td>
+                    <td>
+                        <div *ngIf="flightReservation.ocenaLeta > 0; then thenBlock1 else elseBlock1"></div>
+                        <ng-template #thenBlock1>
+                            {{flightReservation.ocenaLeta}}
+                        </ng-template>
+                        <ng-template #elseBlock1>
+                            <input type="number" class="form-control" min="0" max="5"
+                                onkeydown="return false" [(ngModel)]="ocenaLeta">
+                        </ng-template>
+                    </td>
+                    <td>
+                        <div *ngIf="flightReservation.ocenaKompanije > 0; then thenBlock11 else elseBlock11"></div>
+                        <ng-template #thenBlock11>
+                            {{flightReservation.ocenaKompanije}}
+                        </ng-template>
+                        <ng-template #elseBlock11>
+                            <input type="number" class="form-control" min="0" max="5" 
+                                onkeydown="return false" [(ngModel)]="ocenaKompanije">
+                        </ng-template>
+                    </td>
+                    <td>
+                        <a style="cursor: pointer;" *ngIf="!loading">
+                            <img id={{flightReservation.id}} src="\assets\img\change.png" (click)="changeReservationRate($event)"
+                                class="card-img-top" alt="change rate" style="width: 50px;">
+                        </a>
+                    </td>
+                    <td>
+                        <a style="cursor: pointer;" *ngIf="!loading">
+                            <img id={{flightReservation.id}} src="\assets\img\delete.png" (click)="cancelReservation($event)"
+                                class="card-img-top" alt="delete" style="width: 50px;">
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

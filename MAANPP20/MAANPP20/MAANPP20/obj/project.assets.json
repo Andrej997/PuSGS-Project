@@ -8556,25 +8556,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\marko\\.nuget\\packages\\": {},
+    "C:\\Users\\andre\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\marko\\OneDrive\\Desktop\\PUSGS\\PuSGS-Project\\MAANPP20\\MAANPP20\\MAANPP20\\MAANPP20.csproj",
+      "projectUniqueName": "D:\\FAX\\8.SEMESTAR\\WEB2\\PROJECT\\MAANPP20\\MAANPP20\\MAANPP20\\MAANPP20.csproj",
       "projectName": "MAANPP20",
-      "projectPath": "C:\\Users\\marko\\OneDrive\\Desktop\\PUSGS\\PuSGS-Project\\MAANPP20\\MAANPP20\\MAANPP20\\MAANPP20.csproj",
-      "packagesPath": "C:\\Users\\marko\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\marko\\OneDrive\\Desktop\\PUSGS\\PuSGS-Project\\MAANPP20\\MAANPP20\\MAANPP20\\obj\\",
+      "projectPath": "D:\\FAX\\8.SEMESTAR\\WEB2\\PROJECT\\MAANPP20\\MAANPP20\\MAANPP20\\MAANPP20.csproj",
+      "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
+      "outputPath": "D:\\FAX\\8.SEMESTAR\\WEB2\\PROJECT\\MAANPP20\\MAANPP20\\MAANPP20\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\marko\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -8652,7 +8652,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

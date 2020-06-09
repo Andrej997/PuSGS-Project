@@ -51,6 +51,11 @@ export class FlightComponent implements OnInit {
   success: boolean = false;
   successText: string = "";
 
+  priceOneWayForFlight: number = 0
+  priceTwoWayForFlight: number = 0
+
+  seatId: number = 0;
+
   constructor(private route: ActivatedRoute, private router: Router,
       public authenticationService: AuthenticationService,
       private avioCompaniesService: AvioCompaniesService, private httpService: HttpServiceService,
@@ -75,9 +80,10 @@ export class FlightComponent implements OnInit {
     this.httpService.getIdAction("Flight", this.id).toPromise()
     .then(result => {
       this.flight = result as Flight;
+      this.setPrices();
       this.ocena = 0;
       for (let index = 0; index < this.flight.ocene.length; index++) {
-        this.ocena += this.flight.ocene[index];
+        this.ocena += this.flight.ocene[index].doubleValue;
       }
       if (this.flight.ocene.length != 0)
         this.ocena = this.ocena / this.flight.ocene.length;
@@ -94,6 +100,11 @@ export class FlightComponent implements OnInit {
         this.errorText = "Error while loading flight data!"
         this.loading = false;
       });
+  }
+
+  setPrices() {
+    this.priceOneWayForFlight = this.flight.prise;
+    this.priceTwoWayForFlight = this.flight.priceTwoWay;
   }
 
   passedFirst: boolean = false;
@@ -166,14 +177,19 @@ export class FlightComponent implements OnInit {
     }
     else if (num === 3) {
       this.sumPriceForAll = this.sumPrice;
+      // console.log(this.sumLuggagePrice);
+      // console.log(this.sumPrice);
+      
       this.next = 'None';
       this.prev = 'Cancel';
       if (this.selectedTicket == 1) {
-        this.sumPrice = this.seatsNumber * this.flight.prise;
+        this.sumPrice = this.seatsNumber * this.priceOneWayForFlight;
       }
       else if (this.selectedTicket == 2) {
-        this.sumPrice = this.seatsNumber * this.flight.priceTwoWay;
+        this.sumPrice = this.seatsNumber * this.priceTwoWayForFlight;
       }
+      // console.log(this.sumLuggagePrice);
+      // console.log(this.sumPrice);
     }
   }
   nextView(): void {
@@ -223,24 +239,25 @@ export class FlightComponent implements OnInit {
   }
 
   bookFlight() {
-    this.calledFriends = this.flightsService.getCalledFriends();
-    console.log(this.calledFriends);
-    let flightReservation = new FlightReservation();
-    flightReservation.avioCompanyId = this.flight.idCompany;
-    flightReservation.flightId = this.flight.id;
+    this.paginationNum = 4;
+    // this.calledFriends = this.flightsService.getCalledFriends();
+    // console.log(this.calledFriends);
+    // let flightReservation = new FlightReservation();
+    // flightReservation.avioCompanyId = this.flight.idCompany;
+    // flightReservation.flightId = this.flight.id;
 
-    // ! ------------   ZA REZERVACIJU AUTA!!!!
+    // // ! ------------   ZA REZERVACIJU AUTA!!!!
 
-    for (let i = 0; i < this.calledFriends.length; ++i) {
-      let elStr: string = this.calledFriends[i].email + '//' + 
-          this.calledFriends[i].firstName + '//' + this.calledFriends[i].lastName + '//' + 
-          this.selectedSeats[i + 1];
-      flightReservation.friends.push(elStr);
-    } 
-    flightReservation.reservedSeatsIds = this.selectedSeats[0]; //! moje sediste
-    flightReservation.totalPrice = this.sumPriceForAll;
+    // for (let i = 0; i < this.calledFriends.length; ++i) {
+    //   let elStr: string = this.calledFriends[i].email + '//' + 
+    //       this.calledFriends[i].firstName + '//' + this.calledFriends[i].lastName + '//' + 
+    //       this.selectedSeats[i + 1];
+    //   flightReservation.friends.push(elStr);
+    // } 
+    // flightReservation.reservedSeatsIds = this.selectedSeats[0]; //! moje sediste
+    // flightReservation.totalPrice = this.sumPriceForAll;
 
-    console.log(flightReservation);
+    // console.log(flightReservation);
   }
 
   luggageF() {
@@ -260,5 +277,63 @@ export class FlightComponent implements OnInit {
     this.sumLuggagePrice = co + pb + fss + ld;
 
     this.sumPriceForAll = this.sumPrice + this.sumLuggagePrice;
+  }
+
+  
+  checked: boolean = false;
+  checkCheckBoxvalue(event) {
+    if (this.currentUser.bonus > 0) {
+      this.checked = event.target.checked;
+      if (this.checked === true) {
+        let discount1:number = this.currentUser.bonus / 100;
+        let minusPrice1:number = this.priceOneWayForFlight * discount1;
+        let minusPrice2:number = this.priceTwoWayForFlight * discount1;
+        this.priceOneWayForFlight -= minusPrice1;
+        this.priceTwoWayForFlight -= minusPrice2;
+      }
+      else {
+        this.setPrices();
+      }
+    }
+  }
+
+  cancelReservationi() {
+    this.paginationNum = 0;
+    this.next = 'Choose seats';
+    this.prev = 'None';
+    this.setPrices();
+  }
+
+  setRentACat() {
+    console.log("YES");
+  }
+
+  dontSetRentACat() {
+    let flightReservation = new FlightReservation();
+    flightReservation.flightId = this.flight.id;
+
+    if (this.sumPriceForAll === 0)
+      flightReservation.price = this.sumPrice;
+    else
+      flightReservation.price = this.sumPriceForAll;
+
+    flightReservation.seatNumeration = this.selectedSeats[0];
+    flightReservation.UserIdForPOST = this.currentUser.id.toString();
+    flightReservation.seatId = this.flight.allSeatsForThisFlight[this.selectedSeats[0]-1].id;
+    flightReservation.userBonus = this.checked;
+    console.log(flightReservation);
+
+    this.httpService.postAction('FlightReservation', 'Reserve', flightReservation).subscribe(
+      res => { 
+        this.successText = "Reservation successfully created!";
+        this.router.navigate(['/reservations/' + this.currentUser.id.toString()]);
+        this.success = true;
+      },
+      err => { 
+        this.errorText = err; 
+        this.error = true; 
+        this.success = false;
+      }
+    );
   }
 }

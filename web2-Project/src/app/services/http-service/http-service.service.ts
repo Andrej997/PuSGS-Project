@@ -50,4 +50,12 @@ export class HttpServiceService {
   getUserIdAction(controllerName: string, id: string) {
     return this.http.get(this.rootURL + '/' + controllerName + '/' + id);
   }
+
+  putUserIdAction(controllerName: string, actionName: string, id: string) {
+    return this.http.put(this.rootURL + '/' + controllerName, + '/' + actionName + '/' + id);
+  }
+
+  deleteUserIdAction(controllerName: string, actionName: string, id: string) {
+    return this.http.delete(this.rootURL + '/' + controllerName + '/' + actionName + '/' + id);
+  }
 }
