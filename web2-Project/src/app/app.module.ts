@@ -49,6 +49,40 @@ import { CreateOrReplaceServiceComponent } from './components/rent-a-car/create-
 import { ChangeProfileComponent } from './components/profile/change-profile/change-profile.component'
 import { AuthInterceptorService } from './services/authentication-service/auth-interceptor.service';
 import { TokenInterceptorService } from './services/authentication-service/token-interceptor.service';
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angularx-social-login';  
+
+//import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider} from 'ng4-social-login';
+
+// const config = new AuthServiceConfig([
+// {
+//   id:GoogleLoginProvider.PROVIDER_ID,
+//   provider: new GoogleLoginProvider('917061569315-0njjc7551vq658osh3i7avtam7bodnsj.apps.googleusercontent.com')
+// },
+// {
+//   id: FacebookLoginProvider.PROVIDER_ID,
+//   provider: new FacebookLoginProvider('249628966112878')
+// }
+// ], false);
+
+// export function provideConfig(){
+//   return config;
+// }
+
+export function socialConfigs() {  
+  const config = new AuthServiceConfig(  
+    [  
+      {  
+        id: FacebookLoginProvider.PROVIDER_ID,  
+        provider: new FacebookLoginProvider('249628966112878')  
+      },  
+      {  
+        id: GoogleLoginProvider.PROVIDER_ID,  //917061569315-3405bu8h903hq320c40a4lacmheqmiiu.apps.googleusercontent.com
+        provider: new GoogleLoginProvider('917061569315-f431lcjgsrtmrfpluo91qbh83a3a5pcs.apps.googleusercontent.com')  
+      }  
+    ]  
+  );  
+  return config;  
+}  
 
 @NgModule({
   declarations: [
@@ -103,6 +137,7 @@ import { TokenInterceptorService } from './services/authentication-service/token
     ReactiveFormsModule,
     HttpClientModule,
     //GoogleMapsModule
+    //SocialLoginModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
@@ -111,14 +146,23 @@ import { TokenInterceptorService } from './services/authentication-service/token
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true,
-      },
-      {
-        provide: HTTP_INTERCEPTORS,
-        useClass: TokenInterceptorService,
-        multi: true,
-        },
-    //fakeBackendProvider
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true,
+    }, 
+    AuthService,  
+    {  
+      provide: AuthServiceConfig,  
+      useFactory: socialConfigs  
+    } 
+    // {
+    //   provide: AuthServiceConfig,
+    //   useFactory: provideConfig
+    // }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

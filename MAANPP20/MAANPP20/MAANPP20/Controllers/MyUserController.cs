@@ -18,6 +18,10 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Net;
+using System.Net.Mail;
 
 namespace MAANPP20.Controllers
 {
@@ -27,6 +31,7 @@ namespace MAANPP20.Controllers
     {
         private readonly MAANPP20Context _context;
         private readonly ApplicationSettings _applicationSettings;
+        private static Random random;
 
         public MyUserController(IOptions<ApplicationSettings> applicationSettings, MAANPP20Context context )
         {
@@ -39,8 +44,6 @@ namespace MAANPP20.Controllers
         //POST : /api/User/Register
         public async Task<Object> PostRegisterUser(UserModel model)
         {
-            Console.WriteLine("Stigao do post register!!!!!");
-
             var tmpUser = await _context.Users
                 .Include(address => address.address)
                 .Include(friends => friends.friends)
@@ -84,16 +87,67 @@ namespace MAANPP20.Controllers
             try
             {
                 user.role = Role.adminA;
+                user.EmailConfirmed = false;
+                int randNumber = SendActivationCode();
+                user.activationCode = randNumber.ToString();
                 _context.Users.Add(user);
                 int result = await _context.SaveChangesAsync(); //ako ne sacuvamo dzabe smo krecili
-
                 return user;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
 
+        [HttpPost]
+        [Route("SocialRegister")]
+        public async Task<IActionResult> SocialRegister([FromBody]LoginModel loginModel)
+        {
+            var test = _applicationSettings.JWT_Secret;
+            bool uspesno = true;
+            bool isFb = false;
+            string token = "";
+
+            if (loginModel.IdToken != null)
+            {
+                token = loginModel.IdToken;
+            }
+            else
+            {
+                token = loginModel.authToken;
+                isFb = true;
+            }
+            if (VerifyToken(token, isFb))
+            {
+                var tmpUser = await _context.Users
+                    //.Include(address => address.address)
+                    //.Include(friends => friends.friends)
+                    //.Include(friendRequests => friendRequests.friendRequests)
+                    .FirstOrDefaultAsync(i => i.Email == loginModel.email);
+                if (tmpUser != null)
+                {
+
+                    return BadRequest(new { message = "Vec postoji korisnik sa istim email-om." });
+                }
+                var user = new User()
+                {
+                    UserName = loginModel.name,
+                    firstName = loginModel.firstName,
+                    lastName = loginModel.lastName,
+                    Email = loginModel.email,
+                    role = Role.registredUser
+                };
+                user.EmailConfirmed = false;
+                int randNumber = SendActivationCode();
+                user.activationCode = randNumber.ToString();
+                _context.Users.Add(user);
+                int result = await _context.SaveChangesAsync();
+
+                return Ok(new { uspesno });
+            }
+            uspesno = false;
+            return Ok(new { uspesno });
         }
 
         [HttpPost]
@@ -102,7 +156,6 @@ namespace MAANPP20.Controllers
         public async Task<IActionResult> Login(LoginModel model)
         {
             string hashMessage;
-
             var user = await _context.Users
                 //.Include(address => address.address)
                 //.Include(friends => friends.friends)
@@ -133,6 +186,86 @@ namespace MAANPP20.Controllers
             }
             else
                 return BadRequest(new { message = "Username or password is incorrect." });
+        }
+        public static int SendActivationCode()
+        {
+            random = new Random();
+            int randNumber = random.Next(100001, 999999);
+            string to = "markomisojcic@gmail.com";
+            string from = "markomisojcic@gmail.com";
+            MailMessage message = new MailMessage(from, to);
+            message.Subject = "Aktivacioni kod";
+            //message.Body = @"Using this new feature, you can send an email message from an application very easily.";
+            message.Body = "Vas aktivacioni kod je: " + randNumber.ToString();
+            try
+            {
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                smtpClient.EnableSsl = true;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                //smtpClient.UseDefaultCredentials = true;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential(from, "ohtxksnemsettbey");
+                smtpClient.Send(message);
+                //smtpClient.Send(message.From.ToString(), message.To.ToString(), message.Subject, message.Body);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Ex: " + ex);
+            }
+            return randNumber;
+        }
+
+        
+        [HttpPost]
+        [Route("SocialLogin")]
+        // POST: api/<controller>/Login
+        public async Task<IActionResult> SocialLogin([FromBody]LoginModel loginModel)
+        {
+            var tmpUser = await _context.Users
+                    .FirstOrDefaultAsync(i => i.Email == loginModel.email);
+            var test = _applicationSettings.JWT_Secret;
+
+            if(tmpUser == null)
+            {
+                return BadRequest(new { message = "Ne postoji takav korisnik." });
+            }
+
+            if (tmpUser.PasswordHash != null)
+            {
+                return BadRequest(new { message = "Ne mozete se ulogovati na ovaj nacin, popunite odgovarajuca polja." });
+            }
+
+            string tmpToken = "";
+            bool isFb = false;
+
+            if (loginModel.IdToken != null)
+            {
+                tmpToken = loginModel.IdToken;
+            }
+            else
+            {
+                tmpToken = loginModel.authToken;
+                isFb = true;
+            }
+
+            if (VerifyToken(tmpToken, isFb))
+            {
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim("UserID", tmpUser.Id.ToString()),
+                        new Claim("Roles", tmpUser.role.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(5),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_applicationSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                var token = tokenHandler.WriteToken(securityToken);
+                return Ok(new Token_plus_User() { User = tmpUser, Token = token });
+            }   
+            return Ok();
         }
 
         public class Token_plus_User
@@ -211,12 +344,47 @@ namespace MAANPP20.Controllers
 
             return Ok();
         }
+
+        [HttpPut]
+        [Route("EmailConfirmed")]
+        public async Task<IActionResult> EmailConfirmed(LoginModel model)
+        {
+            string hashMessage = "";
+            User tmpUser = await _context.Users
+                   .FirstOrDefaultAsync(i => i.Email == model.email);
+
+            if(tmpUser != null)
+            {
+                tmpUser.EmailConfirmed = true;
+                _context.Entry(tmpUser).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                    new Claim("UserID",tmpUser.Id.ToString()),
+                    new Claim("Roles", tmpUser.role.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_applicationSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                var token = tokenHandler.WriteToken(securityToken);
+                return Ok(new Token_plus_User() { User = tmpUser, Token = token });
+            }
+            else
+            {
+                return BadRequest(new { message = "Ne postoji korisnik sa takvim e-mailom." });
+            }
+            return Ok();
+        }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteUser(User user)
         {
             //_context.Entry(user.address).State = EntityState.Modified;
             _context.Entry(user).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -232,7 +400,6 @@ namespace MAANPP20.Controllers
                     throw;
                 }
             }
-
             return Ok();
         }
         private bool UserExists(string id) => _context.Users.Any(e => e.Id == id);
@@ -363,6 +530,46 @@ namespace MAANPP20.Controllers
             var encrypted = Convert.FromBase64String(cipherText);
             var decriptedFromJavascript = DecryptStringFromBytes(encrypted, keybytes, iv);
             return string.Format(decriptedFromJavascript);
+        }
+
+        private const string GoogleApiTokenInfoUrl = "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={0}";
+        public bool VerifyToken(string providerToken, bool isFb)
+        {
+            HttpResponseMessage httpResponseMessage;
+            var httpClient = new HttpClient();
+            //string app_id = "249628966112878"; //EAADjCUXZAzm4BAFhfZAlPpT2d7DFALxrhVVdmNpsQk7dOQZAi78CKZCSXAFA5NiDwFuEQdZBR276QvIWJuUQyo2sFajqR9ZBa1aQcs3TDlMv5AnuAqpzYvrvcb4laHzT7f22q9hYixYDgBVT7qhILaaqUZB8sTgFkHlwItEw16lqYZBaKh5Tck9vkG6UNYB6ZBNeTZA44sqFW2owZDZD
+            //string app_secret = "EAADjCUXZAzm4BALzTZBoJl3NhQbnF9aDRl8DZBz6561TzZCafKRaIdO9YdwPsp5WTB2cpVlytf2UOxaigZA6zbGIuv5Bt9ZB9nO6KH2fTZBfu8GzO46lyGZAV3wqyjEZAxcMrUUUQauHcUkWFezGLpSWBSKiWlfUyZBjezPHjwZAS86o97kTaCCHZAQsEVvEZA9OiykIZD";
+            //string app_secret = "EAADjCUXZAzm4BAFhfZAlPpT2d7DFALxrhVVdmNpsQk7dOQZAi78CKZCSXAFA5NiDwFuEQdZBR276QvIWJuUQyo2sFajqR9ZBa1aQcs3TDlMv5AnuAqpzYvrvcb4laHzT7f22q9hYixYDgBVT7qhILaaqUZB8sTgFkHlwItEw16lqYZBaKh5Tck9vkG6UNYB6ZBNeTZA44sqFW2owZDZD";
+            string app_secret = "EAADjCUXZAzm4BAPtphxLiJ5TgxcRWSHdQ2Bo6ZA4PwCiaOTouxVr4c9bcyfI0SLAZA4wzIa0ZC1Vn5anaZBcG6C5r2sFCAp3fqdrqybnnqh4HsON8pwJXAhvNs1WHh05YkW1Cmf9SmViXaCxbXdyehXBd4JmT64RyUMHfugQsmpAgzTFxgejlmmE6VsnNHwZCAH4T70jTp5ZCZBiTP8SCBEJsITBSPy3plAbArLiZBQwrnQZDZDa";
+            //EAADjCUXZAzm4BAMIT1ezeTjPWaKpVwLZAF3GnxCoIPHNPx5Da0zhywZCgWbZCCLaKEBdjZC3k0AgBfccl98v8jYUADbRxyxyhjZBRqTtjYQJbLy2ZAyix1DK5imZANc1xKI60Qa90DRZBum3xQZBqKvc0ydZCSGkfCOyxUOLmcE0VAyY5Fjt8K618CmtG0VndPPNDIZD
+            //string FacebookApiTokenInfoUrl = "https://graph.facebook.com/debug_token?input_token=" + providerToken + "&access_token=" + app_id + "|" + app_secret;
+            string FacebookApiTokenInfoUrl = " https://graph.facebook.com/me?access_token=" + app_secret;
+            Uri requestUri;
+
+            if (isFb)
+                requestUri = new Uri(FacebookApiTokenInfoUrl);
+            else
+                requestUri = new Uri(string.Format(GoogleApiTokenInfoUrl, providerToken));
+
+            try
+            {
+                httpResponseMessage = httpClient.GetAsync(requestUri).Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+
+            if (httpResponseMessage.StatusCode != HttpStatusCode.OK)
+            {
+                return false;
+            }
+
+            var response = httpResponseMessage.Content.ReadAsStringAsync().Result;
+            var googleApiTokenInfo = JsonConvert.DeserializeObject<GoogleApiTokenInfo>(response);
+
+            return true;
         }
     }
 }

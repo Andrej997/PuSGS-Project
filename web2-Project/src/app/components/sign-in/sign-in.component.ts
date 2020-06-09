@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RegisterServiceService } from 'src/app/services/register-service/register-service.service';
 import { ShareDataServiceService } from 'src/app/services/share-data-service/share-data-service.service';
@@ -6,6 +6,9 @@ import { AuthenticationService } from 'src/app/services/authentication-service/a
 import { first } from 'rxjs/operators';
 import { User } from 'src/app/entities/user/user';
 import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
+//import {AuthService, SocialUser, GoogleLoginProvider, FacebookLoginProvider} from 'ng4-social-login';
+import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-sign-in',
@@ -17,17 +20,20 @@ export class SignInComponent implements OnInit {
   imgName : any;
   imgString : string;
   logoImg: string;
-  tmpUser: User;
+  //public user: any = SocialUser;
 
   // id: string = "";
   currentUserForPUT: User;
+  socialProvider = "google";
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService,
               public registerService: RegisterServiceService, 
               private shareService: ShareDataServiceService,
               private route: ActivatedRoute, 
-              private httpService: HttpServiceService) {
+              private httpService: HttpServiceService,
+              public OAuth: AuthService,
+              @Inject(DOCUMENT) private document: Document) {
     this.source = "../../../assets/img/person-icon.png";
     this.imgName = "Nesto";
     this.imgString = "Choose image";
@@ -57,10 +63,10 @@ export class SignInComponent implements OnInit {
   }
  
   OnSubmit(){
-    console.log("onSubmit start");
+    //console.log("onSubmit start");
     this.registerService.register().subscribe(
       (res: any) => {
-        this.tmpUser  = res;
+        //this.tmpUser  = res;
         //localStorage.setItem('token', res.token);
         //localStorage.setItem('userRole', this.tmpUser.role.toString());
         //localStorage.setItem('currentUser', JSON.stringify(this.tmpUser));
@@ -71,27 +77,46 @@ export class SignInComponent implements OnInit {
         console.log("Err: " + err);
         alert(err);
       }
-
-      /* 
-      if (res.succeeded) {
-        this.service.formModel.reset();
-        this.toastr.success('New user created!', 'Registration successful.');
-      } else {
-        res.errors.forEach(element => {
-          switch (element.code) {
-            case 'DuplicateUserName':
-              this.toastr.error('Username is already taken','Registration failed.');
-              break;
-
-            default:
-            this.toastr.error(element.description,'Registration failed.');
-              break;
-          }
-        });
-      }
-      
-      */
     )
+  }
+  GoogleRegistration(){
+    this.socialProvider = "google";
+    this.SocialRegistration();
+  }
+
+  FacebookRegistration(){
+    this.socialProvider = "facebook";
+    this.SocialRegistration();
+  }
+
+  SocialRegistration(){
+    let socialPlatformProvider;  
+    if (this.socialProvider === 'facebook') {  
+      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;  
+    } 
+    else if (this.socialProvider === 'google') {  
+      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;  
+      //console.log("provider:" + this.socialProvider);
+    }  
+    //console.log(socialusers);
+    console.log("provider:" + this.socialProvider);
+    this.OAuth.signIn(socialPlatformProvider).then(socialusers => {  
+      console.log(socialusers);   
+      localStorage.setItem('socialuser', JSON.stringify(socialusers));
+
+      this.registerService.externalRegister(socialusers).subscribe((res:any)=>{
+        alert("Return " + res.uspesno);
+        // localStorage.setItem('token', res.token);
+         console.log(res.uspesno);  
+        this.router.navigateByUrl('/log-in');
+      },
+      err => {
+        console.log("Err: " + err);
+        alert(err + "Pokusaj ponovo!");
+        this.router.navigateByUrl('/sign-in');
+      });
+   
+    });  
   }
 
   onClear() {

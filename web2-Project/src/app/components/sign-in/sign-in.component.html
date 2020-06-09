@@ -203,6 +203,7 @@
                 <div *ngIf="registerService.formModel.controls.passwordRepeat.touched && registerService.formModel.controls.passwordRepeat.invalid" class="alert alert-danger">
                     <div *ngIf="registerService.formModel.controls.passwordRepeat.errors.required">Please enter password repeat.</div>
                     <div *ngIf="registerService.formModel.controls.passwordRepeat.errors.minlength">Password should be 3 character.</div>
+                    <div *ngIf="registerService.formModel.controls.passwordRepeat.errors.mustMatch">Passwords are different.</div>
                 </div>
                 <small id="exampleInputPassword1" 
                         class="text-muted">Must be 8-20 characters long.
@@ -700,12 +701,13 @@
         <div class="text-center">
             <label >Registration  with</label>
         </div>
-        <div class="row">
+        <div class="row" style="padding: 20px;">
             <div class="col-md-6">
               <a class="btn btn-outline-secondary" 
                  id="customBtn" 
-                 href="/users/googleauth" 
-                 role="button" >
+                 style="float: left;" 
+                 role="button" 
+                 (click) = "GoogleRegistration()">
                  <img width="40" 
                      alt="Google sign-in" 
                      src="/assets/img/g-logo.png" />Google
@@ -715,7 +717,8 @@
                 <a class="btn btn-outline-secondary" 
                     id="customBtn"  
                     role="button"
-                    style="float:right">
+                    (click) = "FacebookRegistration()"
+                    style="float: right;">
                     <img width="40"  
                          alt="Facebook sign-in" 
                          src="/assets/img/f-logo.png"/>Facebook
