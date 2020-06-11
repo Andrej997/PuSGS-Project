@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using MAANPP20.Data;
 using MAANPP20.Models.Common;
@@ -44,7 +46,7 @@ namespace MAANPP20.Controllers.Flights
                     .FirstOrDefaultAsync(id => id.Id == flightReservation.UserIdForPOST);
 
                 if (user == null) return BadRequest();
-
+                
                 AvioSediste avioSediste = await _context.AvioSedista
                     .Where(x => x.deleted == false)
                     .FirstOrDefaultAsync(id => id.id == flightReservation.seatId);
@@ -53,15 +55,43 @@ namespace MAANPP20.Controllers.Flights
                 if (avioSediste.deleted == true) return BadRequest();
                 if (avioSediste.reserved == true) return BadRequest();
                 avioSediste.reserved = true;
-                _context.Entry(avioSediste).State = EntityState.Modified;
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
+                //_context.Entry(avioSediste).State = EntityState.Modified;
 
-                    throw;
+                foreach (var friend in flightReservation.friendForFlights)
+                {
+                    AvioSediste avioSediste1 = await _context.AvioSedista
+                    .Where(x => x.deleted == false)
+                    .FirstOrDefaultAsync(id => id.id == friend.seatId);
+                    if (avioSediste1 == null) return BadRequest();
+                    if (avioSediste1.isFastReservation == true) return BadRequest();
+                    if (avioSediste1.deleted == true) return BadRequest();
+                    if (avioSediste1.reserved == true) return BadRequest();
+                    avioSediste1.reserved = true;
+                    //_context.Entry(avioSediste1).State = EntityState.Modified;
+                }
+                bool saveFailed;
+                do
+                {
+                    saveFailed = false;
+                    try
+                    {
+                        _context.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+                        saveFailed = true;
+                        return Conflict();
+                    }
+                    catch (Exception e)
+                    {
+
+                        throw;
+                    }
+                } while (saveFailed);
+
+                foreach (var friendForFlight in flightReservation.friendForFlights)
+                {
+                    friendForFlight.invitationString = RandomString();
                 }
 
                 user.flightReservations.Add(flightReservation);
@@ -95,7 +125,9 @@ namespace MAANPP20.Controllers.Flights
 
                 try
                 {
-                    await _context.SaveChangesAsync();
+                    //if (SendMail(flightReservation.friendForFlights as List<FriendForFlight>))
+                        await _context.SaveChangesAsync();
+                    //else BadRequest();
                 }
                 catch (Exception e)
                 {
@@ -206,6 +238,131 @@ namespace MAANPP20.Controllers.Flights
             if (flightReservation.seatNumeration <= 0) return false;
 
             return true;
+        }
+
+        private bool SendMail(List<FriendForFlight> friendForFlights)
+        {
+            foreach (var friendForFlight in friendForFlights)
+            {
+                string from = "markomisojcic@gmail.com";
+                string to = "markomisojcic@gmail.com";
+                string subject = "Poziv za let";
+                string body = $"Postovani {friendForFlight.prezime} {friendForFlight.ime},\n" +
+                    $"Pozvani ste na let\n" +
+                    $"\n" +
+                    $"Kliknite na link http://localhost:4200/invitation kako biste pristupili stranici " +
+                    $"za prihavatanje ili odbijanje ponude.";
+                using (MailMessage mailMessage = new MailMessage(from, to, subject, body))
+                {
+                    try
+                    {
+                        using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
+                        {
+                            smtpClient.EnableSsl = true;
+                            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                            smtpClient.UseDefaultCredentials = false;
+                            smtpClient.Credentials = new NetworkCredential(from, "ohtxksnemsettbey");
+                            smtpClient.Send(mailMessage);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private async Task<bool> Check(string invitationString)
+        {
+            FriendForFlight friendForFlight = await _context.FriendForFlights
+                .FirstOrDefaultAsync(x => x.invitationString == invitationString);
+            if (friendForFlight == null) return true;
+            return false;
+        }
+
+        // rekurzivno trazenje da li postoji vec takav invitations string
+        private string RandomString()
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            string str = new string(Enumerable.Repeat(chars, 10)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+            if (!this.Check(str).Result)
+                RandomString();
+            return str;
+        }
+
+        [HttpPost]
+        [Route("Accept")]
+        public async Task<IActionResult> AcceptFriendForFlight(StringForICollection invitationString)
+        {
+            var friendForFlight = await _context.FriendForFlights
+                .Where(x => x.deleted == false)
+                .FirstOrDefaultAsync(x => x.invitationString == invitationString.PlainString);
+            if (friendForFlight == null) return BadRequest();
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("Decline/{invitationString}")]
+        public async Task<IActionResult> DeclineFriendForFlight(string invitationString)
+        {
+            var friendForFlight = await _context.FriendForFlights
+                .Where(x => x.deleted == false)
+                .FirstOrDefaultAsync(x => x.invitationString == invitationString);
+            if (friendForFlight == null) return BadRequest();
+            if (friendForFlight.deleted == true) return BadRequest();
+
+            var seat = await _context.AvioSedista
+                .Where(x => x.reserved == true)
+                .FirstOrDefaultAsync(x => x.id == friendForFlight.seatId);
+            if (seat == null) return BadRequest();
+            seat.reserved = false;
+            _context.Entry(seat).State = EntityState.Modified;
+
+            friendForFlight.deleted = true;
+            _context.Entry(friendForFlight).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+
+            return Ok();
+        }
+
+        // GET: api/FlightReservation/Called
+        [HttpGet("Called/{email}")]
+        public async Task<ActionResult<IEnumerable<FriendForFlight>>> GetCallsForFlight(string email)
+        {
+            var user = await _context.Users.Where(x => x.deleted == false)
+                .FirstOrDefaultAsync(i => i.Email == email);
+
+            if (user == null) return BadRequest();
+
+            var friendForFlight = await _context.FriendForFlights
+                .Where(x => x.deleted == false && x.email == email && x.ime == user.firstName && x.prezime == user.lastName)
+                .ToListAsync();
+            if (friendForFlight == null) return BadRequest();
+
+            return friendForFlight;
+        }
+
+        [HttpGet("Statistics/{idFlight}")]
+        public async Task<ActionResult<IEnumerable<FlightReservation>>> GetFlightReservationsStatistics(int idFlight)
+        {
+            return await _context.FlightReservations
+                .Where(x => x.deleted == false)
+                .Where(id => id.flightId == idFlight)
+                .ToListAsync();
         }
     }
 }

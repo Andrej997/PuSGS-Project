@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GoogleMaps.LocationServices;
 using MAANPP20.Data;
+using MAANPP20.Models.Common;
 using MAANPP20.Models.Flights;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -123,6 +125,35 @@ namespace MAANPP20.Controllers.Flights
 
 
             return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("LanLng")]
+        public async Task<ActionResult<IEnumerable<Flight>>> GetLanLng(Address address)
+        {
+            var address1 = "Stavanger, Norway";
+
+            AddressData addressData = new AddressData();
+            addressData.City = "Stavanger";
+            addressData.Country = "Norway";
+
+            var locationService = new GoogleLocationService();
+            MapPoint point;
+            try
+            {
+                point = locationService.GetLatLongFromAddress(addressData);
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+            
+
+            var latitude = point.Latitude;
+            var longitude = point.Longitude;
+
+            return Ok();
         }
     }
 }

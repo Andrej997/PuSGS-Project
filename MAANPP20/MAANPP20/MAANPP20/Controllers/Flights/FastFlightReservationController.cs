@@ -44,25 +44,36 @@ namespace MAANPP20.Controllers.Flights
                     .FirstOrDefaultAsync(id => id.Id == fastFlightReservation.UserIdForPOST);
 
                 if (user == null) return BadRequest();
-
                 AvioSediste avioSediste = await _context.AvioSedista
                     .Where(x => x.deleted == false)
                     .FirstOrDefaultAsync(id => id.id == fastFlightReservation.seatId);
                 if (avioSediste == null) return BadRequest();
-                if (avioSediste.isFastReservation == false) return BadRequest(); 
+                if (avioSediste.isFastReservation == false) return BadRequest();
                 if (avioSediste.deleted == true) return BadRequest();
                 if (avioSediste.reserved == true) return BadRequest();
                 avioSediste.reserved = true;
-                _context.Entry(avioSediste).State = EntityState.Modified;
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
+                //_context.Entry(avioSediste).State = EntityState.Modified;
 
-                    throw;
-                }
+                bool saveFailed;
+                do
+                {
+                    saveFailed = false;
+                    try
+                    {
+                        _context.SaveChanges();
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+                        saveFailed = true;
+                        return Conflict();
+                    }
+                    catch (Exception e)
+                    {
+
+                        throw;
+                    }
+                } while (saveFailed);
+                
 
                 user.fastFlightReservations.Add(fastFlightReservation);
                 // ako je user iskoristion svoj bonus
@@ -206,6 +217,15 @@ namespace MAANPP20.Controllers.Flights
             if (fastFlightReservation.seatNumeration <= 0) return false;
 
             return true;
+        }
+
+        [HttpGet("Statistics/{idFlight}")]
+        public async Task<ActionResult<IEnumerable<FastFlightReservation>>> GetFastFlightReservationsStatistics(int idFlight)
+        {
+            return await _context.FastFlightReservations
+                .Where(x => x.deleted == false)
+                .Where(id => id.flightId == idFlight)
+                .ToListAsync();
         }
     }
 }

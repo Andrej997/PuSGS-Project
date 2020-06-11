@@ -1,11 +1,11 @@
-<div class="container"
+<div class="container down"
         *ngIf='!this.authenticationService.currentUserValue'> <!-- !AKO NIJE NIKO ULOGOVAN -->
     <div class="alert alert-danger" role="alert"> 
         <h1>!YOU ARE NOT AUTHORIZED TO VIEW THIS PAGE!</h1>
     </div>
     <img class="centerSTOPimg" src="\assets\img\STOP.png" alt="">
 </div>
-<div class="container"
+<div class="container down"
         *ngIf='this.authenticationService.currentUserValue'> <!-- !AKO JE ULOGOVAN A NEMA DOZVOLU-->
     <div *ngIf="currentUser.role != 1 && currentUser.role != 2 && currentUser.role != 3">
         <div class="alert alert-danger" role="alert">
@@ -16,9 +16,26 @@
 </div>
 
 <!-- *Ako je ulogovan i ako je avio i car admin -->
-<div class="container" *ngIf='this.authenticationService.currentUserValue'>
+<div class="container down" *ngIf='this.authenticationService.currentUserValue'>
     <div *ngIf="currentUser.role === 1 || currentUser.role === 2">
-        <h1>ovde ide avio statistika</h1>
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+            <b>{{errorText}}</b>
+        </div>
+        <app-my-spinner *ngIf="loading"></app-my-spinner>
+        <div *ngIf="show && !loading">
+            <h3>Prosecna ocena kompanije {{flightCompany.name}} je {{ocena}}</h3>
+            <div *ngFor="let flight1 of flights">
+                <h4 class="ml-2">Let {{flight1.from.city}}[{{flight1.datumPolaska}}] -> {{flight1.to.city}}</h4>
+                <input id={{flight1.id}} class="form-control" type="datetime-local" (change)="getDate($event)">
+            </div>
+            <div *ngIf="showData">
+                <h5 class="ml-5">Prosecna ocena za izabrani let je {{ocenaL}}</h5>
+                <h5 class="ml-5">Tog dana je rezervisano {{dnevne}}</h5>
+                <h5 class="ml-5">Tog meseca je rezervisano {{mesecne}}</h5>
+                <h5 class="ml-5">Te godine je rezervisano {{godisnje}}</h5>
+                <h5 class="ml-5">Ukupna zarada za odabrani let {{zadaraZaTajLet}}</h5>
+            </div>
+        </div>
     </div>
     <div *ngIf="currentUser.role === 1 || currentUser.role === 3">
         <h1>ovde ide rent a car statistika</h1>

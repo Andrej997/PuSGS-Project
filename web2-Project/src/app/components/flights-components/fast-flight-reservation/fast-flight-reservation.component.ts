@@ -71,6 +71,9 @@ export class FastFlightReservationComponent implements OnInit {
 
       this.discountPrice = this.discount();
       this.firstAwaibleSeat = this.fas();
+      if (this.firstAwaibleSeat == undefined) {
+        this.firstAwaibleSeat = 0;
+      }
       
       console.log(this.flight);
     })
@@ -125,6 +128,7 @@ export class FastFlightReservationComponent implements OnInit {
     fastFlightReservation.UserIdForPOST = this.currentUser.id.toString();
     fastFlightReservation.seatId = this.seatId;
     fastFlightReservation.userBonus = this.checked;
+    fastFlightReservation.dateNow = new Date();
     //console.log(fastFlightReservation);
     this.httpService.postAction('FastFlightReservation', 'Reserve', fastFlightReservation).subscribe(
       res => { 

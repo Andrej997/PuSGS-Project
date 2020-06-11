@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
   templateUrl: './planes.component.html',
   styleUrls: ['./planes.component.css']
 })
+
+// declare let ol: any;
+
 export class PlanesComponent implements OnInit {
   currentUser: User;
 

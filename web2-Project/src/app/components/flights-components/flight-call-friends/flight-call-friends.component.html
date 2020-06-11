@@ -10,7 +10,7 @@
         </div>
         <div *ngIf="friendOption=='option1'">
             <div class="form-group">
-                <label for="friendNameHelp">Enter friends email, first and last name and passport</label>
+                <label for="friendNameHelp">Enter friends email, first and last name</label>
                 <div>
                     <input type="email" class="form-control" id="friendEmail" placeholder="email"
                             formControlName="friendEmail"
@@ -38,13 +38,10 @@
                 <label for="exampleFormControlSelect1">Friends</label>
                 <div>
                     <select class="form-control" style="width: 50%; float: left;" formControlName="friendSelect">
-                        <option *ngFor="let frined of currentUser.friends" value={{frined.friend.id}}>
-                            {{frined.friend.firstName}} {{frined.friend.lastName}}
+                        <option *ngFor="let frined of myFriends" value={{frined.id}}>
+                            {{frined.firstName}} {{frined.lastName}}
                         </option>
                     </select>
-                    <!input type="text" class="form-control" id="friendPassportS" placeholder="passport"
-                            formControlName="friendPassportS"    
-                            aria-describedby="friendPassportSHelp" style="width: 50%; float: right;"-->
                 </div>
             </div>
             <div class="form-group">

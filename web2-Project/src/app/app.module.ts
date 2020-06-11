@@ -51,6 +51,8 @@ import { AuthInterceptorService } from './services/authentication-service/auth-i
 import { TokenInterceptorService } from './services/authentication-service/token-interceptor.service';
 import { FlightReservationComponent } from './components/flights-components/flight-reservation/flight-reservation.component';
 import { SearchFlightsComponent } from './components/flights-components/search-flights/search-flights.component';
+import { AcceptReservationComponent } from './components/flights-components/accept-reservation/accept-reservation.component';
+import { MyMapComponent } from './components/flights-components/my-map/my-map.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +100,8 @@ import { SearchFlightsComponent } from './components/flights-components/search-f
     ChangeProfileComponent,
     FlightReservationComponent,
     SearchFlightsComponent,
+    AcceptReservationComponent,
+    MyMapComponent,
 
   ],
   imports: [

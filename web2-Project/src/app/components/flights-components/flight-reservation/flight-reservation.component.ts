@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { Flight } from 'src/app/entities/flight/flight';
 import { FlightReservation } from 'src/app/entities/flight-reservation/flight-reservation';
+import { FriendForFlight } from 'src/app/entities/friend-for-flight/friend-for-flight';
 
 @Component({
   selector: 'app-flight-reservation',
@@ -19,6 +20,7 @@ export class FlightReservationComponent implements OnInit {
 
   allFastFlightReservation: Array<FastFlightReservation> = new Array<FastFlightReservation>(); 
   allFlightReservation: Array<FlightReservation> = new Array<FlightReservation>(); 
+  allReservationCalls: Array<FriendForFlight> = new Array<FriendForFlight>();
 
   error: boolean = false;
   errorFFR: boolean = false;
@@ -55,6 +57,17 @@ export class FlightReservationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.httpService.getUserIdAction('FlightReservation/Called', this.currentUser.email)
+      .toPromise()
+      .then(result => {
+        this.allReservationCalls = result as FriendForFlight[];
+      })
+      .catch(
+        err => {
+          console.log(err)
+          this.error = true;
+          this.errorText = "Error while loading reservations!"
+        });
     this.route.params.subscribe(params => { this.id = params['id']; });
     this.httpService.getUserIdAction('FastFlightReservation', this.id)
       .toPromise()
@@ -352,7 +365,7 @@ export class FlightReservationComponent implements OnInit {
     if (this.ocenaLeta > 0 || this.ocenaKompanije > 0) {
       const idChangeRateFR = event.target.id;
     
-      let fr: FastFlightReservation = null;
+      let fr: FlightReservation = null;
       for (let i = 0; i < this.allFlightReservation.length; ++i) {
         if (this.allFlightReservation[i].id == idChangeRateFR) {
           fr = this.allFlightReservation[i];

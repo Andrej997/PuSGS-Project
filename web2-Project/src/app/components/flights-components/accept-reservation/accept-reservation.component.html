@@ -1,0 +1,29 @@
+<div class="down">
+    <div class="container down">
+
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+            <b>{{errorText}}</b>
+        </div>
+        <div class="alert alert-success" role="alert" *ngIf="success">
+            <b>{{successText}}</b>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            
+            
+            <div class="form-group">
+                <label for="invitationString">Enter invitation string</label>
+                <div class="input-group mb-3 border border-secondary rounded">
+                    <input type="text" id="invitationString" #invitationString 
+                        formControlName="invitationString" class="form-control" placeholder="enter invitation string">
+                </div>
+                <div *ngIf="f.invitationString.touched && f.invitationString.invalid" class="alert alert-danger">
+                    <div *ngIf="f.invitationString.errors.required">Invitation string is required.</div>
+                </div>
+            </div>
+
+            <button class="btn btn-success" type="submit" [disabled]="!form.valid">Accept</button>
+            <button class="btn btn-danger ml-5" (click)="decline()" [disabled]="!form.valid">Decline</button>
+        </form>
+    </div>
+</div>
