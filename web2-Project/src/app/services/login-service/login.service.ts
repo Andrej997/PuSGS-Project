@@ -19,4 +19,14 @@ export class LoginService {
   login(formData) {
     return this.http.post(this.BaseURI + '/MyUser/Login', formData);
   }
+
+  externalLogin(formData) {
+    //return this.http.post(this.BaseURI + '/MyUser/Login', formData);
+    return this.http.post(this.BaseURI + '/MyUser/SocialLogin', formData);
+  }
+
+  emailConfirmed(formData){
+    //console.log(formData);
+    return this.http.put(this.BaseURI + '/MyUser/EmailConfirmed',  formData);
+  }
 }

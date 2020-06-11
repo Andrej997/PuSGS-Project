@@ -50,6 +50,8 @@ namespace MAANPP20.Models.Common
         public int serviceId { get; set; }
 
         public bool deleted { get; set; }
+        
+        public string activationCode { get; set; }
 
         public ICollection<Friend> friends { get; set; }
 

@@ -31,3 +31,28 @@
     z-index: 1;
     margin-top: 50px;
 }
+.kw-dvp-HorizonalButton {
+    color: #0078d7;
+    display:flex;
+    flex-wrap:nowrap;
+    align-items:center;
+  }
+  .kw-dvp-HorizonalButton:before, .kw-dvp-HorizonalButton:after {
+    background-color: #0078d7;
+    content: "";
+    display: inline-block;
+    height:1px;
+  }
+  .kw-dvp-HorizonalButton:before {
+    order:1;
+    flex-grow:1;
+    margin-right:8px;
+  }
+  .kw-dvp-HorizonalButton:after {
+    order: 3;
+    flex-grow: 1;
+    margin-left: 8px;
+  }
+  .kw-dvp-HorizonalButton * {
+    order: 2;
+  }

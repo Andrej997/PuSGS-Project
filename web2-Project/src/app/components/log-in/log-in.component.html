@@ -60,9 +60,83 @@
                 </div>
             </div>
         
-            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
+            <button class="btn btn-primary" 
+                    type="submit" 
+                    [disabled]="!form.valid"
+                    data-toggle="modal"
+                    data-target="#exampleModal">Submit</button>
             <button type="button" class="btn btn-primary" 
                     style="float: right;" routerLink="/sign-in">Registration</button>
         </form>
+        <br/>
+        <div class="kw-dvp-HorizonalButton">
+            <span>or</span>
+        </div>
+        <br/>
+        <div class="text-center">
+            <label >Login  with</label>
+        </div>
+        <div class="row" style="padding: 20px;">
+            <div class="col-md-6">
+              <a class="btn btn-outline-secondary" 
+                 id="customBtn" 
+                 style="float: left;" 
+                 role="button" 
+                 data-toggle="modal"
+                 data-target="#exampleModal"
+                 (click) = "GoogleLogin()"><!--(click) = "GoogleLogin()"-->
+                 <img width="40" 
+                     alt="Google sign-in" 
+                     src="/assets/img/g-logo.png" />Google
+              </a>
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-outline-secondary" 
+                    id="fb"  
+                    role="button"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    (click) = "FacebookLogin()"
+                    style="float: right;">
+                    <img width="40"  
+                         alt="Facebook sign-in" 
+                         src="/assets/img/f-logo.png"/>Facebook
+                </a><!--data-toggle="modal" data-target="#exampleModal"  (click) = "FacebookLogin()"       (click) = "frame.show()"    (click) = "Otvori()"-->
+            </div>
+        </div>
     </div>
 </div>
+<div  class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Molimo unesite kod koji vam je stigao na e-mail adresu</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-header">
+            <small class="text-muted">Ako ste vec aktivirani samo zatvorite prozor.</small>
+        </div>
+        <div class="modal-body">
+            <br>
+            <form [formGroup]="activateUserForm" (ngSubmit)="activateUserSubmit()">
+                <div>
+                    <input name="activateUser" 
+                           id="activateUserId" 
+                           type="text" 
+                           placeholder="example='1561389'"
+                           formControlName="activateUser">
+                    <br>
+                    <p *ngIf="activatedUser">Uspesno ste aktivirali korisnika.</p>
+                    <p *ngIf="!activatedUser">Korisnik nije aktiviran.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" [disabled]="activatedUser" class="btn btn-primary">Check</button>
+                    <button type="button" [disabled]="!activatedUser" class="btn btn-secondary" (click)="Zatvori()" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>

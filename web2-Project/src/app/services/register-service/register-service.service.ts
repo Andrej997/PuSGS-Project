@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ShareDataServiceService } from '../share-data-service/share-data-service.service';
 import * as CryptoJS from 'crypto-js';
 import { HttpServiceService } from '../http-service/http-service.service';
-import { User } from 'src/app/entities/user/user';
+
 
 @Injectable({ 
   providedIn: 'root'
@@ -20,7 +20,8 @@ export class RegisterServiceService {
   constructor(private route: ActivatedRoute, 
               private http: HttpClient, 
               private shareService: ShareDataServiceService,
-              private httpService: HttpServiceService) {
+              private httpService: HttpServiceService,
+              ) {
     this.shareService.currentLogoImage.subscribe(logoImg => this.logoImg = logoImg);
    }
 
@@ -41,6 +42,9 @@ export class RegisterServiceService {
       'passportNumber': new FormControl('', [Validators.minLength(9), 
                                              Validators.maxLength(9),
                                              Validators.pattern("^[0-9]*$")])
+    },
+    {
+      validators: this.ComparePassword('password', 'passwordRepeat')
     });
 
     // putUser(user: User) {
@@ -91,68 +95,32 @@ export class RegisterServiceService {
   
   
     
-    // ComparePassword(controlName: string, matchingControlName: string) :ValidatorFn {
-    //   return{ controlName === matchingControlName}
-      //return (formGroup: FormGroup) => {
-        // const control = formGroup.controls[controlName];
-        // const matchingControl = formGroup.controls[matchingControlName];
+    ComparePassword(controlName: string, matchingControlName: string) : ValidatorFn  {
+      //return{ controlName === matchingControlName}
+      return (formModel: FormGroup) => {
+        const control = formModel.controls[controlName];
+        const matchingControl = formModel.controls[matchingControlName];
     
-        // if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-        //   return;
-        // }
+        if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+          return null;
+        }
     
-        // if (control.value !== matchingControl.value) {
-        //   matchingControl.setErrors({ mustMatch: true });
-        // } else {
-        //   matchingControl.setErrors(null);
-        // }
-      //};
-    //}
+        if (control.value !== matchingControl.value) {
+          matchingControl.setErrors({ mustMatch: true });
+        } else {
+          matchingControl.setErrors(null);
+        }
+      };
+    }
 
-  // formModel = this.formBuilder.group({
-  //   'firstName': ['', Validators.required],
-  //   'lastName': ['', Validators.required],
-  //   'email': ['', Validators.email, , Validators.email],
-  //   Passwords: this.formBuilder.group({
-  //     'password': ['', [Validators.required, Validators.minLength(5)]],
-  //     'passwordRepeat': ['', Validators.required]
-  //   }, { validator: this.comparePasswords }),
-  //   'phoneNumber': ['', Validators.pattern("^[0-9]*$"), Validators.minLength(8)],
-  //   'streetAndNumber': ['', Validators.required],
-  //   'city': ['', Validators.required],
-  //   'profileImg': ['', Validators.required],
-    //'country': ['', Validators.required],
-    //
-    // 'firstName': new FormControl("", Validators.required),
-    // 'lastName': new FormControl("", Validators.required),
-    // 'email': new FormControl('', [Validators.required, Validators.email]),
-    // 'password' : new FormControl('', [Validators.required, Validators.minLength(3)]),
-    // 'passwordRepeat' : new FormControl('', [Validators.required, Validators.minLength(3)]),
-    // 'phoneNumber' : new FormControl('', [
-    //                                       // Validators.required, 
-    //                                       Validators.pattern("^[0-9]*$"),
-    //                                       Validators.minLength(8)]),
-    // 'streetAndNumber': new FormControl("", Validators.required),
-    // 'city': new FormControl("", Validators.required),
-    // 'profileImg': new FormControl("", Validators.nullValidator)
+    signInWithGoogle(): void {
+      
+    }
 
-    //
-  //});
-    
-  // comparePasswords(fb: FormGroup) {
-  //   console.log("stigao do compare passwords");
-  //   let confirmPswrdCtrl = fb.get('passwordRepeat');
-  //   //passwordMismatch
-  //   //confirmPswrdCtrl.errors={passwordMismatch:true}
-  //   if (confirmPswrdCtrl.errors == null || 'passwordMismatch' in confirmPswrdCtrl.errors) {
-  //     if (fb.get('password').value != confirmPswrdCtrl.value)
-  //       confirmPswrdCtrl.setErrors({ passwordMismatch: true });
-  //     else
-  //       confirmPswrdCtrl.setErrors(null);
-  //   }
-  // }
-
-
+    externalRegister(formData){
+      //console.log("external login -> "  + formData);
+      return this.http.post(this.BaseURI + '/MyUser/SocialRegister', formData);
+    }
   //retrun all users
       // this.http.get(this.BaseURI + '/MyUser/GetUsers')
       //     .toPromise()
