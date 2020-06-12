@@ -357,69 +357,70 @@ export class CcFlightComponent implements OnInit {
     //#region JEDAN VEOMA RUZAN KOD, ALI FUNKCIONALAN ZA PROVERU IMENA GRADOVA PRESEDANJA
     let presedanje: Presedanje;
     let chNum = this.form.value.presedanjeCnt;
+    // console.log(this.form.value.presedanjeCnt)
     if (chNum > 0) {
       let chCitiesGood = Array<boolean>(chNum);
       let allChangeovers = new Array<StringForICollection>();
-      if (this.form.value.presedanje1 != 'city' && chNum <= 1) {
+      if (this.form.value.presedanje1 != 'city' && chNum >= 1) {
         let sfic = new StringForICollection();
         sfic.id = 0;
         sfic.PlainString = this.form.value.presedanje1;
         allChangeovers.push(sfic);
         chCitiesGood[0]= true;
       }
-      else if (this.form.value.presedanje1 == 'city' && chNum <= 1) {
+      else if (this.form.value.presedanje1 == 'city' && chNum >= 1) {
         chCitiesGood[0]= false;
         this.error = true;
         this.errorText = "Changeover city can't be named 'city'!";
       }
   
-      if (this.form.value.presedanje2 != 'city' && chNum <= 2) {
+      if (this.form.value.presedanje2 != 'city' && chNum >= 2) {
         let sfic = new StringForICollection();
         sfic.id = 0;
         sfic.PlainString = this.form.value.presedanje2;
         allChangeovers.push(sfic);
         chCitiesGood[1]= true;
       }
-      else if (this.form.value.presedanje2 == 'city' && chNum <= 2) {
+      else if (this.form.value.presedanje2 == 'city' && chNum >= 2) {
         chCitiesGood[1]= false;
         this.error = true;
         this.errorText = "Changeover city can't be named 'city'!";
       }
   
-      if (this.form.value.presedanje3 != 'city' && chNum <= 3) {
+      if (this.form.value.presedanje3 != 'city' && chNum >= 3) {
         let sfic = new StringForICollection();
         sfic.id = 0;
         sfic.PlainString = this.form.value.presedanje3;
         allChangeovers.push(sfic);
         chCitiesGood[2]= true;
       }
-      else if (this.form.value.presedanje3 == 'city' && chNum <= 3) {
+      else if (this.form.value.presedanje3 == 'city' && chNum >= 3) {
         chCitiesGood[2]= false;
         this.error = true;
         this.errorText = "Changeover city can't be named 'city'!";
       }
   
-      if (this.form.value.presedanje4 != 'city' && chNum <= 4) {
+      if (this.form.value.presedanje4 != 'city' && chNum >= 4) {
         let sfic = new StringForICollection();
         sfic.id = 0;
         sfic.PlainString = this.form.value.presedanje4;
         allChangeovers.push(sfic);
         chCitiesGood[3]= true;
       }
-      else if (this.form.value.presedanje4 == 'city' && chNum <= 4) {
+      else if (this.form.value.presedanje4 == 'city' && chNum >= 4) {
         chCitiesGood[3]= false;
         this.error = true;
         this.errorText = "Changeover city can't be named 'city'!";
       }
   
-      if (this.form.value.presedanje5 != 'city' && chNum <= 5) {
+      if (this.form.value.presedanje5 != 'city' && chNum >= 5) {
         let sfic = new StringForICollection();
         sfic.id = 0;
         sfic.PlainString = this.form.value.presedanje5;
         allChangeovers.push(sfic);
         chCitiesGood[4]= true;
       }
-      else if (this.form.value.presedanje5 == 'city' && chNum <= 5) {
+      else if (this.form.value.presedanje5 == 'city' && chNum >= 5) {
         chCitiesGood[4]= false;
         this.error = true;
         this.errorText = "Changeover city can't be named 'city'!";
@@ -481,6 +482,7 @@ export class CcFlightComponent implements OnInit {
         let seat = new AvioSediste(0, false, false);
         allSeats.push(seat);
       }
+      // console.log(this.destValues);
       for (let i = 0; i < this.choseenPlane.numSeats; ++i) {
         this.destValues.forEach(element => {
           //console.log(element);
@@ -491,7 +493,7 @@ export class CcFlightComponent implements OnInit {
       }
       this.flight.allSeatsForThisFlight = allSeats;
 
-      //console.log(this.flight);
+      // console.log(this.flight);
 
       if (send === false) {
         this.error = true;

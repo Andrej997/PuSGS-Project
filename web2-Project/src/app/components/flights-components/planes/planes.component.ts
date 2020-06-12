@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
   templateUrl: './planes.component.html',
   styleUrls: ['./planes.component.css']
 })
+
+// declare let ol: any;
+
 export class PlanesComponent implements OnInit {
   currentUser: User;
 
@@ -19,6 +22,8 @@ export class PlanesComponent implements OnInit {
   errorText: string = "";
 
   change: boolean = false;
+
+  loading: boolean = false;
 
   constructor(private httpService: HttpServiceService, private router: Router,
       public authenticationService: AuthenticationService) { 
@@ -43,15 +48,18 @@ export class PlanesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.httpService.getAction('Plane')
       .toPromise()
       .then(result => {
         this.allPlanes = result as Aeroplane[];
         console.log(this.allPlanes);
+        this.loading = false;
       })
       .catch(
         err => {
           console.log(err)
+          this.loading = false;
           this.error = true;
           this.errorText = "Error while loading planes!"
         });
@@ -62,13 +70,16 @@ export class PlanesComponent implements OnInit {
   }
 
   deletePlane(event) {
+    this.loading = true;
     const idDeleteP = event.target.id;
     this.httpService.deleteAction("Plane", "DeletePlane", idDeleteP).toPromise()
     .then(result => {
       this.change = true;
+      this.loading = false;
     })
     .catch(
       err => {
+        this.loading = false;
         console.log(err);
         this.error = true;
       });

@@ -30,6 +30,8 @@ export class CreateFlightDestinationComponent implements OnInit {
   success: boolean = false;
   successText: string = "";
 
+  loading: boolean = false;
+
   constructor(public authenticationService: AuthenticationService,
     private route: ActivatedRoute, 
     private router: Router, private httpService: HttpServiceService) { 
@@ -42,50 +44,56 @@ export class CreateFlightDestinationComponent implements OnInit {
       else {
         this.kick();
       }
-      route.params.subscribe(params => { this.companyId = params['idC']; });
-      this.httpService.getIdAction("FlightCompany", this.companyId).toPromise()
+    }
+
+  ngOnInit(): void {
+    this.loading = true;
+    this.route.params.subscribe(params => { this.companyId = params['idC']; });
+    this.httpService.getIdAction("FlightCompany", this.companyId).toPromise()
+      .then(result => {
+        this.flightCompany = result as FlightCompany;
+        this.loading = false;
+      })
+      .catch(
+        err => {
+          this.loading = false
+          console.log(err)
+          this.error = true;
+          this.errorText = "Error while loading company!"
+        });
+    this.loading = true;
+    this.route.params.subscribe(params => { this.flightDestinationId = params['idFD']; });
+    if (this.flightDestinationId == undefined) {
+      this.flightDestinationId = -1;
+      this.loading = false;
+    }
+    else {
+      this.httpService.getIdAction("FlightDestination", this.flightDestinationId).toPromise()
         .then(result => {
-          this.flightCompany = result as FlightCompany;
+          this.flightDestination = result as FlightDestination;
+          // console.log(this.flightDestination);
+          this.id1 = this.flightDestination.startAddress.id;
+          this.id2 = this.flightDestination.endAddress.id;
+          this.flightPOST_PUT = this.flightDestination;
+          // console.log(this.flightPOST_PUT);
+          this.form.setValue({
+            streetAndNumber1: this.flightDestination.startAddress.streetAndNumber,
+            city1: this.flightDestination.startAddress.city,
+            country1: this.flightDestination.startAddress.country,
+            streetAndNumber2: this.flightDestination.endAddress.streetAndNumber,
+            city2: this.flightDestination.endAddress.city,
+            country2: this.flightDestination.endAddress.country
+          })
+          this.loading = false
         })
         .catch(
           err => {
+            this.loading = false
             console.log(err)
             this.error = true;
             this.errorText = "Error while loading company!"
           });
-      route.params.subscribe(params => { this.flightDestinationId = params['idFD']; });
-      if (this.flightDestinationId == undefined) {
-        this.flightDestinationId = -1;
-      }
-      else {
-        this.httpService.getIdAction("FlightDestination", this.flightDestinationId).toPromise()
-          .then(result => {
-            this.flightDestination = result as FlightDestination;
-            // console.log(this.flightDestination);
-            this.id1 = this.flightDestination.startAddress.id;
-            this.id2 = this.flightDestination.endAddress.id;
-            this.flightPOST_PUT = this.flightDestination;
-            // console.log(this.flightPOST_PUT);
-            this.form.setValue({
-              streetAndNumber1: this.flightDestination.startAddress.streetAndNumber,
-              city1: this.flightDestination.startAddress.city,
-              country1: this.flightDestination.startAddress.country,
-              streetAndNumber2: this.flightDestination.endAddress.streetAndNumber,
-              city2: this.flightDestination.endAddress.city,
-              country2: this.flightDestination.endAddress.country
-            })
-          })
-          .catch(
-            err => {
-              console.log(err)
-              this.error = true;
-              this.errorText = "Error while loading company!"
-            });
-      }
-    }
-
-  ngOnInit(): void {
-    
+        }
   }
   // ako ne autorizovan ili ne ulogovan korisnik pokusa da pristupi
   // ovoj stranici
@@ -111,7 +119,7 @@ export class CreateFlightDestinationComponent implements OnInit {
   }
 
   submit() {
-    
+    this.loading = true;
     let address1 = new Address(
       this.form.value.streetAndNumber1,
       this.form.value.city1,
@@ -145,8 +153,10 @@ export class CreateFlightDestinationComponent implements OnInit {
             this.successText = "!";
             this.success = true;
             this.error = false;
+            this.loading = false
           },
           err => { 
+            this.loading = false
             this.errorText = err; 
             this.error = true; 
             this.success = false;
@@ -163,11 +173,13 @@ export class CreateFlightDestinationComponent implements OnInit {
         // console.log(this.flightPOST_PUT);
         this.httpService.putAction('FlightDestination', this.flightPOST_PUT).subscribe(
           res => { 
+            this.loading = false
             this.successText = " changes ";
             this.success = true;
             this.error = false;
           },
           err => { 
+            this.loading = false
             this.errorText = err; 
             this.error = true; 
             this.success = false;
@@ -175,6 +187,7 @@ export class CreateFlightDestinationComponent implements OnInit {
       }
     }
     else {
+      this.loading = false
       this.error = true;
     }
     

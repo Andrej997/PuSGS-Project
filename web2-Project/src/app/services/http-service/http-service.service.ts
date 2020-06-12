@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { SearchFlight } from 'src/app/entities/search-flight/search-flight';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { HttpClient } from "@angular/common/http";
 export class HttpServiceService {
 
   //! osnovna putanja
-  readonly rootURL = "http://localhost:57428/api";
+  readonly rootURL = "http://localhost:57429/api";
 
   constructor(private http: HttpClient) { }
 
@@ -30,6 +31,10 @@ export class HttpServiceService {
 
   deleteAction(controllerName: string, actionName: string, id: number) {
     return this.http.delete(this.rootURL + '/' + controllerName + '/' + actionName + '/' + id);
+  }
+
+  deleteTypeAction(controllerName: string, actionName: string, invString: string) {
+    return this.http.delete(this.rootURL + '/' + controllerName + '/' + actionName + '/' + invString);
   }
 
   //! this.httpService.getAction('FlightCompany').toPromise().then(result => this.list = result as FlightCompany[]);

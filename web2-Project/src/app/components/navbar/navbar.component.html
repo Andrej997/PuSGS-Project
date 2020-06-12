@@ -42,7 +42,7 @@
                         height="37" 
                         width="37" >
                   </a>
-                  <a routerLink="/avio-companies/{{currentUser.serviceId}}/details" 
+                  <a routerLink="/avio-companies/{{avioServiceId}}/details" 
                     role="button" style="margin-right: 10px;"
                     aria-haspopup="true" 
                     aria-expanded="false"
@@ -60,13 +60,13 @@
                           width="30" 
                           routerLink="/friends"
                           style="cursor: pointer;">
-                      <sup>
+                      <!-- <sup>
                         <span class="badge badge-danger"
                             *ngIf='this.authenticationService.currentUserValue'>
                           {{fR}}
                         </span>
                         <span class="sr-only">unread messages</span>
-                      </sup>
+                      </sup> -->
                   </a>
                   <a role="button" style="margin-right: 10px;"
                     aria-haspopup="true" 
@@ -76,10 +76,10 @@
                           width="30" 
                           routerLink="/messages"
                           style="cursor: pointer;">
-                      <sup>
+                      <!-- <sup>
                         <span class="badge badge-danger">{{uM}}</span>
                         <span class="sr-only">unread messages</span>
-                      </sup>
+                      </sup> -->
                   </a>
                 </div>  
                 

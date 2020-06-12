@@ -11,6 +11,7 @@ import { AeroplaneServiceService } from '../aeroplane-service/aeroplane-service.
 import { AvioLuggage } from 'src/app/entities/avio-luggage/avio-luggage';
 import { StringForICollection } from 'src/app/entities/StringForICollection/string-for-icollection';
 import { DoubleForICollection } from 'src/app/entities/DoubleForICollection/double-for-icollection';
+import { NavbarComponent } from 'src/app/components/navbar/navbar.component';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class AvioCompaniesService {
     console.log('Učitavanje kompanija...');
     return this.mockedAvioCompanies();
   }
+
 
   private setSeatsForFastReservation(flight: Flight, idS :Array<number>): Flight {
     // flight.aeroplane.allSeats.forEach(element => {

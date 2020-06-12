@@ -16,7 +16,9 @@
     </div>
 </div>
 
-<div *ngIf='this.authenticationService.currentUserValue'>
+<app-my-spinner *ngIf="loading"></app-my-spinner>
+
+<div *ngIf='this.authenticationService.currentUserValue && !loading'>
     <div class="container" *ngIf="currentUser.role === 1 || currentUser.role === 2">
         <div class="alert alert-warning" role="alert">
             <b>All fields are required!</b>

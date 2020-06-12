@@ -22,6 +22,8 @@ export class AvioCompaniesComponent implements OnInit {
 
   loading: boolean = true;
 
+  avioServiceId: number = 0;
+
   allAvioCompanies: Array<FlightCompany> = new Array<FlightCompany>();
   constructor(private avioCompaniesService: AvioCompaniesService,
               private httpService: HttpServiceService,
@@ -29,7 +31,25 @@ export class AvioCompaniesComponent implements OnInit {
     //this.allAvioCompanies = this.avioCompaniesService.loadAvioCompanies();
     if (this.authenticationService.currentUserValue) { 
       this.currentUser = this.authenticationService.currentUserValue;
+
+      this.getUserAvioServiceId();
     }
+  }
+
+  getUserAvioServiceId() {
+    this.httpService.getUserIdAction("FlightCompany/User", this.currentUser.id.toString()).toPromise()
+    .then(result => {
+      this.avioServiceId = result as number;
+
+      if (this.avioServiceId > 0) {
+        this.currentUser.serviceId = this.avioServiceId;
+      }
+    })
+    .catch(
+      err => {
+        this.avioServiceId = 0;
+        console.log(err);
+      });
   }
 
   ngOnInit(): void {
@@ -50,6 +70,7 @@ export class AvioCompaniesComponent implements OnInit {
   }
 
   searchedCompanies(avioCompanies: Array<FlightCompany>) {
+    this.loading = true;
     this.allAvioCompanies = avioCompanies;
     if (this.allAvioCompanies.length == 0) {
       this.error = true;

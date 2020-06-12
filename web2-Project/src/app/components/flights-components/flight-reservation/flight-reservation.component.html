@@ -25,6 +25,26 @@
             <h5 class="ml-1">to: {{flight.to.city}}</h5>
             <label class="ml-2">[{{flight.datumSletanja}}]</label>
         </div>
+
+        <h3>Reservations calls</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">Invitation string</th>
+                    <th scope="col">Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reservationCall of allReservationCalls">
+                    <td>{{reservationCall.invitationString}}</td>
+                    
+                    <td>
+                        <a href="/invitation">Click here to accept or deny</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
         <h3>Fast reservations</h3>
         <table class="table table-hover">
             <thead>
@@ -32,6 +52,7 @@
                     <th scope="col">id</th>
                     <th scope="col">Price</th>
                     <th scope="col">Seat numeration</th>
+                    <th scope="col">Created</th>
                     <th scope="col">Rate flight</th>
                     <th scope="col">Rate flight company</th>
                     <th scope="col">Submit rate</th>
@@ -46,6 +67,7 @@
                     </th>
                     <td>{{fastFlightReservation.price}}</td>
                     <td>{{fastFlightReservation.seatNumeration}}</td>
+                    <td>{{fastFlightReservation.dateNow}}</td>
                     <td>
                         <div *ngIf="fastFlightReservation.ocenaLeta > 0; then thenBlock1 else elseBlock1"></div>
                         <ng-template #thenBlock1>
@@ -89,6 +111,7 @@
                     <th scope="col">id</th>
                     <th scope="col">Price</th>
                     <th scope="col">Seat numeration</th>
+                    <th scope="col">Created</th>
                     <th scope="col">Rate flight</th>
                     <th scope="col">Rate flight company</th>
                     <th scope="col">Submit rate</th>
@@ -103,6 +126,7 @@
                     </th>
                     <td>{{flightReservation.price}}</td>
                     <td>{{flightReservation.seatNumeration}}</td>
+                    <td>{{flightReservation.dateNow}}</td>
                     <td>
                         <div *ngIf="flightReservation.ocenaLeta > 0; then thenBlock1 else elseBlock1"></div>
                         <ng-template #thenBlock1>

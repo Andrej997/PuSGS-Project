@@ -11,6 +11,7 @@ import { HttpServiceService } from 'src/app/services/http-service/http-service.s
 import { FlightDestination } from 'src/app/entities/flight-destination/flight-destination';
 import { Flight } from 'src/app/entities/flight/flight';
 import { DoubleForICollection } from 'src/app/entities/DoubleForICollection/double-for-icollection';
+import { NavbarComponent } from '../../navbar/navbar.component';
 
 @Component({
   selector: 'app-create-avio-company',
@@ -33,7 +34,7 @@ export class CreateAvioCompanyComponent implements OnInit {
   companyId: number = 0;
 
   constructor(public authenticationService: AuthenticationService,
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private router: Router, private httpService: HttpServiceService,
     private avioCompaniesService: AvioCompaniesService) { 
       if (this.authenticationService.currentUserValue) { 

@@ -10,6 +10,7 @@ export class FastFlightReservation {
     userBonus: boolean;
     ocenaLeta: number;
     ocenaKompanije: number;
+    dateNow: Date;
 
     constructor() {
     }

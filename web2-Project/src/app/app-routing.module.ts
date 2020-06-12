@@ -27,6 +27,8 @@ import { ChangeFlightComponent } from './components/flights-components/change-fl
 import { CreateOrReplaceServiceComponent } from './components/rent-a-car/create-or-replace-service/create-or-replace-service.component';
 import { ChangeProfileComponent } from './components/profile/change-profile/change-profile.component';
 import { FlightReservationComponent } from './components/flights-components/flight-reservation/flight-reservation.component';
+import { AcceptReservationComponent } from './components/flights-components/accept-reservation/accept-reservation.component';
+import { MyMapComponent } from './components/flights-components/my-map/my-map.component';
 
 
 const routes: Routes = [
@@ -74,6 +76,14 @@ const routes: Routes = [
   {
     path: "log-in",
     component: LogInComponent
+  },
+  {
+    path: "map",
+    component: MyMapComponent
+  },
+  {
+    path: "invitation",
+    component: AcceptReservationComponent
   },
   {
     path: "sign-in",

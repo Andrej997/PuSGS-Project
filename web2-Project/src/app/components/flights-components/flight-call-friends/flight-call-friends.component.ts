@@ -3,6 +3,8 @@ import { User } from 'src/app/entities/user/user';
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FlightsService } from 'src/app/services/flights-service/flights.service';
+import { Friend } from 'src/app/entities/friend/friend';
+import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 
 @Component({
   selector: 'app-flight-call-friends',
@@ -13,13 +15,25 @@ export class FlightCallFriendsComponent implements OnInit {
   currentUser: User; // sve se nalazi u currentUser-u
   friendOption: string = 'option1';
 
-  constructor(private authenticationService: AuthenticationService,
+  myFriends: Array<User> = new Array<User>();
+
+  constructor(private authenticationService: AuthenticationService, private httpService: HttpServiceService,
       private flightService: FlightsService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     //console.log(this.currentUser);
   }
 
   ngOnInit(): void {
+    this.httpService.getEmailAction('Friend/MyFriends', this.currentUser.email)
+      .toPromise()
+      .then(result => {
+        this.myFriends = result as User[];
+        console.log(this.myFriends);
+      })
+      .catch(
+        err => {
+          console.log(err)
+        });
   }
 
   use(event) {
@@ -69,12 +83,13 @@ export class FlightCallFriendsComponent implements OnInit {
   submitS(){
     if (this.friendOption === 'option2') {
       let friendId = this.formS.value.friendSelect;
-      let passport = this.formS.value.friendPassportS;
-      for (let i = 0; i < this.currentUser.friends.length; ++i) {
-        if (this.currentUser.friends[i].friend.id == friendId) {
-          this.setFriend(this.currentUser.friends[i].friend);
+      for (let i = 0; i < this.myFriends.length; ++i) {
+        if (this.myFriends[i].id.toString() == friendId) {
+          this.setFriend(this.myFriends[i]);
         }
       }
+      this.seatBroj = this.flightService.getSeatBroj();
+      this.addedFriendToList = this.flightService.getAddedFriendToList();
     }
   }
 }

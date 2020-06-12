@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MAANPP20.Data;
+using MAANPP20.FlightRepositories;
 using MAANPP20.Models.Flights;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ namespace MAANPP20.Controllers.Flights
     [ApiController]
     public class PlaneController : ControllerBase
     {
+        private PlaneRepo planeRepo = new PlaneRepo();
         private readonly MAANPP20Context _context;
         public PlaneController(MAANPP20Context context)
         {
@@ -24,24 +26,28 @@ namespace MAANPP20.Controllers.Flights
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Aeroplane>>> GetAeroplanes()
         {
-            return await _context.Aeroplanes
-                .Where(x => x.deleted == false)
-                .ToListAsync();
+            return await planeRepo.GetAeroplanes(_context);
+            //return await _context.Aeroplanes
+            //    .Where(x => x.deleted == false)
+            //    .ToListAsync();
         }
 
         // GET: api/Plane/1
         [HttpGet("{id}")]
         public async Task<ActionResult<Aeroplane>> GetAeroplane(int id)
         {
-            var aeroplane = await _context.Aeroplanes
-                .Where(x => x.deleted == false)
-                .FirstOrDefaultAsync(i => i.id == id);
-
-            if (aeroplane == null)
-            {
-                return NotFound();
-            }
+            var aeroplane = await planeRepo.GetAeroplane(_context, id);
+            if (aeroplane == null) return NotFound();
             return aeroplane;
+            //var aeroplane = await _context.Aeroplanes
+            //    .Where(x => x.deleted == false)
+            //    .FirstOrDefaultAsync(i => i.id == id);
+
+            //if (aeroplane == null)
+            //{
+            //    return NotFound();
+            //}
+            //return aeroplane;
         }
 
         [HttpPost]
@@ -52,11 +58,15 @@ namespace MAANPP20.Controllers.Flights
 
             if (ValidateModel(aeroplane, true))
             {
-                _context.Aeroplanes.Add(aeroplane);
-
-                await _context.SaveChangesAsync();
-
+                var plane = await planeRepo.AddPlane(_context, aeroplane);
+                if (plane == null) return BadRequest();
                 return CreatedAtAction("GetAeroplane", new { id = aeroplane.id }, aeroplane);
+
+                //_context.Aeroplanes.Add(aeroplane);
+
+                //await _context.SaveChangesAsync();
+
+                //return CreatedAtAction("GetAeroplane", new { id = aeroplane.id }, aeroplane);
             }
             else return BadRequest();
         }
@@ -65,23 +75,25 @@ namespace MAANPP20.Controllers.Flights
         [HttpPut]
         public async Task<IActionResult> UpdatePlane(Aeroplane aeroplane)
         {
-            _context.Entry(aeroplane).State = EntityState.Modified;
+            var retAeroplane = await planeRepo.UpdatePlane(_context, aeroplane);
+            if (retAeroplane == null) return NotFound();
+            //_context.Entry(aeroplane).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PlaneExists(aeroplane.id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!PlaneExists(aeroplane.id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
 
             return Ok();
         }
@@ -92,25 +104,27 @@ namespace MAANPP20.Controllers.Flights
         [Route("DeletePlane/{id}")]
         public async Task<ActionResult<Aeroplane>> DeletePlane(int id)
         {
-            var plane = await _context.Aeroplanes
-                .Where(x => x.deleted == false)
-                .FirstOrDefaultAsync(i => i.id == id);
+            var plane = await planeRepo.DeletePlane(_context, id);
+            if (plane == null) return NotFound();
+            //var plane = await _context.Aeroplanes
+            //    .Where(x => x.deleted == false)
+            //    .FirstOrDefaultAsync(i => i.id == id);
 
-            if (plane == null)
-            {
-                return NotFound();
-            }
-            else if (plane.deleted == true)
-            {
-                return NotFound();
-            }
+            //if (plane == null)
+            //{
+            //    return NotFound();
+            //}
+            //else if (plane.deleted == true)
+            //{
+            //    return NotFound();
+            //}
 
-            plane.deleted = true;
+            //plane.deleted = true;
 
-            _context.Entry(plane).State = EntityState.Modified;
+            //_context.Entry(plane).State = EntityState.Modified;
 
-            //_context.Aeroplanes.Remove(plane);
-            await _context.SaveChangesAsync();
+            ////_context.Aeroplanes.Remove(plane);
+            //await _context.SaveChangesAsync();
 
             return Ok();
         }

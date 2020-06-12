@@ -19,7 +19,9 @@ export class UserFriendsComponent implements OnInit {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
   foundUser: boolean = false;
+  foundFriend: boolean = false;
   searchedUser: User;
+  searchedFriend: User;
   searchedUserName: string = '';
   searchedUserSurname: string = '';
 
@@ -152,6 +154,51 @@ export class UserFriendsComponent implements OnInit {
     return this.form.controls;
   }
 
+  form1 = new FormGroup({
+    email: new FormControl()
+  });
+  
+  get f1(){
+    return this.form1.controls;
+  }
+
+  loadAll() {
+    this.httpService.getEmailAction('Friend/MyFriends', this.currentUser.email)
+      .toPromise()
+      .then(result => {
+        console.log(result);
+        this.friends = result as User[];
+        // this.loading = false;
+      })
+      .catch(
+        err => {
+          console.log(err)
+          // this.error = true;
+          // this.errorText = "Error while loading companies!"
+          // this.loading = false;
+        });
+  }
+
+  searchFriend() {
+    let email = this.form1.value.email;
+    this.httpService.getEmailAction("Friend", email).toPromise()
+    .then(result => {
+      this.searchedFriend = result as User;
+      this.friends = new Array<User>();
+      this.friends.push(result as User)
+      this.foundFriend = true;
+      //console.log(this.searchedUser)
+    })
+    .catch(
+      err => {
+        console.log(err)
+        this.foundUser = true;
+        // this.error = true;
+        // this.errorText = "Error while loading company!"
+        // this.loading = false;
+      });
+  }
+
   searchUser() {
     let email = this.form.value.email;
     this.httpService.getEmailAction("Friend", email).toPromise()
@@ -184,7 +231,7 @@ export class UserFriendsComponent implements OnInit {
     friendRequest.hisId = this.searchedUser.id.toString();
     friendRequest.isRequest = false;
     console.log(this.currentUser);
-    this.currentUser.friendRequests.push(friendRequest)
+    //this.currentUser.friendRequests.push(friendRequest)
     //this.friendServiceService.addUserToMyWaitingList(this.searchedUser);
     this.httpService.postAction('Friend', 'SendReq', friendRequest).subscribe (
       res => { 

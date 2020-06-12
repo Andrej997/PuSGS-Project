@@ -8,6 +8,7 @@ import { FlightsService } from 'src/app/services/flights-service/flights.service
 import { FlightReservation } from 'src/app/entities/flight-reservation/flight-reservation';
 import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 import { PlanSeatServiceService } from 'src/app/services/plain-seat-service/plan-seat-service.service';
+import { FriendForFlight } from 'src/app/entities/friend-for-flight/friend-for-flight';
 
 @Component({
   selector: 'app-flight',
@@ -45,6 +46,7 @@ export class FlightComponent implements OnInit {
   loading: boolean = true;
 
   error: boolean = false;
+  errorPost: boolean = false;
   errorText: string = "";
   errorPagination: boolean = false;
 
@@ -240,8 +242,8 @@ export class FlightComponent implements OnInit {
 
   bookFlight() {
     this.paginationNum = 4;
-    // this.calledFriends = this.flightsService.getCalledFriends();
-    // console.log(this.calledFriends);
+    this.calledFriends = this.flightsService.getCalledFriends();
+    console.log(this.calledFriends);
     // let flightReservation = new FlightReservation();
     // flightReservation.avioCompanyId = this.flight.idCompany;
     // flightReservation.flightId = this.flight.id;
@@ -254,7 +256,7 @@ export class FlightComponent implements OnInit {
     //       this.selectedSeats[i + 1];
     //   flightReservation.friends.push(elStr);
     // } 
-    // flightReservation.reservedSeatsIds = this.selectedSeats[0]; //! moje sediste
+    console.log(this.selectedSeats);
     // flightReservation.totalPrice = this.sumPriceForAll;
 
     // console.log(flightReservation);
@@ -305,7 +307,7 @@ export class FlightComponent implements OnInit {
   }
 
   setRentACat() {
-    console.log("YES");
+    this.dontSetRentACat();
   }
 
   dontSetRentACat() {
@@ -321,6 +323,22 @@ export class FlightComponent implements OnInit {
     flightReservation.UserIdForPOST = this.currentUser.id.toString();
     flightReservation.seatId = this.flight.allSeatsForThisFlight[this.selectedSeats[0]-1].id;
     flightReservation.userBonus = this.checked;
+    flightReservation.dateNow = new Date();
+    flightReservation.friendForFlights = new Array<FriendForFlight>();
+    let i: number = 1;
+    this.calledFriends.forEach(element => {
+      let friendForFlight: FriendForFlight = new FriendForFlight();
+      friendForFlight.email = element.email;
+      friendForFlight.ime = element.firstName;
+      friendForFlight.prezime = element.lastName;
+      friendForFlight.seatNumber = this.selectedSeats[i];
+      friendForFlight.seatId = this.flight.allSeatsForThisFlight[this.selectedSeats[i]-1].id;
+
+      ++i;
+
+      flightReservation.friendForFlights.push(friendForFlight);
+    });
+
     console.log(flightReservation);
 
     this.httpService.postAction('FlightReservation', 'Reserve', flightReservation).subscribe(
@@ -328,10 +346,11 @@ export class FlightComponent implements OnInit {
         this.successText = "Reservation successfully created!";
         this.router.navigate(['/reservations/' + this.currentUser.id.toString()]);
         this.success = true;
+        this.errorPost = false; 
       },
       err => { 
-        this.errorText = err; 
-        this.error = true; 
+        this.errorText = "Some of the selected seats are reserved, refresh the page!"; 
+        this.errorPost = true; 
         this.success = false;
       }
     );

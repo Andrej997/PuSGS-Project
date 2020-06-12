@@ -25,6 +25,9 @@
         <div class="alert alert-warning" role="alert" *ngIf="change">
             Changes have been made, please refresh page or click <a style="cursor: pointer;" (click)="refreshPage()"><b>here</b></a>!
         </div>
+
+        <app-my-spinner *ngIf="loading"></app-my-spinner>
+
         <table class="table table-hover">
             <thead>
                 <tr class="table-primary">

@@ -137,7 +137,7 @@
                 <p class="ml-3" id="aeroplane">{{flight.aeroplane.name}}</p>
             </div>
 
-            <div class="container" *ngIf="!success">
+            <div class="container" *ngIf="!success && firstAwaibleSeat > 0">
                 <button type="button" class="btn btn-success" (click)="reserveFastFlight()">
                     BOOK FLIGHT
                 </button>

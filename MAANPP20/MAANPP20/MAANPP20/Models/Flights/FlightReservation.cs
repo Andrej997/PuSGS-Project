@@ -27,6 +27,10 @@ namespace MAANPP20.Models.Flights
 
         public int ocenaKompanije { get; set; }
 
+        public ICollection<FriendForFlight> friendForFlights { get; set; }
+
+        public DateTime dateNow { get; set; }
+
         public bool deleted { get; set; }
     }
 }

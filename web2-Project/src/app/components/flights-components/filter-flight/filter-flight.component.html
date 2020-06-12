@@ -1,7 +1,10 @@
+<div class="alert alert-danger" role="alert" *ngIf="error">
+    <b>{{errorText}}</b>
+</div>
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-group">
 
-        <label for="datefrom">Date</label>
+        <!-- <label for="datefrom">Date</label>
         <div class="form-group"> 
             <input formControlName="datefrom" type="date" #datefrom 
                 placeholder="YYYY-MM-DD" class="form-control" aria-label="datefrom"
@@ -10,37 +13,37 @@
             <input formControlName="dateto" type="date" #dateto
                 placeholder="YYYY-MM-DD" class="form-control" aria-label="dateto"
                 id="dateto" aria-describedby="datetomHelp" style="width: 50%; float: right;">
-        </div>
+        </div> -->
 
         <label for="pricefrom">Price</label>
         <div class="form-group"> 
-            <input formControlName="pricefrom" type="number" #pricefrom min="0"
+            <input formControlName="pricefrom" type="number" #pricefrom min="0" max="99999"
                 placeholder="$$$$" class="form-control" aria-label="pricefrom" value="0"
                 id="pricefrom" aria-describedby="pricefromHelp" style="width: 50%; float: left;">
 
-            <input formControlName="priceto" type="number" #priceto min="1"
+            <input formControlName="priceto" type="number" #priceto min="0" max="100000"
                 placeholder="$$$$" class="form-control" aria-label="priceto"
                 id="priceto" aria-describedby="pricetoHelp" style="width: 50%; float: right;">
         </div>
 
         <label for="distancefrom">Distance</label>
         <div class="form-group"> 
-            <input formControlName="distancefrom" type="number" #distancefrom min="0"
+            <input formControlName="distancefrom" type="number" #distancefrom min="0" max="99999"
                 placeholder="kilometers" class="form-control" aria-label="distancefrom"
                 id="distancefrom" aria-describedby="distancefromHelp" style="width: 50%; float: left;">
 
-            <input formControlName="distanceto" type="number" #distanceto min="1"
+            <input formControlName="distanceto" type="number" #distanceto min="0" max="100000"
                 placeholder="kilometers" class="form-control" aria-label="distanceto"
                 id="distanceto" aria-describedby="distancetoHelp" style="width: 50%; float: right;">
         </div>
 
         <label for="changeoverfrom">Changeover</label>
         <div class="form-group"> 
-            <input formControlName="changeoverfrom" type="number" #changeoverfrom min="0"
+            <input formControlName="changeoverfrom" type="number" #changeoverfrom min="0" max="5"
                 placeholder="xxxx" class="form-control" aria-label="changeoverfrom"
                 id="changeoverfrom" aria-describedby="changeoverfromHelp" style="width: 50%; float: left;">
 
-            <input formControlName="changeoverto" type="number" #changeoverto min="1"
+            <input formControlName="changeoverto" type="number" #changeoverto min="0" max="5" 
                 placeholder="xxxx" class="form-control" aria-label="changeoverto"
                 id="changeoverto" aria-describedby="changeovertoHelp" style="width: 50%; float: right;">
         </div>

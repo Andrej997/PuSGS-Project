@@ -622,6 +622,9 @@ namespace MAANPP20.Migrations
                     b.Property<string>("UserIdForPOST")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("dateNow")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("deleted")
                         .HasColumnType("bit");
 
@@ -814,6 +817,9 @@ namespace MAANPP20.Migrations
                     b.Property<string>("UserIdForPOST")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("dateNow")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("deleted")
                         .HasColumnType("bit");
 
@@ -843,6 +849,50 @@ namespace MAANPP20.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("FlightReservations");
+                });
+
+            modelBuilder.Entity("MAANPP20.Models.Flights.FriendForFlight", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("FlightReservationid")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("acceptedCall")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("invitationString")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("prezime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("reservationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("seatId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("seatNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("FlightReservationid");
+
+                    b.ToTable("FriendForFlights");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Flights.Presedanje", b =>
@@ -1060,6 +1110,13 @@ namespace MAANPP20.Migrations
                     b.HasOne("MAANPP20.Models.Common.User", null)
                         .WithMany("flightReservations")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("MAANPP20.Models.Flights.FriendForFlight", b =>
+                {
+                    b.HasOne("MAANPP20.Models.Flights.FlightReservation", null)
+                        .WithMany("friendForFlights")
+                        .HasForeignKey("FlightReservationid");
                 });
 #pragma warning restore 612, 618
         }

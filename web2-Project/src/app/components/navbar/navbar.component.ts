@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { AuthenticationService } from 'src/app/services/authentication-service/authentication.service';
 import { User } from 'src/app/entities/user/user';
+import { HttpServiceService } from 'src/app/services/http-service/http-service.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +16,9 @@ export class NavbarComponent implements OnInit {
   fR: number; // number of friend req
   uM: number; // unread messages
 
-  constructor(private router: Router, 
+  avioServiceId: number = 0;
+
+  constructor(private router: Router, private httpService: HttpServiceService,
               public authenticationService: AuthenticationService) { 
     if (this.authenticationService.currentUserValue) { 
       this.imgUrl = this.authenticationService.currentUserValue.profileImage;
@@ -25,11 +28,37 @@ export class NavbarComponent implements OnInit {
       //this.uM = this.currentUser.friends.;
       this.uM = 2;
 
+      this.getUserAvioServiceId();
+      
       console.log(this.currentUser);
     }
   }
 
+  getUserAvioServiceId() {
+    this.httpService.getUserIdAction("FlightCompany/User", this.currentUser.id.toString()).toPromise()
+    .then(result => {
+      this.avioServiceId = result as number;
+    })
+    .catch(
+      err => {
+        this.avioServiceId = 0;
+        console.log(err);
+      });
+  }
+
   ngOnInit(): void {
+    //this.checkAllReservations();
+  }
+
+  checkAllReservations() {
+    this.httpService.getAction('FlightReservation')
+      .toPromise()
+      .then(result => {
+      })
+      .catch(
+        err => {
+          console.log(err)
+        });
   }
 
   logout() {

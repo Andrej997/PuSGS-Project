@@ -143,3 +143,18 @@
   .spinner-message {
     text-align: center;
   }
+
+/* #bern {
+  width:112px;
+  height:156px;
+  margin-top: 40%;
+  margin-left: 43%;
+  background:url(https://i.imgur.com/ifk0SLH.png) repeat-x;
+  animation:walk .8s steps(6) infinite;
+  position:relative;
+  bottom:34px;
+}
+@keyframes walk {
+  0% { background-position:0 }
+  100% { background-position:-672px }
+} */

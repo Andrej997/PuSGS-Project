@@ -35,13 +35,34 @@ export class AvioCompanyDetailsComponent implements OnInit {
 
   isMyCompany: boolean = false;
 
+  avioServiceId: number = 0;
+
   constructor(private route: ActivatedRoute, private httpService: HttpServiceService,
         private avioCompaniesService: AvioCompaniesService, private router: Router,
         public authenticationService: AuthenticationService) { 
     if (this.authenticationService.currentUserValue) { 
       this.currentUser = this.authenticationService.currentUserValue;
       this.currentUserEmail = this.currentUser.email;
+
+      this.getUserAvioServiceId();
     }
+  }
+
+  getUserAvioServiceId() {
+    this.httpService.getUserIdAction("FlightCompany/User", this.currentUser.id.toString()).toPromise()
+    .then(result => {
+      this.avioServiceId = result as number;
+
+      if (this.avioServiceId > 0) {
+        this.currentUser.serviceId = this.avioServiceId;
+        this.isMyCompany = true;
+      }
+    })
+    .catch(
+      err => {
+        this.avioServiceId = 0;
+        console.log(err);
+      });
   }
 
   ngOnInit(): void {
@@ -150,13 +171,16 @@ export class AvioCompanyDetailsComponent implements OnInit {
   }
 
   deleteFlight(event) {
+    this.loading = true;
     const idDeleteF = event.target.id;
     this.httpService.deleteAction("Flight", "DeleteFlight", idDeleteF).toPromise()
     .then(result => {
       this.change = true;
+      this.loading = false;
     })
     .catch(
       err => {
+        this.loading = false;
         console.log(err);
         this.error = true;
         this.hideShowBTN = false;
