@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200612101005_Gradovi")]
+    partial class Gradovi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

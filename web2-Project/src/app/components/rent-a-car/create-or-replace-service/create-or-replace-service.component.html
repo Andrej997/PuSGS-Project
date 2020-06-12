@@ -1,25 +1,28 @@
 <div class="svee">
     <div class="container-fluid">
+        <button type="button" (click) = "f()">Get</button>
         <img 
                 class="serviceLogo "
                 alt="your image"
                 id="serviceLogoImg"
                 src = "../../../../assets/img/rent-a-car-logo.jpg">
-        <form [formGroup]="service"
-              (ngSubmit)="OnSubmit()"> <!--[formGroup]="service" -->
+        <form [formGroup]="serviceForm"
+              (ngSubmit)="OnSubmit()"> <!--[formGroup]="serviceForm" -->
             <div class="form-group">
                 <label >Name:</label>
                 <input type="text" 
                        class="form-control" 
                        placeholder="name" 
-                       id="name">
+                       id="name"
+                       formControlName="nameService">
             </div>
             <div class="form-group">
                 <label >Description:</label>
                 <input type="text" 
                        class="form-control" 
                        placeholder="description" 
-                       id="description">
+                       id="description"
+                       formControlName="descriptionService">
             </div>
             <div class="form-group ">
                 <label for="collapseBtnAdr">Address</label>
@@ -46,7 +49,7 @@
                                    id="streetAndNumber" 
                                    #streetAndNumber 
                                    formControlName="streetAndNumber"
-                                   class="form-control">
+                                   class="form-control"><!--formControlName="streetAndNumber"-->
                         </div>
                         <!-- <div *ngIf="registerService.formModel.controls.streetAndNumber.touched && registerService.formModel.controls.streetAndNumber.invalid" class="alert alert-danger">
                             <div *ngIf="registerService.formModel.controls.streetAndNumber.errors.required">Please enter your home address.</div>
@@ -57,7 +60,7 @@
                                    id="city" 
                                    #city 
                                    formControlName="city"
-                                   class="form-control">
+                                   class="form-control"><!--formControlName="city"-->
                         </div>
                         <!-- <div *ngIf="registerService.formModel.controls.city.touched && registerService.formModel.controls.city.invalid" class="alert alert-danger">
                             <div *ngIf="registerService.formModel.controls.city.errors.required">Please enter your city.</div>
@@ -65,7 +68,7 @@
                         <label for="country">Country</label>
                         <div class="input-group mb-3">
                             <div class="dropdown">
-                                <select id="country" name="country" class="form-control">
+                                <select id="country" name="country" class="form-control" formControlName="country">
                                     <option value="Afghanistan">Afghanistan</option>
                                     <option value="Åland Islands">Åland Islands</option>
                                     <option value="Albania">Albania</option>
@@ -87,7 +90,7 @@
                         <input type="file" 
                                name="profileImg"
                                #profileImg
-                               formControlName="profileImg"
+                               
                                id="customFile"
                                accept="image/*"
                                (change)="readURL($event)">
@@ -109,9 +112,286 @@
                     
                 </div>
             </div>
-            
+            <div  class="form-group">
+                <div class="container">
+                    <div class="row card-group" >
+                        <div class="card">
+                            <table>
+                                <!-- <tr>
+                                    <th >Base price</th>
+                                    <td contenteditable="true" aria-required="true"></td>
+                                </tr> 
+                            [readonly]="isReadOnlyModel"-->
+                                <tr>
+                                    <th>Navigation</th>
+                                    <td contenteditable="true" aria-required="true">
+                                        <input type="text" id="nav" value="123" formControlName="nav">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Baby seat</th>
+                                    <td contenteditable="true" aria-required="true">
+                                        <input type="text" id="bab" value="123" formControlName="bab">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Roof rack</th>
+                                    <td contenteditable="true" aria-required="true">
+                                        <input type="text" id="roo" value="123" formControlName="roo">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Luxuary</th>
+                                    <td contenteditable="true" aria-required="true">
+                                        <input type="text" id="lux" value="123" formControlName="lux">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Discount</th>
+                                    <td contenteditable="true" aria-required="true">
+                                        <input type="text" id="dis" value="123" formControlName="dis">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                <!-- <tr>
+                                    <th>Summary</th>
+                                    <td>
+                                        <input type="text" id="summ" value="123" formControlName="sum">
+                                    </td>
+                                </tr> -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <button class="btn btn-primary" 
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#exampleModal"> Add car</button>
+            <h6>Number add cars:</h6>
+            <input type="text" [value]="numberCars" readonly>
+            <br>
+            <button class="btn btn-primary" 
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#branchesModal"> Add branch</button>
+            <h6>Number branch:</h6>
+            <input type="text" [value]="numberBranch" readonly>
+            <br>
+            <button class="btn btn-primary" 
+                    type="submit" 
+                    id="submitCarService"
+                    name="RACSubmit">Create
+            </button>
 
         </form>
+    </div>
+</div>
+
+
+<div  class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create car</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <br>
+            <form [formGroup]="carForm" (ngSubmit)="CreateCarSubmit()">
+                <div>
+                    <h6 for="cars">Brand car:</h6>
+                    <select id="brand" formControlName="brand">
+                        <option value="AlfaRomeo" href="#">Alfa Romeo</option>
+                        <option value="Audi" href="#">Audi</option>
+                        <option value="BMW" href="#" >BMW</option>
+                        <option value="Citroen" href="#" >Citroen</option>
+                        <option value="Fiat" href="#" >Fiat</option>
+                        <option value="Ford" href="#" >Ford</option>
+                        <option value="Mercedes" href="#" >Mercedes</option>
+                        <option value="Peugeot" href="#" >Peugeot</option>
+                        <option value="Porsche" href="#" >Porsche</option>
+                        <option value="Toyota" href="#" >Toyota</option>
+                        <option value="Volkswagen" href="#" >Volkswagen</option>
+                        <option value="Volvo" href="#" >Volvo</option>
+                        <option value="Yugo" href="#" >Yugo</option>
+                        <option value="Skoda" href="#" >Skoda</option>
+                    </select>
+                    <h6 for="model">Model</h6>
+                    <input type="text" id="model" formControlName="model" [readonly]="isReadOnlyModel">
+                    <div *ngIf="carForm.controls.model.invalid" class="alert alert-danger">Obavezno polje</div>
+                    <h6>Type car:</h6>
+                    <select id="type" formControlName="type">
+                        <option value="Convertable" href="#" >Convertable</option>
+                        <option value="Crossoover" href="#" >Crossoover</option>
+                        <option value="Hatchback" href="#" >Hatchback</option>
+                        <option value="Luxuary" href="#" >Luxuary</option>
+                        <option value="Minivan" href="#" >Minivan</option>
+                        <option value="Sedan" href="#" >Sedan</option>
+                    </select>
+                    
+                    <h6 >Fuel:</h6>
+                    <select id="fuel" formControlName="fuel">
+                        <option value="Persol" href="#" >Persol</option>
+                        <option value="Diesel" href="#" >Diesel</option>
+                        <option value="Electric" href="#" >Electric</option>
+                        <option value="Hybrid" href="#" >Hybrid</option>
+                    </select>
+                    <h6 >Gear:</h6>
+                    <select id="gear" formControlName="gear">
+                        <option value="Manual" href="#" >Manual</option>
+                        <option value="Automatic" href="#" >Automatic</option>
+                    </select>
+                    <h6>Year:</h6>
+                    <input type="number" min="1859" max="2020" step="1" value="2010" formControlName="year" [readonly]="isReadOnlyYear">
+                    <h6 >Doors:</h6>
+                    <select id="doors" formControlName="doors">
+                        <option value="Two" href="#" >2/3</option>
+                        <option value="Four" href="#" >4/5</option>
+                    </select>
+                    <h6 >Seats:</h6>
+                    <select id="passenger" formControlName="seats">
+                        <option value="Two" href="#" >2</option>
+                        <option value="Four" href="#" >4</option>
+                        <option value="Five" href="#" >5</option>
+                        <option value="Six" href="#" >6</option>
+                        <option value="Seven" href="#" >7</option>
+                    </select>
+                    <!-- <h6>cm3:</h6>
+                    <input type="number" id="cm3" min="0" max="1290"> -->
+                    <h6>kw:</h6>
+                    <input type="number" id="kw" min="0" max="1000" formControlName="kw" value="10">
+                    <h6>Trunk(l):</h6>
+                    <input type="number" id="trunk" min="0" max="2000" formControlName="trunk" value="10" >
+                    <h6>Base price(e/per day):</h6>
+                    <input type="number" id="price" min="0" max="10000" value="25" value="10" formControlName="price" >
+                    <h6>Accessories:</h6>
+                    <input type="checkbox" id="babySeat" value="babySeat" formControlName="babySeat">Baby seat<br>
+                    <input type="checkbox" id="navigation" value="navigation" formControlName="navigation">Navigation<br>
+                    <input type="checkbox" id="roofRack" value="roofRack" formControlName="roofRack">Roof rack<br>
+                    <div class="form-group">
+                        <h6 >Car image:</h6>
+                        <div class="input-group ">
+                            <div class="input-group-prepend ">
+                              <span class="input-group-text" id="uploadCarImage">Upload</span>
+                            </div>
+                            <div class="btn btn-primary float-left" id="btnImage">
+                                <!-- <label style="position: absolute;">{{ imgName }}</label> -->
+                                <input type="file" 
+                                       name="inputCarImg"
+                                       #carImg
+                                       formControlName="carImg"
+                                       accept="image/*"
+                                       (change)="readURLcar($event)">
+                            </div>
+                            <div class="input-group-prepend" >
+                                    <button type="button" 
+                                        id="deleteCarImg" 
+                                        class="btn btn-outline-secondary" 
+                                        value="Reset">
+                                    <svg class="bi bi-x-square" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button> 
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div >
+                        <img 
+                            height="200"
+                            width="200"
+                            alt="your image"
+                            id="carImg"
+                            [src] = "source"
+                            ><!--src = "../../../../assets/img/rent-a-car-logo.jpg"-->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="CarSubmit" class="btn btn-primary" [disabled]="!carForm.valid">Create</button>
+                    <button type="button"  class="btn btn-secondary"  data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div  class="modal fade" id="branchesModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelBranch" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create branch</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="branchForm" (ngSubmit)="CreateBranchSubmit()">
+                <label for="collapseBtnAdr">Address</label>
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary btn-block" 
+                            type="button" 
+                            data-toggle="collapse" 
+                            id="collapseBtnAdr"
+                            data-target="#collapseAddressBranch" 
+                            aria-expanded="false" 
+                            aria-controls="collapseExample">
+                            Full address
+                        <svg class="bi bi-chevron-contract" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3.646 13.854a.5.5 0 00.708 0L8 10.207l3.646 3.647a.5.5 0 00.708-.708l-4-4a.5.5 0 00-.708 0l-4 4a.5.5 0 000 .708zm0-11.708a.5.5 0 01.708 0L8 5.793l3.646-3.647a.5.5 0 01.708.708l-4 4a.5.5 0 01-.708 0l-4-4a.5.5 0 010-.708z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="collapse " 
+                    id="collapseAddressBranch">
+                    <div class="card card-body addressBg">
+                        <label for="street">Street and number</label>
+                        <div class="input-group mb-3" >
+                            <input type="text" 
+                                id="streetAndNumberBranch" 
+                                formControlName="streetAndNumberBranch"
+                                class="form-control"><!--formControlName="streetAndNumber"-->
+                        </div>
+                        <!-- <div *ngIf="registerService.formModel.controls.streetAndNumber.touched && registerService.formModel.controls.streetAndNumber.invalid" class="alert alert-danger">
+                            <div *ngIf="registerService.formModel.controls.streetAndNumber.errors.required">Please enter your home address.</div>
+                        </div> -->
+                        <label for="city">City</label>
+                        <div class="input-group mb-3">
+                            <input type="text" 
+                                id="cityBranch" 
+                                formControlName="cityBranch"
+                                class="form-control"><!--formControlName="city"-->
+                        </div>
+                        <!-- <div *ngIf="registerService.formModel.controls.city.touched && registerService.formModel.controls.city.invalid" class="alert alert-danger">
+                            <div *ngIf="registerService.formModel.controls.city.errors.required">Please enter your city.</div>
+                        </div> -->
+                        <label for="country">Country</label>
+                        <div class="input-group mb-3">
+                            <div class="dropdown">
+                                <select id="countryBranch" name="country" class="form-control" formControlName="countryBranch">
+                                    <option value="Afghanistan">Afghanistan</option>
+                                    <option value="Åland Islands">Åland Islands</option>
+                                    <option value="Albania">Albania</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- </div> -->
+                <div class="modal-footer">
+                    <button type="submit" name="BranchSubmit" class="btn btn-primary">Create</button>
+                    <button type="button"  class="btn btn-secondary"  data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

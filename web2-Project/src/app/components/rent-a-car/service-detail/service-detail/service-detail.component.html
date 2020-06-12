@@ -59,7 +59,7 @@
                             </ng-template>
                         </div>
                         <div style="display: inline; padding-left: 1em;">
-                            <span>
+                            <span *ngIf="myService.raiting != null">
                                 Vote: {{myService.raiting.length}} 
                             </span>
                         </div>
@@ -90,7 +90,7 @@
                         <br>
                         
                         <span>Branches:</span>
-                        <div class="container">
+                        <div class="container" *ngIf="myService.branches != null">
                             <div class="row card-group" >
                                 <div class="card">
                                     <div class="card mb-3" style="max-width: auto;" *ngFor="let branch of myService.branches">
@@ -109,7 +109,7 @@
                         </div>
                         <br>
                         <span>Pricelist:</span>
-                        <div class="container">
+                        <!-- <div class="container" *ngIf="myService.carlist != null">
                             <div class="row card-group" >
                                 <div class="card">
                                     <table>
@@ -137,10 +137,65 @@
                                     </table>
                                 </div>
                             </div>
+                        </div> -->
+                        <div class="container" *ngIf="myService.pricelist != null">
+                            <div class="row card-group" >
+                                <div class="card">
+                                    <table>
+                                        <!-- <tr>
+                                            <th >Base price</th>
+                                            <td contenteditable="true" aria-required="true"></td>
+                                        </tr> 
+                                    [readonly]="isReadOnlyModel"-->
+                                        <tr>
+                                            <th>Navigation</th>
+                                            <td contenteditable="true" aria-required="true">
+                                                <input type="text" id="nav" [value]="myService.pricelist[1][1]" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Baby seat</th>
+                                            <td contenteditable="true" aria-required="true">
+                                                <input type="text" id="bab" [value]="myService.pricelist[0][1]" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Roof rack</th>
+                                            <td contenteditable="true" aria-required="true">
+                                                <input type="text" id="roo" [value]="myService.pricelist[2][1]" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Luxuary</th>
+                                            <td contenteditable="true" aria-required="true">
+                                                <input type="text" id="lux" [value]="myService.pricelist[3][1]" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Discount</th>
+                                            <td contenteditable="true" aria-required="true">
+                                                <input type="text" id="dis" [value]="myService.pricelist[4][1]" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                        <!-- <tr>
+                                            <th>Summary</th>
+                                            <td>
+                                                <input type="text" id="summ" value="123" formControlName="sum">
+                                            </td>
+                                        </tr> -->
+                                    </table>
+                                </div>
+                            </div>
                         </div>
+
+
+
                         <br>
                         <span>Carlist:</span>
-                        <div class="container">
+                        <div class="container" *ngIf="myService.carlist != null">
                             <div class="row card-group" >
                                 
                                 <div class="card">
@@ -183,14 +238,14 @@
     </div>
     <div  style="  display: inline; max-width: 20%;">
         <span>Comments:</span>
-        <div class="container">
+        <div class="container" *ngIf="myService.comments != null">
             <div class="row card-group" >
                 <div class="card">
                     <div class="card mb-3" style="max-width: auto;" *ngFor="let comment of myService.comments">
                         <div class="row card-group " >
                         <div class="col-md-8">
                             <div class="card-body">
-                                <p class="card-text">User123: {{ comment }}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+                                <p class="card-text">User: {{ comment }}</p>
                             </div>
                         </div>
                     </div>

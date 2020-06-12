@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200610002346_RezervacijeOdDo_auta")]
+    partial class RezervacijeOdDo_auta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,192 +21,12 @@ namespace MAANPP20.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("MAANPP20.Models.Cars.Car", b =>
-                {
-                    b.Property<int>("idCar")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("BabySeat")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Brand")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CarImage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Cm3")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Doors")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FreeSeats")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fuel")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Gear")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Kw")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Model")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Navigation")
-                        .HasColumnType("bit");
-
-                    b.Property<double>("PricePerDay")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("RentACarServiceidRAC")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("RoofRack")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Seats")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Trunk")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Year")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("idService")
-                        .HasColumnType("int");
-
-                    b.HasKey("idCar");
-
-                    b.HasIndex("RentACarServiceidRAC");
-
-                    b.ToTable("Cars");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.Cenovnik", b =>
-                {
-                    b.Property<int>("idCenovnik")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("deleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("idCenovnik");
-
-                    b.ToTable("Cenovnik");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.Grad", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("city")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("images")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Gradovi");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.Ocena", b =>
-                {
-                    b.Property<int>("idOcena")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CaridCar")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RentACarServiceidRAC")
-                        .HasColumnType("int");
-
-                    b.Property<int>("broj")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("deleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("idOcena");
-
-                    b.HasIndex("CaridCar");
-
-                    b.HasIndex("RentACarServiceidRAC");
-
-                    b.ToTable("OcenePojedinacnogAuta");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.RentACarService", b =>
-                {
-                    b.Property<int>("idRAC")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CenovnikidCenovnik")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogoImage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RACaddressId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RACidAdmin")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("deleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("idRAC");
-
-                    b.HasIndex("CenovnikidCenovnik");
-
-                    b.HasIndex("RACaddressId");
-
-                    b.HasIndex("RACidAdmin");
-
-                    b.ToTable("RentACarServices");
-                });
-
             modelBuilder.Entity("MAANPP20.Models.Cars.RezervacijaOdDo", b =>
                 {
                     b.Property<int>("idRezervacijaOdDo")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CaridCar")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("Do")
                         .HasColumnType("datetime2");
@@ -217,35 +39,7 @@ namespace MAANPP20.Migrations
 
                     b.HasKey("idRezervacijaOdDo");
 
-                    b.HasIndex("CaridCar");
-
                     b.ToTable("RezervacijeOdDo");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.StavkaCenovnika", b =>
-                {
-                    b.Property<int>("idStavkeCenovnika")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CenovnikidCenovnik")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Naziv")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Vrednost")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("deleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("idStavkeCenovnika");
-
-                    b.HasIndex("CenovnikidCenovnik");
-
-                    b.ToTable("StavkaCenovnika");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Common.Address", b =>
@@ -254,9 +48,6 @@ namespace MAANPP20.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("RentACarServiceidRAC")
-                        .HasColumnType("int");
 
                     b.Property<string>("city")
                         .HasColumnType("nvarchar(max)");
@@ -272,35 +63,7 @@ namespace MAANPP20.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("RentACarServiceidRAC");
-
                     b.ToTable("Addresses");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.Comment", b =>
-                {
-                    b.Property<int>("idComment")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Comm")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RentACarServiceidRAC")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("idUser")
-                        .HasColumnType("int");
-
-                    b.HasKey("idComment");
-
-                    b.HasIndex("RentACarServiceidRAC");
-
-                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Common.DoubleForICollection", b =>
@@ -861,69 +624,6 @@ namespace MAANPP20.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Presedanja");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.Car", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Cars.RentACarService", null)
-                        .WithMany("RACServiceCars")
-                        .HasForeignKey("RentACarServiceidRAC");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.Ocena", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Cars.Car", null)
-                        .WithMany("OceneAuta")
-                        .HasForeignKey("CaridCar");
-
-                    b.HasOne("MAANPP20.Models.Cars.RentACarService", null)
-                        .WithMany("RACOcene")
-                        .HasForeignKey("RentACarServiceidRAC");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.RentACarService", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Cars.Cenovnik", "Cenovnik")
-                        .WithMany()
-                        .HasForeignKey("CenovnikidCenovnik");
-
-                    b.HasOne("MAANPP20.Models.Common.Address", "RACAddress")
-                        .WithMany()
-                        .HasForeignKey("RACaddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MAANPP20.Models.Common.User", "RACAdmin")
-                        .WithMany()
-                        .HasForeignKey("RACidAdmin");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.RezervacijaOdDo", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Cars.Car", null)
-                        .WithMany("RezervacijeAutaOdDo")
-                        .HasForeignKey("CaridCar");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.StavkaCenovnika", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Cars.Cenovnik", null)
-                        .WithMany("StavkeCenovnika")
-                        .HasForeignKey("CenovnikidCenovnik");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.Address", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Cars.RentACarService", null)
-                        .WithMany("RACBranches")
-                        .HasForeignKey("RentACarServiceidRAC");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.Comment", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Cars.RentACarService", null)
-                        .WithMany("RACComments")
-                        .HasForeignKey("RentACarServiceidRAC");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Common.DoubleForICollection", b =>

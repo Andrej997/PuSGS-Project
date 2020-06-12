@@ -1,27 +1,129 @@
 import { Injectable } from '@angular/core';
 import { Car } from 'src/app/entities/car/car';
 import { CardCity } from 'src/app/entities/card-city/card-city';
-
 import { Address }  from 'src/app/entities/address/address';
 import { RentACarBranch }  from 'src/app/entities/rent-a-car-branch/rent-a-car-branch';
 import { RentACarService } from 'src/app/entities/rent-a-car-service/rent-a-car-service';
 import { stringify } from 'querystring';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { ShareDataServiceService } from '../share-data-service/share-data-service.service';
+import { AuthenticationService } from '../authentication-service/authentication.service';
+import { User } from 'src/app/entities/user/user';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarServiceService {
+  readonly BaseURI = 'http://localhost:57428/api';
+  carImg: string;
+  logoImg: string;
+  currentUser: User;
+  allServices: Array<RentACarService> = new Array<RentACarService>();
+  services: Array<RentACarService>;
   
-  constructor() { }
+  constructor(private http: HttpClient,
+              private shareService: ShareDataServiceService,
+              private authenticationService: AuthenticationService) {
+    this.shareService.carImage.subscribe(carImg => this.carImg = carImg);
+    this.shareService.logoImage.subscribe(logoImg => this.logoImg = logoImg);
+    this.currentUser = this.authenticationService.currentUserValue;
+    
+  }
+
+  createCar(formData, id){
+    console.log(formData);
+    console.log(id);
+    //console.log(this.carImg);
+    var b;
+    var n;
+    var r;
+    if(formData.value.babySeat == null)
+      b = "";
+    else
+      b = "true";
+    if(formData.value.navigation == null)
+      n = "";
+    else
+      n = "true";
+    if(formData.value.roofRack == null)
+      r = "";
+    else
+      r = "true";
+    var body = {
+      Brand: formData.value.brand,
+      Model: formData.value.model,
+      Type: formData.value.type,
+      RoofRack: r,
+      Navigation: n,
+      BabySeat: b,
+      Price: formData.value.price,
+      Trunk: formData.value.trunk,
+      Kw: formData.value.kw,
+      Seats: formData.value.seats,
+      Doors: formData.value.doors,
+      Gear: formData.value.gear,
+      Fuel: formData.value.fuel,
+      Year: formData.value.year,
+      CarImg: this.carImg,
+      idService: id
+    };
+    return this.http.post(this.BaseURI + '/Cars/AddCar', body);
+  }
+
+  createBranch(formData, id){
+    //console.log("car-sevice");
+    //console.log(formData);
+    var body = {
+      streetAndNumber: formData.value.streetAndNumberBranch,
+      city: formData.value.cityBranch,
+      country: formData.value.countryBranch,
+      idService: id
+    };
+    return this.http.post(this.BaseURI + '/Branch/AddBranch', body);
+  }
+
+  createRACService(formData){
+    // console.log("rac-sevice");
+    // console.log(formData);
+    //console.log(this.currentUser.id);
+    var body = {
+      Name: formData.value.nameService,
+      Description: formData.value.descriptionService,
+      LogoImage: this.logoImg,
+      streetAndNumber: formData.value.streetAndNumber,
+      city: formData.value.city,
+      country: formData.value.country,
+      Navigation: formData.value.nav,
+      BabySeat: formData.value.bab,
+      Roof: formData.value.roo,
+      Luxuary: formData.value.lux,
+      Discount: formData.value.dis,
+      idAdmin: this.currentUser.id
+      
+    };
+    return this.http.post(this.BaseURI + '/RACService/AddRACS', body);
+  }
 
   loadCars() {
+
     return this.mockedCars();
   }
+
   loadCardsCity(){
     return this.mockedCardsCity();
   }
+
   loadAllCarServices(){
+    this.services = new Array<RentACarService>();
     return this.mockedCarServices();
+  }
+
+  getCarServices(){
+    return this.http.get(this.BaseURI + '/RACService/GetRentACarServices' );
+  }
+  getCarServiceId(id: string){
+    return this.http.get(this.BaseURI + '/RACService/' + id );
   }
 
   mockedCarServices() {
@@ -108,7 +210,7 @@ export class CarServiceService {
     return allServices;
   }
   getServiceOverId(id: number) : RentACarService{
-    var allServices = this.loadAllCarServices();
+    var allServices = this.loadAllCarServices() as Array<RentACarService>;
     var oneService: RentACarService;
     allServices.forEach(element => {
       if (element.id == id){
@@ -118,8 +220,9 @@ export class CarServiceService {
     });
     return oneService;
   }
+  
   getService(name: string, city: string) : RentACarService{
-    var allServices = this.loadAllCarServices();
+    var allServices = this.loadAllCarServices() as Array<RentACarService>;
     var oneService: RentACarService;
     allServices.forEach(element => {
       if (element.name == name && element.address.city == city){
@@ -130,7 +233,7 @@ export class CarServiceService {
     return oneService;
   }
   getServicesInCity(city: string): RentACarService[] {
-    var allServices = this.loadAllCarServices();
+    var allServices = this.loadAllCarServices() as Array<RentACarService>;
     let services = new  Array<RentACarService>();
     
     allServices.forEach(element => {
@@ -235,26 +338,49 @@ export class CarServiceService {
   }
   mockedCardsCity(): Array<CardCity> {
     let allCards = new Array<CardCity>();
-    let ny = new Array<string>();
-    let ny1 = new Array<string>();
-    let ny2 = new Array<string>();
-    ny.push("../../../assets/img/new york.jpg");
-    ny.push("../../../assets/img/los angeles.jpg");
+    // let ny = new Array<string>();
+    // let ny1 = new Array<string>();
+    // let ny2 = new Array<string>();
+    // ny.push("../../../assets/img/new york.jpg");
+    // ny.push("../../../assets/img/los angeles.jpg");
 
-    ny1.push("../../../assets/img/peking.jpg");
-    ny1.push("../../../assets/img/new york.jpg");
+    // ny1.push("../../../assets/img/peking.jpg");
+    // ny1.push("../../../assets/img/new york.jpg");
 
-    ny2.push("../../../assets/img/moskva.jpg");
-    ny2.push("../../../assets/img/los angeles.jpg");
+    // ny2.push("../../../assets/img/moskva.jpg");
+    // ny2.push("../../../assets/img/los angeles.jpg");
    
 
-    const card1 = new CardCity("New york", "Neki opis ovde stoji..xD", ny);
-    const card2 = new CardCity("Peking", "Neki opis i ovde stoji..xD", ny1);
-    const card4 = new CardCity("Moskva", "Neki opis i ovde stoji..xD", ny2);
+    this.http.get(this.BaseURI + '/City' ).subscribe((res:any)=>{
+      //alert("Return " + res);
+      console.log(res);
+      res.forEach(element => {
+        let ny = new Array<string>();
+        ny.push(element.images);
+        ny.push(element.images);
+        const card = new CardCity(element.city, element.description, ny);
+        //console.log("elementttttttt");
+        //console.log(element);
+        console.log(card);
+        allCards.push(card);
+      },
+      err => {
+        console.log("Err: " + err);
+        alert(err);
+      });
 
-    allCards.push(card1);
-    allCards.push(card2);
-    allCards.push(card4);
+    });
+
+
+
+
+    // const card1 = new CardCity("New york", "Neki opis ovde stoji..xD", ny);
+    // const card2 = new CardCity("Peking", "Neki opis i ovde stoji..xD", ny1);
+    // const card4 = new CardCity("Moskva", "Neki opis i ovde stoji..xD", ny2);
+
+    // allCards.push(card1);
+    // allCards.push(card2);
+    // allCards.push(card4);
 
     return allCards;
   }

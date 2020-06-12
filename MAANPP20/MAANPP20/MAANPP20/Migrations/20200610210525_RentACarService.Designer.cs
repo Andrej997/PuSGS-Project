@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200610210525_RentACarService")]
+    partial class RentACarService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,9 +85,6 @@ namespace MAANPP20.Migrations
                     b.Property<bool>("deleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("idService")
-                        .HasColumnType("int");
-
                     b.HasKey("idCar");
 
                     b.HasIndex("RentACarServiceidRAC");
@@ -106,27 +105,6 @@ namespace MAANPP20.Migrations
                     b.HasKey("idCenovnik");
 
                     b.ToTable("Cenovnik");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.Grad", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("city")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("images")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Gradovi");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Cars.Ocena", b =>
