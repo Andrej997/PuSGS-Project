@@ -6,4 +6,5 @@ export class FriendForFlight {
     seatNumber: number;
     seatId: number;
     invitationString: number;
+    
 }

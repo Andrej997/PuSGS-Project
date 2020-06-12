@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MAANPP20.Data;
+using MAANPP20.FlightRepositories;
 using MAANPP20.Models.Flights;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ namespace MAANPP20.Controllers.Flights
     [ApiController]
     public class FlightDestinationController : ControllerBase
     {
+        private FlightDestinationRepo flightDestinationRepo = new FlightDestinationRepo();
         private readonly MAANPP20Context _context;
         public FlightDestinationController(MAANPP20Context context)
         {
@@ -29,20 +31,23 @@ namespace MAANPP20.Controllers.Flights
         [HttpGet("{id}")]
         public async Task<ActionResult<FlightDestination>> GetFlightDestination(int id)
         {
-            var flightDestinaion = await _context.FlightDestinations
-                .Include(address1 => address1.startAddress)
-                .Include(address2 => address2.endAddress)
-                .FirstOrDefaultAsync(i => i.id== id);
-
-            if (flightDestinaion == null)
-            {
-                return NotFound();
-            }
-            else if (flightDestinaion.deleted == true)
-            {
-                return NotFound();
-            }
+            var flightDestinaion = await flightDestinationRepo.GetFlightDestination(_context, id);
+            if (flightDestinaion == null) return NotFound();
             return flightDestinaion;
+            //var flightDestinaion = await _context.FlightDestinations
+            //    .Include(address1 => address1.startAddress)
+            //    .Include(address2 => address2.endAddress)
+            //    .FirstOrDefaultAsync(i => i.id== id);
+
+            //if (flightDestinaion == null)
+            //{
+            //    return NotFound();
+            //}
+            //else if (flightDestinaion.deleted == true)
+            //{
+            //    return NotFound();
+            //}
+            //return flightDestinaion;
         }
 
         // POST: api/FlightDestination/AddFD
@@ -54,27 +59,30 @@ namespace MAANPP20.Controllers.Flights
 
             if (ValidateModel(flightDestination))
             {
-               // daj mi komapniju
-               var flightCompany = await _context.FlightCompanies
-               .Include(address => address.address)
-               .Include(destinations => destinations.destinations)
-               .Include(flights => flights.flights)
-               .Include(ocene => ocene.ocene)
-               .FirstOrDefaultAsync(i => i.id == flightDestination.CompanyID);
-
-                if (flightCompany == null)
-                {
-                    return BadRequest();
-                }
-
-                //dodaj mu destinaciju i sacuvaj izmene u kompaniji
-                flightCompany.destinations.Add(flightDestination);
-
-                _context.FlightDestinations.Add(flightDestination);
-
-                await _context.SaveChangesAsync();
-
+                var flightDestinationRet = await flightDestinationRepo.AddFlightCompany(_context, flightDestination);
+                if (flightDestinationRet == null) return BadRequest();
                 return CreatedAtAction("GetFlightDestination", new { id = flightDestination.id }, flightDestination);
+                // daj mi komapniju
+                //var flightCompany = await _context.FlightCompanies
+                //.Include(address => address.address)
+                //.Include(destinations => destinations.destinations)
+                //.Include(flights => flights.flights)
+                //.Include(ocene => ocene.ocene)
+                //.FirstOrDefaultAsync(i => i.id == flightDestination.CompanyID);
+
+                // if (flightCompany == null)
+                // {
+                //     return BadRequest();
+                // }
+
+                // //dodaj mu destinaciju i sacuvaj izmene u kompaniji
+                // flightCompany.destinations.Add(flightDestination);
+
+                // _context.FlightDestinations.Add(flightDestination);
+
+                // await _context.SaveChangesAsync();
+
+                // return CreatedAtAction("GetFlightDestination", new { id = flightDestination.id }, flightDestination);
             }
             else return BadRequest();
         }
@@ -85,25 +93,28 @@ namespace MAANPP20.Controllers.Flights
         {
             if (ValidateModel(flightDestination))
             {
-                _context.Entry(flightDestination).State = EntityState.Modified;
-
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!FlightDestinationExists(flightDestination.id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
+                var flightDestinationRet = await flightDestinationRepo.UpdateFlightCompany(_context, flightDestination);
+                if (flightDestinationRet == null) return NotFound();
                 return Ok();
+                //_context.Entry(flightDestination).State = EntityState.Modified;
+
+                //try
+                //{
+                //    await _context.SaveChangesAsync();
+                //}
+                //catch (DbUpdateConcurrencyException)
+                //{
+                //    if (!FlightDestinationExists(flightDestination.id))
+                //    {
+                //        return NotFound();
+                //    }
+                //    else
+                //    {
+                //        throw;
+                //    }
+                //}
+
+                //return Ok();
             }
             else return BadRequest();
         }
@@ -113,26 +124,29 @@ namespace MAANPP20.Controllers.Flights
         [Route("DeleteFlightDestination/{id}")]
         public async Task<ActionResult<FlightDestination>> DeleteFlightDestination(int id)
         {
-            var flightDestinaion = await _context.FlightDestinations
-                .Include(address1 => address1.startAddress)
-                .Include(address2 => address2.endAddress)
-                .FirstOrDefaultAsync(i => i.id == id);
-
-            if (flightDestinaion == null)
-            {
-                return NotFound();
-            }
-
-            flightDestinaion.deleted = true;
-            flightDestinaion.startAddress.deleted = true;
-            flightDestinaion.endAddress.deleted = true;
-
-            _context.Entry(flightDestinaion).State = EntityState.Modified;
-
-            //_context.FlightDestinations.Remove(flightDestinaion);
-            await _context.SaveChangesAsync();
-
+            var flightDestinaion = await flightDestinationRepo.DeleteFlightDestination(_context, id);
+            if (flightDestinaion == null) return NotFound();
             return Ok();
+            //var flightDestinaion = await _context.FlightDestinations
+            //    .Include(address1 => address1.startAddress)
+            //    .Include(address2 => address2.endAddress)
+            //    .FirstOrDefaultAsync(i => i.id == id);
+
+            //if (flightDestinaion == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //flightDestinaion.deleted = true;
+            //flightDestinaion.startAddress.deleted = true;
+            //flightDestinaion.endAddress.deleted = true;
+
+            //_context.Entry(flightDestinaion).State = EntityState.Modified;
+
+            ////_context.FlightDestinations.Remove(flightDestinaion);
+            //await _context.SaveChangesAsync();
+
+            //return Ok();
         }
 
         private bool ValidateModel(FlightDestination flightDestination)

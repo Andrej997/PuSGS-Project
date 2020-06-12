@@ -125,138 +125,162 @@ export class FlightReservationComponent implements OnInit {
       });
   }
 
+  deleteThatReservation(constrollerName: string, actionName: string ,model: any) {
+    this.loading = true;
+    this.httpService.deleteAction(constrollerName, actionName, model).toPromise()
+        .then(result => {
+          this.change = true;
+          this.loading = false;
+          this.errorFFR = false;
+        })
+        .catch(
+          err => {
+            this.loading = false;
+            console.log(err);
+            this.errorFFR = true;
+            this.errorText = "You can't delete that flight now!"
+          });
+  }
+
   cancelFastReservation(event) {
     const idDeleteFFR = event.target.id;
+    this.deleteThatReservation("FastFlightReservation", "DeleteFFR", idDeleteFFR);
     
-    let ffr: FastFlightReservation = null;
-    for (let i = 0; i < this.allFastFlightReservation.length; ++i) {
-      if (this.allFastFlightReservation[i].id == idDeleteFFR) {
-        ffr = this.allFastFlightReservation[i];
-        this.loading = true;
-        this.httpService.getIdAction("Flight", ffr.flightId).toPromise()
-          .then(result => {
-            this.flight = (result as Flight);
-            if (ffr != null) {
-              let date = new Date();
-              let deteOfFlight = new Date(this.flight.datumPolaska);
-              if (date.getFullYear() <= deteOfFlight.getFullYear()) {
-                if (date.getMonth() <= deteOfFlight.getMonth()) {
-                  if (date.getDay() <= deteOfFlight.getDay()) {
-                    let hours = deteOfFlight.getHours() - date.getHours();
-                    if (hours > 3) {
-                      this.errorFFR = false;
-                      this.errorText = "";
-                      this.httpService.deleteAction("FastFlightReservation", "DeleteFFR", idDeleteFFR).toPromise()
-                          .then(result => {
-                            this.change = true;
-                          })
-                          .catch(
-                            err => {
-                              console.log(err);
-                              this.error = true;
-                            });
-                    }
-                    else {
-                      this.errorFFR = true;
-                      this.errorText = "You can't that cancel flight!";
-                    }
-                  }
-                  else {
-                    this.errorFFR = true;
-                    this.errorText = "You can't that cancel flight!";
-                  }
-                }
-                else {
-                  this.errorFFR = true;
-                  this.errorText = "You can't that cancel flight!";
-                }
-              }
-              else {
-                this.errorFFR = true;
-                this.errorText = "You can't that cancel flight!";
-              }
-            }
-            this.showFlightDetails = true;
-            this.loading = false;
-          })
-          .catch(
-            err => {
-              console.log(err)
-              this.error = true;
-              this.errorText = "Error while loading flight data!"
-              this.loading = false;
-            });
+    // let ffr: FastFlightReservation = null;
+    // for (let i = 0; i < this.allFastFlightReservation.length; ++i) {
+    //   if (this.allFastFlightReservation[i].id == idDeleteFFR) {
+    //     ffr = this.allFastFlightReservation[i];
+    //     this.loading = true;
+    //     this.httpService.getIdAction("Flight", ffr.flightId).toPromise()
+    //       .then(result => {
+    //         this.flight = (result as Flight);
+    //         if (ffr != null) {
+    //           // let date = new Date();
+    //           // let deteOfFlight = new Date(this.flight.datumPolaska);
+    //           // console.log("danasnja godina: " + date.getUTCFullYear());
+    //           // console.log("danasnji mesec: " + date.getUTCMonth());
+    //           // console.log("danasnji dan: " + date.getUTCDay());
+    //           // console.log("danasnji sat: " + date.getUTCHours());
+    //           // console.log("let godina: " + deteOfFlight.getUTCFullYear());
+    //           // console.log("let mesec: " + deteOfFlight.getUTCMonth());
+    //           // console.log("let dan: " + deteOfFlight.getUTCDay());
+    //           // console.log("let sat: " + deteOfFlight.getUTCHours());
+    //           // if (date.getFullYear() < deteOfFlight.getFullYear()) {
+    //             // this.deleteThatReservation("FastFlightReservation", "DeleteFFR", idDeleteFFR);
+    //           // }
+    //           // if (date.getFullYear() == deteOfFlight.getFullYear()) {
+    //           //   if (date.getMonth() < deteOfFlight.getMonth()) {
+    //           //     this.deleteThatReservation("FastFlightReservation", "DeleteFFR", idDeleteFFR);
+    //           //   }
+    //           //   else if (date.getMonth() < deteOfFlight.getMonth()) {
+    //           //     if (date.getDay() < deteOfFlight.getDay()) {
+    //           //       this.deleteThatReservation("FastFlightReservation", "DeleteFFR", idDeleteFFR);
+    //           //     }
+    //           //     else if (date.getDay() == deteOfFlight.getDay()) {
+    //           //       if (date.getHours() < deteOfFlight.getHours() - 3) {
+    //           //         this.deleteThatReservation("FastFlightReservation", "DeleteFFR", idDeleteFFR);
+    //           //       }
+    //           //       else if (date.getHours() >= deteOfFlight.getHours() - 3) {
+    //           //         this.errorFFR = true;
+    //           //         this.errorText = "You can't that cancel flight!";
+    //           //       }
+    //           //     }
+    //           //     else {
+    //           //       this.errorFFR = true;
+    //           //       this.errorText = "You can't that cancel flight!";
+    //           //     }
+    //           //   }
+    //           //   else {
+    //           //     this.errorFFR = true;
+    //           //     this.errorText = "You can't that cancel flight!";
+    //           //   }
+    //           // }
+    //           // else {
+    //           //   this.errorFFR = true;
+    //           //   this.errorText = "You can't that cancel flight!";
+    //           // }
+    //         }
+    //         this.showFlightDetails = true;
+    //         this.loading = false;
+    //       })
+    //       .catch(
+    //         err => {
+    //           console.log(err)
+    //           this.error = true;
+    //           this.errorText = "Error while loading flight data!"
+    //           this.loading = false;
+    //         });
         
-        break;
-      }
-    }
+    //     break;
+    //   }
+    // }
   }
 
   cancelReservation(event) {
     const idDeleteFR = event.target.id;
-    
-    let ffr: FlightReservation = null;
-    for (let i = 0; i < this.allFlightReservation.length; ++i) {
-      if (this.allFlightReservation[i].id == idDeleteFR) {
-        ffr = this.allFlightReservation[i];
-        this.loading = true;
-        this.httpService.getIdAction("Flight", ffr.flightId).toPromise()
-          .then(result => {
-            this.flight = (result as Flight);
-            if (ffr != null) {
-              let date = new Date();
-              let deteOfFlight = new Date(this.flight.datumPolaska);
-              if (date.getFullYear() <= deteOfFlight.getFullYear()) {
-                if (date.getMonth() <= deteOfFlight.getMonth()) {
-                  if (date.getDay() <= deteOfFlight.getDay()) {
-                    let hours = deteOfFlight.getHours() - date.getHours();
-                    if (hours > 3) {
-                      this.errorFFR = false;
-                      this.errorText = "";
-                      this.httpService.deleteAction("FlightReservation", "DeleteFR", idDeleteFR).toPromise()
-                          .then(result => {
-                            this.change = true;
-                          })
-                          .catch(
-                            err => {
-                              console.log(err);
-                              this.error = true;
-                            });
-                    }
-                    else {
-                      this.errorFFR = true;
-                      this.errorText = "You can't that cancel flight!";
-                    }
-                  }
-                  else {
-                    this.errorFFR = true;
-                    this.errorText = "You can't that cancel flight!";
-                  }
-                }
-                else {
-                  this.errorFFR = true;
-                  this.errorText = "You can't that cancel flight!";
-                }
-              }
-              else {
-                this.errorFFR = true;
-                this.errorText = "You can't that cancel flight!";
-              }
-            }
-            this.showFlightDetails = true;
-            this.loading = false;
-          })
-          .catch(
-            err => {
-              console.log(err)
-              this.error = true;
-              this.errorText = "Error while loading flight data!"
-              this.loading = false;
-            });
+    this.deleteThatReservation("FlightReservation", "DeleteFR", idDeleteFR);
+    // let ffr: FlightReservation = null;
+    // for (let i = 0; i < this.allFlightReservation.length; ++i) {
+    //   if (this.allFlightReservation[i].id == idDeleteFR) {
+    //     ffr = this.allFlightReservation[i];
+    //     this.loading = true;
+    //     this.httpService.getIdAction("Flight", ffr.flightId).toPromise()
+    //       .then(result => {
+    //         this.flight = (result as Flight);
+    //         if (ffr != null) {
+    //           let date = new Date();
+    //           let deteOfFlight = new Date(this.flight.datumPolaska);
+    //           if (date.getFullYear() <= deteOfFlight.getFullYear()) {
+    //             if (date.getMonth() <= deteOfFlight.getMonth()) {
+    //               if (date.getDay() <= deteOfFlight.getDay()) {
+    //                 let hours = deteOfFlight.getHours() - date.getHours();
+    //                 if (hours > 3) {
+    //                   this.errorFFR = false;
+    //                   this.errorText = "";
+    //                   this.httpService.deleteAction("FlightReservation", "DeleteFR", idDeleteFR).toPromise()
+    //                       .then(result => {
+    //                         this.change = true;
+    //                       })
+    //                       .catch(
+    //                         err => {
+    //                           console.log(err);
+    //                           this.error = true;
+    //                         });
+    //                 }
+    //                 else {
+    //                   this.errorFFR = true;
+    //                   this.errorText = "You can't that cancel flight!";
+    //                 }
+    //               }
+    //               else {
+    //                 this.errorFFR = true;
+    //                 this.errorText = "You can't that cancel flight!";
+    //               }
+    //             }
+    //             else {
+    //               this.errorFFR = true;
+    //               this.errorText = "You can't that cancel flight!";
+    //             }
+    //           }
+    //           else {
+    //             this.errorFFR = true;
+    //             this.errorText = "You can't that cancel flight!";
+    //           }
+    //         }
+    //         this.showFlightDetails = true;
+    //         this.loading = false;
+    //       })
+    //       .catch(
+    //         err => {
+    //           console.log(err)
+    //           this.error = true;
+    //           this.errorText = "Error while loading flight data!"
+    //           this.loading = false;
+    //         });
         
-        break;
-      }
-    }
+    //     break;
+    //   }
+    // }
   }
 
   putFastFlightReservation(ffr: FastFlightReservation) {

@@ -307,7 +307,7 @@ export class FlightComponent implements OnInit {
   }
 
   setRentACat() {
-    console.log("YES");
+    this.dontSetRentACat();
   }
 
   dontSetRentACat() {

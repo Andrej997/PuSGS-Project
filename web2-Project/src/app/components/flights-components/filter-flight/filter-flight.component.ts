@@ -11,6 +11,9 @@ import { FilterFlight } from 'src/app/entities/filter-flight/filter-flight';
 export class FilterFlightComponent implements OnInit {
   filterFlight: FilterFlight;
 
+  error: boolean = false;
+  errorText: string = "";
+
   constructor(private flightsComponent: FlightsComponent) { }
 
   ngOnInit(): void {
@@ -40,9 +43,20 @@ export class FilterFlightComponent implements OnInit {
                                           this.form.value.distanceto,
                                           this.form.value.changeoverfrom,
                                           this.form.value.changeoverto);
-    //console.log(this.filterFlight);
 
-    this.flightsComponent.filter(this.filterFlight);
+    if (this.filterFlight.changeoverfrom < 0 || 
+        this.filterFlight.changeoverto > 5 || 
+        this.filterFlight.distancefrom < 0 ||
+        this.filterFlight.distanceto > 100000 ||
+        this.filterFlight.pricefrom < 0 ||
+        this.filterFlight.priceto > 100000) {
+          this.error = true;
+          this.errorText = "Filter input not good!";
+        }
+    else {
+      this.error = false;
+      this.flightsComponent.filter(this.filterFlight);
+    }
   }
 
   showAll(){

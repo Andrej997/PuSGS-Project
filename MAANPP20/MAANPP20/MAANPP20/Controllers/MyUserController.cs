@@ -195,8 +195,8 @@ namespace MAANPP20.Controllers
         {
             random = new Random();
             int randNumber = random.Next(100001, 999999);
-            string to = "markomisojcic@gmail.com";
-            string from = "markomisojcic@gmail.com";
+            string to = "andrej.km997@gmail.com";
+            string from = "andrej.km997@gmail.com";
             MailMessage message = new MailMessage(from, to);
             message.Subject = "Aktivacioni kod";
             //message.Body = @"Using this new feature, you can send an email message from an application very easily.";
@@ -208,7 +208,7 @@ namespace MAANPP20.Controllers
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                 //smtpClient.UseDefaultCredentials = true;
                 smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential(from, "ohtxksnemsettbey");
+                smtpClient.Credentials = new NetworkCredential(from, "kscuugcirljlecre");
                 smtpClient.Send(message);
                 //smtpClient.Send(message.From.ToString(), message.To.ToString(), message.Subject, message.Body);
             }

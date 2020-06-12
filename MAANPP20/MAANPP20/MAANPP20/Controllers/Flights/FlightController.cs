@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MAANPP20.Data;
+using MAANPP20.FlightRepositories;
 using MAANPP20.Models.Common;
 using MAANPP20.Models.Flights;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +16,7 @@ namespace MAANPP20.Controllers.Flights
     [ApiController]
     public class FlightController : ControllerBase
     {
+        private FlightRepo flightRepo = new FlightRepo();
         private readonly MAANPP20Context _context;
         public FlightController(MAANPP20Context context)
         {
@@ -25,84 +27,91 @@ namespace MAANPP20.Controllers.Flights
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Flight>>> GetFlights()
         {
-            var flights = await _context.Flights.Where(x => x.deleted == false)
-                .Include(from => from.from)
-                .Include(to => to.to)
-                .Include(presedanje => presedanje.presedanje)
-                .ThenInclude(gradoviPresedanja => gradoviPresedanja.gradoviPresedanja)
-                .Include(aeroplane => aeroplane.aeroplane)
-                .Include(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
-                .Include(luggage => luggage.luggage)
-                .Include(ocene => ocene.ocene)
-                .ToListAsync();
+            return await flightRepo.GetFlights(_context);
+            //var flights = await _context.Flights.Where(x => x.deleted == false)
+            //    .Include(from => from.from)
+            //    .Include(to => to.to)
+            //    .Include(presedanje => presedanje.presedanje)
+            //    .ThenInclude(gradoviPresedanja => gradoviPresedanja.gradoviPresedanja)
+            //    .Include(aeroplane => aeroplane.aeroplane)
+            //    .Include(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
+            //    .Include(luggage => luggage.luggage)
+            //    .Include(ocene => ocene.ocene)
+            //    .ToListAsync();
 
-            var retFlights = new List<Flight>();
-            foreach (var flight in flights)
-                if (flight.deleted == false)
-                    retFlights.Add(flight);
+            //var retFlights = new List<Flight>();
+            //foreach (var flight in flights)
+            //    if (flight.deleted == false)
+            //        retFlights.Add(flight);
 
-            return retFlights;
+            //return retFlights;
         }   
 
         // GET: api/Flight/1
         [HttpGet("{id}")]
         public async Task<ActionResult<Flight>> GetFlight(int id)
         {
-            Flight flight = null;
-            try
-            {
-                flight = await _context.Flights.Where(x => x.deleted == false)
-                .Include(from => from.from)
-                .Include(to => to.to)
-                .Include(presedanje => presedanje.presedanje)
-                .ThenInclude(gradoviPresedanja => gradoviPresedanja.gradoviPresedanja)
-                .Include(aeroplane => aeroplane.aeroplane)
-                .Include(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
-                .Include(luggage => luggage.luggage)
-                .Include(ocene => ocene.ocene)
-                .FirstOrDefaultAsync(i => i.id == id);
-
-                if (flight == null)
-                {
-                    return NotFound();
-                }
-                if (flight.deleted == true)
-                {
-                    return NotFound();
-                }
-            }
-            catch (Exception e)
-            {
-
-                throw;
-            }
-            
+            var flight = await flightRepo.GetFlight(_context, id);
+            if (flight == null) return NotFound();
             return flight;
+            //Flight flight = null;
+            //try
+            //{
+            //    flight = await _context.Flights.Where(x => x.deleted == false)
+            //    .Include(from => from.from)
+            //    .Include(to => to.to)
+            //    .Include(presedanje => presedanje.presedanje)
+            //    .ThenInclude(gradoviPresedanja => gradoviPresedanja.gradoviPresedanja)
+            //    .Include(aeroplane => aeroplane.aeroplane)
+            //    .Include(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
+            //    .Include(luggage => luggage.luggage)
+            //    .Include(ocene => ocene.ocene)
+            //    .FirstOrDefaultAsync(i => i.id == id);
+
+            //    if (flight == null)
+            //    {
+            //        return NotFound();
+            //    }
+            //    if (flight.deleted == true)
+            //    {
+            //        return NotFound();
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+
+            //    throw;
+            //}
+            
+            //return flight;
         }
 
         // GET: api/Flight/Seats/1
         [HttpGet("Seats/{id}")]
         public async Task<ActionResult<Flight>> GetFlightSeats(int id)
         {
-            Flight flight = null;
-            try
-            {
-                flight = await _context.Flights
-                .Include(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
-                .FirstOrDefaultAsync(i => i.id == id);
-
-                if (flight == null)
-                {
-                    return NotFound();
-                }
-            }
-            catch (Exception e)
-            {
-
-                throw;
-            }
-
+            var flight = await flightRepo.GetFlightSeats(_context, id);
+            if (flight == null) return NotFound();
             return flight;
+            //Flight flight = null;
+            //try
+            //{
+            //    flight = await _context.Flights
+            //    .Include(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
+            //    .FirstOrDefaultAsync(i => i.id == id);
+
+            //    if (flight == null)
+            //    {
+            //        return NotFound();
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+
+            //    throw;
+            //}
+
+            //return flight;
         }
 
         // POST: api/Flight/AddF
@@ -114,38 +123,41 @@ namespace MAANPP20.Controllers.Flights
 
             if (ValidateModel(flight))
             {
-                // daj mi komapniju
-                var flightCompany = await _context.FlightCompanies
-                .Include(address => address.address)
-                .Include(destinations => destinations.destinations)
-                .Include(flights => flights.flights)
-                .Include(ocene => ocene.ocene)
-                .FirstOrDefaultAsync(i => i.id == flight.idCompany);
-
-                if (flightCompany == null)
-                {
-                    return BadRequest();
-                }
-
-                // posto vec postoje sa primarnim kljucevima
-                flight.addressFromId = flight.from.id;
-                flight.addressToId = flight.to.id;
-                flight.aeroplaneId = flight.aeroplane.id;
-
-                //dodaj mu destinaciju i sacuvaj izmene u kompaniji
-                flightCompany.flights.Add(flight);
-
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-
-                    throw;
-                }
-
+                var flightRet = await flightRepo.AddFlight(_context, flight);
+                if (flightRet == null) return BadRequest();
                 return CreatedAtAction("GetFlight", new { id = flight.id }, flight);
+                // daj mi komapniju
+                //var flightCompany = await _context.FlightCompanies
+                //.Include(address => address.address)
+                //.Include(destinations => destinations.destinations)
+                //.Include(flights => flights.flights)
+                //.Include(ocene => ocene.ocene)
+                //.FirstOrDefaultAsync(i => i.id == flight.idCompany);
+
+                //if (flightCompany == null)
+                //{
+                //    return BadRequest();
+                //}
+
+                //// posto vec postoje sa primarnim kljucevima
+                //flight.addressFromId = flight.from.id;
+                //flight.addressToId = flight.to.id;
+                //flight.aeroplaneId = flight.aeroplane.id;
+
+                ////dodaj mu destinaciju i sacuvaj izmene u kompaniji
+                //flightCompany.flights.Add(flight);
+
+                //try
+                //{
+                //    await _context.SaveChangesAsync();
+                //}
+                //catch (Exception e)
+                //{
+
+                //    throw;
+                //}
+
+                //return CreatedAtAction("GetFlight", new { id = flight.id }, flight);
             }
             else return BadRequest();
         }
@@ -154,29 +166,32 @@ namespace MAANPP20.Controllers.Flights
         [HttpPut]
         public async Task<IActionResult> UpdateFlight(Flight flight)
         {
-            foreach (var seat in flight.allSeatsForThisFlight)
-            {
-                _context.Entry(seat).State = EntityState.Modified;
-            }
-            _context.Entry(flight).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FlightExists(flight.id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            var flightRet = await flightRepo.UpdateFlight(_context, flight);
+            if (flightRet == null) return NotFound();
             return Ok();
+            //foreach (var seat in flight.allSeatsForThisFlight)
+            //{
+            //    _context.Entry(seat).State = EntityState.Modified;
+            //}
+            //_context.Entry(flight).State = EntityState.Modified;
+
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!FlightExists(flight.id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+
+            //return Ok();
         }
 
         // DELETE: api/Flight/DeleteFlight/1
@@ -184,42 +199,45 @@ namespace MAANPP20.Controllers.Flights
         [Route("DeleteFlight/{id}")]
         public async Task<ActionResult<Flight>> DeleteFlight(int id)
         {
-            var flight = await _context.Flights
-                .Include(presedanje => presedanje.presedanje)
-                    .ThenInclude(gradoviPresedanja => gradoviPresedanja.gradoviPresedanja)
-                .Include(luggage => luggage.luggage)
-                .Include(ocene => ocene.ocene)
-                .Include(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
-                .FirstOrDefaultAsync(i => i.id == id);
-
-            if (flight == null)
-            {
-                return NotFound();
-            }
-            else if (flight.deleted == true)
-            {
-                return NotFound();
-            }
-
-            flight.deleted = true;
-            foreach (var seat in flight.allSeatsForThisFlight)
-            {
-                seat.deleted = true;
-            }
-
-            flight.presedanje.deleted = true;
-            foreach (var gradPresedanja in flight.presedanje.gradoviPresedanja)
-                gradPresedanja.deleted = true;
-
-            flight.luggage.deleted = true;
-
-            // TO DO: brisanje ocena
-
-            _context.Entry(flight).State = EntityState.Modified;
-            //_context.Flights.Remove(flight);
-            await _context.SaveChangesAsync();
-
+            var flight = await flightRepo.DeleteFlight(_context, id);
+            if (flight == null) return NotFound();
             return Ok();
+            //var flight = await _context.Flights
+            //    .Include(presedanje => presedanje.presedanje)
+            //        .ThenInclude(gradoviPresedanja => gradoviPresedanja.gradoviPresedanja)
+            //    .Include(luggage => luggage.luggage)
+            //    .Include(ocene => ocene.ocene)
+            //    .Include(allSeatsForThisFlight => allSeatsForThisFlight.allSeatsForThisFlight)
+            //    .FirstOrDefaultAsync(i => i.id == id);
+
+            //if (flight == null)
+            //{
+            //    return NotFound();
+            //}
+            //else if (flight.deleted == true)
+            //{
+            //    return NotFound();
+            //}
+
+            //flight.deleted = true;
+            //foreach (var seat in flight.allSeatsForThisFlight)
+            //{
+            //    seat.deleted = true;
+            //}
+
+            //flight.presedanje.deleted = true;
+            //foreach (var gradPresedanja in flight.presedanje.gradoviPresedanja)
+            //    gradPresedanja.deleted = true;
+
+            //flight.luggage.deleted = true;
+
+            //// TO DO: brisanje ocena
+
+            //_context.Entry(flight).State = EntityState.Modified;
+            ////_context.Flights.Remove(flight);
+            //await _context.SaveChangesAsync();
+
+            //return Ok();
         }
 
         private bool ValidateModel(Flight flight)

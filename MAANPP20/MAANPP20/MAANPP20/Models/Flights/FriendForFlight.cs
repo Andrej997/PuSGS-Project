@@ -23,6 +23,10 @@ namespace MAANPP20.Models.Flights
 
         public string invitationString { get; set; }
 
+        public DateTime reservationDate { get; set; }
+
+        public bool acceptedCall { get; set; }
+
         public bool deleted { get; set; }
     }
 }
