@@ -307,10 +307,14 @@ export class FlightComponent implements OnInit {
   }
 
   setRentACat() {
-    this.dontSetRentACat();
+    this.reserveThisAvio(true);
   }
 
   dontSetRentACat() {
+    this.reserveThisAvio(false);
+  }
+
+  reserveThisAvio(rentACar: boolean) {
     let flightReservation = new FlightReservation();
     flightReservation.flightId = this.flight.id;
 
@@ -324,6 +328,7 @@ export class FlightComponent implements OnInit {
     flightReservation.seatId = this.flight.allSeatsForThisFlight[this.selectedSeats[0]-1].id;
     flightReservation.userBonus = this.checked;
     flightReservation.dateNow = new Date();
+    flightReservation.rentACar = rentACar;
     flightReservation.friendForFlights = new Array<FriendForFlight>();
     let i: number = 1;
     this.calledFriends.forEach(element => {
@@ -339,7 +344,7 @@ export class FlightComponent implements OnInit {
       flightReservation.friendForFlights.push(friendForFlight);
     });
 
-    console.log(flightReservation);
+    //console.log(flightReservation);
 
     this.httpService.postAction('FlightReservation', 'Reserve', flightReservation).subscribe(
       res => { 

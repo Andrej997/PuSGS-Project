@@ -47,18 +47,6 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.checkAllReservations();
-  }
-
-  checkAllReservations() {
-    this.httpService.getAction('FlightReservation')
-      .toPromise()
-      .then(result => {
-      })
-      .catch(
-        err => {
-          console.log(err)
-        });
   }
 
   logout() {

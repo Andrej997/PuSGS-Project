@@ -25,20 +25,6 @@ namespace MAANPP20.Controllers.Flights
             _context = context;
         }
 
-        /// <summary>
-        /// Kontorler koji pri stalnom pokretanju sajta,
-        /// proverava da li neko nije prihvatio resevaciju, 
-        /// ako je proslo 3 dana ili je ostalo 3h od resevacije
-        /// automatski se oslobadja sediste!
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<IActionResult>>> CheckAllReservations()
-        {
-            //await flightReservationRepo.CheckAllReservations(_context);
-            return Ok();
-        }
-
         // GET: api/FlightReservation/546tr76f
         [HttpGet("{idUser}")]
         public async Task<ActionResult<IEnumerable<FlightReservation>>> GetFlightReservations(string idUser)

@@ -12,6 +12,8 @@ export class FlightReservation {
     ocenaKompanije: number;
     dateNow: Date;
 
+    rentACar: boolean;
+
     friendForFlights: Array<FriendForFlight>;
 
     // datum sletanja za rent a car! salji string 1:1:2002T11:54

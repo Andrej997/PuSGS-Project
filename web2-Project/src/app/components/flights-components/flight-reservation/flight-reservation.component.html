@@ -61,7 +61,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let fastFlightReservation of allFastFlightReservation">
-                    <th id={{fastFlightReservation.id}} scope="row" (click)="getFlight($event)"
+                    <th id={{fastFlightReservation.id}} scope="row" (click)="getFastFlight($event)"
                             style="cursor: pointer;">
                         {{fastFlightReservation.id}}
                     </th>
@@ -112,6 +112,7 @@
                     <th scope="col">Price</th>
                     <th scope="col">Seat numeration</th>
                     <th scope="col">Created</th>
+                    <th scope="col">Rent a car</th>
                     <th scope="col">Rate flight</th>
                     <th scope="col">Rate flight company</th>
                     <th scope="col">Submit rate</th>
@@ -127,6 +128,7 @@
                     <td>{{flightReservation.price}}</td>
                     <td>{{flightReservation.seatNumeration}}</td>
                     <td>{{flightReservation.dateNow}}</td>
+                    <td>{{flightReservation.rentACar}}</td>
                     <td>
                         <div *ngIf="flightReservation.ocenaLeta > 0; then thenBlock1 else elseBlock1"></div>
                         <ng-template #thenBlock1>

@@ -4,14 +4,16 @@ using MAANPP20.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAANPP20.Migrations
 {
     [DbContext(typeof(MAANPP20Context))]
-    partial class MAANPP20ContextModelSnapshot : ModelSnapshot
+    [Migration("20200613063200_FlightReservation_rentACar")]
+    partial class FlightReservation_rentACar
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -212,17 +214,12 @@ namespace MAANPP20.Migrations
                     b.Property<DateTime>("Od")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("deleted")
                         .HasColumnType("bit");
 
                     b.HasKey("idRezervacijaOdDo");
 
                     b.HasIndex("CaridCar");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("RezervacijeOdDo");
                 });
@@ -961,10 +958,6 @@ namespace MAANPP20.Migrations
                     b.HasOne("MAANPP20.Models.Cars.Car", null)
                         .WithMany("RezervacijeAutaOdDo")
                         .HasForeignKey("CaridCar");
-
-                    b.HasOne("MAANPP20.Models.Common.User", null)
-                        .WithMany("rentACarReservation")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("MAANPP20.Models.Cars.StavkaCenovnika", b =>
