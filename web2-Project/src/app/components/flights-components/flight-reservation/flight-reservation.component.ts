@@ -98,9 +98,19 @@ export class FlightReservationComponent implements OnInit {
     location.reload();
   }
 
-  getFlight(event){
+  getFastFlight(event){
     let ffrId = event.target.id;
     this.allFastFlightReservation.forEach(element => {
+      if (ffrId == element.id){
+        this.loading = true;
+        this.getFlightFromServer(element.flightId);
+      }
+    });
+  }
+
+  getFlight(event){
+    let ffrId = event.target.id;
+    this.allFlightReservation.forEach(element => {
       if (ffrId == element.id){
         this.loading = true;
         this.getFlightFromServer(element.flightId);

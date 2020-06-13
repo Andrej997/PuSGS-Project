@@ -31,6 +31,8 @@ namespace MAANPP20.Models.Flights
 
         public DateTime dateNow { get; set; }
 
+        public bool rentACar { get; set; }
+
         public bool deleted { get; set; }
     }
 }

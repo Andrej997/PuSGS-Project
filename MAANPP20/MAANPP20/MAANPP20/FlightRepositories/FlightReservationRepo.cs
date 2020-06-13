@@ -346,6 +346,31 @@ namespace MAANPP20.FlightRepositories
 
             if (user == null) return null;
 
+            #region Provara kod svakod da li je proslo vise od 3 dana od kreiranja rezervacije
+            var friendForFlightForCheck = await _context.FriendForFlights
+                .Where(x => x.deleted == false && x.acceptedCall == false).ToListAsync();
+
+            foreach (var friend in friendForFlightForCheck)
+            {
+                if (friend == null) continue;
+                if (CheckDateIf(friend.reservationDate))
+                {
+                    friend.deleted = true;
+                    _context.Entry(friend).State = EntityState.Modified;
+
+                    var avioSeat = await _context.AvioSedista
+                        .Where(x => x.deleted == false)
+                        .FirstOrDefaultAsync(x => x.id == friend.seatId);
+                    if (avioSeat == null) continue;
+                    avioSeat.reserved = false;
+                    _context.Entry(avioSeat).State = EntityState.Modified;
+
+                    _context.SaveChanges();
+                }
+            }
+            #endregion
+
+
             var friendForFlight = await _context.FriendForFlights
                 .Where(x => x.deleted == false && x.email == email && x.ime == user.firstName && x.prezime == user.lastName && x.acceptedCall == false)
                 .ToListAsync();
@@ -362,30 +387,6 @@ namespace MAANPP20.FlightRepositories
                 .ToListAsync();
         }
 
-        public async Task<ActionResult<IEnumerable<FriendForFlight>>> CheckAllReservations(MAANPP20Context _context)
-        {
-            var friendForFlight = await _context.FriendForFlights
-                .Where(x => x.deleted == false && x.acceptedCall == false).ToListAsync();
-
-            foreach (var friend in friendForFlight)
-            {
-                if (friend == null) continue;
-                if (CheckDateIf(friend.reservationDate))
-                {
-                    friend.deleted = true;
-                    _context.Entry(friend).State = EntityState.Modified;
-
-                    var avioSeat = await _context.AvioSedista
-                        .Where(x => x.deleted == false)
-                        .FirstOrDefaultAsync(x => x.id == friend.seatId);
-                    if (avioSeat == null) continue;
-                    avioSeat.reserved = false;
-                    _context.Entry(avioSeat).State = EntityState.Modified;
-                }
-            }
-
-            return null;
-        }
 
         private bool CheckDateIf(DateTime dateTimeReservation)
         {
@@ -395,7 +396,8 @@ namespace MAANPP20.FlightRepositories
             {
                 if (dateTimeReservation.Month == dateNow.Month)
                 {
-                    if (dateTimeReservation.Day >= dateNow.Day + 3)
+                    var dateDifference = dateNow.Day - dateTimeReservation.Day;
+                    if (dateDifference > 3)
                     {
                         return true;
                     }

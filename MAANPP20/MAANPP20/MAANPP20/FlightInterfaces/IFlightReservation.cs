@@ -19,6 +19,5 @@ namespace MAANPP20.FlightInterfaces
         Task<FriendForFlight> DeclineFriendForFlight(MAANPP20Context _context, string invitationString);
         Task<ActionResult<IEnumerable<FriendForFlight>>> GetCallsForFlight(MAANPP20Context _context, string email);
         Task<ActionResult<IEnumerable<FlightReservation>>> GetFlightReservationsStatistics(MAANPP20Context _context, int idFlight);
-        Task<ActionResult<IEnumerable<FriendForFlight>>> CheckAllReservations(MAANPP20Context _context);
     }
 }
