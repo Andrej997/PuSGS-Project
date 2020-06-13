@@ -18,8 +18,26 @@ export class ShareDataServiceService {
   private logoImg = new BehaviorSubject("");
   logoImage = this.logoImg.asObservable();
 
-  // private services: Rent;
-  // RACServices = this.services.asObservable();
+  
+
+  private startDay = new BehaviorSubject("");
+  startD = this.startDay.asObservable();
+
+  private endDay = new BehaviorSubject("");
+  endD = this.endDay.asObservable();
+
+  private startTime = new BehaviorSubject("");
+  startT = this.startTime.asObservable();
+
+  private endTime = new BehaviorSubject("");
+  endT = this.endTime.asObservable();
+
+
+
+  // console.log(startDay.value);
+  //   console.log(endDay.value);
+  //   console.log(startTime.value);
+  //   console.log(endTime.value);
 
   constructor() { }
 
@@ -39,8 +57,17 @@ export class ShareDataServiceService {
     this.logoImg.next(imageString);
   }
 
-  // changeRACService(serv: Array<RentACarService>){
-  //   this.services.next(serv);
-  // }
+  changeStartDay(str: string){
+    this.startDay.next(str);
+  }
+  changeEndDay(str: string){
+    this.endDay.next(str);
+  }
+  changeStartTime(str: string){
+    this.startTime.next(str);
+  }
+  changeEndTime(str: string){
+    this.endTime.next(str);
+  }
   
 }

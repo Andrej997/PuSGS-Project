@@ -6,7 +6,6 @@
     <div class="row card-group" >
         <div class="col-sm-12" *ngFor="let service of services">
             <div class="card" style="margin-bottom: 10px;">
-              
               <div class="card-body">
                 <div class="card-mb-4">
                   <div class="row card-group " >
@@ -90,8 +89,8 @@
                   </div>
                 </div>
               </div>
-                <div class="container">
-                  <div class="card mb-3" style="max-width: auto;" *ngFor="let car of service.carlist">
+                <div class="container" *ngIf="service.carlist != null">
+                  <div class="card mb-3" style="max-width: auto;"  *ngFor="let car of service.carlist">
                     <div class="row card-group " >
                       <div class="col-md-4">
                         <img [src]="car.image" class="card-img" alt="...">
@@ -158,8 +157,12 @@
                           </div>
                           <br>
                           <p>Trunk: {{ car.trunk }} l</p>
-                          <p>Gear: {{ car.gear }} </p>
-                          <p>Fuel: {{ car.fuel }} </p>
+                          <div *ngIf="car.gear == 1"> <p>Gear: Manual</p></div>
+                          <div *ngIf="car.gear == 2"><p>Gear: Automatic</p> </div> <!--{{  car.gear }}-->
+                          <div *ngIf="car.fuel == 1"> <p>Fuel: Persol</p></div>
+                          <div *ngIf="car.fuel == 2"><p>Fuel: Diesel</p> </div>
+                          <div *ngIf="car.fuel == 3"><p>Fuel: Electric</p> </div>
+                          <div *ngIf="car.fuel == 4"><p>Fuel: Hybrid</p> </div>
                         </div>
                       </div>
                       <div class="col-md-1">
@@ -179,9 +182,10 @@
                             </span>
                           </div>
                           <div class="btn btn-primary" style="width: 120px;"
-                               data-toggle="modal" 
-                               data-target="#rentReview">Rent
-                          </div>
+                               *ngIf="currentUser.role != 5"
+                               (click) = "rentacar(car)">Rent
+                          </div><!--data-toggle="modal" 
+                            data-target="#rentReview"-->
                           <br>
                           <div class="btn btn-primary" style="width: 120px; margin-top: 3px;"
                                (click) = "func(service, car)"> 
@@ -192,14 +196,9 @@
                   </div>
                 </div>
               </div>
-
-
             </div>
         </div>
     </div>
-
-
-
 <h2>
   Prikaz svih dostupnih vozila:
 </h2>
@@ -236,7 +235,7 @@
                   </span>
                 </div>
                 <div class="btn btn-primary" style="width: 120px;">
-                  <span>
+                  <span *ngIf="currentUser.role != 5">
                     Rent
                   </span>
                 </div>
@@ -253,7 +252,7 @@
   </div>
 
 
-  <div class="modal fade" id="rentReview" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- <div class="modal fade" id="rentReview" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -271,4 +270,4 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->

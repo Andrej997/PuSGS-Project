@@ -129,7 +129,6 @@
                                 <p class="car-text">KW/KS: {{ car.kw }}/{{car.kw * kwks}} </p>
                                 <p class="card-text">Year: {{ car.year }}</p>
                                 <p>Seats: {{ car.seats }}</p>
-                                <p>{{message}}</p>
                                 <div>
                                     <div *ngIf = "car.doors == 3; else petVrata">
                                       Doors: 2/3

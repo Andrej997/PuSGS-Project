@@ -5,6 +5,7 @@ import { RentACarService } from 'src/app/entities/rent-a-car-service/rent-a-car-
 import { Car } from 'src/app/entities/car/car';
 import { Address } from 'src/app/entities/address/address';
 import { RentACarBranch } from 'src/app/entities/rent-a-car-branch/rent-a-car-branch';
+import { ShareDataServiceService } from 'src/app/services/share-data-service/share-data-service.service';
 
 @Component({
   selector: 'app-just-rent',
@@ -21,12 +22,25 @@ export class JustRentComponent implements OnInit {
   adr: Address;
   myService: RentACarService;
 
+  startDay:string;
+  endDay:string;
+  startTime:string;
+  endTime:string;
+
   constructor(private route: ActivatedRoute,
-              private carServiceService: CarServiceService) {
+              private carServiceService: CarServiceService,
+              private data: ShareDataServiceService) {
     route.params.subscribe(params => { this.city = params['cityId']; });
     this.services = new Array<RentACarService>();
     //this.services = carServiceService.getServicesInCity(this.city);
     
+    this.data.startD.subscribe(startDay => this.startDay = startDay);
+    this.data.startD.subscribe(endDay => this.endDay = endDay);
+    this.data.startD.subscribe(startTime => this.startTime = startTime);
+    this.data.startD.subscribe(endTime => this.endTime = endTime);
+    //console.log("this.startDayyyyy");
+    //console.log(this.startDay);
+
     carServiceService.getCarServices().subscribe((res:any)=>{
       res.forEach(element => {
         console.log("just rent");
@@ -55,7 +69,9 @@ export class JustRentComponent implements OnInit {
           comments.push("Povoljne cene, svaka preporuka");
           
           element.racServiceCars.forEach(element4 => {
-            var car = new Car(0, 
+              console.log("element4 -> ");
+              console.log(element4);
+            var car = new Car(element4.idCar, 
                               element4.carImage,
                               this.ReturnBrand(element4.brand),
                               element4.model,

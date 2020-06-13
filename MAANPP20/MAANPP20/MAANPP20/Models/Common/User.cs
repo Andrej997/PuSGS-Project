@@ -1,4 +1,5 @@
-﻿using MAANPP20.Models.Flights;
+﻿using MAANPP20.Models.Cars;
+using MAANPP20.Models.Flights;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,8 @@ namespace MAANPP20.Models.Common
         public ICollection<FastFlightReservation> fastFlightReservations { get; set; }
 
         public ICollection<FlightReservation> flightReservations { get; set; }
+
+        public ICollection<RezervacijaOdDo> rentACarReservation { get; set; }
 
         public int bonus { get; set; }
     }

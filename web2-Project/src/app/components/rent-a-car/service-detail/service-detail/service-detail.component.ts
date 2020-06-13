@@ -68,7 +68,7 @@ export class ServiceDetailComponent implements OnInit {
           comments.push("Povoljne cene, svaka preporuka");
           
           res.racServiceCars.forEach(element4 => {
-            var car = new Car(0, 
+            var car = new Car(element4.idCar, 
                               element4.carImage,
                               this.ReturnBrand(element4.brand),
                               element4.model,

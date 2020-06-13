@@ -9,11 +9,21 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ShareDataServiceService } from '../share-data-service/share-data-service.service';
 import { AuthenticationService } from '../authentication-service/authentication.service';
 import { User } from 'src/app/entities/user/user';
+import { Rezervacija } from 'src/app/entities/rezeracija/rezervacija';
 
 
 @Injectable({
   providedIn: 'root'
 })
+
+// export class Reservation{
+//   startDay : string;
+//   endDay : string;
+//   startTime : string;
+//   endTime : string;
+//   idCar : string;
+// }
+
 export class CarServiceService {
   readonly BaseURI = 'http://localhost:57428/api';
   carImg: string;
@@ -103,6 +113,20 @@ export class CarServiceService {
       
     };
     return this.http.post(this.BaseURI + '/RACService/AddRACS', body);
+  }
+
+  createReservation(formData : Rezervacija){
+
+    var body = {
+      startDay: formData.startDay,
+      endDay: formData.endDay,
+      startTime: formData.startTime,
+      endTime: formData.endTime,
+      idCar : formData.idCar,
+      idUser : formData.idUser
+    }
+    console.log(body);
+    return this.http.post(this.BaseURI + '/Reservation/AddReservation', body);
   }
 
   loadCars() {

@@ -90,7 +90,7 @@ namespace MAANPP20.Controllers
             user.bonus = 0;
             try
             {
-                user.role = Role.adminA;
+                //user.role = Role.adminA;
                 user.EmailConfirmed = false;
                 int randNumber = SendActivationCode();
                 user.activationCode = randNumber.ToString();
