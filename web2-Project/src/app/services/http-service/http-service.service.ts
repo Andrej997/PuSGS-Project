@@ -13,7 +13,7 @@ import { SearchFlight } from 'src/app/entities/search-flight/search-flight';
 export class HttpServiceService {
 
   //! osnovna putanja
-  readonly rootURL = "http://localhost:57429/api";
+  readonly rootURL = "http://localhost:57000/api";
 
   constructor(private http: HttpClient) { }
 

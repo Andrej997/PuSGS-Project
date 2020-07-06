@@ -256,8 +256,8 @@ namespace MAANPP20.Controllers.Flights
         {
             foreach (var friendForFlight in friendForFlights)
             {
-                string to = "andrej.km997@gmail.com";
-                string from = "andrej.km997@gmail.com";
+                string to = "mail";
+                string from = "mail";
                 string subject = "Poziv za let";
                 string body = $"Postovani {friendForFlight.prezime} {friendForFlight.ime},\n" +
                     $"Pozvani ste na let\n" +
@@ -273,7 +273,7 @@ namespace MAANPP20.Controllers.Flights
                             smtpClient.EnableSsl = true;
                             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                             smtpClient.UseDefaultCredentials = false;
-                            smtpClient.Credentials = new NetworkCredential(from, "kscuugcirljlecre");
+                            smtpClient.Credentials = new NetworkCredential(from, "mail_code");
                             smtpClient.Send(mailMessage);
                         }
                     }
