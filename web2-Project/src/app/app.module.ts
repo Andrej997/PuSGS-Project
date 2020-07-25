@@ -51,6 +51,10 @@ import { AuthInterceptorService } from './services/authentication-service/auth-i
 import { TokenInterceptorService } from './services/authentication-service/token-interceptor.service';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angularx-social-login';  
 
+
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+
+
 //import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider} from 'ng4-social-login';
 
 // const config = new AuthServiceConfig([
@@ -87,6 +91,7 @@ import { FlightReservationComponent } from './components/flights-components/flig
 import { SearchFlightsComponent } from './components/flights-components/search-flights/search-flights.component';
 import { AcceptReservationComponent } from './components/flights-components/accept-reservation/accept-reservation.component';
 import { MyMapComponent } from './components/flights-components/my-map/my-map.component';
+import { LeafletMapComponent } from './components/flights-components/leaflet-map/leaflet-map.component';
 
 @NgModule({
   declarations: [
@@ -136,6 +141,7 @@ import { MyMapComponent } from './components/flights-components/my-map/my-map.co
     SearchFlightsComponent,
     AcceptReservationComponent,
     MyMapComponent,
+    LeafletMapComponent,
 
   ],
   imports: [
@@ -144,6 +150,7 @@ import { MyMapComponent } from './components/flights-components/my-map/my-map.co
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    LeafletModule
     //GoogleMapsModule
     //SocialLoginModule
   ],

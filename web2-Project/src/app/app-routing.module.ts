@@ -29,6 +29,7 @@ import { ChangeProfileComponent } from './components/profile/change-profile/chan
 import { FlightReservationComponent } from './components/flights-components/flight-reservation/flight-reservation.component';
 import { AcceptReservationComponent } from './components/flights-components/accept-reservation/accept-reservation.component';
 import { MyMapComponent } from './components/flights-components/my-map/my-map.component';
+import { LeafletMapComponent } from './components/flights-components/leaflet-map/leaflet-map.component';
 
 
 const routes: Routes = [
@@ -72,6 +73,10 @@ const routes: Routes = [
         component: CreateOrReplaceServiceComponent
       }
     ]
+  },
+  {
+    path: "map",
+    component: LeafletMapComponent
   },
   {
     path: "log-in",

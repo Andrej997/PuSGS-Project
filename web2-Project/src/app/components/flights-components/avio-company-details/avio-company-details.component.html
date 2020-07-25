@@ -118,6 +118,9 @@
                 <h5 class="card-text">{{flightCompany.address.streetAndNumber}},</h5>
                 <h5 class="card-text">{{flightCompany.address.city}},</h5>
                 <h5 class="card-text">{{flightCompany.address.country}}</h5>
+                <div>
+                    <app-leaflet-map></app-leaflet-map>
+                </div>
             </div>
         <div class="col-md-8">
             <div class="card-body">
@@ -275,15 +278,15 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <!-- <div>
                     <h4 data-toggle="collapse" href="#collapseExampleMap" style="cursor: pointer;">Map</h4>
                     <div class="collapse" id="collapseExampleMap">
-                        <app-my-map></app-my-map>
+                        <app-leaflet-map></app-leaflet-map>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
   </div>
-  
+  <!-- <app-leaflet-map></app-leaflet-map> -->
 </div>
