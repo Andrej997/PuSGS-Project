@@ -1,8 +1,5 @@
 ﻿using MAANPP20.Data;
-using MAANPP20.Models.Common;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Controller;
 using System;
 using System.Text;
 using System.Security.Cryptography;
@@ -15,14 +12,15 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Mail;
-using MAANPP20.Models.Flights;
+using Common.Models.Common_U;
+using Common.Models.Common;
+using Common.Models.Flights;
 
 namespace MAANPP20.Controllers
 {

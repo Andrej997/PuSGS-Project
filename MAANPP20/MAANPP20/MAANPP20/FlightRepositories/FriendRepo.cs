@@ -1,9 +1,9 @@
-﻿using MAANPP20.Data;
+﻿using Common.Models.Common;
+using Common.Models.Common_U;
+using MAANPP20.Data;
 using MAANPP20.FlightInterfaces;
-using MAANPP20.Models.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

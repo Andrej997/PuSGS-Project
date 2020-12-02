@@ -4,11 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Common.Models.Common;
+using Common.Models.Flights;
 using MAANPP20.Data;
 using MAANPP20.FlightRepositories;
-using MAANPP20.Models.Common;
-using MAANPP20.Models.Flights;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

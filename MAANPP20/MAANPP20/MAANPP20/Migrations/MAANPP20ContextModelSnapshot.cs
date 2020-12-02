@@ -19,192 +19,12 @@ namespace MAANPP20.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("MAANPP20.Models.Cars.Car", b =>
-                {
-                    b.Property<int>("idCar")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("BabySeat")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Brand")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CarImage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Cm3")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Doors")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FreeSeats")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Fuel")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Gear")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Kw")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Model")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Navigation")
-                        .HasColumnType("bit");
-
-                    b.Property<double>("PricePerDay")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("RentACarServiceidRAC")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("RoofRack")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Seats")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Trunk")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Year")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("idService")
-                        .HasColumnType("int");
-
-                    b.HasKey("idCar");
-
-                    b.HasIndex("RentACarServiceidRAC");
-
-                    b.ToTable("Cars");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.Cenovnik", b =>
-                {
-                    b.Property<int>("idCenovnik")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("deleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("idCenovnik");
-
-                    b.ToTable("Cenovnik");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.Grad", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("city")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("images")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Gradovi");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.Ocena", b =>
-                {
-                    b.Property<int>("idOcena")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CaridCar")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RentACarServiceidRAC")
-                        .HasColumnType("int");
-
-                    b.Property<int>("broj")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("deleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("idOcena");
-
-                    b.HasIndex("CaridCar");
-
-                    b.HasIndex("RentACarServiceidRAC");
-
-                    b.ToTable("OcenePojedinacnogAuta");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.RentACarService", b =>
-                {
-                    b.Property<int>("idRAC")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CenovnikidCenovnik")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogoImage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RACaddressId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RACidAdmin")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("deleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("idRAC");
-
-                    b.HasIndex("CenovnikidCenovnik");
-
-                    b.HasIndex("RACaddressId");
-
-                    b.HasIndex("RACidAdmin");
-
-                    b.ToTable("RentACarServices");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.RezervacijaOdDo", b =>
+            modelBuilder.Entity("Common.Models.Cars.RezervacijaOdDo", b =>
                 {
                     b.Property<int>("idRezervacijaOdDo")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CaridCar")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("Do")
                         .HasColumnType("datetime2");
@@ -220,48 +40,17 @@ namespace MAANPP20.Migrations
 
                     b.HasKey("idRezervacijaOdDo");
 
-                    b.HasIndex("CaridCar");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("RezervacijeOdDo");
+                    b.ToTable("RezervacijaOdDo");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Cars.StavkaCenovnika", b =>
-                {
-                    b.Property<int>("idStavkeCenovnika")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CenovnikidCenovnik")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Naziv")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Vrednost")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("deleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("idStavkeCenovnika");
-
-                    b.HasIndex("CenovnikidCenovnik");
-
-                    b.ToTable("StavkaCenovnika");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.Address", b =>
+            modelBuilder.Entity("Common.Models.Common.Address", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("RentACarServiceidRAC")
-                        .HasColumnType("int");
 
                     b.Property<string>("city")
                         .HasColumnType("nvarchar(max)");
@@ -277,38 +66,10 @@ namespace MAANPP20.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("RentACarServiceidRAC");
-
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Common.Comment", b =>
-                {
-                    b.Property<int>("idComment")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Comm")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RentACarServiceidRAC")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("idUser")
-                        .HasColumnType("int");
-
-                    b.HasKey("idComment");
-
-                    b.HasIndex("RentACarServiceidRAC");
-
-                    b.ToTable("Comment");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.DoubleForICollection", b =>
+            modelBuilder.Entity("Common.Models.Common.DoubleForICollection", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -336,7 +97,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("DoubleForICollections");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Common.Friend", b =>
+            modelBuilder.Entity("Common.Models.Common.Friend", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -362,7 +123,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("Friends");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Common.FriendRequest", b =>
+            modelBuilder.Entity("Common.Models.Common.FriendRequest", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -388,7 +149,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("FriendRequests");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Common.Message", b =>
+            modelBuilder.Entity("Common.Models.Common.Message", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -423,7 +184,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Common.StringForICollection", b =>
+            modelBuilder.Entity("Common.Models.Common.StringForICollection", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -446,7 +207,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("StringForICollections");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Common.User", b =>
+            modelBuilder.Entity("Common.Models.Common_U.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -537,7 +298,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.Aeroplane", b =>
+            modelBuilder.Entity("Common.Models.Flights.Aeroplane", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -558,7 +319,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("Aeroplanes");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.AvioLuggage", b =>
+            modelBuilder.Entity("Common.Models.Flights.AvioLuggage", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -585,7 +346,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("AvioLuggages");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.AvioSediste", b =>
+            modelBuilder.Entity("Common.Models.Flights.AvioSediste", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -614,7 +375,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("AvioSedista");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.FastFlightReservation", b =>
+            modelBuilder.Entity("Common.Models.Flights.FastFlightReservation", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -661,7 +422,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("FastFlightReservations");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.Flight", b =>
+            modelBuilder.Entity("Common.Models.Flights.Flight", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -742,7 +503,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("Flights");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.FlightCompany", b =>
+            modelBuilder.Entity("Common.Models.Flights.FlightCompany", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -779,7 +540,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("FlightCompanies");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.FlightDestination", b =>
+            modelBuilder.Entity("Common.Models.Flights.FlightDestination", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -809,7 +570,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("FlightDestinations");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.FlightReservation", b =>
+            modelBuilder.Entity("Common.Models.Flights.FlightReservation", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -859,7 +620,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("FlightReservations");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.FriendForFlight", b =>
+            modelBuilder.Entity("Common.Models.Flights.FriendForFlight", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -903,7 +664,7 @@ namespace MAANPP20.Migrations
                     b.ToTable("FriendForFlights");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.Presedanje", b =>
+            modelBuilder.Entity("Common.Models.Flights.Presedanje", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -921,212 +682,152 @@ namespace MAANPP20.Migrations
                     b.ToTable("Presedanja");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Cars.Car", b =>
+            modelBuilder.Entity("Common.Models.Cars.RezervacijaOdDo", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Cars.RentACarService", null)
-                        .WithMany("RACServiceCars")
-                        .HasForeignKey("RentACarServiceidRAC");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.Ocena", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Cars.Car", null)
-                        .WithMany("OceneAuta")
-                        .HasForeignKey("CaridCar");
-
-                    b.HasOne("MAANPP20.Models.Cars.RentACarService", null)
-                        .WithMany("RACOcene")
-                        .HasForeignKey("RentACarServiceidRAC");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.RentACarService", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Cars.Cenovnik", "Cenovnik")
-                        .WithMany()
-                        .HasForeignKey("CenovnikidCenovnik");
-
-                    b.HasOne("MAANPP20.Models.Common.Address", "RACAddress")
-                        .WithMany()
-                        .HasForeignKey("RACaddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MAANPP20.Models.Common.User", "RACAdmin")
-                        .WithMany()
-                        .HasForeignKey("RACidAdmin");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Cars.RezervacijaOdDo", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Cars.Car", null)
-                        .WithMany("RezervacijeAutaOdDo")
-                        .HasForeignKey("CaridCar");
-
-                    b.HasOne("MAANPP20.Models.Common.User", null)
+                    b.HasOne("Common.Models.Common_U.User", null)
                         .WithMany("rentACarReservation")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Cars.StavkaCenovnika", b =>
+            modelBuilder.Entity("Common.Models.Common.DoubleForICollection", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Cars.Cenovnik", null)
-                        .WithMany("StavkeCenovnika")
-                        .HasForeignKey("CenovnikidCenovnik");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.Address", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Cars.RentACarService", null)
-                        .WithMany("RACBranches")
-                        .HasForeignKey("RentACarServiceidRAC");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.Comment", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Cars.RentACarService", null)
-                        .WithMany("RACComments")
-                        .HasForeignKey("RentACarServiceidRAC");
-                });
-
-            modelBuilder.Entity("MAANPP20.Models.Common.DoubleForICollection", b =>
-                {
-                    b.HasOne("MAANPP20.Models.Flights.FlightCompany", null)
+                    b.HasOne("Common.Models.Flights.FlightCompany", null)
                         .WithMany("ocene")
                         .HasForeignKey("FlightCompanyid");
 
-                    b.HasOne("MAANPP20.Models.Flights.Flight", null)
+                    b.HasOne("Common.Models.Flights.Flight", null)
                         .WithMany("ocene")
                         .HasForeignKey("Flightid");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Common.Friend", b =>
+            modelBuilder.Entity("Common.Models.Common.Friend", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Common.User", null)
+                    b.HasOne("Common.Models.Common_U.User", null)
                         .WithMany("friends")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Common.FriendRequest", b =>
+            modelBuilder.Entity("Common.Models.Common.FriendRequest", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Common.User", null)
+                    b.HasOne("Common.Models.Common_U.User", null)
                         .WithMany("friendRequests")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Common.Message", b =>
+            modelBuilder.Entity("Common.Models.Common.Message", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Common.Friend", null)
+                    b.HasOne("Common.Models.Common.Friend", null)
                         .WithMany("messages")
                         .HasForeignKey("Friendid");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Common.StringForICollection", b =>
+            modelBuilder.Entity("Common.Models.Common.StringForICollection", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Flights.Presedanje", null)
+                    b.HasOne("Common.Models.Flights.Presedanje", null)
                         .WithMany("gradoviPresedanja")
                         .HasForeignKey("Presedanjeid");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Common.User", b =>
+            modelBuilder.Entity("Common.Models.Common_U.User", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Common.Address", "address")
+                    b.HasOne("Common.Models.Common.Address", "address")
                         .WithMany()
                         .HasForeignKey("addressid");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.AvioSediste", b =>
+            modelBuilder.Entity("Common.Models.Flights.AvioSediste", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Flights.Flight", null)
+                    b.HasOne("Common.Models.Flights.Flight", null)
                         .WithMany("allSeatsForThisFlight")
                         .HasForeignKey("Flightid");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.FastFlightReservation", b =>
+            modelBuilder.Entity("Common.Models.Flights.FastFlightReservation", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Common.User", null)
+                    b.HasOne("Common.Models.Common_U.User", null)
                         .WithMany("fastFlightReservations")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.Flight", b =>
+            modelBuilder.Entity("Common.Models.Flights.Flight", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Flights.FlightCompany", null)
+                    b.HasOne("Common.Models.Flights.FlightCompany", null)
                         .WithMany("flights")
                         .HasForeignKey("FlightCompanyid");
 
-                    b.HasOne("MAANPP20.Models.Common.Address", "from")
+                    b.HasOne("Common.Models.Common.Address", "from")
                         .WithMany()
                         .HasForeignKey("addressFromId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MAANPP20.Models.Common.Address", "to")
+                    b.HasOne("Common.Models.Common.Address", "to")
                         .WithMany()
                         .HasForeignKey("addressToId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MAANPP20.Models.Flights.Aeroplane", "aeroplane")
+                    b.HasOne("Common.Models.Flights.Aeroplane", "aeroplane")
                         .WithMany()
                         .HasForeignKey("aeroplaneId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MAANPP20.Models.Flights.AvioLuggage", "luggage")
+                    b.HasOne("Common.Models.Flights.AvioLuggage", "luggage")
                         .WithMany()
                         .HasForeignKey("luggageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MAANPP20.Models.Flights.Presedanje", "presedanje")
+                    b.HasOne("Common.Models.Flights.Presedanje", "presedanje")
                         .WithMany()
                         .HasForeignKey("presedanjeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.FlightCompany", b =>
+            modelBuilder.Entity("Common.Models.Flights.FlightCompany", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Common.Address", "address")
+                    b.HasOne("Common.Models.Common.Address", "address")
                         .WithMany()
                         .HasForeignKey("addressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MAANPP20.Models.Common.User", "admin")
+                    b.HasOne("Common.Models.Common_U.User", "admin")
                         .WithMany()
                         .HasForeignKey("idAdmin");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.FlightDestination", b =>
+            modelBuilder.Entity("Common.Models.Flights.FlightDestination", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Flights.FlightCompany", null)
+                    b.HasOne("Common.Models.Flights.FlightCompany", null)
                         .WithMany("destinations")
                         .HasForeignKey("FlightCompanyid");
 
-                    b.HasOne("MAANPP20.Models.Common.Address", "endAddress")
+                    b.HasOne("Common.Models.Common.Address", "endAddress")
                         .WithMany()
                         .HasForeignKey("eId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MAANPP20.Models.Common.Address", "startAddress")
+                    b.HasOne("Common.Models.Common.Address", "startAddress")
                         .WithMany()
                         .HasForeignKey("sId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.FlightReservation", b =>
+            modelBuilder.Entity("Common.Models.Flights.FlightReservation", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Common.User", null)
+                    b.HasOne("Common.Models.Common_U.User", null)
                         .WithMany("flightReservations")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("MAANPP20.Models.Flights.FriendForFlight", b =>
+            modelBuilder.Entity("Common.Models.Flights.FriendForFlight", b =>
                 {
-                    b.HasOne("MAANPP20.Models.Flights.FlightReservation", null)
+                    b.HasOne("Common.Models.Flights.FlightReservation", null)
                         .WithMany("friendForFlights")
                         .HasForeignKey("FlightReservationid");
                 });

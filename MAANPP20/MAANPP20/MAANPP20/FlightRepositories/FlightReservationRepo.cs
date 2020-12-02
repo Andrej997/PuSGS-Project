@@ -1,7 +1,8 @@
-﻿using MAANPP20.Data;
+﻿using Common.Models.Common;
+using Common.Models.Common_U;
+using Common.Models.Flights;
+using MAANPP20.Data;
 using MAANPP20.FlightInterfaces;
-using MAANPP20.Models.Common;
-using MAANPP20.Models.Flights;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;

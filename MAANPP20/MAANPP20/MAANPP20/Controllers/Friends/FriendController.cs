@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using MAANPP20.Data;
 using MAANPP20.FlightRepositories;
-using MAANPP20.Models.Common;
+using Common.Models.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Common.Models.Common_U;
 
 namespace MAANPP20.Controllers.Friends
 {

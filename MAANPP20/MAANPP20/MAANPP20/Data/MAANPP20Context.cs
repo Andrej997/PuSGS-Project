@@ -1,11 +1,7 @@
-﻿using MAANPP20.Models.Cars;
-using MAANPP20.Models.Common;
-using MAANPP20.Models.Flights;
+﻿using Common.Models.Common;
+using Common.Models.Common_U;
+using Common.Models.Flights;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MAANPP20.Data
 {
@@ -44,19 +40,6 @@ namespace MAANPP20.Data
         public DbSet<FlightCompany> FlightCompanies { get; set; }
         public DbSet<Flight> Flights { get; set; }
         #endregion
-
-        #endregion
-
-        #region Rent a car
-        public DbSet<Car> Cars { get; set; }
-        public DbSet<Ocena> OcenePojedinacnogAuta { get; set; }
-        public DbSet<RezervacijaOdDo> RezervacijeOdDo { get; set; }
-
-        public DbSet<RentACarService> RentACarServices { get; set; }
-
-        public DbSet<Grad> Gradovi { get; set; }
-
-
 
         #endregion
     }

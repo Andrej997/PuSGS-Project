@@ -1,5 +1,5 @@
 ﻿using MAANPP20.Data;
-using MAANPP20.Models.Flights;
+using Common.Models.Flights;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

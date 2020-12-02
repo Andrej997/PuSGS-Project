@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Common.Models.Common;
 using MAANPP20.Data;
 using MAANPP20.FlightRepositories;
-using MAANPP20.Models.Common;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MAANPP20.Controllers.Flights
